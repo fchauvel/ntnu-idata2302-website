@@ -3,18 +3,27 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to NTNU IDATA 2302's documentation!
-===========================================
+##############################
+Algorithms and Data Structures
+##############################
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 4
+   :caption: Modules
+                
+   welcome.rst
+   graphs/index.rst
 
-
-
+##################
 Indices and tables
-==================
+##################
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+####
+TODO
+####
+
+.. todolist::
