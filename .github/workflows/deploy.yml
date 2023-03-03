@@ -24,6 +24,7 @@ jobs:
          SCP_USERNAME: ${{ secrets.USERNAME }}
          SCP_PASSWORD: ${{ secrets.PASSWORD }}
       run: |
-        echo "Deploying to NTNU file server" >> github.txt
-        sshpass -p ${SCP_PASSWORD} scp -prq ./github.txt ${SCP_USERNAME}:/public_html/idata2302/
+        echo "Deploying to NTNU file server" > bidon.txt
+        ls -l
+        sshpass -p ${SCP_PASSWORD} scp -prq ./bidon.txt ${SCP_USERNAME}:/public_html/idata2302/
       
