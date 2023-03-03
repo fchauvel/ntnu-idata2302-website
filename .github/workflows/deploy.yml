@@ -9,6 +9,8 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-20.04
     steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
     - name: Install Deps
       run: |
         pip install -r requirements.txt
