@@ -26,5 +26,5 @@ jobs:
       run: |
         echo "Deploying to NTNU file server" > bidon.txt
         ls -l
-        sshpass -p ${SCP_PASSWORD} scp -prq ./bidon.txt ${SCP_USERNAME}:/public_html/idata2302/
+        sshpass -p ${SCP_PASSWORD} scp -prq -o StrictHostKeyChecking=no ./bidon.txt ${SCP_USERNAME}:public_html/idata2302/
       
