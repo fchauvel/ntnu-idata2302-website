@@ -3,20 +3,35 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-##############################
+
 Algorithms and Data Structures
-##############################
+==============================
 
 .. toctree::
    :maxdepth: 4
    :caption: Modules
                 
    welcome.rst
+   arrays/index.rst
    graphs/index.rst
 
-##################
-Indices and tables
-##################
+.. toctree::
+   :caption: Lab Sessions
+
+   graphs/lab_mazes
+
+.. toctree::
+   :caption: Code Examples
+
+   graphs/samples
+
+.. toctree::
+   :caption: Recaps
+
+   maths.rst
+      
+Indices and Tables
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
