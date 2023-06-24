@@ -18,4 +18,5 @@ Contents
    dynamic_arrays.rst
    searching.rst
    sorting.rst
+   stacks
    

@@ -33,6 +33,9 @@ that yourself.
 An ADT for Sequences
 ====================
 
+.. index::
+   pair: ADT ; Sequence
+
 Intuitively, a sequence is just a collection of items. A "list" if you
 will, but let's avoid the word "list", because "list" is a specific
 data structure, which we shall study later.
