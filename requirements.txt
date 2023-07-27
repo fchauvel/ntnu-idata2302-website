@@ -20,6 +20,7 @@ soupsieve==2.3.2.post1
 Sphinx==6.1.3
 sphinx-book-theme==1.0.1
 sphinx-exercise==0.4.1
+sphinx-toolbox==3.4.0
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
 sphinxcontrib-htmlhelp==2.0.0
