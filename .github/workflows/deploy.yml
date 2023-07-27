@@ -27,7 +27,5 @@ jobs:
          SCP_PASSWORD: ${{ secrets.PASSWORD }}
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        echo "Deploying to NTNU file server" > bidon.txt
-        ls -l
         sshpass -p ${SCP_PASSWORD} scp -prq -o StrictHostKeyChecking=no ./build/* ${SCP_USERNAME}:public_html/idata2302/
       
