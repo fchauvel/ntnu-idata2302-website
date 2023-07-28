@@ -8,11 +8,22 @@ Algorithms and Data Structures
 ==============================
 
 .. toctree::
+   :maxdepth: 3
+   :caption: About This Course
+
+   about/welcome
+   about/overview
+   about/practicalities
+   about/resources
+   
+
+.. toctree::
    :maxdepth: 4
    :caption: Modules
-                
-   welcome.rst
+
+   foundations/index.rst
    arrays/index.rst
+   recursion/index.rst
    graphs/index.rst
 
 .. toctree::
@@ -37,8 +48,3 @@ Indices and Tables
 * :ref:`modindex`
 * :ref:`search`
 
-####
-TODO
-####
-
-.. todolist::
