@@ -12,4 +12,4 @@ Contents
    :maxdepth: 2
    :numbered:
 
-   welcome.rst
+   computation
