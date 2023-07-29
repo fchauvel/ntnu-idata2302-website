@@ -18,12 +18,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Algorithms and Data Structures'
-copyright = '2022, NTNU'
+copyright = '2021, NTNU'
 author = 'NTNU'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
 
+html_title = "Algorithms and Data Structures"
 
 # -- General configuration ---------------------------------------------------
 
