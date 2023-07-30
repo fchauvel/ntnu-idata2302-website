@@ -2,6 +2,10 @@
 Computations
 ============
 
+:Lecture: Lecture 1.1 :download:`(slides) <_static/computation/welcome.pptx>`
+:Objectives: Understand core Computer Science concepts
+:Concepts: Data, Computation, Computational Problem, Algorithm, Data Structure
+
 Welcome! I am very happy to welcome you in this course about *Algorithms
 & Data Structures*. I prepared this course as well as I could with the
 time, resources and energy I had, and I do hope you will find it
@@ -317,7 +321,7 @@ they all rely on natural language, which may be ambiguous. We will see
 in the next Lecture how we can convert pseudo code into machine code,
 that code that machine can understand.
 
-.. inportant::
+.. important::
 
    There is an direct relationship between the actions we stipulate in
    an algorithm and the capabilities of the computer we use to execute
