@@ -27,5 +27,5 @@ jobs:
          SCP_PASSWORD: ${{ secrets.PASSWORD }}
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        sshpass -p ${SCP_PASSWORD} rsync --delete -avz build/ ${SCP_USERNAME}:public_html/idata2302  
+        sshpass -p ${SCP_PASSWORD} rsync -e "ssh -o StrictHostKeyChecking=no" --delete -avz build/ ${SCP_USERNAME}:public_html/idata2302  
       
