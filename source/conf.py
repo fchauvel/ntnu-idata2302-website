@@ -22,9 +22,9 @@ copyright = '2021, NTNU'
 author = 'NTNU'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = '0.3.1'
 
-html_title = "Algorithms and Data Structures"
+html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
 
 # -- General configuration ---------------------------------------------------
 
@@ -38,6 +38,8 @@ extensions = [
     "sphinx_togglebutton"
 ]
 
+rst_prolog = "Version: |release|"
+
 # Number the figures
 numfig = True
 
@@ -48,9 +50,6 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
-# Includes todos
-todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -63,6 +62,7 @@ html_theme = 'sphinx_book_theme'
 html_theme_options = {
     "use_sidenotes": True,
     "repository_url": "https://github.com/fchauvel/ntnu-idata2302-website",
+    "path_to_docs": "source",
     "use_edit_page_button": True,
 }
 
@@ -74,14 +74,13 @@ html_css_files = ["custom.css"]
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
 mathjax3_config = {
     "svg": {
-        "displayAlign": 'left',
+        "displayAlign": 'center',
         "displayIndent": "2em"
     },
     "chtml": {
-        "displayAlign": 'right',
+        "displayAlign": 'left',
         "displayIndent": "2em"
     }
 }
