@@ -63,6 +63,8 @@ complicated.
 Architecture
 ------------
 
+.. index::  RAM ; architecture
+
 A random access machine (RAM) is a machine that mimics the behavior of
 a real computer. It manipulates data encoded as symbols. It has the
 three following components, also shown on
@@ -124,6 +126,7 @@ machine would thus override the value of the ``ACC`` register with the
 sequence of symbols “12”, as explained in
 :numref:`foundations/computer/ram_instructions`.
 
+.. index::  RAM ; instructions
 
 .. _foundations/computer/ram_instructions:
 
@@ -245,6 +248,8 @@ say the least.
 
 Assembly Code
 -------------
+
+.. index:: RAM ; assembly code
 
 .. _foundations/computer/asm_memory_layout:
 
