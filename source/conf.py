@@ -22,7 +22,7 @@ copyright = '2021, NTNU'
 author = 'NTNU'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.3'
+release = '0.3.4'
 
 html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
 
