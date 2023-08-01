@@ -29,6 +29,8 @@ Algorithms and Data Structures
 .. toctree::
    :caption: Lab Sessions
 
+   labs/setup
+   labs/foundations
    graphs/lab_mazes
 
 .. toctree::
