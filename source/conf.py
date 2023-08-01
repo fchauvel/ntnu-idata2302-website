@@ -22,7 +22,7 @@ copyright = '2021, NTNU'
 author = 'NTNU'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.2'
+release = '0.3.3'
 
 html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
 
@@ -32,9 +32,7 @@ html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.todo",
     "sphinx_exercise",
-    "sphinx_toolbox.collapse",
     "sphinx_togglebutton"
 ]
 
