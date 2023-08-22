@@ -24,8 +24,6 @@ author = 'NTNU'
 # The full version, including alpha/beta/rc tags
 release = '0.3.4'
 
-html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -57,14 +55,19 @@ exclude_patterns = []
 
 html_theme = 'sphinx_book_theme'
 
+#html_logo = "_static/ntnu_logo.png"
+
+html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
+
 html_theme_options = {
     "use_sidenotes": True,
     "repository_url": "https://github.com/fchauvel/ntnu-idata2302-website",
     "path_to_docs": "source",
     "use_edit_page_button": True,
+    "navbar_end": ["logo.html"]
+
 }
 
-html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 
 # Add any paths that contain custom static files (such as style sheets) here,

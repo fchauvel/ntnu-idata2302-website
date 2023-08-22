@@ -16,27 +16,17 @@ Algorithms and Data Structures
    about/practicalities
    about/resources
    
-
 .. toctree::
    :maxdepth: 4
    :caption: Modules
 
    foundations/index.rst
-   arrays/index.rst
-   recursion/index.rst
-   graphs/index.rst
 
 .. toctree::
    :caption: Lab Sessions
 
    labs/setup
    labs/foundations
-   graphs/lab_mazes
-
-.. toctree::
-   :caption: Code Examples
-
-   graphs/samples
 
 .. toctree::
    :caption: Recaps

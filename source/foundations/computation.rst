@@ -283,8 +283,8 @@ algorithms.
    The grade-school addition algorithm, portrayed as a flowchart.
 
    
-Using Pseudocode
-----------------
+Using Pseudo-code
+-----------------
 
 .. index:: pseudocode
 
@@ -294,21 +294,22 @@ languages (loops and conditional) with plain English or mathematical
 notation in order to express succinctly the main idea of an algorithm.
 For our addition algorithm we could write something like:
 
-.. code-block::
+.. parsed-literal::
+   :name: foundations/computation/pseudocode
 
-   Input: x: Sequence of digits
-   Input: y: Sequence of digits
-   Output: z: Sequence of digits such as z = x + y
+   **Input** `x`: Sequence of digits
+   **Input**: `y`: Sequence of digits
+   **Output**: `z`: Sequence of digits such as z = x + y
 
    1. Setup x and y into a grid ;
-   2. Place your finger under the right most column; while there are
-      digits in the column do:
+   2. Place your finger under the right most column.
+   3. **while** there are digits in the column do:
       a. Read these digits;
-      b. Add them up to get the sum and the carry; Write down this sum
-         in the bottom cell;
-      c. Move your finger to the next column on the left; Write down
-        this carry in the top cell;
-   3. return the last row of the grid;
+      b. Add them up to get the sum and the carry;
+      c. Write down this sum in the bottom cell;
+      d. Move your finger to the next column on the left;
+      e. Write down this carry in the top cell;
+   3. *return* the last row of the grid;
 
 
 Using a Program
