@@ -226,7 +226,7 @@ we will use throughout the course.
    .. code:: console
 
         $ javap -c \
-                --classpath ./target/lab01-0.1-SNAPSHOT.jar \
+                -classpath ./target/lab01-0.1-SNAPSHOT.jar \
                no.ntnu.idata2302.lab01.Multiplication
         Compiled from "Multiplication.java"
         public class no.ntnu.idata2302.lab01.Multiplication {
