@@ -209,7 +209,7 @@ we will use throughout the course.
       .. code:: shell
 
                $ javap -c \
-                       --classpath ./target/lab01-0.1-SNAPSHOT.jar \
+                       -classpath ./target/lab01-0.1-SNAPSHOT.jar \
                        no.ntnu.idata2302.lab01.Multiplication 
 
    #. Take the time to read about the Java bytecode, for example `on
