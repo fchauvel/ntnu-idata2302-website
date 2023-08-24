@@ -18,3 +18,5 @@ Contents
    computation
    ram
    correctness
+   efficiency
+   analysis
