@@ -20,3 +20,4 @@ Contents
    correctness
    efficiency
    analysis
+   big_o
