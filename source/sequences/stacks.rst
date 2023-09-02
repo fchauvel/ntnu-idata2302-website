@@ -14,6 +14,8 @@ present them using ADT only here.
 Stacks
 ======
 
+.. _sequences/stacks/stack:
+
 .. index::
    pair: ADT ; Stack
 

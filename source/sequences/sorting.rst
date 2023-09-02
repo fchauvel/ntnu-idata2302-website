@@ -129,6 +129,8 @@ original. When sorting affects the given sequence, we call this
 *in-place* sorting.
 
 
+.. _sequences/sorting/selection_sort/entry:
+
 Selection Sort
 ==============
 
