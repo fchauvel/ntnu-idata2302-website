@@ -2,6 +2,10 @@
  Abstract Data Types
 =====================
 
+:Lecture: Lecture 2.1 :download:`(slides) <_static/adt/adt.pptx>`
+:Objectives: Understand what is an abstract data type
+:Concepts: Data, Computation, Computational Problem, Algorithm, Data Structure
+
 So far we have used only numbers, but in real-life, we need a little
 more. We want text, images, colors, sounds, dates, 2D points, users
 records, etc. In this lecture, we will look at data types, what they are
