@@ -20,13 +20,15 @@ Algorithms and Data Structures
    :maxdepth: 4
    :caption: Modules
 
-   foundations/index.rst
+   foundations/index
+   sequences/index
 
 .. toctree::
    :caption: Lab Sessions
 
    labs/setup
    labs/foundations
+   labs/sequences
 
 .. toctree::
    :caption: Recaps

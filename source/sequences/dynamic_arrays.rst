@@ -1,6 +1,10 @@
-==============================
-Sequences Using Dynamic Arrays
-==============================
+====================
+Using Dynamic Arrays
+====================
+
+:Lecture: Lecture 2.3 :download:`(slides) <_static/dynamic_arrays/amortized_analysis.pptx>`
+:Objectives: Understand amortized analysis and dynamic arrays
+:Concepts: Amortized analysis, dynamic arrays, memory allocation
 
 .. role:: python(code)
    :language: python
@@ -61,13 +65,6 @@ times at the end.
 The assertion we placed in the :func:`insert` fails as soon as the
 given position exceeds the capacity and the program terminates with an
 error.
-
-.. exercise::
-   :label: exercise-1
-
-   What would happen if comment out our assertion that checks whether
-   the given sequence is full (line 4)? Would our "blow out" program
-   work?
 
 Can we do better? Yes, when there is not enough capacity, we need to a
 bigger array, copy what is already in our array, and finally release

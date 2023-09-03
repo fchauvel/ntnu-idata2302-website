@@ -1,6 +1,10 @@
-=====================
-Array-based Sequences
-=====================
+============
+Using Arrays
+============
+
+:Lecture: Lecture 2.2 :download:`(slides) <_static/arrays/arrays.pptx>`
+:Objectives: Understand how to implement sequences using arrays
+:Concepts: Insertion, deletion and searching through sequences
 
 Let us now look at "sequences", our first abstract data type. Our
 objectives are:
