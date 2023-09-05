@@ -31,32 +31,38 @@ This first section focuses on how to implementing the Sequence ADT
 using *dynamic arrays* in Java (see :doc:`Lecture 2.3
 </sequences/dynamic_arrays>`).
 
+The class :code:`no.ntnu.idata2302.lab02.SequenceTest` contains some
+unit test that can help you.
+
 .. exercise:: 2 points
    :label: lab/sequences/insertion
    :nonumber:
 
    Implement the `insert` function, which appends the given item at
    the end. If the underlying array is full, it shall resize the array
-   appropriately.
+   appropriately (multiply the capacity by 2)
            
    .. code-block:: java
 
-      public void insert(int item, int position) {
-         // TODO: Implement 
+      public void insert(int item, int index) {
+        // TODO: Implement
+        throw new RuntimeException("Not yet implemented.");
       }
 
 .. exercise:: 2 points
    :label: lab/sequences/deletion
    :nonumber:
 
-   Implement the `remove` function, which delete the item stored at the
-   given index. If the underlying array gets empty, it shall resize
-   the array appropriately.
+   Implement the `remove` function, which delete the item stored at
+   the given index. If the underlying array gets empty, it shall
+   resize the array appropriately. It should halve the capacity as soon
+   as the load is less or equal to 25 %.
            
    .. code-block:: java
 
       public void remove(int index) {
-         // TODO: Implement 
+          // TODO: Implement
+          throw new RuntimeException("Not yet implemented.");
       }
    
 .. exercise:: 2 points
@@ -70,7 +76,8 @@ using *dynamic arrays* in Java (see :doc:`Lecture 2.3
    .. code-block:: java
 
       public int search(int item) {
-         // TODO: Implement 
+        // TODO: Implement
+        throw new RuntimeException("Not yet implemented.");
       }
 
 Finding Extrema
@@ -87,11 +94,10 @@ maximum of the given sequence.
    the given sequence.
 
    .. code-block:: java
-                   
+
       public int[] extrema() {
-         int extrema = new int[2];
-         // TODO: Find both the minimum and the maximum
-         return extrema;
+        // TODO: Implement
+        throw new RuntimeException("Not yet implemented.");
       }
 
 .. exercise:: 1 point
@@ -136,9 +142,9 @@ Finding Duplicates
    .. code-block:: java
 
       public boolean hasDuplicate() {
-         // TODO: Implement
+        // TODO: Implement
+        throw new RuntimeException("Not yet implemented.");
       }
-
       
 .. exercise:: 2 points
    :label: lab/sequences/duplicate/worst-case
