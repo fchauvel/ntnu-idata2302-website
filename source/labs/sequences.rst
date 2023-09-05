@@ -20,27 +20,27 @@
    - Do *not* exceed *8 pages*
    - Do *not* attach a zip of your Java project
 
-   Submit your report, as a **PDF** file, on Blackboard by **Monday
-   September 11, 2023 at 13:00**.
+   Submit your report, as a **PDF** file, on Blackboard by **Wednesday
+   September 20, 2023 at 13:00** at the latest.
 
 
 Dynamic Arrays in Java
 ======================
 
-This first section focuses on how to implementing the Sequence ADT
-using *dynamic arrays* in Java (see :doc:`Lecture 2.3
-</sequences/dynamic_arrays>`).
+This first section focuses on how to implement the Sequence ADT
+using *dynamic arrays* in Java (see lectures :doc:`2.2
+</sequences/arrays>` and :doc:`2.3 </sequences/dynamic_arrays>`).
 
 The class :code:`no.ntnu.idata2302.lab02.SequenceTest` contains some
-unit test that can help you.
+unit tests that might help you.
 
 .. exercise:: 2 points
    :label: lab/sequences/insertion
    :nonumber:
 
-   Implement the `insert` function, which appends the given item at
-   the end. If the underlying array is full, it shall resize the array
-   appropriately (multiply the capacity by 2)
+   Implement the `insert` function, which inserts the given item at
+   the given position. If the underlying array is full, it shall
+   resize the array appropriately, by doubling its capacity.
            
    .. code-block:: java
 
@@ -56,7 +56,7 @@ unit test that can help you.
    Implement the `remove` function, which delete the item stored at
    the given index. If the underlying array gets empty, it shall
    resize the array appropriately. It should halve the capacity as soon
-   as the load is less or equal to 25 %.
+   as the load is less or equal than 25 %.
            
    .. code-block:: java
 
@@ -84,14 +84,14 @@ Finding Extrema
 ===============
 
 We focus here on finding extrema, that is, both the minimum and the
-maximum of the given sequence.
+maximum of the sequence.
 
 .. exercise:: 3 points
    :label: lab/sequences/extrema/code
    :nonumber:
 
    Propose an algorithm the finds both the minimum and the maximum of
-   the given sequence.
+   the sequence.
 
    .. code-block:: java
 
@@ -123,7 +123,7 @@ Finding Duplicates
    :nonumber:
 
    Propose an algorithm that checks whether the given sequence has
-   duplicate, that is, whether any item occurs more than
+   duplicates, that is, whether any item occurs more than
    once. Consider the following examples:
 
    - The sequence :math:`s_1 = (1, 2, 3, 4, 5)` does not contain any
@@ -136,8 +136,10 @@ Finding Duplicates
      duplicate, 1, which occurs three times.
 
    Do **not** use any additional data structure, such as hash tables,
-   hash sets, etc. We can add it has a new operations on our Sequence
-   ADT, as follows:
+   hash sets, etc.
+
+   We can add it has a new operations on our Sequence class, as
+   follows:
 
    .. code-block:: java
 
@@ -177,8 +179,6 @@ Finding Duplicates
    #. How would you express such an upper bound with the Big-Oh notation?
    #. Which one is the tightest bound?
 
-
-      
 Digital Counter
 ===============
 
@@ -189,14 +189,14 @@ Consider a counter whose value increases whenever the user presses the
 display only shows a single symbol (from 0 to 9).
 
 Each single-digit display accepts a `next` command that changes it to
-the next symbols, for instance, from 0 to 1, 1 to 2, from 2 to 3, etc,
+the next symbols, for instance, from 0 to 1, from 1 to 2, from 2 to 3, etc,
 and from 9 back to 0.
 
 .. exercise:: 2 points
    :label: lab/sequences/counter/algo
    :nonumber:
 
-   Implement the `increment` function of the counter, that increases its
+   Implement the `increment` function, that increases the counter
    value by one.
 
    .. code-block:: java
@@ -215,8 +215,8 @@ and from 9 back to 0.
          // ...
       }
    
-   Note  that, in  some  cases, we  must propagate  the  carry to  the
-   left. For  instance to  increment `123`,  one the  right-most digit
+   Note that, in some cases, we must propagate the carry to the
+   left. For instance to increment `123`, only the right-most digit
    change to make `124`, but incrementing `199` yields `200` and three
    digits must changed.
 
