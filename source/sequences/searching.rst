@@ -2,8 +2,8 @@
 Searching
 =========
 
-:Lectures: Lecture 4.3
-:Objectives: Understand how "order" enable searching faster in
+:Lectures: Lecture 2.4 :download:`(slides) <_static/searching/searching.pptx>`
+:Objectives: Understand how "order" enables searching faster in
              sequences.
 :Concepts: Sequences (ADT), jump search (algorithm), binary search
            (algorithm), interpolation search (algorithm)

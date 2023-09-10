@@ -2,7 +2,7 @@
 Simple Sorting
 ==============
 
-:Lectures: Lecture 4.4
+:Lectures: Lecture 2.5 :download:`(slides) <_static/sorting/simple_sorting.pptx>`
 :Objectives: Understand what is a sorted sequence and a few basic algorithms
              to sort
 :Concepts: Sequences (ADT), sort stability, insertion sort
