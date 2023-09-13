@@ -14,6 +14,7 @@ Algorithms and Data Structures
    about/welcome
    about/overview
    about/practicalities
+   about/exams
    about/resources
    
 .. toctree::
