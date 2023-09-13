@@ -35,12 +35,3 @@ solutions, where I see fit.
     Every week, I will post a quiz to help you assess your understanding of
     the week’s topics. They do not account in your grade but please reach
     out if any thing is unclear.
-
-Examinations
-============
-
-Your grade depends solely on the final examination. To get prepared as
-well as possible, I include two “home” examinations around Week 4 and 8.
-These are optional, but should you feel the need for it, I can grade
-them. All examinations follow the same pattern: 100 points divided among
-four parts with 5 questions each.
