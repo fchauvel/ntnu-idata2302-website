@@ -21,9 +21,7 @@ Algorithms and Data Structures
    :caption: Modules
 
    foundations/index
-   sequences/index
-
-..    
+   sequences/index   
    recursion/index
 
 .. toctree::

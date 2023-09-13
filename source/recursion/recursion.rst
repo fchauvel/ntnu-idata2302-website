@@ -4,7 +4,7 @@ Recursion
 
 :Lecture: Lecture 3.2 :download:`(slides) <_static/recursion/recursion.pptx>`
 :Objectives: Understand what is recursion, how to use it, and how
-             measure efficiency of recursive algoritms
+             measure efficiency of recursive algorithms
 :Concepts: Recursion, recursive procedure, recursive data type
 
 In :doc:`Lecture 3.1 </recursion/procedure_calls>`, we have clarified
