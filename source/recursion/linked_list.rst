@@ -320,24 +320,135 @@ last :math:`n` items.
 Iterators
 =========
 
-..
-    The ADT Iterator:
-     - hasNext ()
-     - next ()
-     - insert ()
-     - remove ()
+Consider our :doc:`Sequence ADT <sequences/arrays>`, and how one can
+traverse it, say to print all items. Given the operations we
+defined, one could write the program shown by
+:numref:`recursion/sequence/traversal`.
 
-    Usage scenarios:
-     - search and delete
-     - 
+.. code-block:: c
+   :caption: Traversing a sequence using the operations of the ADT
+   :name: recursion/sequennce/traversal
+
+   for (int i=1 ; i<=seq_length(sequence) ; i++) {
+      int item = seq_get(sequence, index);
+      // Do something with item ...
+   }
+
+If use an array to implement our sequence (see :doc:`Lecture 2.2
+<sequences/arrays`), this traversal would run in :math:`O(n)`. Indeed,
+each access to a specific items (see :code:`seq_get()` takes
+:math:`O(1)` and we will do this for each of the :math:`n` items.
+
+However, if we used a linked list, this traversal would run in
+:math:`O(n^2)`. With a linked list, each access runs in :math:`O(n)`
+because we have to navigate the list from its "head" to the desired
+node, and doing that for the :math:`n` items would take
+:math:`O(n^2)`. But we can do better! Recall the :code:`find_node_at`,
+it also traverses the sequences, and yet runs in :math:`O(n)` because
+it moves from one node to the next without restarting at the
+beginning, as shown on :numref:`recursion/linked_list/traversal`.
+
+.. code-block:: c
+   :caption: Traversing a linked list efficiently, from node to node.
+   :name: recursion/linked_list/traversal
+      
+   Node* current = list->head;
+   while (current != NULL) {
+      int item = current->item;
+      // .. do something with item
+      current = current->next;
+   }
 
 
-Linked List vs. Dynamic Arrays
-==============================
+The Iterator ADT
+----------------
 
-Let summarize the performance of linked lists and dynamic arrays.
+The iterator ADT captures the notion of "position within a container"
+(i.e., sequences, trees, maps, etc.). It defines at least the
+following operations:
 
-.. csv-table:: Comparing Performance of linked list and dynamic arrays (worst cases)
+.. module:: iterator
+
+.. function:: create(s: Sequence, i: Natural) -> Iterator
+
+   Create a new sequence iterator, setup at the given index. The
+   resulting iterator is bound to the given sequence :math:`s`.
+
+.. function:: item(i: Iterator) -> Item
+
+   Returns the item at the known index
+
+.. function:: hasNext(i: Iterator) -> Boolean
+
+   Returns true if and only if there are more value beyond the
+   position represented by the iterator,
+
+.. function:: next(i: Iterator) -> Iterator
+
+   Move the iterator from its current position to the next in the
+   sequence
+
+With this new ADT and its operations, we can now write a list
+traversal as follows on
+:numref:`recursion/sequence/traversal/iterator`.
+
+.. code-block:: c
+   :caption: Traversing a sequence using an iterator
+   :name: recursion/sequence/traversal/iterator
+
+   Iterator* position = iterator_create(sequence, 1);
+   while (iterator_has_next(position)) {
+      int item = iterator_item(position);
+      // .. do something with item ...
+      iterator_next(position);
+   }
+
+C Implementation
+----------------
+
+Iterators can be implemented against an array, or a linked list, as we
+will do below. To implement an iterator, we must keep track of the
+list of interest, the current node, and its predecessor (if any).
+:numref:`recursion/linked_list/iterator/c` shows how that could look
+like in C, where we use a record to hold a reference to each of these
+bits and pieces.
+
+.. margin::
+
+   .. code-block:: c
+      :caption: A record that defines an iterator
+      :name: recursion/linked_list/iterator/c
+
+      typedef struct Iterator {
+        List *list;
+        Node *previous;
+        Node *current;
+      } Iterator;
+      
+:numref:`recursion/linked_list/iterator/structure` shows the structure
+of a list, with an iterator "pointing" at the 3\ :sup:`rd` item. The
+`previous` field enables extending the set of operations, with
+insertion and deletion in :math:`O(1)`.
+
+.. figure:: _static/linked_list/images/iterator.svg
+   :name: recursion/linked_list/iterator/structure
+
+   An iterator referencing a list and one of its node.
+
+
+
+Linked Lists vs. Dynamic Arrays
+===============================
+
+:numref:`recursion/linked_list/vs-array` summarizes the performance of
+linked lists and dynamic arrays. Regarding the memory, a linked list
+requires more memory than an equivalent array, because we need to
+store all these extra pointers. As for the runtime, there is no clear
+winner, and using one or the other depends on the problem at hand.
+
+.. csv-table:: Comparing runtime efficiency of linked list and dynamic
+               arrays (worst cases)
+   :name: recursion/linked_list/vs-array
    :header: "Scenario", "Dynamic Array", "Linked List"
    :widths: 30, 10, 10
 
