@@ -200,9 +200,60 @@ follows:
 Efficiency
 ==========
 
+Let's now look at how fast is the quick sort. First we have to
+distinguish the best case from the worst case before to try to
+calculate their growth order.
+
 
 Worst Case
 ----------
+
+What is the worst case? When we pick a pivot element, we pick an item
+in the middle. We pick *an index*, but the hope is that this value is
+the "median" value of the sequence, that is, it has as many items on
+its left as it has on its right. That way, we have a "perfect" split
+of the sequence in two halves. By contrast, the worst case occurs when
+the pivot turns out to be the minimum (or the maximum). As shown on
+:numref:`recursion/quick_sort/worst_case`, that yields broken splits
+where one side is empty, and in turns, :math:`n` recursion levels.
+
+.. figure:: _static/quick_sort/images/worst_case.svg
+   :name: recursion/quick_sort/worst_case
+
+   Unfolding the worst case: At every recursion, the chosen pivot
+   turns out to be the minimum (resp. the maximum) of the sequence.
+
+How many operation would that require? To simplify the calculation
+let's only count the swap operations, and assume that partitioning an
+sequences of length :math:`\ell` runs in :math:`O(\ell)`.
+
+As for other recursive algorithms, we have to formulate the efficiency
+using a recurrence relationship.
+
+.. math::
+
+   t(n) = \begin{cases}
+   0 & \textrm{if } n < 2 \\
+   n + t(n-1) & \textrm{otherwise}
+   \end{cases}
+
+If we unfold this recurrence, we can see that it yields the sum of the
+:math:`n` first integers.
+
+.. math::
+
+   t(n) & = n + t(n-1) \\
+        & = n + (n-1) + t(n-2) \\
+        & = n + (n-1) + (n-2) + t(n-3) \\
+        & = n + (n-1) + (n-2) + (n-3) + \ldots + (n-n+2) + 0 \\
+        & = \sum_{i=1}^{n} i \\
+        & = \frac{n \cdot (n+1)}{2} \\
+        & = \frac{n^2 + n}{2} \\
+    t(n) & \in O(n^2)
+  
+.. important:: In the worst case, quick sort also runs in
+               :math:`O(n^2)`, but in practice this case is rare
+               enough.
 
 
 Best Case
