@@ -141,7 +141,62 @@ items without any extra memory cost.
 In-place Partitioning
 ----------------------
 
+To partition "in-place" we rely on the swap operation, which exchanges
+the position of two items in a sequence, and runs in :math:`O(1)`. To
+do that, we will organize our sequence as shown on
+:numref:`recursion/quick_sort/in-place_partitioning`. We will
+temporarily place the pivot in front, while we will divide the rest
+into smaller items on the left, larger items on the right, with the
+items yet to be partitioned in between.
 
+.. figure:: _static/quick_sort/images/in-place_partitioning.svg
+   :name: recursion/quick_sort/in-place_partitioning
+
+   Setup used to partition a sequence: The pivot is placed in front
+   (temporarily), while the rest is split between the smaller items on
+   the left and the larger items on the right.
+
+As we progress, we move items from the middle to either smaller or
+greater. The variable :code:`first` and :code:`last` keep track of
+the remaining items yet to be partitioned. Overall, we proceed as
+follows:
+
+#. We choose a pivot item, and we swap it with first item, put it in
+   "safe" place.
+
+#. Initially, :code:`first` and :code:`last` points toward the second
+   and the last item, respectively.
+
+#. As long as last is not smaller than first:
+
+   #. If :code:`first` is greater or equal to the pivot, we swap it with
+      :code:`last` and we *decrement* last.
+
+   #. If :code:`first` is smaller than the pivot, we simply increment
+      :code:`first`.
+
+#. We swap back the pivot with :code:`first`, to put it back in the
+   right place.
+
+
+.. code-block:: python
+   :caption: In-place partition of sub sequences, delimited by
+             :code:`lower` and :code:`upper`.
+
+   def partition(sequence, lower, upper):
+     pivot = (lower + upper) // 2
+     sequence.swap(lower, pivot)
+     first, last = lower+1, upper-1
+     while first <= last:
+          if sequence[first] <= sequence[lower]:
+               first += 1
+          else:
+               sequence.swap(first, last)
+               last -= 1
+     swap(array, lower, first-1)
+     return first-1
+
+   
 Efficiency
 ==========
 
