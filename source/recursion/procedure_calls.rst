@@ -2,7 +2,7 @@
 Procedure Calls
 ===============
 
-:Lectures: Lecture 4.1 :download:`(slides)
+:Lectures: Lecture 3.1 :download:`(slides)
            <_static/procedure_calls/procedure_calls.pptx>`
 :Objectives: Understand the mechanisms of procedure calls and their
              runtime and memory cost
