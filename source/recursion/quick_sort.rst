@@ -205,6 +205,53 @@ distinguish the best case from the worst case before to try to
 calculate their growth order.
 
 
+Best Case
+---------
+
+.. figure:: _static/quick_sort/images/best_case.svg
+
+   Unfolding the best case scenario for quick sort: The chosen pivot
+   index turns out to always hold the median value, which yields a
+   "perfect" split in halves.
+
+How fast would that be? Again, for such a recursive algorithm we have
+to model it using a recurrence relationship. At a high-level, the time
+spent sorting is the time spent partitioning plus the time spent
+sorting the left and right hand side of the pivot.
+
+If we assume the time spent partitioning is proportional to the length
+of the given sequence, we get:
+
+.. math::
+
+   t(n) & = \begin{cases}
+      0 & \textrm{if } n < 2 \\
+      n + 2\cdot t(\frac{n}{2}) & \textrm{otherwise}
+   \end{cases}
+
+We can expand it to see a pattern emerge as follows:
+
+.. math::
+
+   t(n) & = n + 2 \cdot t(\frac{n}{2}) \\
+        & = n + 2 \left[ \frac{n}{2} + 2 \cdot t(\frac{n}{4}) \right] \\
+        & = n + n + 4 \cdot t(\frac{n}{4}) \\
+        & = n + n + 4 \left[ \frac{n}{4} + 2 \cdot t(\frac{n}{8}) \right] \\
+        & = n + n + n + 8 \cdot t(\frac{n}{8}) \\
+        & = n + n + n + \ldots  + 2^k \cdot t(\frac{n}{k}) \\
+
+Now the question becomes: When will this term :math:`\frac{n}{k}`
+becomes smaller than 2. Or put in another way, how many time can one
+recursively divide :math:`n` by 2? The answer is given by
+:math:`\log_2 n`.
+
+.. math::
+        t(n) & = \underbrace{n + n + n + \ldots + n}_{log_2 n \textrm{ times}} + 0 \\
+             & = n \log_2 n \\
+        t(n) & \in O(n \log n)
+
+.. important:: In the best case, quick sort runs in :math:`O(n \log n)`
+
 Worst Case
 ----------
 
@@ -254,10 +301,6 @@ If we unfold this recurrence, we can see that it yields the sum of the
 .. important:: In the worst case, quick sort also runs in
                :math:`O(n^2)`, but in practice this case is rare
                enough.
-
-
-Best Case
----------
 
 
 Average Case
