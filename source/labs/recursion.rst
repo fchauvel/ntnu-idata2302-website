@@ -318,242 +318,247 @@ is thus formed by “linked” nodes. You will find this design in
 Using Recursion
 ---------------
 
-We now turn towards a recursive implementation of the linked list. The
-class ``INode`` we used for our iterative implementation is a recursive
-type: It references itself. In this section, we explore an alternative
-design that makes the most of this inherent recursive structure. As
-shown in Figure `2 <#fig:recursive>`__, we created two classes. The
-class ``RNode`` represents a item followed by a list, whereas the class
-``Empty`` represents the empty list. Both implements the
-``List`` interface. A list is thus either a node followed by another
-list, or an empty list. You will find this design in the file
-``RecursiveList.java``
+.. caution:: Available as soon as possible   
+   
+.. dede
 
-.. container:: float
-   :name: fig:recursive
 
-   .. container:: center
+   We now turn towards a recursive implementation of the linked list. The
+   class ``INode`` we used for our iterative implementation is a recursive
+   type: It references itself. In this section, we explore an alternative
+   design that makes the most of this inherent recursive structure. As
+   shown in Figure `2 <#fig:recursive>`__, we created two classes. The
+   class ``RNode`` represents a item followed by a list, whereas the class
+   ``Empty`` represents the empty list. Both implements the
+   ``List`` interface. A list is thus either a node followed by another
+   list, or an empty list. You will find this design in the file
+   ``RecursiveList.java``
 
-      |image2|
+   .. container:: float
+      :name: fig:recursive
 
-Consider for example the ``length()`` method, whose code appears below.
-Recursively, the length of a list is one for the first element, plus the
-length of the rest. The ``Empty`` class only handles the *base case*
-when the list is empty. The class ``Node`` implements the *recursive
-case*. None of them uses loops and both are short statements. This is
-typical from recursive algorithms.
+      .. container:: center
 
-.. code:: java
+         |image2|
 
-     class RNode<T> implements List<T> {
-
-       @Override
-       public int length() {
-          return 1 + next.length();
-       }
-       
-     }
-
-     class Empty<T> {
-
-       @Override
-       public int length () { return 0; }
-       
-     }
-
-.. exercise::
-   :label: labs/recursion/linked-list/recursive/insert
-   :nonumber:
-
-   By taking inspiration on the length method, implement the ``insert``
-   operation in a recursive manner. Here are some steps to guide you.
-
-   #. Can you identify self-similar sub problems. The structure of the
-      linked list may help you.
-
-   #. What are the base cases?
-
-   #. What are the recursive cases?
-
-.. solution::
-   :class: dropdown
-
-   As a recursive data type, a linked list is either an empty list, or
-   an item followed by another list. To insert in a list, we either have
-   to modify the first element or insert into the “rest”, which is
-   another list, but shorter. I see the following cases:
-
-   #. The given index is smaller than 1, so we raise an error
-
-   #. The given index is 1, we create a new node, with the given item
-      and the current list as next.
-
-   #. When the index is greater than one, there are two alternatives:
-
-      #. The list is empty, so we raise an error.
-
-      #. The list is a node and we delegate the insertion to the next
-         list, but with a smaller index. This is the recursive case.
-
-   The recursive case occurs when the list is not empty and the given
-   index is greater than one. In that case, we delegate the insertion to
-   the next list, but we decrease the index.
-
-   The following piece of code gives illustrates this idea:
+   Consider for example the ``length()`` method, whose code appears below.
+   Recursively, the length of a list is one for the first element, plus the
+   length of the rest. The ``Empty`` class only handles the *base case*
+   when the list is empty. The class ``Node`` implements the *recursive
+   case*. None of them uses loops and both are short statements. This is
+   typical from recursive algorithms.
 
    .. code:: java
 
-          public class Node<T> implements List<T> {
+        class RNode<T> implements List<T> {
 
-            @Override
-            public List<T> insert(int index, T item) throws InvalidIndex {
-              if (index < 1) throw new InvalidIndex(index);
-              if (index == 1) return new Node(item, this);
-              next = next.insert(index-1, item);
-              return this;
-            }
-            
+          @Override
+          public int length() {
+             return 1 + next.length();
           }
 
-          class Empty<T> implements List<T> {
+        }
 
-            @Override
-            public List<T> insert (int index, T item) throws InvalidIndex {
-              if (index == 1) return new Node(item, this);
-              throw new InvalidIndex(index);
-            }
-            
-          }
+        class Empty<T> {
 
-          
-.. exercise::
-   :label: labs/recursion/linked-list/recursive/comparisons
-   :nonumber:
+          @Override
+          public int length () { return 0; }
 
-   In worst case, how many comparisons will your recursive insertion
-   takes?
+        }
 
-   #. Try to abstract the algorithm (for example in pseudo code) from
-      the Java code.
+   .. exercise::
+      :label: labs/recursion/linked-list/recursive/insert
+      :nonumber:
 
-   #. Write down the number of comparisons as a recurrence relation.
+      By taking inspiration on the length method, implement the ``insert``
+      operation in a recursive manner. Here are some steps to guide you.
 
-   #. Solve this recurrence.
+      #. Can you identify self-similar sub problems. The structure of the
+         linked list may help you.
 
-.. solution:: labs/recursion/linked-list/recursive/comparisons
-   :class: dropdown
+      #. What are the base cases?
 
-   One challenge when working with actual source code, is that the
-   algorithm is obscured by the technicalities. Here, the use of
-   inheritance spread our algorithm over two methods.
-   Figure `[alg:insert] <#alg:insert>`__ shows the general principle.
+      #. What are the recursive cases?
 
-   We can thus count the comparisons, and formalize the number of
-   comparison for a sequence of length :math:`n` by a recurrence
-   :math:`F(n,i)` as follows:
+   .. solution::
+      :class: dropdown
 
-   .. math::
+      As a recursive data type, a linked list is either an empty list, or
+      an item followed by another list. To insert in a list, we either have
+      to modify the first element or insert into the “rest”, which is
+      another list, but shorter. I see the following cases:
 
-      F(n, i) = \begin{cases}
-            1 & \textrm{if } i < 1 \\
-            2 & \textrm{if } i = 1 \\
-            3 & \textrm{if } n = 0 \\
-            3 + F(n-1, i-1) & \textrm{otherwise}
-            \end{cases}
+      #. The given index is smaller than 1, so we raise an error
 
-   In our case, we are looking at the worst case, which is the last one,
-   that is, when we insert at the end of the list. In that case, we know
-   that :math:`i = n+1`.
+      #. The given index is 1, we create a new node, with the given item
+         and the current list as next.
 
-   A simple strategy to solve such recurrences is to expand a few
-   examples. Consider for instance :math:`n = 6`.
+      #. When the index is greater than one, there are two alternatives:
 
-   .. math::
+         #. The list is empty, so we raise an error.
 
-            F(6, 7) & = 3 + F(5, 6) \\
-                    & = 3 + 3 + F(4, 5) \\
-                    & = 3 + 3 + 3 + F(3, 4) \\
-                    & = \underbrace{3 + 3 + \ldots + 3}_{\textrm{6 times}} + F(0, 1) \\
-                    & = 3\times 6 + 2;
+         #. The list is a node and we delegate the insertion to the next
+            list, but with a smaller index. This is the recursive case.
 
-   We can see the general pattern is :math:`F(n,n+1)= 3n + 2`.
+      The recursive case occurs when the list is not empty and the given
+      index is greater than one. In that case, we delegate the insertion to
+      the next list, but we decrease the index.
 
-.. exercise::
-   :label: labs/recursion/list/recursive/insert/memory
-   :nonumber:
+      The following piece of code gives illustrates this idea:
 
-   In the worst case, how much memory will it takes? Remember to account
-   for the call stack.
+      .. code:: java
 
-.. solution:: labs/recursion/list/recursive/insert/memory
-   :class: dropdown
+             public class Node<T> implements List<T> {
 
-   Just as we did for counting comparisons, we have to count the pieces
-   of memory that are allocated. That gives us the following recurrence
-   relationship:
+               @Override
+               public List<T> insert(int index, T item) throws InvalidIndex {
+                 if (index < 1) throw new InvalidIndex(index);
+                 if (index == 1) return new Node(item, this);
+                 next = next.insert(index-1, item);
+                 return this;
+               }
 
-   .. math::
+             }
 
-      S(n, i) = \begin{cases}
-            3 & \textrm{if } i > 1 \land n > 0 \\
-            0 & \textrm{otherwise}
-          \end{cases}
+             class Empty<T> implements List<T> {
 
-   By solving this recurrence, we obtain :math:`S(n, i) = 3n;`, which is
-   linear. By contrast with the iterative approach, a recursive
-   algorithm consumes memory on each call.
+               @Override
+               public List<T> insert (int index, T item) throws InvalidIndex {
+                 if (index == 1) return new Node(item, this);
+                 throw new InvalidIndex(index);
+               }
 
-Benchmark
-=========
+             }
 
-Let see now is theory matches practice. To get some concrete evidence,
-we will try to insert items in both an ``IterativeList`` and in a
-``RecursiveList``. Take a look at the file ``Benchmark.java``, which
-implements the above scenario.
 
-.. exercise::
-   :label: labs/recursion/benchmark/run
-   :nonumber:
+   .. exercise::
+      :label: labs/recursion/linked-list/recursive/comparisons
+      :nonumber:
 
-   Run the benchmark on your machine. What result do you get. To run the
-   benchmark, you can use the command:
+      In worst case, how many comparisons will your recursive insertion
+      takes?
 
-   .. code:: shell
+      #. Try to abstract the algorithm (for example in pseudo code) from
+         the Java code.
 
-          $ java -cp target/lab03-0.1-SNAPSHOT.jar \
-                     no.ntnu.idata2302.lab03.Benchmark 
+      #. Write down the number of comparisons as a recurrence relation.
 
-.. solution:: labs/recursion/benchmark/run
-   :class: dropdown
+      #. Solve this recurrence.
 
-   On my machine, I obtain the following:
+   .. solution:: labs/recursion/linked-list/recursive/comparisons
+      :class: dropdown
 
-   .. code:: shell
+      One challenge when working with actual source code, is that the
+      algorithm is obscured by the technicalities. Here, the use of
+      inheritance spread our algorithm over two methods.
+      Figure `[alg:insert] <#alg:insert>`__ shows the general principle.
 
-          $ java -cp target/lab03-0.1-SNAPSHOT.jar \
-                     no.ntnu.idata2302.lab03.Benchmark
-          Iterative List: 100000 item(s) inserted. 
-          Recursive List: 23723 item(s) inserted. (error)
+      We can thus count the comparisons, and formalize the number of
+      comparison for a sequence of length :math:`n` by a recurrence
+      :math:`F(n,i)` as follows:
 
-.. exercise::
-   :label: labs/recursion/benchmark/why
-   :nonumber:
+      .. math::
 
-   Why do you think happen to ``RecursiveList``? Why is it
-   underperforming?
+         F(n, i) = \begin{cases}
+               1 & \textrm{if } i < 1 \\
+               2 & \textrm{if } i = 1 \\
+               3 & \textrm{if } n = 0 \\
+               3 + F(n-1, i-1) & \textrm{otherwise}
+               \end{cases}
 
-.. solution:: labs/recursion/benchmark/why
-   :class: dropdown
+      In our case, we are looking at the worst case, which is the last one,
+      that is, when we insert at the end of the list. In that case, we know
+      that :math:`i = n+1`.
 
-   Most languages and OS limit the size of the call stack, so that it
-   cannot grow indefinitely. Looking at the code of the benchmark, we
-   are actually catching a ``StackOverflowError`` which, in Java,
-   indicates that the program has used all the memory allowed for the
-   call stack. That is often the main problem of recursive algorithms:
-   They consume more memory. We will see further in the course, method
-   to avoid that in some cases.
+      A simple strategy to solve such recurrences is to expand a few
+      examples. Consider for instance :math:`n = 6`.
 
-.. |image1| image:: images/iterative.pdf
-   :width: 65.0%
-.. |image2| image:: images/recursive.pdf
-   :width: 75.0%
+      .. math::
+
+               F(6, 7) & = 3 + F(5, 6) \\
+                       & = 3 + 3 + F(4, 5) \\
+                       & = 3 + 3 + 3 + F(3, 4) \\
+                       & = \underbrace{3 + 3 + \ldots + 3}_{\textrm{6 times}} + F(0, 1) \\
+                       & = 3\times 6 + 2;
+
+      We can see the general pattern is :math:`F(n,n+1)= 3n + 2`.
+
+   .. exercise::
+      :label: labs/recursion/list/recursive/insert/memory
+      :nonumber:
+
+      In the worst case, how much memory will it takes? Remember to account
+      for the call stack.
+
+   .. solution:: labs/recursion/list/recursive/insert/memory
+      :class: dropdown
+
+      Just as we did for counting comparisons, we have to count the pieces
+      of memory that are allocated. That gives us the following recurrence
+      relationship:
+
+      .. math::
+
+         S(n, i) = \begin{cases}
+               3 & \textrm{if } i > 1 \land n > 0 \\
+               0 & \textrm{otherwise}
+             \end{cases}
+
+      By solving this recurrence, we obtain :math:`S(n, i) = 3n;`, which is
+      linear. By contrast with the iterative approach, a recursive
+      algorithm consumes memory on each call.
+
+   Benchmark
+   =========
+
+   Let see now is theory matches practice. To get some concrete evidence,
+   we will try to insert items in both an ``IterativeList`` and in a
+   ``RecursiveList``. Take a look at the file ``Benchmark.java``, which
+   implements the above scenario.
+
+   .. exercise::
+      :label: labs/recursion/benchmark/run
+      :nonumber:
+
+      Run the benchmark on your machine. What result do you get. To run the
+      benchmark, you can use the command:
+
+      .. code:: shell
+
+             $ java -cp target/lab03-0.1-SNAPSHOT.jar \
+                        no.ntnu.idata2302.lab03.Benchmark 
+
+   .. solution:: labs/recursion/benchmark/run
+      :class: dropdown
+
+      On my machine, I obtain the following:
+
+      .. code:: shell
+
+             $ java -cp target/lab03-0.1-SNAPSHOT.jar \
+                        no.ntnu.idata2302.lab03.Benchmark
+             Iterative List: 100000 item(s) inserted. 
+             Recursive List: 23723 item(s) inserted. (error)
+
+   .. exercise::
+      :label: labs/recursion/benchmark/why
+      :nonumber:
+
+      Why do you think happen to ``RecursiveList``? Why is it
+      underperforming?
+
+   .. solution:: labs/recursion/benchmark/why
+      :class: dropdown
+
+      Most languages and OS limit the size of the call stack, so that it
+      cannot grow indefinitely. Looking at the code of the benchmark, we
+      are actually catching a ``StackOverflowError`` which, in Java,
+      indicates that the program has used all the memory allowed for the
+      call stack. That is often the main problem of recursive algorithms:
+      They consume more memory. We will see further in the course, method
+      to avoid that in some cases.
+
+   .. |image1| image:: images/iterative.pdf
+      :width: 65.0%
+   .. |image2| image:: images/recursive.pdf
+      :width: 75.0%
