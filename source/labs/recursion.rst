@@ -318,247 +318,252 @@ is thus formed by “linked” nodes. You will find this design in
 Using Recursion
 ---------------
 
-.. caution:: Available as soon as possible   
+We will now use recursion to implement the same linked list. Look at
+the file :code:`RecursiveList.java`. The :code:`length` method is a
+simple example, shown below:
+             
+.. code-block:: java
+   :emphasize-lines: 3, 7-9
+
+   @Override
+   public int length() {
+       return lengthFrom(head);
+   }
+
+   private int lengthFrom(RNode<T> start) {
+       if (start == null)
+           return 0;
+       return 1 + lengthFrom(start.next);
+   }
+
+Often, recursive algorithms need to accept more arguments than their
+iterative counterpart. That's the role of the :code:`lengthFrom`
+operation, which embodies the actual recursive implementation. The
+:code:`length` operation directly calls it.
+
+.. exercise::
+   :label: labs/recursion/list/recursive/insert
+   :nonumber:
+
+   By taking inspiration on the :code:`length` method, implement the
+   :code:`insert` operation in a recursive manner. Here are questions
+   that might help to guide you.
+
+   #. Can you identify self-similar sub problems. The structure of the
+      linked list may help you.
+
+   #. What are the base cases?
+
+   #. What are the recursive cases?
+
+      
+.. solution:: labs/recursion/list/recursive/insert
+   :class: dropdown
+
+   A list is recursive by definition. It is just an item followed by
+   another shorter list. We can use this definition to build a
+   recursive implementation of the insert function. Insertion in 3\
+   :sup:`rd` position in a list of 5 items, is the same as inserting
+   in the 2\ :sup:`nd` position in the sub-sequence starting at the 2
+   position. Consider these examples:
+
+   - Inserting Z at the 3\ :sup:`rd` position of a sequence
+     :math:`s=(A, B, C, D)`, is the same skipping A, and insert Z at the
+     2\ :sup:`nd` position of the sequence :math:`s'=(B,C,D)`.
+
+   - Inserting Z at the 5\ :sup:`th` position of a sequence
+     :math:`s=(A, B, C, D)`, is the same skipping A, and insert Z at the
+     4\ :sup:`th` position of the sequence :math:`s'=(B,C,D)`.
    
-.. dede
+   The idea if to create a function that insert *after* a given
+   position, but from a given *start* node.
 
+   .. code-block:: java
 
-   We now turn towards a recursive implementation of the linked list. The
-   class ``INode`` we used for our iterative implementation is a recursive
-   type: It references itself. In this section, we explore an alternative
-   design that makes the most of this inherent recursive structure. As
-   shown in Figure `2 <#fig:recursive>`__, we created two classes. The
-   class ``RNode`` represents a item followed by a list, whereas the class
-   ``Empty`` represents the empty list. Both implements the
-   ``List`` interface. A list is thus either a node followed by another
-   list, or an empty list. You will find this design in the file
-   ``RecursiveList.java``
+      private void insertAfter(RNode<T> start, int index, T item) {
+                   
+      }
 
-   .. container:: float
-      :name: fig:recursive
+   There are two base cases:
+   
+   - If we insert a the beginning of the list, we need to update the
+     :code:`head` field. This case occurs when the given index is zero.
 
-      .. container:: center
+   - If we have found the node that precedes the insertion points, we
+     need to create a new node and wire it into the list. This case
+     occurs when :code:`index` is 1.
 
-         |image2|
+   Finally, when index is greater than 1, it means that we have not
+   yet found the node that precedes the insertion point, and we must
+   place a recursive call, passing in the node that follows the
+   current one, and the given index decremented by one.
+   
+   The following piece of code gives illustrates this idea:
 
-   Consider for example the ``length()`` method, whose code appears below.
-   Recursively, the length of a list is one for the first element, plus the
-   length of the rest. The ``Empty`` class only handles the *base case*
-   when the list is empty. The class ``Node`` implements the *recursive
-   case*. None of them uses loops and both are short statements. This is
-   typical from recursive algorithms.
+   .. code-block:: java
+      :emphasize-lines: 5, 18
 
-   .. code:: java
+      @Override
+      public void insert(int index, T item) throws InvalidIndex {
+          if (index < 1)
+              throw new IllegalArgumentException("Invalid index");
+          insertAfter(head, index - 1, item);
+      }
 
-        class RNode<T> implements List<T> {
+      private void insertAfter(RNode<T> start, int index, T item) throws InvalidIndex {
+          if (index == 0) {
+              var newNode = new RNode<T>(item, start);
+              head = newNode;
 
-          @Override
-          public int length() {
-             return 1 + next.length();
+          } else if (index == 1) {
+              var newNode = new RNode<T>(item, start.next);
+              start.next = newNode;
+
+          } else if (index > 1) {
+              insertAfter(start.next, index - 1, item);
+
+          } else {
+              throw new IllegalArgumentException("Invalid Index");
+
           }
 
-        }
+      }
 
-        class Empty<T> {
+  
+.. exercise::
+   :label: labs/recursion/list/recursive/comparisons
+   :nonumber:
 
-          @Override
-          public int length () { return 0; }
+   In worst case, how many comparisons will your recursive insertion
+   takes?
 
-        }
+   #. Identify the worst case. What is it?
 
-   .. exercise::
-      :label: labs/recursion/linked-list/recursive/insert
-      :nonumber:
+   #. Count the comparisons needed for each base and recursive
+      cases.
 
-      By taking inspiration on the length method, implement the ``insert``
-      operation in a recursive manner. Here are some steps to guide you.
+   #. Write down the number of comparisons as a recurrence
+      relationship.
 
-      #. Can you identify self-similar sub problems. The structure of the
-         linked list may help you.
+   #. Solve this recurrence.
 
-      #. What are the base cases?
-
-      #. What are the recursive cases?
-
-   .. solution::
-      :class: dropdown
-
-      As a recursive data type, a linked list is either an empty list, or
-      an item followed by another list. To insert in a list, we either have
-      to modify the first element or insert into the “rest”, which is
-      another list, but shorter. I see the following cases:
-
-      #. The given index is smaller than 1, so we raise an error
-
-      #. The given index is 1, we create a new node, with the given item
-         and the current list as next.
-
-      #. When the index is greater than one, there are two alternatives:
-
-         #. The list is empty, so we raise an error.
-
-         #. The list is a node and we delegate the insertion to the next
-            list, but with a smaller index. This is the recursive case.
-
-      The recursive case occurs when the list is not empty and the given
-      index is greater than one. In that case, we delegate the insertion to
-      the next list, but we decrease the index.
-
-      The following piece of code gives illustrates this idea:
-
-      .. code:: java
-
-             public class Node<T> implements List<T> {
-
-               @Override
-               public List<T> insert(int index, T item) throws InvalidIndex {
-                 if (index < 1) throw new InvalidIndex(index);
-                 if (index == 1) return new Node(item, this);
-                 next = next.insert(index-1, item);
-                 return this;
-               }
-
-             }
-
-             class Empty<T> implements List<T> {
-
-               @Override
-               public List<T> insert (int index, T item) throws InvalidIndex {
-                 if (index == 1) return new Node(item, this);
-                 throw new InvalidIndex(index);
-               }
-
-             }
+.. solution:: labs/recursion/list/recursive/comparisons
+   :class: dropdown
 
 
-   .. exercise::
-      :label: labs/recursion/linked-list/recursive/comparisons
-      :nonumber:
+   The worst case occurs when one tries to insert an item at the very
+   end of the list. For instance, given a sequence
+   :math:`s=(A,B,C,D)`, the worst case would be to insert in 5\
+   :sup:`th` position.
 
-      In worst case, how many comparisons will your recursive insertion
-      takes?
+   What happen in this worst case. Only two cases of the algorithm are
+   exercised:
 
-      #. Try to abstract the algorithm (for example in pseudo code) from
-         the Java code.
+   - The base case where we have found the node that precedes the
+     insertion point. In that case, we execute two comparisons.
 
-      #. Write down the number of comparisons as a recurrence relation.
+   - The recursive case, where we propagate the insertion to the next
+     node. In that case, we execute 3 comparisons, plus the
+     comparisons incurred by the recursive call.
 
-      #. Solve this recurrence.
+   We can formulate that using the following recurrence relationship
+   :math:`t(\ell)`, where :math:`\ell` denotes the length of the
+   sequence.
 
-   .. solution:: labs/recursion/linked-list/recursive/comparisons
-      :class: dropdown
+   .. math::
 
-      One challenge when working with actual source code, is that the
-      algorithm is obscured by the technicalities. Here, the use of
-      inheritance spread our algorithm over two methods.
-      Figure `[alg:insert] <#alg:insert>`__ shows the general principle.
+      t(\ell) = \begin{cases}
+      2 & \textrm{if } \ell == 1 \\
+      3 + t(\ell-1) & \textrm{otherwise} \\
+      \end{cases}
 
-      We can thus count the comparisons, and formalize the number of
-      comparison for a sequence of length :math:`n` by a recurrence
-      :math:`F(n,i)` as follows:
+   We can expand the expression :math:`t(\ell)` to see what pattern it
+   yields:
 
-      .. math::
+   .. math::
 
-         F(n, i) = \begin{cases}
-               1 & \textrm{if } i < 1 \\
-               2 & \textrm{if } i = 1 \\
-               3 & \textrm{if } n = 0 \\
-               3 + F(n-1, i-1) & \textrm{otherwise}
-               \end{cases}
+      t(\ell) & = 3 + t(\ell-1) \\
+              & = 3 + \left( 3 + t(\ell-2) \right) \\
+              & = 3 + \left( 3 + \left[ 3 + t(\ell-4) \right] \right) \\
+              & = \underbrace{3 + 3 + \ldots + 3}_{\ell-1 \textrm{ times}} + t(1) \\
+              & = 3 (\ell-1) + 2 \\
+              & = 3\ell - 1
+        
+.. exercise::
+   :label: labs/recursion/list/recursive/insert/memory
+   :nonumber:
 
-      In our case, we are looking at the worst case, which is the last one,
-      that is, when we insert at the end of the list. In that case, we know
-      that :math:`i = n+1`.
+   In the worst case, how much memory will it takes? Remember to account
+   for the call stack.
 
-      A simple strategy to solve such recurrences is to expand a few
-      examples. Consider for instance :math:`n = 6`.
+.. solution:: labs/recursion/list/recursive/insert/memory
+   :class: dropdown
 
-      .. math::
+   Just as we did for counting comparisons, we have to count the
+   pieces of memory that are allocated. Each call to `insertAfter`
+   requires storing three input arguments
 
-               F(6, 7) & = 3 + F(5, 6) \\
-                       & = 3 + 3 + F(4, 5) \\
-                       & = 3 + 3 + 3 + F(3, 4) \\
-                       & = \underbrace{3 + 3 + \ldots + 3}_{\textrm{6 times}} + F(0, 1) \\
-                       & = 3\times 6 + 2;
+   That gives us the following recurrence relationship :math:`m(\ell)`
+   where :math:`\ell` denotes the length of the sequence.
 
-      We can see the general pattern is :math:`F(n,n+1)= 3n + 2`.
+   .. math::
 
-   .. exercise::
-      :label: labs/recursion/list/recursive/insert/memory
-      :nonumber:
+      m(\ell) = \begin{cases}
+            0 & \textrm{if } \ell = 1 \\
+            3 & \textrm{otherwise} \\
+          \end{cases}
 
-      In the worst case, how much memory will it takes? Remember to account
-      for the call stack.
+   By solving this recurrence, we obtain :math:`m(\ell) = 3(\ell-1);`,
+   which is linear. By contrast with the iterative approach, a
+   recursive algorithm consumes memory on each call.
 
-   .. solution:: labs/recursion/list/recursive/insert/memory
-      :class: dropdown
+Benchmark
+=========
 
-      Just as we did for counting comparisons, we have to count the pieces
-      of memory that are allocated. That gives us the following recurrence
-      relationship:
+Let see now is theory matches practice. To get some concrete evidence,
+we will try to insert items in both an ``IterativeList`` and in a
+``RecursiveList``. Take a look at the file ``Benchmark.java``, which
+implements the above scenario.
 
-      .. math::
+.. exercise::
+   :label: labs/recursion/benchmark/run
+   :nonumber:
 
-         S(n, i) = \begin{cases}
-               3 & \textrm{if } i > 1 \land n > 0 \\
-               0 & \textrm{otherwise}
-             \end{cases}
+   Run the benchmark on your machine. What result do you get. To run the
+   benchmark, you can use the command:
 
-      By solving this recurrence, we obtain :math:`S(n, i) = 3n;`, which is
-      linear. By contrast with the iterative approach, a recursive
-      algorithm consumes memory on each call.
+   .. code:: shell
 
-   Benchmark
-   =========
+          $ java -cp target/lab03-0.1-SNAPSHOT.jar \
+                     no.ntnu.idata2302.lab03.Benchmark 
 
-   Let see now is theory matches practice. To get some concrete evidence,
-   we will try to insert items in both an ``IterativeList`` and in a
-   ``RecursiveList``. Take a look at the file ``Benchmark.java``, which
-   implements the above scenario.
+.. solution:: labs/recursion/benchmark/run
+   :class: dropdown
 
-   .. exercise::
-      :label: labs/recursion/benchmark/run
-      :nonumber:
+   On my machine, I obtain the following:
 
-      Run the benchmark on your machine. What result do you get. To run the
-      benchmark, you can use the command:
+   .. code:: shell
 
-      .. code:: shell
+          $ java -cp target/lab03-0.1-SNAPSHOT.jar \
+                     no.ntnu.idata2302.lab03.Benchmark
+          Iterative List: 100000 item(s) inserted. 
+          Recursive List: 23723 item(s) inserted. (error)
 
-             $ java -cp target/lab03-0.1-SNAPSHOT.jar \
-                        no.ntnu.idata2302.lab03.Benchmark 
+.. exercise::
+   :label: labs/recursion/benchmark/why
+   :nonumber:
 
-   .. solution:: labs/recursion/benchmark/run
-      :class: dropdown
+   Why do you think happen to ``RecursiveList``? Why is it
+   underperforming?
 
-      On my machine, I obtain the following:
+.. solution:: labs/recursion/benchmark/why
+   :class: dropdown
 
-      .. code:: shell
+   Most languages and OS limit the size of the call stack, so that it
+   cannot grow indefinitely. Looking at the code of the benchmark, we
+   are actually catching a ``StackOverflowError`` which, in Java,
+   indicates that the program has used all the memory allowed for the
+   call stack. That is often the main problem of recursive algorithms:
+   They consume more memory. We will see further in the course, method
+   to avoid that in some cases.
 
-             $ java -cp target/lab03-0.1-SNAPSHOT.jar \
-                        no.ntnu.idata2302.lab03.Benchmark
-             Iterative List: 100000 item(s) inserted. 
-             Recursive List: 23723 item(s) inserted. (error)
-
-   .. exercise::
-      :label: labs/recursion/benchmark/why
-      :nonumber:
-
-      Why do you think happen to ``RecursiveList``? Why is it
-      underperforming?
-
-   .. solution:: labs/recursion/benchmark/why
-      :class: dropdown
-
-      Most languages and OS limit the size of the call stack, so that it
-      cannot grow indefinitely. Looking at the code of the benchmark, we
-      are actually catching a ``StackOverflowError`` which, in Java,
-      indicates that the program has used all the memory allowed for the
-      call stack. That is often the main problem of recursive algorithms:
-      They consume more memory. We will see further in the course, method
-      to avoid that in some cases.
-
-   .. |image1| image:: images/iterative.pdf
-      :width: 65.0%
-   .. |image2| image:: images/recursive.pdf
-      :width: 75.0%
