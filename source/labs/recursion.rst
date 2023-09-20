@@ -194,13 +194,12 @@ in turn, may refer to another ``Node``, and so on and so forth. The list
 is thus formed by “linked” nodes. You will find this design in
 ``IterativeList.java``.
 
-.. container:: float
-   :name: fig:iterative
+.. figure:: _static/recursion/images/lab_recursion.svg
+   :name: labs/recursion/list/iterative
 
-   .. container:: center
-
-      |image1|
-
+   The IterativeList implements the Sequence ADT and uses the INode
+   class.
+   
 .. exercise::
    :label: labs/recursion/linked-list/insert
    :nonumber:
