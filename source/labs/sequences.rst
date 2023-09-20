@@ -12,16 +12,16 @@
 
 .. important::
 
-   This is the first **mandatory** lab session. Organize yourself by
-   groups of 2 to 3 students and write a short report, summarizing
-   your answers. Here are some guidelines:
+   UPDATED! This is the first **mandatory** lab session. Organize
+   yourself by groups of 2 to 3 students and write a short report,
+   summarizing your answers. Here are some guidelines:
    
    - Justify every answer, especially calculations.
    - Do *not* exceed *8 pages*
    - Do *not* attach a zip of your Java project
 
-   Submit your report, as a **PDF** file, on Blackboard by **Wednesday
-   September 20, 2023 at 13:00** at the latest.
+   Submit your report, as a **PDF** file, on Blackboard by **Friday
+   September 22, 2023 at 23:30** at the latest.
 
 
 Dynamic Arrays in Java
