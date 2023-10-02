@@ -78,22 +78,90 @@ It will never be faster than :math:`n \log n`.
    When sorting using comparisons, there cannot be any algorithm that
    runs faster than :math:`O(n \log n)`.
 
-If we are not using comparisons, let us see what else we can do.
+If we are not using comparisons, let us see what else we can do. We
+shall look at the *counting sort* and the *radix sort*, two algorithms
+that do not rely on comparisons.
+
 
 Counting Sort
 =============
 
-Idea: Counting keys
+The idea of the counting sort is to count items per category. Consider
+for instance the sequence :math:`s=(0,1,1,2,0,1,1,2,0,1,1,2,0)`. It contains
+only three "categories" of items: 0, 1, and 2. Provided we know the
+order of these categories, we can traverse the sequence once, counting
+how many items falls in each category, and finally rebuild the
+sequence as follows:
 
-Assumptions: Know the ordering of keys
+.. math::
 
-Count sort
+   s'=(\overbrace{0,0,0,0}^{\times 4},\overbrace{1,1,1,1,1,1}^{\times 6},\overbrace{2,2,2}^{\times 3})
 
-Runtime
+In summary, counting sort proceeds as follows:
 
-Memory
+#. Traverse the given sequence, and build a *frequency table*, which
+   registers how many items fall into each category.
 
+#. Compute the cumulative frequencies
 
+#. Adjust the given sequence, according to the cumulative frequency
+   table
+   
+
+:numref:`recursion/radix/counting_sort/code` illustrate this in
+Java. The :code:`countingSort` procedure accepts a sequence (as an
+array) and its largest key. The largest key captures the set of
+categories, implying that the given sequence will contain only values
+from 0 to that largest key. The most tricky part is how we rebuild the
+sorted sequence. The cumulative frequency table also capture the index
+at which a given category should start. So we proceed backward and for
+each item in the given sequence, we write it down at its latest
+position, decrementing the count (see lines 14-18).
+   
+.. code-block:: java
+   :caption: Java implementation of counting sort
+   :name: recursion/radix/counting_sort/code
+   :linenos:
+   :emphasize-lines: 14-18
+
+   int[] countingSort(int sequence[], int largestItem) {
+       int[] sorted = new int[sequence.length];
+       int [] frequencies = new int[largestItem + 1];
+
+       for (int i=0 ; i<sequence.length ; i++) {
+           int key = sequence[i];
+           frequencies[key] += 1;
+       }
+
+       for (int key=1; key<largestItem+1 ; key++) {
+           frequencies[key] += frequencies[key-1];
+       }
+
+       for (int i=sequence.length-1 ; i>=0 ; i--) {
+           int key = sequence[i];
+           sorted[frequencies[key]-1] = key;
+           frequencies[key]--;
+       }
+
+       return sorted;
+    }
+
+Runtime Efficiency
+   We see :numref:`recursion/radix/counting_sort/code` that each of
+   the steps if implemented using a loop. We iterate either through
+   the given sequence, or through the set of categories. As the result
+   counting sort runs in :math:`O(n+k)` where :math:`n` is the length
+   of the given sequence and :math:`k` is the number of categories.
+
+Memory efficiency
+  :numref:`recursion/radix/counting_sort/code` provides an
+  out-of-place, where we provision a separate array to hold the
+  result. But besides this, the is no additional memory required, so
+  counting sort requires a constant amount of memory (i.e., :math:`O(1)`).
+
+   
+    
+   
 Radix Sort
 ==========
 
