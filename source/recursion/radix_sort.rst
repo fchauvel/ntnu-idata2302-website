@@ -154,27 +154,133 @@ Runtime Efficiency
    of the given sequence and :math:`k` is the number of categories.
 
 Memory efficiency
-  :numref:`recursion/radix/counting_sort/code` provides an
-  out-of-place, where we provision a separate array to hold the
-  result. But besides this, the is no additional memory required, so
-  counting sort requires a constant amount of memory (i.e., :math:`O(1)`).
+   :numref:`recursion/radix/counting_sort/code` provides an out-of-place,
+   where we provision a separate array to hold the result. But besides
+   this, we also need some memory for the frequency table. So counting
+   sort requires (i.e., :math:`O(n+k)`) memory.
 
-   
-    
-   
+Counting sort offers a first way to sort without comparing, but it has
+its limitations. Counting works best when we have a few categories and
+many items. For instance, sorting a sequence of 10 items between 0 and
+1 000 000 would be penalized by the very large number of categories
+(i.e., 1 000 000). Besides, in many practical situations, we do not
+know the categories before hand. Let see how *radix sort* builds on
+*counting sort* to work around these limitations.
+  
 Radix Sort
 ==========
 
-Idea: counting sort by digits
+The idea of the radix sort is to apply counting sort
+repeatedly. Consider numbers such as 123 for instance. If we work on
+separate digits, then the number of categories required by counting
+sort is known, it's 10, for the ten digits. Since, counting sort is a
+*stable* sorting algorithm, we can apply it for each digit, from the
+least significant (LSD) to the most significant, without disrupting
+what was sorted before. :numref:`recursion/radix/idea` illustrates
+this idea.
 
-Implementation
+.. figure:: _static/radix_sort/images/radix_sort.svg
+   :name: recursion/radix/idea
 
-Runtime
+   The Radix sort (LSD): Applying repeatedly counting sort on each
+   digits, for the least significant to the most significant.
 
-Memory
+:numref:`recursion/radix/code` shows an possible implementation of
+radix sort in Java. It uses a modified version of the counting sort
+where the categories are "hard-coded" (i.e., the 10 digits), and that
+accept the significant digit to consider. First we search for the
+maximum of the given sequence, and compute its number of digits. We
+can then apply counting sort as many times as there are digits in this
+largest item.
+
+.. code-block:: java
+   :caption: An implementation of the Radix sort in Java
+   :name: recursion/radix/code
+   :emphasize-lines: 5-7
+
+   int[] radixSort(int[] array) {
+       int[] sorted = array;
+       int maximum = findMaximum(array);
+       int digitCount = countDigits(maximum);
+       for(int digit=0 ; digit<digitCount ; digit++) {
+           sorted = countingSort(sorted, digit);
+       }
+       return sorted;
+    }
+   
+Runtime Efficiency
+  Radix sort is basically running counting sort as many times as there
+  are digits. The runtime therefore depends on the number of items in
+  the sequence but also in the maximum number of digits in these
+  items. Radix sort thus runs in :math:`O(d \cdot (k+n))` where
+  :math:`n` is the number of items, :math:`k` the number of
+  categories, and :math:`d` the number of digits.
+
+Memory Efficiency
+  Radix sort does not requires more memory than what counting sort
+  does, so the space complexity of radix sort is the same,
+  :math:`O(n+k)`.
+
+
+.. important::
+
+   When applicable, non-comparison sorting algorithm offer fast
+   (linear runtime) alternative to more "classical" quick sort and
+   merge sort.
 
 
 Sorting Algorithms, Overview
 ============================
 
+That concludes our dive into sorting algorithms, but there are many
+more such as the heap sort or the shell sort to name a
+few. :numref:`recursion/radix/sorting_summary` summarizes the
+efficiency of the different sorting algorithms we have studied so far.
 
+
+.. list-table:: Summary of sorting algorithms studied in this course
+   :name: recursion/radix/sorting_summary
+   :widths: 23 10 10 10 10
+   :header-rows: 1
+
+   * - Algorithm
+     - Worst time
+     - Average time
+     - Space
+     - Stable
+   * - Insertion Sort
+     - :math:`O(n^2)`
+     - :math:`O(n^2)`
+     - :math:`O(1)`
+     - Yes
+   * - Selection Sort
+     - :math:`O(n^2)`
+     - :math:`O(n^2)`
+     - :math:`O(1)`
+     - No
+   * - Bubble Sort
+     - :math:`O(n^2)`
+     - :math:`O(n^2)`
+     - :math:`O(1)`
+     - Yes
+   * - Quick Sort
+     - :math:`O(n^2)`
+     - :math:`O(n \log n)`
+     - :math:`O(\log n)`
+     - No
+   * - Merge Sort
+     - :math:`O(n \log n)`
+     - :math:`O(n \log n)`
+     - :math:`O(n)`
+     - Yes
+   * - Counting Sort
+     - :math:`O(n+k)`
+     - :math:`O(n+k)`
+     - :math:`O(n+k)`
+     - Yes
+   * - Radix Sort
+     - :math:`O(d (n+k))`
+     - :math:`O(d (n+k))`
+     - :math:`O(n+k)`
+     - Yes
+       
