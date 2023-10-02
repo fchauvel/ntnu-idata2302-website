@@ -2,7 +2,7 @@
 Sorting Without Comparing
 =========================
 
-:Lecture: Lecture 3.6 :download:`(slides) <_static/merge_sort/radix_sort.pptx>`
+:Lecture: Lecture 3.6 :download:`(slides) <_static/radix_sort/radix.pptx>`
 :Objectives: Understand the limit of sorting by comparing.
 :Concepts: Sorting without comparing, counting sort, radix sort
 
