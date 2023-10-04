@@ -16,3 +16,4 @@ Contents
    linked_list
    quick_sort
    merge_sort
+   radix_sort
