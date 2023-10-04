@@ -24,6 +24,7 @@ Algorithms and Data Structures
    foundations/index
    sequences/index
    recursion/index
+   hashing/index
 
 .. toctree::
    :caption: Lab Sessions
