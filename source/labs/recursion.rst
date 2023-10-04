@@ -483,7 +483,7 @@ operation, which embodies the actual recursive implementation. The
 
       t(\ell) & = 3 + t(\ell-1) \\
               & = 3 + \left( 3 + t(\ell-2) \right) \\
-              & = 3 + \left( 3 + \left[ 3 + t(\ell-4) \right] \right) \\
+              & = 3 + \left( 3 + \left[ 3 + t(\ell-3) \right] \right) \\
               & = \underbrace{3 + 3 + \ldots + 3}_{\ell-1 \textrm{ times}} + t(1) \\
               & = 3 (\ell-1) + 2 \\
               & = 3\ell - 1
@@ -509,7 +509,7 @@ operation, which embodies the actual recursive implementation. The
 
       m(\ell) = \begin{cases}
             0 & \textrm{if } \ell = 1 \\
-            3 & \textrm{otherwise} \\
+            3 + t(\ell + 1)& \textrm{otherwise} \\
           \end{cases}
 
    By solving this recurrence, we obtain :math:`m(\ell) = 3(\ell-1);`,
