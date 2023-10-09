@@ -32,6 +32,7 @@ Algorithms and Data Structures
    labs/foundations
    labs/sequences
    labs/recursion
+   labs/trees
 
 .. toctree::
    :caption: Recaps
