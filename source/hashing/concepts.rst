@@ -121,8 +121,32 @@ depends on how many items are in the mapping.
 
 
 What Is a "Good" Key?
-========================
+=====================
 
+Choosing a key is not an important design decision. Not everything is
+a "good" key. Ideally, a key should be *unique* to a single value, it
+must *never change* over time (immutability) and should be *as small
+as possible*.
+
+Consider a user profile (a record) with various fields such as display
+name, email, birth date. Which one would be a good key?
+
+ - *Display name* capture the name the user would like other to see
+   about him. The problem here is that this display name can change
+   over time. If we insert the user record in a hash table and then,
+   the user change its display name, the hash function will return a
+   different value and the user record there will irrelevant or non
+   existent.
+
+ - *Birth date* is better because it will never change---in principle
+   at least. The problem here is uniqueness. Two users may very well
+   be born on the same day, any hash function would thus return the
+   same index for both.
+
+ - *Email* would be the better choice here, because if is both
+   immutable in practice and is unique to a user (at least in
+   principle).
+   
 
 .. important::
 
