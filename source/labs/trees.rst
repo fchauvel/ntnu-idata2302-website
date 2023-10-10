@@ -4,7 +4,7 @@ Trees
 
 
 :Module: Trees
-:Git Repository: `Lab 03---Trees <https://github.com/fchauvel/aldast-lab04>`_
+:Git Repository: `Lab 04---Trees <https://github.com/fchauvel/aldast-lab04>`_
 :Objectives:
    - Understand the general concept of tree
    - Understand how a binary search tree works 
