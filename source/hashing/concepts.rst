@@ -131,21 +131,21 @@ as possible*.
 Consider a user profile (a record) with various fields such as display
 name, email, birth date. Which one would be a good key?
 
- - *Display name* capture the name the user would like other to see
-   about him. The problem here is that this display name can change
-   over time. If we insert the user record in a hash table and then,
-   the user change its display name, the hash function will return a
-   different value and the user record there will irrelevant or non
-   existent.
+- *Display name* captures the name the user would like other to see
+  about him. The problem here is that this display name can change
+  over time. If we insert the user record in a hash table and then,
+  the user change its display name, the hash function will return a
+  different value and the user record there will irrelevant or non
+  existent.
 
- - *Birth date* is better because it will never change---in principle
-   at least. The problem here is uniqueness. Two users may very well
-   be born on the same day, any hash function would thus return the
-   same index for both.
+- *Birth date* is better because it will never change---in principle
+  at least. The problem here is uniqueness. Two users may very well
+  be born on the same day, any hash function would thus return the
+  same index for both.
 
- - *Email* would be the better choice here, because if is both
-   immutable in practice and is unique to a user (at least in
-   principle).
+- *Email* would be the better choice here, because if is both
+  immutable in practice and is unique to a user (at least in
+  principle).
    
 
 .. important::
@@ -372,6 +372,222 @@ Efficiency
 Hash Functions
 ==============
 
+What is this *hash* function? It maps the set of keys to indexes of
+the underlying array. The challenge is that the set of possible keys
+is generally very large or infinite (e.g., the set of possible
+strings), whereas the set of possible indices is bounded (e.g., from 0
+to 99 for an array of 100 items). Let us see how that work?
 
-Other Usages of Hashing
-=======================
+In a nutshell, a hash function does two things.
+
+#. The maps the given key to an arbitrary integer value, irrespective
+   of the range of valid indices. This is the *hashing* per se, often
+   denoted by a function :math:`H(k)`.
+
+#. It "compresses" this large integer so that it fits the range of
+   valid indices. The final index is the remainder of the hash code
+   divided by the number of possible entries in the hash table (i.e.,
+   the capacity :math:`c`).
+
+   .. math::
+
+      index(k) = H(k) \mod c
+
+Very often a hash function is a low-level procedure that operates on
+raw byte.
+
+
+Re-interpretation
+-----------------
+
+If the key data type has the same length than an integer, we can
+simply interpret the bytes as an integer value (see :doc:`Lecture 2.1
+<sequences/adt>`).
+
+Say for instance that the key is a color :code:`rgba(74, 111, 104,
+0.43)` (some sort of pale green), which is represented by four bytes
+:code:`#4A6F6864`. Since 4-byte is the very size of a 32-bit integer,
+we can *reinterpret* this four bytes as the value 1 248 815 214.
+
+Unfortunately this only works when keys have a fixed length that
+matches the one of an integer value.
+
+Summation
+---------
+
+.. margin::
+
+   .. figure:: _static/hashing/images/summation.svg
+      :name: hashing/intro/summation
+
+      Hashing by summation
+
+If the keys are longer than an integer, say a string or an array for
+instance, we can use the summation approach. As shown in
+:numref:`hashing/intro/summation`, we break the given into :math:`n`
+blocks the size of an integer value, which we then sum to get a single
+final integer value.
+
+.. code-block:: java
+   :name: hashing/intro/summation/code
+   :caption: Hashing a string with summation
+
+   int hash(String text) {
+       int hash = 0;
+       for (int i = 0; i < text.length(); i++) {
+           hash += text.charAt(i);
+       }
+       return hash;
+   }
+
+The main drawback of hashing by summation is that does not distinguish
+between keys whose bytes are permuted. For instance, the Java code
+shown by :numref:`hashing/intro/summation/code` yields the same hash
+code for "post", "stop", "tops", and "pots".
+
+
+Polynomials
+-----------
+
+.. margin::
+
+   .. figure:: _static/hashing/images/polynomials.svg
+      :name: hashing/intro/polynomials
+
+      Hashing using a polynomial
+      
+To better distinguish between keys, we can use a polynomial instead of
+simple summation.  We just need to weight each term of our sum with a
+value that depends on the block position, as shown on
+:numref:`hashing/intro/polynomials`. A simple strategy is to choose a
+prime number raise to power of the block position. The equation below
+summarizes this approach:
+
+.. math::
+   H(b_1, b_2, \ldots, b_n) = \sum_{i=1}^n a^i \cdot  b_1
+
+:numref:`hashing/intro/polynomial/code` illustrates how this applies
+to hashing a String object in Java, relying on `Horner's method
+<https://en.wikipedia.org/wiki/Horner%27s_method>`_ for polynomial
+evaluation.
+   
+.. code-block:: java
+   :name: hashing/intro/polynomial/code
+   :caption: Hashing a string with a polynomial
+
+   int hash(String text) {
+       int a = 17;
+       int hash = 1;
+       for (int i = 0; i < text.length(); i++) {
+           hash *= a + text.charAt(i);
+       }
+       return hash;
+   }
+
+
+Cyclic Shifts
+-------------
+
+.. margin::
+
+   .. figure:: _static/hashing/images/cyclic_shifts.svg
+      :name: hashing/intro/cyclic-shifts
+
+      Hashing using circular rotation (ROT-L) of :math:`k` bits.
+
+Another way to hash a key of varying size is to use cyclic
+shifts. Working at the byte level offers `bitwise operations
+<https://en.wikipedia.org/wiki/Bitwise_operation>`_ such as
+:code:`AND`, :code:`OR`, :code:`XOR`, and various forms of shifts.
+
+We can use the cyclic left rotation (denoted as
+:math:`\textrm{rot}_L`), to combine different 4-byte blocks into a
+single integer value, as shown on
+:numref:`hashing/intro/cyclic-shifts`. The recurrence below give
+another perspective on the same calculation.
+
+.. math::
+
+   H(b_1, b_2, \ldots, b_n) = \begin{cases}
+     \textrm{rot}_L(k, b_1) & \textrm{if } n = 1 \\
+     b_n + \textrm{rot}_L(k, H(b_1,\ldots,b_{n-1})) & \textrm{otherwise}
+   \end{cases}
+
+:numref:`hashing/intro/cyclic-shifts/code` illustrates how one can
+implement that in Java. The expression :code:`(sum << 5) | (sum >>>
+27)`, which implementats the :math:`\textrm{rot}_L` operation using
+left- and right- shifts, for a 32-bit value with :math:`k = 5`.
+
+.. code-block:: java
+   :caption: Hashing a String using cyclic shifts in Java
+   :name: hashing/intro/cyclic-shifts/code
+   :emphasize-lines: 4
+
+   int hashCode(String text) {
+       int sum = 0;
+       for (int index = 0; index < text.length(); index++) {
+           sum = (sum << 5) | (sum >>> 27); 
+           sum += (int) text.charAt(index); 
+       }
+       return sum;
+   }
+
+
+Usages of Hashing
+=================
+
+Hashing is a concept that goes way beyond algorithms and data
+structure. Whereas the concepts remain the same, the `hash functions
+<https://en.wikipedia.org/wiki/List_of_hash_functions>`_ vary in
+complexity.
+
+File Digest
+-----------
+
+In cryptography, hashing is useful to ensure integrity, that is, be
+confident that a message, sent over the network, was not modified (by
+a malicious middle man or by erroneous network devices).
+
+When we downloading from the Internet, especially large files such as
+disk images, you may be offer the opportunity of also download a file
+digest (e.g., MD5 file). These "digests" contain in fact the hash of
+the file you want to download.
+
+Once you have downloaded the file and its digest, you can compute the
+hash of the your local download and compare it to the "digest" you
+have downloaded. If they do not match your download got corrupted on
+the way.
+
+Storing Passwords
+-----------------
+
+In cryptography again, hashing also avoids storing passwords in
+clear. When a user creates an account on a web site, she chooses a
+password that front-end hash and only this hash reaches the back-end
+where it gets stored in a database.
+
+When the same user later logs in, the front-end requests the password
+again, hashes it, and send that hash one the wire. The back-end
+compare that new hash to the one that was stored previously. If the
+two match, the user is authenticated.
+
+Pseudo Random Numbers
+---------------------
+
+Hashing can also help generate pseudo random numbers. One key point of
+hash functions is that they transform any input into an unrelated
+integer value. They thus can provide a practical source of randomness.
+
+The following recurrence relationship shows a simple blueprint to turn
+any hash function :math:`H` into a pseudo random number generator.
+
+.. math::
+
+   \textrm{random}(n) = \begin{cases}
+   c & \textrm{if } n=1 \\
+   H(\textrm{random}(n-1)) & \textrm{otherwise}
+   \end{cases}
+
+The hash function transforms the seed :math:`c` at each step to
+produce the next number in the sequence, giving the appearance of
+randomness.
