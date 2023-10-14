@@ -2,6 +2,11 @@
 What Is Hashing?
 ================
 
+:Lecture: Lecture 4.1 :download:`(slides) <_static/hashing/hashing.pptx>`
+:Objectives: Understand what is a hash function how a hash table uses
+             it offer constant time access
+:Concepts: Map ADT, hash functions, hash table, insertion, deletion
+
 Hashing is a general concepts that surfaces in cryptography, pseudo
 random number generation, machine learning, etc. In this course, we
 will use it to access data in constant time (i.e., :math:`O(1)`).
