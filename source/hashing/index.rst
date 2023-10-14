@@ -13,4 +13,5 @@ Contents
    :numbered:
 
    concepts.rst
+   collisions.rst
    
