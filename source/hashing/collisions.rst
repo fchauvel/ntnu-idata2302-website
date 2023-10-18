@@ -275,18 +275,263 @@ gradually degrade: The linked list will start to grow, consuming more
 memory and increasing the runtime of the :code:`put` and :code:`get`
 operations.
 
-
 Open Addressing
 ===============
+
+*Open addressing* is another approach to handle *collisions*. With
+open addressing, when facing a collision at a given index, we *probe*
+another index, until we find a free entry, or until the underlying
+table gets full.
+
+.. figure:: _static/collisions/images/open_addressing.svg
+   :name: hashing/collisions/open-addressing
+
+   Handling collisions using *open addressing*: When an entry is
+   occupied, we *probe* another one
+
+:numref:`hashing/collisions/open-addressing` shows an example. The
+hash table already contains three entries: Hugo's record at index 1,
+John at index 3, and Lisa at index 4. We now try to insert Neil's
+record, whose key's hash is 3. That index already contains John's
+record, so we try the next one, which is also taken, so we try the
+next, which is free. So we insert Neil's details at Index 5.
+
+As a data-structure, open addressing requires less memory than
+separate chaining. The downside is that the table will get full at
+some point and must then be resized. Such a resizing, so called
+*rehashing*, resembles resizing a dynamic array (see :doc:`Lecture 2.3
+<sequences/dynamic_arrays>`) but requires to recompute the hash of
+every entry, since the table has a new capacity.
 
 Retrieval
 ---------
 
-Insertion
----------
+To retrieve the value associated to the given key, we proceeds as
+follows:
+
+#. Compute the "expected" index where the value should be, using the
+   hash function.
+
+#. We check the key.value pair stored at that index.
+
+#. If there is no key-value pair at that index, the key was not defined.
+   
+#. If there is a key-value pair that has the given key, we return the
+   value.
+
+#. Otherwise, we check the next key-value pair in the next entry and
+   we return to Step 2.
+
+   #. If the have reached the last entry, we continue from the first one.
+
+   #. If we are back the initial "expected" index, the key was not defined.
+
+
+:numref:`hashing/collisions/open-addressing/get` details how we can do
+that in Java. To simplify search, we use an :code:`offset`, which we
+add to the "start" index. 
+      
+.. code-block:: java
+   :caption: Retrieving a value from a hash table using open-addressing
+   :name: hashing/collisions/open-addressing/get
+   :emphasize-lines: 3-4
+   :linenos:
+                
+   public Value get(Key key) throws NoSuchKey {
+        int start = hash(key);
+        for (int offset = 0; offset < entries.length ; offset++) {
+            var index = (start + offset) % entries.length;
+            var candidate = (Pair<Key, Value>) entries[index];
+            if (candidate == null)
+                throw new NoSuchKey(key);
+            if (candidate.key.equals(key))
+                return candidate.value;
+        }
+        throw new NoSuchKey(key);
+    }
+
+How Efficient Is It?
+   To retrieve a keey-value pair, we have to follow a trail of
+   "non-empty" entries. This is the *probing sequence* and its length
+   affects the runtime. In the worst case, we have to scan the whole
+   table and the runtime degrades to :math:`O(n)`.
 
 Deletion
 --------
 
+To remove an entry from the hash table requires a bit of care. If we
+simply delete the entry, we will not be able to find the keys that
+were inserted beyond. Instead, we shall use a *soft deletion* (a.k.a.
+tombstone), where instead of deleting the entry, we will only *mark*
+it as deleted. We proceed as follows:
+
+#. We compute the "expected" index where the value should be, using
+   the hash function. This will be our starting position.
+
+#. We check the key.value pair stored at that index.
+
+#. If there is no key-value pair at that index, the key was not defined.
+   
+#. If there is a key-value pair that has the given key, we *mark* it
+   as a deleted, and we are done.
+
+#. Otherwise, we check the next key-value pair in the next entry and
+   we return to Step 2.
+
+   #. If the have reached the last entry, we continue from the first one.
+
+   #. If we are back where we started, the key was not defined.
+
+
+The Listing below illustrates how this be done in Java. We use the same
+strategy as we did before to iterate through the table from an
+arbitrary position, using an offset. By contrast, when we find the
+key, we simply mark it as "deleted".
+
+.. code-block:: java
+   :caption: Retrieving a value from a hash table using open-addressing
+   :name: hashing/collisions/open-addressing/remove
+   :emphasize-lines: 3-4, 8-9
+   :linenos:
+                
+   public Value remove(Key key, Value value) throws NoSuchKey {
+       int start = hash(key);
+       for (int offset = 0; offset < entries.length ; offset++) {
+           var index = (start + offset) % entries.length;
+           var candidate = (Pair<Key, Value>) entries[index];
+           if (candidate == null)
+               throw new NoSuchKey(key);
+           if (candidate.key.equals(key)) {
+               return candidate.markAsDeleted();
+           }
+       }
+       throw new NoSuchKey(key);
+   }
+
+To mark a given as "deleted" we can modify the :code:`Pair` class as
+shown on :numref:`hashing/collisions/open-addressing/pairs`
+
+.. code-block:: java
+   :name: hashing/collisions/open-addressing/pairs
+   :caption: Key-value pair with soft deletion
+   :emphasize-lines: 10-13, 15-17 
+   :linenos:
+
+   class Pair<Key, Value> {
+        Key key;
+        Value value;
+
+        Pair(Key key, Value value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        Value markAsDeleted() {
+            key = null;
+            return value;
+        }
+
+        boolean isDeleted() {
+            return key == null;
+        }
+    }   
+
+How Efficient Is It?
+   To delete a keey-value pair, we also have to follow a trail of
+   "non-empty" entries. The length of *probing sequence* also affects
+   the runtime. In the worst case, we have to scan the whole table and
+   the runtime degrades to :math:`O(n)`.
+    
+      
+Insertion
+---------
+
+To insert a new key-value pair, we first try as the index yielded by
+the hash function. If that entry is taken, we try the next entry,
+until we find a free one (or one that has been marked as deleted).
+
+#. We compute the "expected" index where the value should be, using
+   the hash function. This will be our starting position.
+
+#. We check the key.value pair stored at that index.
+
+#. If there is no key-value pair at that index, or if the pair has
+   been marked as deleted, we insert a new key-value pair here and we
+   are done.
+   
+#. Otherwise, we check the next key-value pair in the next entry and
+   we return to Step 2.
+
+   #. If the have reached the last entry, we continue from the first one.
+
+   #. If we are back where we started, the key was not defined.
+
+.. code-block:: java
+   :caption: Inserting a new key-value pair in a hash table using open-addressing
+   :name: hashing/collisions/open-addressing/remove
+   :emphasize-lines: 3-4, 6
+   :linenos:
+                
+   public void put(Key key, Value value) {
+       int start = hash(key);
+       for (int offset = 0; offset < entries.length ; offset++) {
+           var index = (start + offset) % entries.length;
+           var candidate = (Pair<Key, Value>) entries[index];
+           if (candidate == null || candidate.isDeleted()) {
+               entries[index] = new Pair<Key, Value>(key, value);
+               return;
+           }
+       }
+       throw new RuntimeException("Table is full!");
+   }
+
+How Efficient Is It?
+   To insert a keey-value pair, we again have to follow a trail of
+   "non-empty" entries. The length of *probing sequence* again dictates
+   the runtime. In the worst case, we have to scan the whole table and
+   the runtime degrades to :math:`O(n)`.
+   
+   
 Variations
 ----------
+
+In the implementation above, we also probe the direct next entry, but
+there are other strategies, The most common ones are linear probing,
+quadratic probing, and double hashing.
+
+Linear Probing
+   With linear probing to insert a pair :math:`(k,v)` in a table of
+   capacity :math:`c`, we use the following function, which computes
+   the index to try for the i\ :sup:`th` attempt:
+
+   .. math::
+      \textrm{attempt}(k, i) = (\textrm{hash}(k) + i) \mod c
+
+   This is what we have implemented above. The downside of this is
+   that entries form cluster in the table. Such cluster degrades the
+   performance of the operation, because insertion must scan these
+   large clusters
+
+Quadratic Probing
+   With quadratic probing, we make jumps that are bigger and
+   bigger. For instance, we first the entry
+   :math:`\textrm{hash}(k)+1`, then :math:`\textrm{hash}(k)+4`, then
+   :math:`\textrm{hash}(k) + 9`, etc. The attempt function goes as
+   follows:
+
+   .. math::
+      \textrm{attempt}(k, i) = (\textrm{hash}(k) + i^2) \mod c
+
+   Quadratic probing helps reduce clustering but places constraint on
+   the capacity, which must be a prime number. 
+      
+Double Hashing
+   With *double hashing*, the jump we make when probing is computed by
+   another hash function, as follows:
+
+   .. math::
+      \textrm{attempt}(k, i) = (\textrm{hash}_1(k) + i\cdot\textrm{hash}_2(k)) \mod c
+   
+   This also helps reduce clustering but the two hash functions must
+   be chosen carefully. Some pairs of hash function will not play well
+   together and leads to more clustering.
