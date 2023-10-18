@@ -17,3 +17,6 @@ Contents
    introduction
    bst
    heap
+   avl
+   btrees
+   tries
