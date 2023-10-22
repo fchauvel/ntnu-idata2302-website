@@ -1,6 +1,13 @@
-************
+============
 Graph Theory
-************
+============
+
+:Lecture: Lecture 6.1 :download:`(slides) <_static/graphs.pptx>
+:Objectives: Understand what a graph is, what data structures exists
+             to represent it, and when to choose these data
+             structures.
+:Concepts: Graph, path, circuit, edge list, adjacency list, adjacency
+           matrix, depth-first traversal, breadth-first traversal,
 
 We started by looking at *sequences*, implemented either using arrays
 or linked lists. In a sequence, each item has at most one predecessor
@@ -102,9 +109,7 @@ blocks of instructions whereas edges represents the *flow of
 control*. In object-oriented analysis, class diagrams (say in UML) are
 also graphs, where nodes represents classes and edges captures their
 relationships. Entity-relationships models we use in database are also
-graphs.
-
-You get the idea.
+graphs. You get the idea.
 
 Graphs Species
 ==============
@@ -420,3 +425,18 @@ Vertex cover
 Independent set
    Given a graph G=(V,E), find a subset of vertices V' such that no
    vertex in V' is adjacent to a vertex in V.
+
+.. include:: data_structure.rst
+
+   
+Appendix
+========
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+      
+   ruby_edge_list
+   js_adjacency_list
+   c_adjacency_matrix
+   

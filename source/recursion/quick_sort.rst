@@ -8,7 +8,7 @@ Quick Sort
 
 We have already looked at three sorting algorithms: Insertion sort,
 selection sort, and bubble sort. All are rather slow as they run in
-quadratic time (see :doc:`Lecture 2.5 <sequences/sorting>`). We will
+quadratic time (see :doc:`Lecture 2.5 </sequences/sorting>`). We will
 now scrutinize one of the faster, namely *quick-sort*, implemented
 among others by the :code:`qsort` operation in the C standard library.
            

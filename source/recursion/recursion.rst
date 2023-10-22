@@ -94,7 +94,7 @@ Lists
 -----
 
 List is a data structure that we can use to implement the
-:doc:`Sequence ADT <sequences/array>`, as an alternative to
+:doc:`Sequence ADT </sequences/arrays>`, as an alternative to
 arrays. The idea is to see a sequence as an element followed by
 another sequence. :numref:`recursion/recursion/list` shows how one can
 declare such a data type in Java [#javaRecord]_ . We create a class
@@ -449,7 +449,7 @@ Memory Efficiency
 -----------------
 
 What about memory consumption? As we saw in :doc:`the previous lecture
-<recursion/procedure_calls>`, procedure calls consume memory via the
+</recursion/procedure_calls>`, procedure calls consume memory via the
 call stack. Since recursion relies on procedure calls, recursive
 algorithms consume more memory.
 

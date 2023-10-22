@@ -2,7 +2,6 @@
 Trees
 =====
 
-
 :Module: Trees
 :Git Repository: `Lab 04---Trees <https://github.com/fchauvel/aldast-lab04>`_
 :Objectives:

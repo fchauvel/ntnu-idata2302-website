@@ -1,48 +1,37 @@
-******
+======
 Graphs
-******
+======
 
-:Objectives: Understand the concept of graphs and know classical graph
-             problems and their accepted solutions.
-:Key concepts: graph (ADT), shortest path, spanning tree, flow network
-:Data Structures: edge list, adjacency list, adjacency matrix
-:Algorithms: graph traversals (depth-first, breadth-first), Dijkstra,
-             Bellman-Ford, Floyd Warhsall, Prim, Kruskal, Floyd-Fulkerson
-:Suggested Readings:
-   - Goodrich et al, Chap 7
-   - Siena, Chap 7
+This module focuses on *graphs*: Webs of nodes connected by
+links. Graph is a versatile concept that surfaces is every application
+domain, from transportation to Biology: Social networks, food webs,
+digital circuits, transportation maps, etc. We sill look at how to
+represent graphs in memory, how to traverse them, and more.
 
-    
-Activities
-==========
-     
-This module focuses on graphs.
+.. seealso::
 
-1. Introduction (:download:`slides </_static/slides/dummy.pptx>`)
-2. Shortest paths
-3. Minimum Spanning Trees and Networks
+   Here we only scratched the surface, from the Computer Science
+   angle. Graph is such a common construct that it has its dedicated
+   bra of mathematics! There are many resources available to go
+   further:
+
+   - Erciyes, E. (2018). Guide to Graph algorithms. 1st
+     edition, Springer.
+
+   - Wilson, R. J. (1996). Introduction to graph theory. 4th
+     edition, Addison-Wesley.
 
 Contents
 ========
-   
+     
 .. toctree::
    :maxdepth: 3
    :numbered:
 
-   introduction
-   data_structure
-   shortest_path
+   intro/index
+   shortest_path/index
+   mst/index
    
-To Go Further
-=============
+    
 
-Graph is a versatile concept that surfaces is every application
-domain, from transportation to Biology. Here we only scratched the
-surface, from the Computer Science angle. There are many resources
-available to go further, including:
 
-- Erciyes, E. (2018). Guide to Graph algorithms. 1st
-  edition, Springer.
-
-- Wilson, R. J. (1996). Introduction to graph theory. 4th
-  edition, Addison-Wesley.
