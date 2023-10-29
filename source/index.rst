@@ -27,6 +27,7 @@ Algorithms and Data Structures
    hashing/index
    trees/index
    graphs/index
+   optimization/index
 
 .. toctree::
    :caption: Lab Sessions
