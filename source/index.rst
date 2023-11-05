@@ -16,7 +16,7 @@ Algorithms and Data Structures
    about/practicalities
    about/exams
    about/resources
-   
+
 .. toctree::
    :maxdepth: 4
    :caption: Modules
@@ -28,6 +28,7 @@ Algorithms and Data Structures
    trees/index
    graphs/index
    optimization/index
+   theory/index
 
 .. toctree::
    :caption: Lab Sessions
