@@ -14,7 +14,7 @@ Contents
    :maxdepth: 2
    :numbered:
 
-   introduction
+   intro/index
    bst
    heap
    avl
