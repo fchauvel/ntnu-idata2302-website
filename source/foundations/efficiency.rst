@@ -258,7 +258,7 @@ time each instruction take. This is known as the *cost model* of the
 computation model (i.e., the RAM). In this course we assume that every
 instruction takes one unit of time, as shown in
 :numref:`foundations/efficiency/cost-model` below. This is known as
-the *unit cost model [#other-cost-models]_ .
+the *unit cost model* [#other-cost-models]_ .
 
 .. [#other-cost-models] More "realistic" cost models exist. For
                         example, with the *bit-cost* model, the time

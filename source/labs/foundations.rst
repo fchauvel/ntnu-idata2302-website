@@ -15,8 +15,8 @@ Java Refresher
 The questions below should help you get up-to-speed with Java and with
 programming in general.
 
-.. exercise::
-   :label: foundations/refresher/rps
+.. exercise:: Rock-Paper-Scissor
+   :label: labs/foundations/refresher/rps
            
    Write a procedure ``whoWins`` that decides who wins a
    Rock-scissor-paper game. The procedure accepts the choice of the two
@@ -33,8 +33,8 @@ programming in general.
                $ mvn test -Dtest="no.ntnu.idata2302.lab01.RSPTest"
 
                
-.. solution:: foundations/refresher/rps
-   :class: toggle
+.. solution:: labs/foundations/refresher/rps
+   :class: dropdown
 
    There are many ways solve this. The simplest I can think of is to
    wrote a conditional with all the possibilities. I prefer however to
@@ -55,9 +55,9 @@ programming in general.
         {1, 2, 0}
       };
 
-.. exercise::
-   :label: foundations/minimum
-
+.. exercise:: Find the Minimum
+   :label: labs/foundations/refresher/minimum
+      
    Write a procedure that finds the minimum in a given array of
    integers.
 
@@ -70,7 +70,7 @@ programming in general.
 
                $ mvn test -Dtest="no.ntnu.idata2302.lab01.MinimumTest"
 
-.. solution:: foundations/minimum
+.. solution:: labs/foundations/refresher/minimum
    :class: dropdown
 
    To find the minimum, I would proceed as follows:
@@ -102,8 +102,8 @@ programming in general.
          return minimum;
        }
 
-.. exercise::
-   :label: foundations/triangles
+.. exercise:: ASCII Triangle
+   :label: labs/foundations/refresher/triangle
 
    Write a procedure that draws a triangle with characters, as shown
    below. The procedure accepts its height and a buffer where it can
@@ -137,8 +137,8 @@ programming in general.
 
                $ mvn test -Dtest="no.ntnu.idata2302.lab01.TriangleTest"
 
-.. solution:: foundations/triangle
-   :class: toggle
+.. solution:: labs/foundations/refresher/triangle
+   :class: dropdown
 
    To write a triangle with a given height, I would proceed line by
    line. First, I would compute the padding, that is the number of white
@@ -175,8 +175,8 @@ Random Access Machines
 This section illustrates random access machines: The computation model
 we will use throughout the course.
 
-.. exercise::
-   :label: foundations/ram/jvm
+.. exercise:: Java Virtual Machine
+   :label: labs/foundations/ram/jvm
 
    Consider for example the following Java program, which you can find
    in the file ``Multiplication.java``. It defines two constants
@@ -217,7 +217,7 @@ we will use throughout the course.
 
    #. How does this Java bytecode compare with the RAM assembly? Why?
 
-.. solution:: foundations/ram/jvm
+.. solution:: labs/foundations/ram/jvm
    :class: toggle
 
    Using ``javap`` on my machine, I obtain the following output (the
@@ -261,13 +261,13 @@ we will use throughout the course.
    the principles remain the same. The JVM is a sequential machine that
    stores intructions in memory and process them one after the other.
 
-.. exercise::
-   :label: foundations/ram/minimum
+.. exercise:: Find Minimum in ASM
+   :label: labs/foundations/ram/minimum
 
    Write a RAM assembly program that computes the minimum between two
    numbers given by the user (i.e., read on the I/O device).
 
-.. solution:: foundations/ram/minimum
+.. solution:: labs/foundations/ram/minimum
    :class: toggle
 
    The main challenge about this program is to implement a conditional
@@ -298,16 +298,16 @@ we will use throughout the course.
         else:  PRINT     second      
         done:  HALT
 
-.. exercise::
-   :label: foundations/ram/product
+.. exercise:: Multiplication in ASM
+   :label: labs/foundations/ram/product
 
    Write a RAM assembly program that computes the product of two
    positive numbers given by the users (i.e., read on the I/O device).
 
-.. solution:: foundations/ram/product
+.. solution:: labs/foundations/ram/product
    :class: toggle
 
-   One possible solution is to implement the product of two number as a
+   One possible solution is to implement the product of two numbers as a
    series of additions such that:
 
    .. math:: x \times y = \underbrace{x+x+\ldots+x}_{y~times}
@@ -356,8 +356,8 @@ In our case, we consider a database of quotes (a single CSV file). The
 job is that, given a fragment of text, say “jog”, find all the quotes
 that contains that very fragment.
 
-.. exercise::
-   :label: foundations/correctness/find-all-quotes
+.. exercise:: Find all Quotes
+   :label: labs/foundations/correctness/find-all-quotes
 
    Write an algorithm to find all the quotes that contains the fragment
    the user has provided.
@@ -370,7 +370,7 @@ that contains that very fragment.
    #. There is no test cases associated with this question. You will
       roll your own in the next question.
 
-.. solution:: foundations/correctness/find-all-quotes
+.. solution:: labs/foundations/correctness/find-all-quotes
    :class: toggle
 
    My first attempt would be to iterate through each of the entries and
@@ -388,8 +388,8 @@ that contains that very fragment.
               return matches;
           }
 
-.. exercise::
-   :label: foundations/correctness/find-all-quotes/test-cases
+.. exercise:: Test find all quotes
+   :label: labs/foundations/correctness/find-all-quotes/test-cases
 
    Consider testing your algorithm. Which test-cases would you write?
    Why these in particular? How much is enough for you to be confident
@@ -405,7 +405,7 @@ that contains that very fragment.
 
    #. Why did you choose these test-cases?
 
-.. solution:: foundations/correctness/find-all-quotes/test-cases
+.. solution:: labs/foundations/correctness/find-all-quotes/test-cases
    :class: toggle
    
    The test cases I would select include:
@@ -437,8 +437,8 @@ that contains that very fragment.
               assertTrue(result.isEmpty());
           }
 
-.. exercise::
-   :label: foundations/correctness/find-all-match/proof
+.. exercise:: Proof of Correctness
+   :label: labs/foundations/correctness/find-all-match/proof
 
    *Prove* that your algorithm is correct.
 
@@ -451,7 +451,7 @@ that contains that very fragment.
    #. Try to connect the two. How can you deduce the post-condition from
       the pre-condition?
 
-.. solution:: foundations/correctness/find-all-match/proof
+.. solution:: labs/foundations/correctness/find-all-match/proof
    :class: toggle
 
    The algorithm iterates over the entries and checks each of them. Here
@@ -501,8 +501,8 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
        return result;
      }
 
-.. exercise::
-   :label: foundations/efficiency/factorial
+.. exercise:: Efficiency of Factorial
+   :label: labs/foundations/efficiency/factorial
 
    Let us assume a cost model where all operations (assignments,
    arithmetic and logic) all cost 1 unit of time. Find the time
@@ -510,7 +510,7 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
    relationship between the size of the given array and the time needed
    for the computation.
 
-.. solution:: foundations/efficiency/factorial
+.. solution:: labs/foundations/efficiency/factorial
 
    My approach is to simply count the instructions executed using a
    frequency table, which gives me :math:`time(n) = 5n+3`.
@@ -529,7 +529,7 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
    Total Runtime:                               :math:`5n+3`
    =========================== ==== =========== ============
 
-.. exercise::
+.. exercise:: Growth Order of Factorial
    :label: foundations/efficiency/factorial
 
    What is the associated order of growth? How would you prove it?
@@ -566,7 +566,7 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
    I can thus conclude that our factorial procedure is of linear order
    (i.e., :math:`\Theta(n)`).
 
-.. exercise::
+.. exercise:: Factorial with a different cost-model
    :label: foundations/efficiency/factorial/cost
 
    Let us consider a different cost model, where a multiplication
@@ -605,7 +605,7 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
         
       \end{aligned}
 
-.. exercise::
+.. exercise:: Factorial (Alternative Cost Model)
    :label: foundations/efficiency/factorial/cost2
 
    What is the associated order of growth, with this alternative cost
@@ -632,8 +632,8 @@ lists all the pairs of natural numbers :math:`\{x,y\}` whose sum is
 :math:`\{0, 4\}, \{1, 3\}, \{2, 2\}`. Note that *pairs* are not ordered,
 so :math:`\{x,y\} = \{y,x\}`.
 
-.. exercise::
-   :label: foundations/efficiency/pairs
+.. exercise:: Finding all Pairs
+   :label: labs/foundations/efficiency/pairs
 
    Design an algorithm that finds all such pairs. The point is not to
    find the perfect algorithm, just a working solution. We will try to
@@ -644,7 +644,7 @@ so :math:`\{x,y\} = \{y,x\}`.
    #. Argue for the correctness. What make you think that it will not
       miss any pair? That it will not output twice the same pair?
 
-.. solution:: foundations/efficiency/pairs
+.. solution:: labs/foundations/efficiency/pairs
    :class: toggle
               
    My first idea would be to search through all the possible pairs and
@@ -661,8 +661,8 @@ so :math:`\{x,y\} = \{y,x\}`.
    :math:`x=6`, the pair :math:`\{6, 4\}` will have been listed when
    :math:`x=4`.
 
-.. exercise::
-   :label: foundations/efficiency/pairs
+.. exercise:: Implement Finding all Pairs
+   :label: labs/foundations/efficiency/pairs/code
 
    Implement your algorithm in Java. I provide a ``Pair`` class which
    can hold two values. You program should return a list of pairs.
@@ -678,7 +678,7 @@ so :math:`\{x,y\} = \{y,x\}`.
 
    #. Did any test case failed? Where did you get it wrong?
 
-.. solution:: foundations/efficiency/pairs
+.. solution:: labs/foundations/efficiency/pairs/code
    :class: toggle
               
    Here is my implementation of the algorithm shown above. I add pairs
@@ -704,7 +704,7 @@ so :math:`\{x,y\} = \{y,x\}`.
          return pairs;
      }
 
-.. exercise::
+.. exercise:: :math:`n = 4`
    :label: foundations/efficiency/parameter
 
    Let us assume that :math:`n=4`. How many instructions would the
@@ -735,7 +735,8 @@ so :math:`\{x,y\} = \{y,x\}`.
    cost 6. That gives us a total of
    :math:`15 \times 6 + 4 \times 3 = 102`.
 
-.. exercise:: foundations/efficiency/model
+.. exercise:: Efficiency Model
+   :label: foundations/efficiency/model
 
    Generalize a model of the time-efficiency of your algorithm.
 
@@ -798,14 +799,14 @@ so :math:`\{x,y\} = \{y,x\}`.
    We can check that :math:`time(4) = 102`, as we anticipated.
 
 
-.. exercise::
+.. exercise::  Order of Growth
    :label: foundations/efficiency/last
 
    What order of growth best characterizes the time-efficiency of your
    solution? If your algorithm is not of linear order, do you see a way
    to improve?
 
-.. solution:: :numref:`foundations/efficiency/last`
+.. solution:: foundations/efficiency/last
    :class: toggle
 
    Intuitively, we see that this solution runs in quadratic time (i.e.,
@@ -819,7 +820,6 @@ so :math:`\{x,y\} = \{y,x\}`.
 
       :math:`x \gets 0`
 
-.. _`sec:setup`:
 
 
 

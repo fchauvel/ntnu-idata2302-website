@@ -169,7 +169,7 @@ Hash Tables
 
 The hash table is the goto data structure to implement this *map*
 ADT. Under the hood, a hash table is just a fixed-sized array (see
-:doc:`Lecture 2.1 <sequences/adt>`). The particularity is the presence
+:doc:`Lecture 2.1 </sequences/adt>`). The particularity is the presence
 of a hash function that decides at which index a given key gets
 stored.  The hash function thus has the following signature:
 :math:`hash: Key \to \mathbb{N}`.
@@ -407,7 +407,7 @@ Re-interpretation
 
 If the key data type has the same length than an integer, we can
 simply interpret the bytes as an integer value (see :doc:`Lecture 2.1
-<sequences/adt>`).
+</sequences/adt>`).
 
 Say for instance that the key is a color :code:`rgba(74, 111, 104,
 0.43)` (some sort of pale green), which is represented by four bytes

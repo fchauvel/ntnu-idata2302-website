@@ -37,14 +37,14 @@ grids where the player can move in four directions: North, east, south
 and west. Some moves are not possible, because of walls.
 
 .. exercise::
-   :label: labs/graphs/create-your-maze
+   :label: labs/graphs/create-your-own
    :nonumber:
 
    Create your own :math:`5 \times 5` maze (with pen and paper). How
    did you proceed?
 
 
-.. solution:: labs/graphs/create.your-own
+.. solution:: labs/graphs/create-your-own
    :class: dropdown
 
    Any maze would do, here. See for example
@@ -100,7 +100,7 @@ and west. Some moves are not possible, because of walls.
    Figure :numref:`labs/graphs/maze_as_graph`)
 
    .. figure:: _static/images/maze_as_graph.svg
-      :name: labs/graph/maze_as_graph
+      :name: labs/graphs/maze_as_graph
 
       A simple :math:`3 \times 3` maze represented as an undirected
       graph
@@ -245,21 +245,22 @@ search and Dijkstra’s algorithm.
    the ``Search`` class. Below is one possible, which works with all
    DFS, BFS and Dijkstra’s algorithms.
 
-   .. code:: java
+   .. code-block:: none
 
-      void record(Vector start, Vector move, Vector end) {
-        var newDistance = distanceTo(start) + 1;
-        var record = knownCells.get(end);
-        if (record == null) {
-          knownCells.put(end, new Record(end, move, newDistance));
-          pendingCells.add(end);
+          void record(Vector start, Vector move, Vector end) {
+              var newDistance = distanceTo(start) + 1;
+              var record = knownCells.get(end);
+              if (record == null) {
+                knownCells.put(end, new Record(end, move, newDistance));
+                pendingCells.add(end);
 
-        } else if (distanceTo(end) > newDistance) {
-          record.move = move;
-          record.distance = newDistance;
-        }
-      }
+              } else if (distanceTo(end) > newDistance) {
+                   record.move = move;
+                   record.distance = newDistance;
+              }
+          }
 
+      
 Analysis
 ========
 
@@ -407,6 +408,7 @@ the two following properties [#buck2015]_.
    
 .. exercise::
    :label: labs/graphs/is-perfect
+   :nonumber:
 
    Sketch an algorithm that checks whether a given maze is perfect. How
    would you proceed?

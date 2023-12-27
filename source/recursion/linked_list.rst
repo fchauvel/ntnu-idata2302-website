@@ -8,11 +8,11 @@ Linked Lists
 :Concepts: Linked-lists, Iterators
 
 
-Now we know about :doc:`recursion <recursion/recursion>`, and how it
+Now we know about :doc:`recursion </recursion/recursion>`, and how it
 applies to both algorithms and data types, we can look at our first
 recursive data type: The *linked List*. We will see how a linked list
 yields another implementation of the :doc:`sequence ADT
-<sequences/arrays>` with different efficiency as opposed to
+</sequences/arrays>` with different efficiency as opposed to
 array-based implementation. We will also briefly look at other members
 of linked-list family, including the doubly linked list, and the
 circular list. Finally, we will look at Iterator, a concepts that
@@ -320,14 +320,14 @@ last :math:`n` items.
 Iterators
 =========
 
-Consider our :doc:`Sequence ADT <sequences/arrays>`, and how one can
+Consider our :doc:`Sequence ADT </sequences/arrays>`, and how one can
 traverse it, say to print all items. Given the operations we
 defined, one could write the program shown by
 :numref:`recursion/sequence/traversal`.
 
 .. code-block:: c
    :caption: Traversing a sequence using the operations of the ADT
-   :name: recursion/sequennce/traversal
+   :name: recursion/sequence/traversal
 
    for (int i=1 ; i<=seq_length(sequence) ; i++) {
       int item = seq_get(sequence, index);
@@ -335,7 +335,7 @@ defined, one could write the program shown by
    }
 
 If use an array to implement our sequence (see :doc:`Lecture 2.2
-<sequences/arrays`), this traversal would run in :math:`O(n)`. Indeed,
+</sequences/arrays>`), this traversal would run in :math:`O(n)`. Indeed,
 each access to a specific items (see :code:`seq_get()` takes
 :math:`O(1)` and we will do this for each of the :math:`n` items.
 

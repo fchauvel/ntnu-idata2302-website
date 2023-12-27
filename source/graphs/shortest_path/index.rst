@@ -7,3 +7,5 @@ Reachability & Shortest Paths
 :Concepts: Dijsktra's algorithm, Bellman-Ford algorithm, Floyd-Warshall algorithm
 
 To be completed
+
+.. include:: reachability.inc.rst

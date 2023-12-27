@@ -182,7 +182,7 @@ Formally, a tree :math:`t` over a set :math:`S` is defined
 .. [#definitions] There are many ways to formalize the notion of
    tree. I choose the "recursive" one, which I found the most
    concise. We will see an alternative when we discuss :doc:`graphs
-   </graphs/intro>`.
+   </graphs/intro/index>`.
 
 .. margin::
 
@@ -500,6 +500,7 @@ trees, so it is natural to write it in a recursive way. For instance,
 the ``flatten`` procedure above can be rewritten as follows:
 
 .. code-block:: java
+   :caption: Depth-first strategy implemented recursively
    :name: trees/intro/dfs/recursive
    :emphasize-lines: 4, 8, 10
    :linenos:

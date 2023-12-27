@@ -29,7 +29,7 @@ earlier in :numref:`friendship_graph`. Finding a *path* from Denis to
 Kevin would reveal whether they belong to the same "community". Here
 there is no such path.
 
-.. image:: _static/images/friendship_graph.svg
+.. figure:: ../intro/_static/images/friendship_graph.svg
 
    A sample friendship graph (same as :numref:`friendship_graph`).
 
@@ -91,14 +91,13 @@ vertices.  The depth-first traversal would proceed as follows:
 Example Implementation
 ----------------------
          
-:numref:`depth_first_alg` below shows a Java implementation of this
-algorithm. Note the use of a stack (see Line 3) which forces the
-extraction of the *last* inserted pending vertex.
+:numref:`graphs/sp/depth_first/code` below shows a Java implementation
+of this algorithm. Note the use of a stack (see Line 3) which forces
+the extraction of the *last* inserted pending vertex.
 
-.. _depth_first_alg:
-   
 .. code-block:: ruby
    :caption: Ruby implementation of a depth-first search
+   :name: graphs/sp/depth_first/code
    :linenos:
    :emphasize-lines: 3,7,10-12
                      
@@ -127,16 +126,15 @@ extraction of the *last* inserted pending vertex.
    list pattern in Ruby".
    
   
-Consider for example :numref:`depth_first_example` below, which shows
+Consider for example :numref:`graphs/sp/dfs/example` below, which shows
 a "friendship" graph. Vertex represent persons, whereas an edge between two
 persons indicates they know each other. Edges are bidirectional and
 can be navigated both ways. Starting from "Denis", this depth-first
 traversal will reach the vertices in the following order: Denis,
 Frank, Lisa, John, Mary, Olive, Erik, Peter, and Thomas.
 
-.. _depth_first_example:
-
-.. figure:: _static/images/depth_first_traversal.png
+.. figure:: ../intro/_static/images/depth_first_traversal.png
+   :name: graphs/sp/dfs/example
    :align: center
 
    Traversing a graph "depth-first", starting from the vertex "Denis"
@@ -147,9 +145,7 @@ Frank, Lisa, John, Mary, Olive, Erik, Peter, and Thomas.
 Let see how the ``visited`` and ``pending`` variables evolve in this
 example.
 
-.. include:: depth_first_run.rst
 
-             
 Why is it Correct?
 ------------------
 
@@ -165,8 +161,10 @@ What are the best cases and the worst cases
   
 - worst-case: The graph is a list-like object and we have to traverse
   the whole graph to reach the target.
+  
   - In that case, we traverse E and V edges before to reach to the
     target, which gives us O(V vertex+V-1 edges) = O(V)
+
   - Worst-case the graph is meshed, so there us V + V^2 edges 
 
 
@@ -199,14 +197,13 @@ pick from the list of pending vertices: The breadth-first traversal
 uses the first inserted, whereas the depth-first traversal uses the
 last inserted.
 
-:numref:`breadth_first_java` below illustrates how a breadth-first
+:numref:`graphs/sp/bfs/code` below illustrates how a breadth-first
 traversal could look like in Java. We use a ``Queue`` to ensure we
 always pick the first pending vertex, by insertion order.
 
-.. _breadth_first_java:
-   
 .. code-block:: java
-   :caption: Java implementation of a breadth-first traversal 
+   :caption: Java implementation of a breadth-first traversal
+   :name: graphs/sp/bfs/code
    :linenos:
    :emphasize-lines: 3,7,10-12
                      
@@ -227,17 +224,16 @@ always pick the first pending vertex, by insertion order.
    }
 
 Consider again the "friendship" graph introduced in above in
-:numref:`depth_first_example` and reproduced below on
-:numref:`breadth_first_example`. A breadth-first traversal starting
+:numref:`graphs/sp/dfs/example` and reproduced below on
+:numref:`graphs/sp/bfs/example`. A breadth-first traversal starting
 from "Denis" proceeds by "levels". First it looks at all the adjacent
 vertices, namely Frank and Olive. Then, it looks at vertices that it
 can reach from those, that is Lisa, Thomas, Mary, and Olive. And then
 it continues exploring nodes one more edge away, namely John and
 Peter.
 
-.. _breadth_first_example:
-
-.. figure:: _static/images/breadth_first_traversal.svg
+.. figure:: ../intro/_static/images/breadth_first_traversal.svg
+   :name: graphs/sp/bfs/example
    :align: center
 
    Traversing a graph "breadth-first". It enumerates vertices by

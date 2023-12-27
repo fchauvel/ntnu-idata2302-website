@@ -91,8 +91,6 @@ each edge includes a source vertex, a target vertex and a label. With
 this design a vertex is identified by its index in the underlying list
 of vertices, and an edge by its index in the underlying list of edges.
 
-.. _edge_list:
-
 .. figure:: _static/images/edge_list.svg
    :align: center
 
@@ -101,14 +99,14 @@ of vertices, and an edge by its index in the underlying list of edges.
 
 While simple, the main downside of this scheme is that most of
 operations on graphs rely on linear search to find either the vertex
-or the edge of interest. :numref:`edge_list_code` illustrates this
-issue on the ``edgesFrom`` method, where we have to iterate through
-all the edges to find those whose source vertex match the given one.
-
-.. _edge_list_code:
+or the edge of interest. :numref:`graphs/intro/edge_list/code`
+illustrates this issue on the ``edgesFrom`` method, where we have to
+iterate through all the edges to find those whose source vertex match
+the given one.
 
 .. code-block:: java
    :caption: Skeleton to implement a graph using an *edge list* in Java
+   :name: graphs/intro/edge_list/code
 
    public class EdgeList<V, E> {
    
@@ -143,7 +141,6 @@ gets its own list of incident edges. Often, store a hash table to
 retrieve specific vertex faster. When edges have no label/payload,
 each vertex is associated with the list of adjacent vertices (so the
 name "adjacency list").
-
 
 The benefit of the this adjacency list is that is speed up the
 retrieval of incoming and outgoing edges. These are often very useful
@@ -194,8 +191,8 @@ Adjacency Matrix
 
 
 .. note:: Graphs can quickly become very large. Take social media for
-          instances with millions of users, or package dependencies in
-          Python of JavaScript. Such large graphs requires dedicated
+          instance with millions of users, or package dependencies in
+          Python or JavaScript. Such large graphs requires dedicated
           storage solution, more like databases. Relational databases
           such as MySQL are however inappropriate and dedicated
           solution exists such as such as `Neo4j

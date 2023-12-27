@@ -426,7 +426,7 @@ Independent set
    Given a graph G=(V,E), find a subset of vertices V' such that no
    vertex in V' is adjacent to a vertex in V.
 
-.. include:: data_structure.rst
+.. include:: data_structure.inc.rst
 
    
 Appendix

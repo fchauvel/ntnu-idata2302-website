@@ -167,7 +167,7 @@ Linked Lists
 
 We continue by implementing the sequence ADT as a singly linked
 list. We implemented the same sequence ADT using arrays in
-:doc:`Lecture 2.2 <sequences/arrays>`.
+:doc:`Lecture 2.2 </sequences/arrays>`.
 
 .. code:: java
 

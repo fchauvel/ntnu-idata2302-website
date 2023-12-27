@@ -80,7 +80,7 @@ key-value, the hash of the key gives us the index where we shall store
 the given value. What to do to when a collision happens?
 
 The idea of *separate chaining* is to use an array of :doc:`linked
-lists <recursion/linked_list>` (as opposed to an array of
+lists </recursion/linked_list>` (as opposed to an array of
 values). This way, when a collision occurs we can simply insert the
 given value in the corresponding list [#list-insert]_
 . :numref:`hashing/collisions/separate_chaining` illustrates that. It
@@ -139,7 +139,7 @@ for these linked list of key-value pairs. We proceed as follows:
 In :numref:`hashing/collisions/chaining/get` shows how one could do
 that in Java. We first retrieve the *list* associated with the given
 key. If that list is :code:`null`, then the key is missing. Otherwise,
-we use :doc:`linear search <sequences/array>` to find which item holds
+we use :doc:`linear search </sequences/arrays>` to find which item holds
 the desired key. Note the iterator that speeds up traversing the list
 (see the :code:`search` procedure).
 
@@ -300,7 +300,7 @@ As a data-structure, open addressing requires less memory than
 separate chaining. The downside is that the table will get full at
 some point and must then be resized. Such a resizing, so called
 *rehashing*, resembles resizing a dynamic array (see :doc:`Lecture 2.3
-<sequences/dynamic_arrays>`) but requires to recompute the hash of
+</sequences/dynamic_arrays>`) but requires to recompute the hash of
 every entry, since the table has a new capacity.
 
 Retrieval
@@ -468,7 +468,7 @@ until we find a free one (or one that has been marked as deleted).
 
 .. code-block:: java
    :caption: Inserting a new key-value pair in a hash table using open-addressing
-   :name: hashing/collisions/open-addressing/remove
+   :name: hashing/collisions/open-addressing/insert
    :emphasize-lines: 3-4, 6
    :linenos:
                 
