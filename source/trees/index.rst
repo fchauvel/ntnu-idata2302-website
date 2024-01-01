@@ -4,7 +4,7 @@ Trees
 
 
 This module focuses on *trees*, probably the most ubiquitous structure
-in Computer Science. We will look at the general concept of tree, and
+in computer science. We will look at the general concept of tree, and
 at several data structures around this theme.
 
 Contents
@@ -15,7 +15,7 @@ Contents
    :numbered:
 
    intro/index
-   bst
+   bst/index
    heap
    avl
    btrees

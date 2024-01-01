@@ -28,7 +28,6 @@ trees, taxonomies, enterprise organizations, etc. often have a
 tree-like structure. Let's review a few common examples.
 
 Family Tree
-
   In a family tree, each person has two "parents" as shown
   :numref:`trees/intro/family_tree`. At the bottom, Franck's parents
   are Bertrand and Catherine. Bertrand's parents are Bernard and
