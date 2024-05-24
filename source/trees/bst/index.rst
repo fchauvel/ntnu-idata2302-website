@@ -13,7 +13,7 @@ We focus here on the *binary search tree* (BST), a tree data structure
 that implements *ordered sets* where items shall remain in a specific
 order at all times. Although the BST in its simplest form is *not*
 very efficient, we will later add :doc:`*self-balancing* (see Lecture
-5.4) </trees/avl>` to make it "production-ready".
+5.4) </trees/avl/index>` to make it "production-ready".
 
 Ordered Sets
 ============
