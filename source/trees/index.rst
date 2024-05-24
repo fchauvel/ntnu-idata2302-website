@@ -16,7 +16,7 @@ Contents
 
    intro/index
    bst/index
-   heap
-   avl
+   heap/index
+   avl/index
    btrees
    tries
