@@ -18,5 +18,5 @@ Contents
    bst/index
    heap/index
    avl/index
-   btrees
+   btree/index 
    tries
