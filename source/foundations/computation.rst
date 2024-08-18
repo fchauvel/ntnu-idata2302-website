@@ -2,7 +2,8 @@
 Computations
 ============
 
-:Lecture: Lecture 1.1 :download:`(slides) <_static/computation/welcome.pptx>`
+:Lecture: Lecture 1.1 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EbWFSG8t5CRNtOKCzuIc8wUBb9CaUMSfKrQLwm2jseGARA?e=ykm6PO>`
 :Objectives: Understand core Computer Science concepts
 :Concepts: Data, Computation, Computational Problem, Algorithm, Data Structure
 
