@@ -65,7 +65,7 @@ html_theme_options = {
     "path_to_docs": "source",
     "use_edit_page_button": True,
     "navbar_end": ["logo.html"],
-    "announcement": "<p class='news'>Hi there! What do you think of this course, so far? Please, give us <a href='https://docs.google.com/forms/d/e/1FAIpQLSdUWRWrbTWcRPWzu3ytqgJaEAe-pJNcyhB1gVyM9s0DoSaz_A/viewform?usp=sf_link' target='_blank'>feedback</a>!</p>"
+#    "announcement": "<p class='news'>Hi there! What do you think of this course, so far? Please, give us <a href='https://docs.google.com/forms/d/e/1FAIpQLSdUWRWrbTWcRPWzu3ytqgJaEAe-pJNcyhB1gVyM9s0DoSaz_A/viewform?usp=sf_link' target='_blank'>feedback</a>!</p>"
 
 }
 
