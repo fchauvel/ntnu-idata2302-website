@@ -30,8 +30,8 @@ there three times a week for all lectures and lab sessions. Feel free
 to come and ask questions. I am paid to answer you!
 
 .. note:: I am only an external resource in NTNU. I am a software
-   engineer at `Axbit <https://axbit.com>`_ so I don't have an office
-   where you can find me.
+   engineer at `dipai.no <https://dipai.no>`_ so I don't have an
+   office iN NTNU, where you can find me.
 
    Feel free to reach out, by email work best for me
    franck.chauvel@ntnu.no Expect a reply in the next 12 hours.
