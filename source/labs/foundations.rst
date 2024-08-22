@@ -210,8 +210,11 @@ we will use throughout the course.
 
                $ javap -c \
                        -classpath ./target/lab01-0.1-SNAPSHOT.jar \
-                       no.ntnu.idata2302.lab01.Multiplication 
-
+                       no.ntnu.idata2302.lab01.Multiplication
+     
+      You may need to force the compilation of the code using the command
+      ``mvn package -DskipTests``
+    
    #. Take the time to read about the Java bytecode, for example `on
       Wikipedia <https://en.wikipedia.org/wiki/Java_bytecode>`__.
 
