@@ -2,7 +2,8 @@
 The Big-O Notation
 ==================
 
-:Lecture: Lecture 1.6 :download:`(slides) <_static/big_oh/big_oh.pptx>`
+:Lecture: Lecture 1.6 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/r/personal/franckc_ntnu_no/Documents/IDATA%202302/01_foundations/06_big_oh.pptx?d=wa4816badbb9d441a81d0e5c3daf4e929&csf=1&web=1&e=zi4t6e>`
 :Objectives: Understand Orders-of-growth
 :Concepts: Order-of-growth, Big-O, Big-:math:`\Theta`, Big-:math:`\Omega`
 
