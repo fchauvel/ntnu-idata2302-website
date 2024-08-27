@@ -3,7 +3,7 @@ Algorithm Analysis
 ==================
 
 :Lecture: Lecture 1.5 :download:`(slides)
-          <https://studntnu-my.sharepoint.com/:p:/r/personal/franckc_ntnu_no/Documents/IDATA%202302/01_foundations/05_algorithm_analysis.pptx?d=w932ce26b4f6342d9860efd2a1b3917aa&csf=1&web=1&e=NsdFwf>`
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EWviLJNjT9lChg79Khs5F6oBzNnyk1O1-As_NqcSO2WEig?e=VN8rTl>`
 :Objectives: Understand how different execution scenarios of an
              algorithm
 :Concepts: Best-case, worst-case, average case
