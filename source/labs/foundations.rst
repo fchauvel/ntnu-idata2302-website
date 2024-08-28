@@ -510,13 +510,13 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
    Let us assume a cost model where all operations (assignments,
    arithmetic and logic) all cost 1 unit of time. Find the time
    efficiency, that is the function :math:`time(n)` that captures the
-   relationship between the size of the given array and the time needed
+   relationship between the parameter :math:`n` and the time needed
    for the computation.
 
 .. solution:: foundations/efficiency/factorial
 
-   My approach is to simply count the instructions executed using a
-   frequency table, which gives me :math:`time(n) = 5n+3`.
+   My approach is to count the instructions executed using a frequency
+   table, which gives me :math:`time(n) = 5n+3`.
 
 
    =========================== ==== =========== ============
@@ -544,7 +544,7 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
    :math:`\Theta(n)`). Let see how one could prove that:
 
    To this end, I would return to the definitions, and prove that our
-   function is both bounded above and below by a linear function.
+   function is **both** bounded above and below by a linear function.
 
    Let shows our function :math:`f \in O(n)`. We have to find two
    constants :math:`c` and :math:`n_0`, such that
@@ -650,8 +650,20 @@ so :math:`\{x,y\} = \{y,x\}`.
    My first idea would be to search through all the possible pairs and
    print those that fit. I come up with something like:
 
-   .. math::
-      x \gets 0
+   .. parsed-literal::
+
+      **Input** `n`: The target sum, n ≥ 0
+
+      1. x ← 0
+      2. **while** x ≤ n 
+         1. y ← x
+         2. **while** y ≤ n
+            1. **if** x + y = n
+               1. **print** {x, y}
+            2. y ← y + 1
+         3. x ← x + 1
+   
+
 
    My intuition is that given a value for :math:`x`, say 4, the inner
    loop searches through all the pairs where :math:`y` is greater than
@@ -661,8 +673,9 @@ so :math:`\{x,y\} = \{y,x\}`.
    :math:`x=6`, the pair :math:`\{6, 4\}` will have been listed when
    :math:`x=4`.
 
+
 .. exercise::
-   :label: foundations/efficiency/pairs
+   :label: foundations/efficiency/pairs/impl
 
    Implement your algorithm in Java. I provide a ``Pair`` class which
    can hold two values. You program should return a list of pairs.
@@ -678,7 +691,7 @@ so :math:`\{x,y\} = \{y,x\}`.
 
    #. Did any test case failed? Where did you get it wrong?
 
-.. solution:: foundations/efficiency/pairs
+.. solution:: foundations/efficiency/pairs/impl
    :class: toggle
               
    Here is my implementation of the algorithm shown above. I add pairs
@@ -719,12 +732,12 @@ so :math:`\{x,y\} = \{y,x\}`.
    during this computation. I underline the pairs that match.
 
    -  :math:`x=0`: :math:`\{0, 0\}`, :math:`\{0, 1\}`, :math:`\{0, 2\}`,
-      :math:`\{0, 3\}`, *:math:`\{0, 4\}`*
+      :math:`\{0, 3\}`, :math:`\{0, 4\}`
 
    -  :math:`x=1`: :math:`\{1, 1\}`, :math:`\{1, 2\}`,
-      *:math:`\{1, 3\}`*, :math:`\{1, 4\}`
+      :math:`\{1, 3\}`, :math:`\{1, 4\}`
 
-   -  :math:`x=2`: *:math:`\{2, 2\}`*, :math:`\{2, 3\}`,
+   -  :math:`x=2`: :math:`\{2, 2\}`, :math:`\{2, 3\}`,
       :math:`\{2, 4\}`
 
    -  :math:`x=3`: :math:`\{3, 3\}`, :math:`\{3, 4\}`
@@ -735,7 +748,8 @@ so :math:`\{x,y\} = \{y,x\}`.
    cost 6. That gives us a total of
    :math:`15 \times 6 + 4 \times 3 = 102`.
 
-.. exercise:: foundations/efficiency/model
+.. exercise::
+   :label: foundations/efficiency/model
 
    Generalize a model of the time-efficiency of your algorithm.
 
@@ -815,11 +829,13 @@ so :math:`\{x,y\} = \{y,x\}`.
    :math:`x \leq \frac{n}{2}`. That gives us a faster “linear” algorithm
    as follows:
 
-   .. container:: algorithm
+   .. parsed-literal::
 
-      :math:`x \gets 0`
+      **Input** `n`: The target sum, n ≥ 0
 
-.. _`sec:setup`:
-
-
+      1. x ← 0
+      2. **while** x ≤ (n/2) 
+         1. print {x, n-x}
+  
+     
 
