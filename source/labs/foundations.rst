@@ -558,7 +558,6 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
           f(n) \leq & c \cdot n \\
           5n + 3  \leq & 6n \\
                3  \leq & n
-        
       \end{aligned}
 
    That holds! And we get the :math:`n_0` value: :math:`n_0 = 3`.
@@ -593,7 +592,6 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
           time_{L5}(n) = & \sum_{i=1}^{n} time_{\times}(i) \\
                       = & \sum_{i=1}^{n} i \\
                       = & \frac{n(n+1)}{2}
-        
       \end{aligned}
 
    And a grand total for the ``factorial`` procedure of:
@@ -605,7 +603,6 @@ number: :math:`n! = 1 \times 2 \times 3 \times \ldots \times n`.
                   = & 3n + \frac{n(n+1)}{2} + 3 \\
                   = & \frac{6n + (n^2 + n) + 6}{2} \\
                   = & \frac{n^2 + 7n + 6}{2}
-        
       \end{aligned}
 
 .. exercise::
