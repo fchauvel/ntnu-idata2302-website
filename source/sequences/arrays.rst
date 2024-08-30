@@ -2,7 +2,8 @@
 Using Arrays
 ============
 
-:Lecture: Lecture 2.2 :download:`(slides) <_static/arrays/arrays.pptx>`
+:Lecture: Lecture 2.2 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ERDXnLUKJdpDoxCfwbwf26sBckbk0sdSrlSV4Y8xdWohYA?e=piGwcH>`
 :Objectives: Understand how to implement sequences using arrays
 :Concepts: Insertion, deletion and searching through sequences
 

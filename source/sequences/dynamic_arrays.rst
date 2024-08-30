@@ -2,7 +2,8 @@
 Using Dynamic Arrays
 ====================
 
-:Lecture: Lecture 2.3 :download:`(slides) <_static/dynamic_arrays/amortized_analysis.pptx>`
+:Lecture: Lecture 2.3 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Efm693KhdtlOka_fZCqrSzoBo1n5FQnxuAaL-6o0PrtxCg?e=co0zs0>`
 :Objectives: Understand amortized analysis and dynamic arrays
 :Concepts: Amortized analysis, dynamic arrays, memory allocation
 
