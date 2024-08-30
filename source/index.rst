@@ -21,10 +21,9 @@ Algorithms and Data Structures
    :maxdepth: 4
    :caption: Modules
 
-   foundations/index
-
-..             
+   foundations/index             
    sequences/index
+..
    recursion/index
    hashing/index
    trees/index

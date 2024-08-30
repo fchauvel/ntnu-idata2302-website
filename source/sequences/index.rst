@@ -16,6 +16,7 @@ Contents
    adt.rst
    arrays.rst
    dynamic_arrays.rst
+..
    searching.rst
    sorting.rst
    stacks
