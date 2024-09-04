@@ -12,16 +12,20 @@
 
 .. important::
 
-   UPDATED! This is the first **mandatory** lab session. Organize
-   yourself by groups of 2 to 3 students and write a short report,
-   summarizing your answers. Here are some guidelines:
+   This is the first **mandatory** lab session. Organize into groups
+   of 2 to 3 students and write a short report, summarizing your
+   answers. Here are some guidelines:
    
-   - Justify every answer, especially calculations.
+   - Justify your answers, especially calculations.
    - Do *not* exceed *8 pages*
    - Do *not* attach a zip of your Java project
 
    Submit your report, as a **PDF** file, on Blackboard by **Friday
-   September 22, 2023 at 23:30** at the latest.
+   September 20, 2024 at 23:30** at the latest. You will find the
+   submission form under `Learning material 〉Sequences 〉Lab 2`.
+
+   Note that you need to be assigned in a group to see the submission
+   form.
 
 
 Dynamic Arrays in Java
@@ -104,8 +108,8 @@ maximum of the sequence.
    :label: lab/sequences/extrema/worst-case
    :nonumber:
 
-   What is the worst-case scenario for your algorithm? Give an example
-   of sequence that triggers that worst case.
+   What is the worst-case scenario for your algorithm? Give an sample
+   sequence that triggers that worst case.
 
 .. exercise:: 2 points
    :label: lab/sequences/extrema/worst-case/count
@@ -135,7 +139,7 @@ Finding Duplicates
    - The sequence :math:`s_3 = (1, 2, 1, 3, 1, 4)` also contains one
      duplicate, 1, which occurs three times.
 
-   Do **not** use any additional data structure, such as hash tables,
+   Do **not** use any additional data structures, such as hash tables,
    hash sets, etc.
 
    We can add it has a new operations on our Sequence class, as
@@ -179,6 +183,7 @@ Finding Duplicates
    #. How would you express such an upper bound with the Big-Oh notation?
    #. Which one is the tightest bound?
 
+      
 Digital Counter
 ===============
 
