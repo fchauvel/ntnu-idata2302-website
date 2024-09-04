@@ -6,7 +6,7 @@
 :Git Repository: `Lab 02---Sequences <https://github.com/fchauvel/aldast-lab02>`_
 :Objectives:
    - Understand the sequence ADT
-   - Understand dynamic arrays and memory allocation
+   - Understand arrays and memory allocation
    - Apply algorithm analysis techniques
 
 
@@ -28,12 +28,12 @@
    form.
 
 
-Dynamic Arrays in Java
-======================
+Sequences Using Arrays in Java
+==============================
 
-This first section focuses on how to implement the Sequence ADT
-using *dynamic arrays* in Java (see lectures :doc:`2.2
-</sequences/arrays>` and :doc:`2.3 </sequences/dynamic_arrays>`).
+This first section focuses on how to implement the Sequence ADT using
+*arrays* in Java (see lectures :doc:`2.2 </sequences/arrays>` and
+:doc:`2.3 </sequences/dynamic_arrays>`).
 
 The class :code:`no.ntnu.idata2302.lab02.SequenceTest` contains some
 unit tests that might help you.
