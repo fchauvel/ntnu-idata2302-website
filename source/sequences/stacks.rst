@@ -2,7 +2,8 @@
 Stacks, Queues, and Deques
 ==========================
 
-:Lectures: Lecture 2.6 :download:`(slides) <_static/stacks/stacks_and_queues.pptx>`
+:Lectures: Lecture 2.6 :download:`(slides)
+           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ER16NnH6HGRJsO3IWtyRPgwBGB1PBCSxAPpmwy8WAYs6pg?e=1UBcGS>`
 :Objectives: Know other useful ADT, including Stacks, Queues, and Deques
 :Concepts: ADT, Sequences (ADT), Queue (ADT), Stack (ADT), Deque (ADT)
 
