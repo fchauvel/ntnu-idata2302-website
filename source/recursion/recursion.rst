@@ -2,7 +2,7 @@
 Recursion
 =========
 
-:Lecture: Lecture 3.2 :download:`(slides) <_static/recursion/recursion.pptx>`
+:Lecture: Lecture 3.2 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQ4LCfcFE6RIndFUInByF-kBGjjjcgE8q0YQ62ysOZCGMw?e=Ccqdet>`
 :Objectives: Understand what is recursion, how to use it, and how
              measure efficiency of recursive algorithms
 :Concepts: Recursion, recursive procedure, recursive data type

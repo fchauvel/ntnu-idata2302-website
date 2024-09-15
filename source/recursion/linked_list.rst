@@ -2,7 +2,7 @@
 Linked Lists
 ============
 
-:Lecture: Lecture 3.3 :download:`(slides) <_static/linked_list/linked_lists.pptx>`
+:Lecture: Lecture 3.3 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EYkbgdwxCwJIj6snFY0uOakB40JubjlbZRrAzQAWtGmwpA?e=qTxfgj>`
 :Objectives: What is a linked list, and how to implement the Sequence
              ADT using a linked list
 :Concepts: Linked-lists, Iterators
