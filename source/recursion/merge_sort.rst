@@ -2,7 +2,8 @@
 Merge Sort
 ==========
 
-:Lecture: Lecture 3.5 :download:`(slides) <_static/merge_sort/merge_sort.pptx>`
+:Lecture: Lecture 3.5 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Ef7Ac-PmhwxLr7PoXB6_0u4Bo6t6_STQnBzsJYCAnBybFw?e=5URP91>`
 :Objectives: Understand how does merge sort works, and why does it sort fast
 :Concepts: Merge sort using split and merge, master theorem
 

@@ -2,7 +2,8 @@
 Quick Sort
 ==========
 
-:Lecture: Lecture 3.4 :download:`(slides) <_static/quick_sort/quick_sort.pptx>`
+:Lecture: Lecture 3.4 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQ3eIyg4GPhGuQ1cVfOTDGoBmXZQfwz7A8GdcSWofKnGoQ?e=iLNPe5>`
 :Objectives: Understand how does quick sort works, and why does it sort fast
 :Concepts: Sorting, recursion, pivot element
 
