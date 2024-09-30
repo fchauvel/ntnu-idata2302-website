@@ -2,7 +2,8 @@
 Collisions
 ==========
 
-:Lecture: Lecture 4.2 :download:`(slides) <_static/collisions/hashing_collisions.pptx>`
+:Lecture: Lecture 4.2 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EWOA-ivowCFLl96rXMhX7D4BoNNjGhSHC_v0InEwDo6kjQ?e=lLXBDK>`
 :Objectives: Understand the problem of collisions when using a hash
              function and how to work around it
 :Concepts: Hash function, collisions, separate chaining, open addressing
