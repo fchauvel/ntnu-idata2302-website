@@ -2,7 +2,8 @@
 What Is Hashing?
 ================
 
-:Lecture: Lecture 4.1 :download:`(slides) <_static/hashing/hashing.pptx>`
+:Lecture: Lecture 4.1 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQ1VOikUF1VMulIorHS_fmcBnuMe_v8KBxSDiPH-LKfyYQ?e=srwrQi>`
 :Objectives: Understand what is a hash function how a hash table uses
              it offer constant time access
 :Concepts: Map ADT, hash functions, hash table, insertion, deletion

@@ -2,7 +2,8 @@
 Efficiency
 ==========
 
-:Lecture: Lecture 1.4 :download:`(slides) <_static/efficiency/efficiency.pptx>`
+:Lecture: Lecture 1.4 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ETKCPpn1nvZJjo0lmblBd1ABeC4138uX4FZsv5LRpoY_rA?e=HFt6tU>`
 :Objectives: Understand how to estimate the resources consumed by a
              computation
 :Concepts: Time, Space, Efficiency/Complexity, Cost Model

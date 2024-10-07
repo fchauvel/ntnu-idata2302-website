@@ -2,7 +2,7 @@
 Searching
 =========
 
-:Lectures: Lecture 2.4 :download:`(slides) <_static/searching/searching.pptx>`
+:Lectures: Lecture 2.4 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EXhRnVYq6vNLpv4sKXGsA4oBHZn1YC1hX1ODjl7pKJj-BA?e=6nTls5>`
 :Objectives: Understand how "order" enables searching faster in
              sequences.
 :Concepts: Sequences (ADT), jump search (algorithm), binary search

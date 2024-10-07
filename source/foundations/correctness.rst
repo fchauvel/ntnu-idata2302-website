@@ -2,7 +2,8 @@
 Correctness
 ===========
 
-:Lecture: Lecture 1.3 :download:`(slides) <_static/correctness/correctness.pptx>`
+:Lecture: Lecture 1.3 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EbVXtGOrTcNDs276AbcjSAkBtlpMzqk6QFVf-MnTUIHulQ?e=dLbeyG>`
 :Objectives: Check whether an algorithm is correct
 :Concepts: termination, proof, loop invariant, test
 

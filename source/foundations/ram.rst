@@ -2,7 +2,8 @@
 Computer
 ========
 
-:Lecture: Lecture 1.2 :download:`(slides) <_static/computer/ram.pptx>`
+:Lecture: Lecture 1.2 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EVRZ4inHnqRAkCXLyFt_mX0BvxVxkmwCQs_OvtZrLw4DIg?e=8P0N2R>`
 :Objectives: Understand how the machine works
 :Concepts: CPU, Memory, Instruction, Program
 

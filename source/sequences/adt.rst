@@ -2,7 +2,8 @@
  Abstract Data Types
 =====================
 
-:Lecture: Lecture 2.1 :download:`(slides) <_static/adt/adt.pptx>`
+:Lecture: Lecture 2.1 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ETGmtqfZd0xLim0wXUhPLGIBNtYqVdd7hmeetQdX28yasg?e=lT8MtD>`
 :Objectives: Understand what is an abstract data type
 :Concepts: Data, Computation, Computational Problem, Algorithm, Data Structure
 

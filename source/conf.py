@@ -17,22 +17,19 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Algorithms and Data Structures'
-copyright = '2021, NTNU'
-author = 'NTNU'
+project = "Algorithms and Data Structures"
+copyright = "2021, NTNU"
+author = "NTNU"
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.38'
+release = "0.4.15"
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    "sphinx_exercise",
-    "sphinx_togglebutton"
-]
+extensions = ["sphinx_exercise", "sphinx_togglebutton"]
 
 rst_prolog = "Version: |release|"
 
@@ -40,7 +37,7 @@ rst_prolog = "Version: |release|"
 numfig = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -53,9 +50,9 @@ exclude_patterns = ['.DS_Store', '**/*inc.rst']
 # a list of builtin themes.
 #
 
-html_theme = 'sphinx_book_theme'
+html_theme = "sphinx_book_theme"
 
-#html_logo = "_static/ntnu_logo.png"
+# html_logo = "_static/ntnu_logo.png"
 
 html_title = "IDATA 2302 &mdash; Algorithms and Data Structures"
 
@@ -65,8 +62,7 @@ html_theme_options = {
     "path_to_docs": "source",
     "use_edit_page_button": True,
     "navbar_end": ["logo.html"],
-    "announcement": "<p class='news'>Hi there! What do you think of this course, so far? Please, give us <a href='https://docs.google.com/forms/d/e/1FAIpQLSdUWRWrbTWcRPWzu3ytqgJaEAe-pJNcyhB1gVyM9s0DoSaz_A/viewform?usp=sf_link' target='_blank'>feedback</a>!</p>"
-
+    #    "announcement": "<p class='news'>Hi there! What do you think of this course, so far? Please, give us <a href='https://docs.google.com/forms/d/e/1FAIpQLSdUWRWrbTWcRPWzu3ytqgJaEAe-pJNcyhB1gVyM9s0DoSaz_A/viewform?usp=sf_link' target='_blank'>feedback</a>!</p>"
 }
 
 html_css_files = ["custom.css"]
@@ -74,15 +70,9 @@ html_css_files = ["custom.css"]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 mathjax3_config = {
-    "svg": {
-        "displayAlign": 'center',
-        "displayIndent": "2em"
-    },
-    "chtml": {
-        "displayAlign": 'left',
-        "displayIndent": "2em"
-    }
+    "svg": {"displayAlign": "center", "displayIndent": "2em"},
+    "chtml": {"displayAlign": "left", "displayIndent": "2em"},
 }

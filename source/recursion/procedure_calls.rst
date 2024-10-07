@@ -3,7 +3,7 @@ Procedure Calls
 ===============
 
 :Lectures: Lecture 3.1 :download:`(slides)
-           <_static/procedure_calls/procedure_calls.pptx>`
+           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EZETEPT__alMmNYtg6n6EP8B8p0KU5M4oPZMhpwi8WHXyg?e=kEJbzE>`
 :Objectives: Understand the mechanisms of procedure calls and their
              runtime and memory cost
 :Concepts: call-stack, call-frame, static and dynamic memory
