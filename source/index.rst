@@ -25,8 +25,8 @@ Algorithms and Data Structures
    sequences/index
    recursion/index
    hashing/index
-..
    trees/index
+..
    graphs/index
    optimization/index
    theory/index

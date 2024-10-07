@@ -17,6 +17,8 @@ Contents
    intro/index
    bst/index
    heap/index
+
+..
    avl/index
    btree/index 
    tries

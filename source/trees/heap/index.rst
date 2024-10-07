@@ -2,7 +2,8 @@
 Binary Heaps
 ============
 
-:Lecture: Lecture 5.3 :download:`(slides) <_static/heaps.pptx>`
+:Lecture: Lecture 5.3 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQGJXr3Y261JmR24u2QX69EBRPkxWZ-RG68slB7LKYRRbw?e=nFC1HJ>`
 :Objectives: Understand how to implement a priority queue using binary heap
 :Concepts: Priority queue ADT, insertion, minimum extraction,
            "heapification".

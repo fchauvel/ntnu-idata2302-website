@@ -2,7 +2,8 @@
 Binary Search Trees
 ===================
 
-:Lecture: Lecture 5.2 :download:`(slides) <_static/bst.pptx>`
+:Lecture: Lecture 5.2 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EW2z8u3JLjRNr3GYw-Pr9mgBL28wX_tBfmGJOAetBUyyYA?e=NNV4z3>`
 :Objectives: Understand how to implement an ordered set using a binary
              search tree
 :Concepts: Ordered Set ADT, insertion, deletion, min/max,

@@ -2,11 +2,10 @@
  Trees
 =======
 
-:Lecture: Lecture 5.1 :download:`(slides) <_static/trees.pptx>`
+:Lecture: Lecture 5.1 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQKtzmoUCRBDscwKftUbJOYBHIv0IyhcOdo20MO3kfyKpA?e=DhXUxc>`
 :Objectives: Understand the concept of trees and how to traverse a tree
 :Concepts: Tree, tree representation, depth-first traversal,
            breadth-first traversal
-
 
 What Is a Tree?
 ===============
