@@ -21,7 +21,7 @@ Trees
    - Do *not* attach a zip of your Java project
 
    Submit your report, as a **PDF** file, on Blackboard by **Friday
-   October 27, 2023 at 23:30** at the latest.
+   November 1, 2024 at 23:30** at the latest.
 
    
 Binary Search Tree (BST)
@@ -149,4 +149,3 @@ We look here at how one can implement a minimum heap in Java.
    an error if k is greater or equal to the element stored at
    position i.
 
-      
