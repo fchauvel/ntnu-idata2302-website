@@ -1,4 +1,4 @@
-    class Node
+class Node
 
   def initialize(capacity)
     unless capacity > 1
@@ -9,6 +9,10 @@
 
   def minimum_key
     raise "Abstract class"
+  end
+
+  def maximum_key
+    raise
   end
 
   def size
@@ -51,25 +55,41 @@
     raise "Abstract class"
   end
 
+  def take_maximum_from(node)
+    raise "Abstract class"
+  end
+
+  def take_minimum_from(node)
+    raise "Abstract class"
+  end
+
 end
 
 class Branch < Node
 
   def initialize(capacity, branches)
-    # if branches.count < capacity / 2
-    #   raise ArgumentError.new("Shall have at least #{capacity / 2} branch(es)")
-    # end
     super(capacity)
-    @keys = branches[1...branches.count].map{ |branch| branch.minimum_key }
-    @branches = branches
+    @branches = branches.sort_by{| b | b.minimum_key}
   end
 
   def branches
     return @branches
   end
 
+  def minimum_key
+    return @branches[0].minimum_key
+  end
+
+  def maximum_key
+    return @branches.last.maximum_key
+  end
+
   def size
     return @branches.count
+  end
+
+  def keys
+    @branches.drop(1).map{|b| b.minimum_key}
   end
 
   def find(key)
@@ -79,11 +99,13 @@ class Branch < Node
 
   private
   def pick_branch(key)
-    index = (0...@keys.count).find{|i| @keys[i] > key}
+    index = @branches.find_index{| b | b.minimum_key > key }
     if index.nil?
       return @branches.last, @branches.count - 1
+    elsif index == 0
+      return @branches.first, index
     else
-      return @branches[index], index
+      return @branches[index-1], index-1
     end
   end
 
@@ -92,17 +114,17 @@ class Branch < Node
     branch, index = pick_branch(key)
     branch.insert(key, item)
     if branch.is_overflowing
-      key, left, right = branch.split
-      @keys[index,1] = [index, key]
+      left, right = branch.split
       @branches[index,1] = [left, right]
     end
   end
 
   def split
-    raise RuntimeError.new("Not overflowing") unless is_overflowing
+    if not is_overflowing
+      raise RuntimeError.new("Only split when overflowing!")
+    end
     half = @branches.count / 2
-    return @branches[half].minimum_key,
-           Branch.new(@capacity, @branches.take(half)),
+    return Branch.new(@capacity, @branches.take(half)),
            Branch.new(@capacity, @branches.drop(half))
   end
 
@@ -110,19 +132,27 @@ class Branch < Node
     branch, index = pick_branch(key)
     branch.remove(key)
     if branch.is_underflowing
-      left, right = siblings_of(index)
-      if left and left.has_extra
-        take_from_left(index)
-      elsif right and right.has_extra
-        take_from_right(index)
-      elsif left
-        merge_with_left(index)
-      else
-        merge_with_right(index)
-      end
+      repair_underflow(branch, index)
     end
   end
 
+  private
+  def repair_underflow(underflowing, index)
+    left, right = siblings_of(index)
+    if left and left.has_extra
+      underflowing.take_maximum_from(left)
+    elsif right and right.has_extra
+      underflowing.take_minimum_from(right)
+    elsif left
+      @branches[index-1, 2] = left.merge_with(underflowing)
+    elsif right
+      @branches[index, 2] = underflowing.merge_with(right)
+    else
+      raise RuntimeError.new("Could not merge with or take from either side")
+    end
+  end
+
+  private
   def siblings_of(index)
     if index == 0
       return nil, @branches[index+1]
@@ -133,30 +163,23 @@ class Branch < Node
     end
   end
 
-  def take_from_left(index, left)
-    key, item = left.remove_last_entry
-    @branches[index].add(@keys[index-1], item)
-    @key[index-1] = key
+
+  def take_minimum_from(node)
+    unless node.is_a? Branch
+      raise RuntimeError.new("Can only take from another Branch node!")
+    end
+    @branches.push(node.branches.shift)
   end
 
-  def take_from_right(right)
-    key, item = right.remove_first_entry
-    @branches[index].add_entry(@key[index], item)
-    @keys[index] = key
+  def take_maximum_from(node)
+    unless node.is_a? Branch
+      raise RuntimeError.new("Can only take from another Branch node?")
+    end
+    @branches.insert(0, node.branches.pop)
   end
 
-  def merge_with_left(index)
-    merge = @branches[index-1].merge_with(@branches[index])
-    @branches.delete_at(index)
-    @branches[index-1] = merge
-    @keys.delete_at(index-1)
-  end
-
-  def merge_with_right(index)
-    merge = @branches[index].merge_with(@branches[index+1])
-    @branches.delete_at(index+1)
-    @branches[index] = merge
-    @keys.delete_at(index)
+  def merge_with(other)
+    return Branch.new(capacity, branches + other.branches)
   end
 
 end
@@ -191,6 +214,13 @@ class Leaf < Node
     return @entries[0].key
   end
 
+  def maximum_key
+    if size == 0
+      raise RuntimeError.new("Empty leaf has no maximum key")
+    end
+    return @entries.last.key
+  end
+
   def find(key)
     match = @entries.find{|e| e.key == key}
     return match.item unless match.nil?
@@ -214,9 +244,12 @@ class Leaf < Node
   def split
     raise RuntimeError.new("Not overflowing") unless is_overflowing
     half = @entries.count / 2
-    return @entries[half].key,
-           Leaf.new(@capacity, @entries.take(half)),
+    return Leaf.new(@capacity, @entries.take(half)),
            Leaf.new(@capacity, @entries.drop(half))
+  end
+
+  def remove(key)
+    @entries.reject!{|e| e.key == key }
   end
 
   def merge_with(node)
@@ -224,6 +257,20 @@ class Leaf < Node
       return Leaf.new(@capacity, @entries + node.entries)
     end
     raise ArgumentError.new("Neither node is underflowing")
+  end
+
+  def take_maximum_from(node)
+    unless node.is_a?(Leaf)
+      raise RuntimeError.new("A leaf can only take from another leaf")
+    end
+    @entries.insert(0, node.maximum_entry)
+  end
+
+  def take_minimum_from(node)
+    unless node.is_a?(Leaf)
+      raise RuntimeError.new("A leaf can only take from another leaf")
+    end
+    @entries.push(node.minimum_entry)
   end
 
 end
