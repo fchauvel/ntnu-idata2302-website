@@ -6,3 +6,5 @@ build
 # C/C++ files
 *.o
 a.out
+**/.scala-build
+**/.bsp
