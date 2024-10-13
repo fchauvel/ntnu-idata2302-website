@@ -1,8 +1,9 @@
-====================
-Self-Balancing Trees
-====================
+=========
+AVL Trees
+=========
 
-:Lecture: Lecture 5.4 :download:`(slides) <_static/avl.pptx>`
+:Lecture: Lecture 5.4 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ERcNN9oUejxIpg4lQbqFLnMBXPumPV8KVF2O-dbofG45mA?e=caOyKY>`
 :Objectives: Understand why BST must remain well-balanced. Understand
              how this is done in AVL trees.
 :Concepts: balancing factor, tree rotations, insertion and deletion in

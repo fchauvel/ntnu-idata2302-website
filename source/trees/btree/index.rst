@@ -3,7 +3,8 @@ B-Trees
 =======
 
 
-:Lecture: Lecture 5.5 :download:`(slides) <_static/btrees.pptx>`
+:Lecture: Lecture 5.5 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EUYDoQNgD0BBgmHoAttKHG8BYG8HtqEcnV64J8XGc26lzw?e=oarFuj>`
 :Objectives: Understand what is a B-tree, and how and when it helps
              reduce disk usage
 :Concepts: Disk-access Model (DAM), B-Tree principle, insertion and
