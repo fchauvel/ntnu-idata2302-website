@@ -2,7 +2,8 @@
 Graph Theory
 ============
 
-:Lecture: Lecture 6.1 :download:`(slides) <_static/graphs.pptx>`
+:Lecture: Lecture 6.1 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EdFvI3aqOWxAn6p69GI1nCYBtQbsqGSJqujuD_11B7MzmA?e=HzjmL0>`
 :Objectives: Understand what a graph is, what data structures exists
              to represent it, and when to choose these data
              structures.
