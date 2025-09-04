@@ -21,7 +21,7 @@
    - Do *not* attach a zip of your Java project
 
    Submit your report, as a **PDF** file, on Blackboard by **Friday
-   September 20, 2024 at 23:30** at the latest. You will find the
+   September 26, 2025 at 23:30** at the latest. You will find the
    submission form under `Learning material 〉Sequences 〉Lab 2`.
 
    Note that you need to be assigned in a group to see the submission
@@ -225,10 +225,11 @@ and from 9 back to 0.
    change to make `124`, but incrementing `199` yields `200` and three
    digits must changed.
 
-.. exercise:: 2 points
-   :label: lab/sequences/counter/amortized
-   :nonumber:
+..   
+   .. exercise:: 2 points
+      :label: lab/sequences/counter/amortized
+      :nonumber:
 
-   When incrementing the value of the counter, how many times does
-   your algorithm invoke the `next` operation for its digits. Use
-   amortized analysis to find a bound.
+      When incrementing the value of the counter, how many times does
+      your algorithm invoke the `next` operation for its digits. Use
+      amortized analysis to find a bound.
