@@ -21,7 +21,7 @@ Trees
    - Do *not* attach a zip of your Java project
 
    Submit your report, as a **PDF** file, on Blackboard by **Friday
-   November 1, 2024 at 23:30** at the latest.
+   November 6, 2025 at 23:30** at the latest.
 
    
 Binary Search Tree (BST)
