@@ -429,15 +429,5 @@ Independent set
 
 .. include:: data_structure.inc.rst
 
-   
-Appendix
-========
-
-.. toctree::
-   :maxdepth: 2
-   :titlesonly:
-      
-   ruby_edge_list
-   js_adjacency_list
-   c_adjacency_matrix
+             
    
