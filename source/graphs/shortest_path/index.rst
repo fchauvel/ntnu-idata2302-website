@@ -199,7 +199,7 @@ vertex, it has found the shortest path to that vertex.
 
 
 Why BFS Finds Shortest Paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **The Intuition**: BFS is like throwing a stone into a pond—the ripples
 spread outward uniformly. Vertices at distance :math:`d` are all
@@ -907,9 +907,8 @@ optimal.
 How Efficient is it?
 ~~~~~~~~~~~~~~~~~~~~
 
-The time complexity depends on how we implement the priority queue:
-
-**With a binary heap** (standard ``PriorityQueue`` in Java):
+The time complexity depends on how we implement the priority queue,
+but here we assume we are using a :doc:`binary heap <trees/heaps>`.
 
 - :math:`O(V)` extract-min operations: :math:`O(V \log V)`
 - :math:`O(E)` decrease-key operations: :math:`O(E \log V)` (remove and
@@ -918,26 +917,6 @@ The time complexity depends on how we implement the priority queue:
 
 For connected graphs where :math:`E \geq V - 1`, this simplifies to
 :math:`O(E \log V)`.
-
-**With a Fibonacci heap**:
-
-- :math:`O(V)` extract-min operations: :math:`O(V \log V)`
-- :math:`O(E)` decrease-key operations: :math:`O(E)` (amortized)
-- **Total**: :math:`O(V \log V + E)`
-
-**With a simple array** (for dense graphs):
-
-- Finding minimum among :math:`V` vertices: :math:`O(V)` per iteration
-- :math:`V` iterations: :math:`O(V^2)`
-- Edge relaxations: :math:`O(E)`
-- **Total**: :math:`O(V^2 + E) = O(V^2)` for dense graphs
-
-For dense graphs where :math:`E \approx V^2`, the array implementation
-can be faster than heap-based approaches!
-
-**Space complexity**: :math:`O(V)` for distance array, parent array,
-and priority queue.
-
 
 Limitation
 ~~~~~~~~~~

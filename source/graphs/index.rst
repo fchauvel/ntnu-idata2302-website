@@ -39,14 +39,3 @@ Contents
    intro/index
    shortest_path/index
    mst/index
-   
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Appendices
-   :numbered:
-    
-   intro/ruby_edge_list
-   intro/js_adjacency_list
-   intro/c_adjacency_matrix
- 

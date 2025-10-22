@@ -483,88 +483,74 @@ Here's the algorithm in pseudocode:
        return MST
 
 The key challenge is efficiently determining whether two vertices are
-in the same component and merging components. This is where the
-**union-find** (or disjoint-set) data structure comes in.
+in the same component and merging components. This requires tracking
+**disjoint sets** of vertices.
 
 
-The Union-Find Data Structure
-------------------------------
+Managing Disjoint Sets
+-----------------------
 
-.. index:: union-find, disjoint-set
+.. index:: disjoint sets, components
 
-The union-find data structure maintains a collection of disjoint sets
-and supports two operations:
+To implement Kruskal's algorithm, we need a data structure that
+maintains a collection of disjoint sets (components) and supports these
+operations:
+
+**MakeSet(x)**
+   Create a new set containing only element :math:`x`.
 
 **Find(x)**
    Determine which set contains element :math:`x`. Returns a
-   representative element (the "root") of the set.
+   representative element identifying the set.
 
 **Union(x, y)**
    Merge the sets containing :math:`x` and :math:`y` into a single set.
 
-For Kruskal's algorithm:
+For Kruskal's algorithm, we use these operations as follows:
 
-- Initially, each vertex is in its own set (component)
+- Initially, each vertex is in its own set: ``MakeSet(v)`` for all
+  :math:`v \in V`
 - ``Find(u) == Find(v)`` tells us if :math:`u` and :math:`v` are in
   the same component
-- ``Union(u, v)`` merges the components after adding an edge
+- ``Union(u, v)`` merges the components after adding edge :math:`(u, v)`
+  to the MST
 
-A simple implementation uses an array ``parent[]`` where
-``parent[v]`` points to :math:`v`'s parent in its set tree.
+Here's how we use this abstract data type in Kruskal's algorithm:
 
-.. code-block:: java
-   :caption: Simple union-find implementation
-   :linenos:
+.. code-block:: text
+   :caption: Kruskal's algorithm with disjoint sets
 
-   public class UnionFind {
-       private int[] parent;
-       private int[] rank;  // For union by rank
+   function kruskal(G):
+       MST ← empty set
 
-       public UnionFind(int n) {
-           parent = new int[n];
-           rank = new int[n];
-           for (int i = 0; i < n; i++) {
-               parent[i] = i;  // Each element is its own parent
-               rank[i] = 0;
-           }
-       }
+       // Initialize: each vertex in its own component
+       for each vertex v:
+           MakeSet(v)
 
-       // Find with path compression
-       public int find(int x) {
-           if (parent[x] != x) {
-               parent[x] = find(parent[x]);  // Path compression
-           }
-           return parent[x];
-       }
+       // Sort edges by weight
+       sort all edges by weight (ascending)
 
-       // Union by rank
-       public void union(int x, int y) {
-           int rootX = find(x);
-           int rootY = find(y);
+       // Process edges in order
+       for each edge (u, v) in sorted order:
+           if Find(u) ≠ Find(v):           // Different components?
+               add edge (u, v) to MST
+               Union(u, v)                  // Merge components
 
-           if (rootX == rootY) return;  // Already in same set
+       return MST
 
-           // Attach smaller tree under larger tree
-           if (rank[rootX] < rank[rootY]) {
-               parent[rootX] = rootY;
-           } else if (rank[rootX] > rank[rootY]) {
-               parent[rootY] = rootX;
-           } else {
-               parent[rootY] = rootX;
-               rank[rootX]++;
-           }
-       }
+.. note::
 
-       public boolean connected(int x, int y) {
-           return find(x) == find(y);
-       }
-   }
+   **Implementation Note**: Efficient implementations of these disjoint
+   set operations exist using the **union-find** (or **disjoint-set
+   forest**) data structure. With clever optimizations (path compression
+   and union by rank), each operation takes nearly constant time:
+   :math:`O(\alpha(V))`, where :math:`\alpha` is the inverse Ackermann
+   function (effectively :math:`\alpha(V) < 5` for all practical graph
+   sizes).
 
-With **path compression** (line 15) and **union by rank** (lines
-29-34), each operation takes nearly constant time: :math:`O(\alpha(n))`
-where :math:`\alpha` is the inverse Ackermann function, which grows
-incredibly slowly (effectively :math:`\alpha(n) < 5` for all practical
-:math:`n`).
+   For details on implementing union-find, see the Further Reading
+   section at the end of this lecture, particularly Tarjan's 1975 paper
+   on efficient set union algorithms.
 
 
 A Concrete Example
@@ -634,7 +620,8 @@ Actually, this confirms MSTs can differ if edge weights allow it.
 Implementation
 --------------
 
-Here's a Java implementation of Kruskal's algorithm:
+Here's a Java implementation of Kruskal's algorithm, assuming we have a
+``DisjointSets`` class that provides the operations described above:
 
 .. _mst_kruskal_code:
 
@@ -645,7 +632,7 @@ Here's a Java implementation of Kruskal's algorithm:
 
    public Set<Edge> kruskal(Graph graph) {
        var mst = new HashSet<Edge>();
-       var uf = new UnionFind(graph.vertices().size());
+       var sets = new DisjointSets(graph.vertices().size());
 
        // Sort all edges by weight
        var edges = new ArrayList<>(graph.edges());
@@ -656,9 +643,9 @@ Here's a Java implementation of Kruskal's algorithm:
            int u = edge.source;
            int v = edge.target;
 
-           if (!uf.connected(u, v)) {
+           if (sets.find(u) != sets.find(v)) {
                mst.add(edge);
-               uf.union(u, v);
+               sets.union(u, v);
 
                // Early termination: MST has |V| - 1 edges
                if (mst.size() == graph.vertices().size() - 1) {
@@ -673,6 +660,13 @@ Here's a Java implementation of Kruskal's algorithm:
 
        return mst;
    }
+
+The ``DisjointSets`` class provides:
+
+- ``DisjointSets(n)``: Initialize :math:`n` disjoint sets
+- ``find(x)``: Return the representative of the set containing
+  :math:`x`
+- ``union(x, y)``: Merge the sets containing :math:`x` and :math:`y`
 
 
 Why is it Correct?
@@ -706,10 +700,10 @@ By the cut property, :math:`(u, v)` must be in some MST.
 By induction on the number of edges added, Kruskal's algorithm produces
 an MST.
 
-**Why doesn't it create cycles?** The union-find structure ensures we
-only add edges connecting different components. Since components are
-trees (or single vertices initially), connecting two different
-components cannot create a cycle.
+**Why doesn't it create cycles?** The disjoint sets structure ensures
+we only add edges connecting different components (checked via
+``Find``). Since components are trees (or single vertices initially),
+connecting two different components with an edge cannot create a cycle.
 
 
 How Efficient is it?
@@ -719,16 +713,21 @@ The complexity of Kruskal's algorithm:
 
 **Steps**:
 
-1. Sort edges: :math:`O(E \log E)`
-2. Process each edge: :math:`O(E)` iterations
-3. Union-find operations: :math:`O(\alpha(V))` per operation, nearly
-   constant
-4. Total for union-find: :math:`O(E \cdot \alpha(V)) \approx O(E)`
+1. **Sort edges**: :math:`O(E \log E)`
+2. **Process each edge**: :math:`O(E)` iterations
+3. **Disjoint set operations**: For each edge, we call ``Find`` (twice)
+   and possibly ``Union`` (once). With an efficient implementation,
+   these operations take nearly constant time: :math:`O(\alpha(V))` per
+   operation, where :math:`\alpha` is the inverse Ackermann function
+4. **Total for disjoint sets**: :math:`O(E \cdot \alpha(V)) \approx
+   O(E)` (since :math:`\alpha(V) < 5` for all practical :math:`V`)
 
 **Total time complexity**: :math:`O(E \log E)` = :math:`O(E \log V)`
-(since :math:`E \leq V^2`, :math:`\log E = O(\log V)`)
 
-**Space complexity**: :math:`O(V)` for the union-find structure,
+The sorting step dominates. Since :math:`E \leq V^2`, we have
+:math:`\log E = O(\log V)`.
+
+**Space complexity**: :math:`O(V)` for the disjoint sets structure,
 :math:`O(E)` for the edge list.
 
 **Comparison with Prim's**: Both have :math:`O(E \log V)` complexity,
@@ -760,7 +759,7 @@ characteristics:
    | **Edge Choice**  | Cheapest edge from     | Cheapest edge globally |
    |                  | tree to new vertex     | that doesn't cycle     |
    +------------------+------------------------+------------------------+
-   | **Data           | Priority queue of      | Union-find for         |
+   | **Data           | Priority queue of      | Disjoint sets for      |
    | Structure**      | edges                  | components             |
    +------------------+------------------------+------------------------+
    | **Time           | O(E log V) with binary | O(E log E) ≈           |

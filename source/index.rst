@@ -44,11 +44,21 @@ Algorithms and Data Structures
    labs/graphs/index
    labs/optimization
 
+   
+.. toctree::
+   :caption: Code Examples
+   :maxdepth: 1
+              
+   code/ruby_edge_list
+   code/js_adjacency_list
+   code/c_adjacency_matrix
+    
 .. toctree::
    :caption: Recaps
 
    maths.rst
-      
+
+             
 Indices and Tables
 ==================
 
