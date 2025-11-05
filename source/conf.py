@@ -22,7 +22,7 @@ copyright = "2021, NTNU"
 author = "NTNU"
 
 # The full version, including alpha/beta/rc tags
-release = "0.5.18"
+release = "0.5.19"
 
 # -- General configuration ---------------------------------------------------
 
@@ -39,8 +39,8 @@ numfig = True
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
+# List of patterns, relative to source directory, that vtmatch files and
+# directories to ignore when looking for source files.q
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [".DS_Store", "**/*inc.rst"]
 
