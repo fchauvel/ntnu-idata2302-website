@@ -22,7 +22,7 @@ copyright = "2021, NTNU"
 author = "NTNU"
 
 # The full version, including alpha/beta/rc tags
-release = "0.5.19"
+release = "0.5.20"
 
 # -- General configuration ---------------------------------------------------
 
