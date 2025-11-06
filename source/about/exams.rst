@@ -7,14 +7,14 @@ well as possible, I include two “home” examinations around Week 4
 and 8.  These are optional, but should you feel the need for it, I can
 grade them. All examinations follow the same pattern: 100 points
 divided among four parts with 5 questions each. We apply the grading
-scheme shown on :numref:`exams/grading` below.
+scheme from `NTNU <https://i.ntnu.no/wiki/-/wiki/English/Grading+scale+using+percentage+points>`_ shown on :numref:`exams/grading` below.
 
 .. csv-table:: Grading Scheme (total on 100 points)
    :name: exams/grading
    :header: "A", "B", "C", "D", "E", "F"
    :widths: 10, 10, 10, 10, 10, 10
 
-   ">=90", ">=80", ">=60", ">=50", ">=40", "<40"
+   ">=89", ">=77", ">=65", ">=53", ">=41", "<41"
 
 :numref:`exams/previous` list the questions and elements of solutions
 of the previous years. I encourage you to try one of these
