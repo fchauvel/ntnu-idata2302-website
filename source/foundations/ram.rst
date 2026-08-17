@@ -14,12 +14,12 @@ is the sequence of steps that specifies what computation to carry out in
 order to solve a computational problem.
 
 What about the *computer*? We saw that anything that can run a
-computation fits, but a primary school pupil and an Intel chip does not
+computation fits, but a primary school pupil and an Intel chip do not
 really look the same, do they? In this lecture, we will look at these
 “computing devices”. We will define a model of an “ideal” computer,
-which will help us answering:
+which will help us answer:
 
-#. What capabilities does our computer has?
+#. What capabilities does our computer have?
 
 #. What does it mean for the computer to use any of these capabilities?
 
@@ -28,8 +28,8 @@ which will help us answering:
 This “ideal” computer is the *model of computation* that we will assume
 in this course. It is called *random access machines* and underpins all
 imperative programming languages such as C, Pascal, Ada, Java, Python,
-etc. This may is a little theoretical, but this model of computation
-will be quite handy when discuss the correctness and efficiency of
+etc. This may be a little theoretical, but this model of computation
+will be quite handy when discussing the correctness and efficiency of
 algorithms. Other programming paradigms such as functional programming
 (e.g., LISP, Haskell, OCaml), logic programming (e.g., Prolog), hardware
 circuits or parallel computing use different models of computation.
@@ -45,9 +45,9 @@ Random Access Machines
 In this course, the machine we will use is called a *random access
 machine* (RAM) [#cook73]_. It closely resembles an actual “computer”,
 with a CPU and a memory, which makes it the\ *de facto* standard in
-algorithms and data structure course. RAM answers three questions:
+algorithms and data structures courses. RAM answers three questions:
 
-#. How does the machine acquires, stores and retrieves data?
+#. How does the machine acquire, store and retrieve data?
 
 #. What elementary computation can the machine do?
 
@@ -58,7 +58,7 @@ algorithms and data structure course. RAM answers three questions:
    354–375.
    
 RAM is an abstract machine, a “model” of computation: It is a blueprint
-for machine that carries out computation. A real computer is much more
+for a machine that carries out computation. A real computer is much more
 complicated.
 
 Architecture
@@ -76,8 +76,8 @@ three following components, also shown on
    example.
 
 -  A *memory*, which contains infinitely many *cells*. Each memory cell
-   can contains an arbitrary long sequence of symbols (i.e., a number)
-   and has a unique identifier (so called its address) which will allow
+   can contain an arbitrary long sequence of symbols (i.e., a number)
+   and has a unique identifier (so called its address) which will allow us
    to read and write anywhere in this memory.
 
 -  A central processing unit (CPU) that carries out arithmetic and
@@ -98,16 +98,16 @@ three following components, also shown on
    memory, and I/O device
 
 This RAM model remains a gross simplification. In a “real” computer,
-both the memory cells and the register have a limited size and can only
+both the memory cells and the registers have a limited size and can only
 contain a fixed number of binary digits (8, 16, 32 or 64 bits). This is
 known as the *word*-size, and captures the number of symbols the machine
 processes in one go. Besides, a real machine also has a limited memory,
-as well as many more registers with dedicated purposed.
+as well as many more registers with dedicated purposes.
 
 For the RAM to do anything, we need to tell it what to do. We can
 basically instruct it to move symbols from the memory to the CPU, to
 apply some elementary symbol manipulations on the CPU’s registers and to
-move symbol from the CPU back to the memory.
+move symbols from the CPU back to the memory.
 
 .. _`sec:machine-code`:
 
@@ -119,7 +119,7 @@ instructions. :numref:`foundations/computer/ram_instructions` details
 the eight instructions available. Each instruction is a pair of
 natural numbers, say :math:`(1, 12)` for instance. The first one is
 the *operation code* (OP) and indicates which action the machine must
-executed (read, write, add, etc.). The second number is the *operand*
+execute (read, write, add, etc.). The second number is the *operand*
 and details what piece of data the machine must manipulate. So the
 pair :math:`(1, 12)` means ``LOAD 12``, because :math:`1` is the
 operation code of the ``LOAD`` instruction, and 12 is the operand. The
@@ -142,10 +142,10 @@ Where are these instructions?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 These RAM instructions are stored in the main memory, just like any
-other data. Since each instruction is a pair of number, a program is
+other data. Since each instruction is a pair of numbers, a program is
 just a long list of numbers. Each instruction thus occupies two
 contiguous memory cells, one holding the operation code and one holding
-the operand. This number are the *machine code*.
+the operand. These numbers are the *machine code*.
 
 .. important::
 
@@ -158,14 +158,14 @@ the operand. This number are the *machine code*.
 Execution
 ---------
 
-Let us see how does the machine computes. It reads two memory cells
+Let us see how the machine computes. It reads two memory cells
 from the address contained in the ``IP`` register. Then it executes
 this instruction following the semantic given in
 :numref:`foundations/computer/ram_instructions`, and start over. The
 machine stops as soon as it meets an unknown operation code.
 
 :numref:`foundations/computer/machine_code` shows the complete memory
-layout of a tiny program that reads two numbers and print their
+layout of a tiny program that reads two numbers and prints their
 sum. The program stores the numbers given by the user at addresses 50
 and 51 respectively. It also stores the sum at address 52.
 
@@ -174,7 +174,7 @@ and 51 respectively. It also stores the sum at address 52.
 
 .. figure:: _static/computer/images/machine_code.svg
 
-   The *machine code* of a programs that reads two values from the I/O
+   The *machine code* of a program that reads two values from the I/O
    devices, add them, and print their sum back.
    
 
@@ -196,13 +196,13 @@ follows:
    it interprets as ``LOAD 0``. It thus sets the ``ACC`` register to 0,
    and then increments ``IP`` by 2.
 
-#. ``IP`` now equals 6, The machine reads addresses 6 and 7, which it
+#. ``IP`` now equals 6, the machine reads addresses 6 and 7, which it
    interprets as ``ADD 50``. It thus adds the value at address 50 to the
    ``ACC`` and then increments ``IP`` by 2.
 
 #. ``IP`` now contains 8. The machine reads addresses 8 and 9, which it
    interprets as ``ADD 51``. It thus adds the value stored at address 51
-   to the ``ACC`` register and then increase IP by 2.
+   to the ``ACC`` register and then increments IP by 2.
 
 #. ``IP`` is now 10 and the machine reads addresses 10 and 11, which it
    interprets as ``STORE 52``. It writes the value contained in the
@@ -221,11 +221,11 @@ follows:
 
    RAM is a *model of computation*: It defines how we carry out
    computations. We saw however that different computational problems
-   requires different algorithms, which in turn, may require different
+   require different algorithms, which in turn, may require different
    machines. Other models of computation exist such as Turing machines,
    finite state machines, :math:`\lambda`-calculus, cellular automata,
    etc.  If you wonder whether there is a universal machine that can
-   solve all computational problems, well, yes. Turing machines is the
+   solve all computational problems, well, yes. Turing machines are the
    most powerful computation model we know so far, and RAM and a few
    others are as powerful. This equivalence is known as the Church-Turing
    thesis. This is a theoretical question that goes beyond the scope of
@@ -261,7 +261,7 @@ Assembly Code
    segments. Data goes from address 0 to :math:`k−1` and code from
    :math:`k` to :math:`k+i−1`.
 
-Machine code does not fit humans’ capabilities. We do not want to uses
+Machine code does not fit humans’ capabilities. We do not want to use
 addresses but rather names or labels that are meaningful to the problem
 at hand. To cope with this, we can use an *assembly language* that is
 better suited to us and that we can convert to machine code. An assembly
@@ -277,7 +277,7 @@ following:
 - *Memory Layout* that clearly delineates between memory cells that
   store program instructions from those that store program data
   (input, output, intermediate results) (See
-  :numref:`foundations/computer/asm_memory_layout`).`
+  :numref:`foundations/computer/asm_memory_layout`).
 
 .. code-block:: asm
    :caption: An sample assembly program that reads two numbers and
@@ -299,10 +299,10 @@ following:
           PRINT sum      ; show the result
           HALT
 
-:numref:`foundations/computer/asm_example` shows an “hypothetical”
+:numref:`foundations/computer/asm_example` shows a “hypothetical”
 assembly program for our program that reads two numbers and prints
 their sum from :numref:`foundations/computer/machine_code`. It
-defines a data and a code segments (denoted by ``.data`` and ``.code``
+defines a data segment and a code segment (denoted by ``.data`` and ``.code``
 respectively) as shown on
 :numref:`foundations/computer/asm_memory_layout`. The data segment
 defines three variables ``n1``, ``n2``, and ``sum``, whose size is one
@@ -315,7 +315,7 @@ address of the first instruction.
 Now we can use an *assembler* to convert our assembly code into
 machine code and get a long list of numbers 6, 50, 6, 51, …, 0, 0 (see
 :numref:`foundations/computer/machine_code`) we can feed to the
-machine. The actual numbers generated depends on the where the
+machine. The actual numbers generated depend on where the
 assembler decides to place the code and data segments into memory.
 
 High-level Code
@@ -328,11 +328,11 @@ languages such as C, Java or Python. Here are the most common
 constructs:
 
 - *Arithmetic and logic expressions* such as :math:`a + c \geq
-  25`. They may refer to variable by name and contains explicit
+  25`. They may refer to variables by name and contain explicit
   numbers (literals).
 
-- *Assignments* such as :math:`v \gets e` which assigns the value of
-  resulting from expression :math:`e` the name :math:`v`.
+- *Assignments* such as :math:`v \gets e` which assigns to the name :math:`v` the value
+  resulting from expression :math:`e`.
 
 - *Conditionals* such as :math:`\mathbf{if} \; e \; \mathbf{then} \;
   c_1 \; \mathbf{else} \; c_2` which executes code :math:`c_1` only
@@ -348,7 +348,7 @@ constructs:
 We need to translate these constructs into assembly code either
 explicitly by a *compiler* or executed line by line by an *interpreter*.
 Without diving into the nitty-gritty details of compilers it is critical
-to understands this translation scheme.
+to understand this translation scheme.
 
 .. important::
 
@@ -380,7 +380,7 @@ Expressions
 ^^^^^^^^^^^
 
 Evaluating an expression consists in building a sequence of instructions
-that leaves the result in ``ACC`` register. The first thing RAM compiler
+that leaves the result in ``ACC`` register. The first thing the RAM compiler
 would do is to break long arithmetic expressions into a sequence of
 binary assignments, according to the precedence rules of arithmetic
 operators. Consider the following example:
@@ -431,7 +431,7 @@ Sequences of Commands
 A sequence of code blocks “:math:`c_1 \, ;\, c_2`” specifies the
 execution order of these two blocks. To this end, we either place the
 ASM code for :math:`c_2` right after the one for :math:`c_1` (as shown
-on :numref:`foundations/computer/sequence`, or place a ``JUMP`` in
+on :numref:`foundations/computer/sequence`), or place a ``JUMP`` in
 between.
 
 Conditionals
@@ -496,7 +496,7 @@ Returning to the multiplication of two natural numbers,
 :numref:`foundations/computer/product`
 and :numref:`foundations/computer/product/asm` show the pseudo code
 and some possible assembly code. During the compilation, we assume
-that input are read from the I/O device and output printed.
+that inputs are read from the I/O device and output is printed.
 
 .. code-block:: asm
    :caption: Computing the product of two given numbers

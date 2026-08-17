@@ -31,26 +31,26 @@ to come and ask questions. I am paid to answer you!
 
 .. note:: I am only an external resource in NTNU. I am a software
    engineer at `dipai.no <https://dipai.no>`_ so I don't have an
-   office iN NTNU, where you can find me.
+   office in NTNU, where you can find me.
 
-   Feel free to reach out, by email work best for me
-   franck.chauvel@ntnu.no Expect a reply in the next 12 hours.
+   Feel free to reach out by email; it works best for me:
+   franck.chauvel@ntnu.no. Expect a reply in the next 12 hours.
 
    
 What Do I Expect from You?
 --------------------------
 
 This course **is hard**---I cannot stress this enough. Do not wait the
-last moment to start preparing for the final examination.This course
-is an opportunity, and here is how I would do the most it:
+last moment to start preparing for the final examination. This course
+is an opportunity, and here is how I would make the most of it:
 
 -  Attend the lecture physically. Even more, ask questions! Attending
-   empower you to ask questions and to stop me if I am unclear. Please
+   empowers you to ask questions and to stop me if I am unclear. Please
    do so: I am happy to adjust or answer to the best of my knowledge.
 
 -  Attend the lab sessions and go through the exercises. In my
-   experience, exercises (whether on paper or on computer) is the only
-   thing that really ground our understanding.
+   experience, exercises (whether on paper or on computer) are the only
+   thing that really grounds our understanding.
 
 -  Go through the home examinations. I believe this is a good
    preparation to the final one and also a good way to see where we
@@ -58,5 +58,5 @@ is an opportunity, and here is how I would do the most it:
 
 -  Reach out if you need any help.
 
--  Practice. practice, practice.
+-  Practice, practice, practice.
 

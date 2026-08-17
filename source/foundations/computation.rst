@@ -41,7 +41,7 @@ Data is an overloaded term. Intuitively, it stands for more or less
 anything: Texts, numbers, pictures, audio recording, etc. In CS however,
 data is anything that we can write down using *a finite set of symbols*.
 For example, the word “computation” is a sequence of letters, each drawn
-from the Latin alphabet. Numbers shows up as combinations of Arabic
+from the Latin alphabet. Numbers show up as combinations of Arabic
 digits. Your smart phone computes using “binary” data, encoded using
 binary alphabet (0 or 1) …These are various forms of data.
 
@@ -55,8 +55,8 @@ Symbols vs. Concepts
 
 .. index:: symbol
 
-Symbols are things that stands for something else, often a more
-“abtsract” thing. For example, in the Western civilization, the symbol
+Symbols are things that stand for something else, often a more
+“abstract” thing. For example, in the Western civilization, the symbol
 ☠ stands for danger or death. Numbers are another example
 of “concepts” that we can write using a variety of symbols. We can write
 the concept of “two tens” as a combination of Arabic digits “20”, as the
@@ -67,7 +67,7 @@ interpretation, which is peculiar to human cognition.
 
 .. important::
 
-   A **computation** transforms of a sequence of symbols into another.
+   A **computation** transforms a sequence of symbols into another.
 
 Computational Problems
 ----------------------
@@ -79,7 +79,7 @@ solved by a computation! These are so-called *computational problems*,
 and are the focus of this course.
 
 A computational problem defines what are the valid outputs for any given
-input given. Such a problem sets the requirements for a computation.
+input. Such a problem sets the requirements for a computation.
 Here is an example:
 
 .. math::
@@ -94,7 +94,7 @@ The problem specified by Equation `[eq:addition] <#eq:addition>`__ is to
 find the number that is the sum of the two given inputs :math:`x` and
 :math:`y`. Note that the ’\ :math:`+`\ ’ symbol I used above does not
 tell us how to actually carry out an addition. It simply denotes the
-concept of “addition” and I assume that everyone recognizes it and know
+concept of “addition” and I assume that everyone recognizes it and knows
 what it means (associativity, neutral element, etc.). I bet you already
 know a procedure to find the sum of two natural numbers. In general,
 problems describe relations between concepts: natural numbers, addition,
@@ -106,7 +106,7 @@ whether a given number is a prime number. We will also meet search
 problems, where we have to find a particular value in a larger set, such
 as finding all the pairs of numbers whose sum is 10. Another type of
 problem is counting, where we try to figure out the number of solutions
-to a another problem. Finally there is also optimization problems, where
+to another problem. Finally there are also optimization problems, where
 we search for the solution that maximizes a specific criterion. All
 these problems can be described as mathematical functions.
 
@@ -135,7 +135,7 @@ instructions that solve a computational problem.
 Returning to the addition of two natural numbers, I have learned in
 primary school an algorithm to do that.
 :numref:`foundations/computation/addition` shows the setup I would
-use to add to 967. Here are the steps I would follow:
+use to add 4179 to 967. Here are the steps I would follow:
 
 #. Write down the two given numbers in a grid and align their digits by
    significance: The least significant digit on the rightmost column.
@@ -155,7 +155,7 @@ use to add to 967. Here are the steps I would follow:
 
 #. Move your finger to the next column on the left.
 
-#. If there is a carry-over, write it down in first cell.
+#. If there is a carry-over, write it down in the first cell.
 
 #. Return to Step 3.
 
@@ -216,10 +216,10 @@ In our addition example
 (see :numref:`foundations/computation/addition`) we use a “grid” that
 stores all the data, including the two given numbers (the inputs), the
 result (output) and the carryovers (intermediate results). This grid
-has four rows and one more column than the longest given numbers has
+has four rows and one more column than the longest given number has
 digits.
 
-Many data structure are possible for a given algorithm, and an
+Many data structures are possible for a given algorithm, and an
 appropriate data structure enables efficient algorithms. We will discuss
 various schemes such as lists, trees, graphs, etc. Each has its
 strengths and its weaknesses. As for our addition, we could have written
@@ -248,8 +248,8 @@ Once we have solved a computational problem, we have to communicate our
 solution: Explain it to our colleagues or simply to “program” a machine
 to do it. So, what is the best way to describe an algorithm? If the
 computer is a person our bullet list of plain English instructions may
-very well do the job. If the computer is a machine however, there we
-will have a hard time to get the machine understand all the nuances of
+very well do the job. If the computer is a machine, however, we
+will have a hard time getting the machine to understand all the nuances of
 our natural languages. Let us review a few commonly used approaches:
 Natural languages, flowcharts, pseudo-code and programs.
 
@@ -257,7 +257,7 @@ Using Natural Language
 ----------------------
 
 The simplest way to describe an algorithm is to use plain English,
-though this often lead to ambiguous text, which rules out the use
+though this often leads to ambiguous text, which rules out the use of
 machines. This is what we used in the previous section for our addition
 algorithm.
 
@@ -269,10 +269,10 @@ Using Flowcharts
 Another human-friendly way is to use a flowchart as shown on
 :numref:`foundations/computation/flowchart`. In a flowchart, the steps
 of an algorithm are shown as boxes connected by arrows. The flowchart
-syntax distinguishes between various type of steps such as processes,
-document, decisions, references, etc using different shapes.
-Figure `1 <#fig:flowchart>`__ only use “processes” (shown as
-rectangles) and decisions (shown as diamond). A flowchart makes the
+syntax distinguishes between various types of steps such as processes,
+documents, decisions, references, etc using different shapes.
+Figure `1 <#fig:flowchart>`__ only uses “processes” (shown as
+rectangles) and decisions (shown as diamonds). A flowchart makes the
 control structure (loops and decisions) very explicit, but the
 graphical syntax is quite space consuming and may not scale to complex
 algorithms.
@@ -303,7 +303,7 @@ For our addition algorithm we could write something like:
    **Output**: `z`: Sequence of digits such as z = x + y
 
    1. Setup x and y into a grid ;
-   2. Place your finger under the right most column.
+   2. Place your finger under the rightmost column.
    3. **while** there are digits in the column do:
       a. Read these digits;
       b. Add them up to get the sum and the carry;
@@ -325,7 +325,7 @@ that code that machine can understand.
 
 .. important::
 
-   There is an direct relationship between the actions we stipulate in
+   There is a direct relationship between the actions we stipulate in
    an algorithm and the capabilities of the computer we use to execute
    it.
 
@@ -334,6 +334,6 @@ Conclusions
 ===========
 
 Hopefully, you have a better grasp at what this is about. Let us get
-started! There is a lot or ground to cover. Please reach out if you have
+started! There is a lot of ground to cover. Please reach out if you have
 any questions or if you find mistakes in the slides, the lectures notes
 or the lab sessions.

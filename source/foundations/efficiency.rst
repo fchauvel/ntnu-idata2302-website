@@ -13,11 +13,11 @@ problems. We also saw how the machine executes a program and how we can
 therefore argue for correctness.
 
 Generally there are however many ways to solve a given computation
-problem. If we have several “correct” algorithms, them we need to
+problem. If we have several “correct” algorithms, then we need to
 compare them. There are many things we can look at, including their
-length, there readability, or their performance. In this course, we will
+length, their readability, or their performance. In this course, we will
 only look at their performance, which includes time and space. Time is
-the clock time enlapsed between the moment the RAM starts and the moment
+the clock time elapsed between the moment the RAM starts and the moment
 it stops, whereas space is the number of memory cells the machine uses.
 
 I organized the remainder as follows. The first part introduces two
@@ -27,7 +27,7 @@ which program runs the fastest and consumes the least memory. We then
 take a closer look, by converting these programs to RAM assembly, which
 gives us very different results. Finally, we look at understanding
 higher-level code without resorting to RAM assembly. In the next
-lecture, we will generalize to fully-fledge algorithms with arbitrary
+lecture, we will generalize to fully-fledged algorithms with arbitrary
 inputs and code.
 
 Running Example
@@ -72,7 +72,7 @@ require. There are two main resources: Time and space.
 
 
 .. code-block:: c
-   :caption: Computing the sum of the the first :math:`n` integers
+   :caption: Computing the sum of the first :math:`n` integers
              using a loop
    :name: foundations/efficiency/sum/loop
    :linenos:
@@ -91,7 +91,7 @@ require. There are two main resources: Time and space.
 Benchmarking Performance
 ========================
 
-How can get an idea of the time and memory these programs require? The
+How can we get an idea of the time and memory these programs require? The
 simplest way to answer that is to execute them and to measure. On most
 POSIX operating systems, one can do that using the ``time`` command,
 which accepts a command and displays various runtime information
@@ -127,10 +127,10 @@ including the run-time and memory consumption, as we can see on
 
 This is of course a simplistic way to measure, but it gives some
 indications nonetheless. We see that our C program takes less than 10
-milliseconds (0.00 real) to run whereas our Python programs takes 60 ms.
+milliseconds (0.00 real) to run whereas our Python program takes 60 ms.
 As for the memory (indicated by the maximum resident set size, in
-bytes), our C program requires 1.1 MiB, whereas our Python programs uses
-7.9 MiB. This a huge difference, but is that really about our
+bytes), our C program requires 1.1 MiB, whereas our Python program uses
+7.9 MiB. This is a huge difference, but is that really about our
 algorithms?
 
 These measurements describe the whole underlying setup, including
@@ -148,7 +148,7 @@ slower, and requires much more memory.
 
 *Performance engineering* is the Art of fine-tuning the machine, the OS
 and the runtime environment for maximum performance. In this course, we
-only focus “ballpark estimates”, independent of the machine and software
+only focus on “ballpark estimates”, independent of the machine and software
 stack. What we aim at is a relative landmark to compare alternative
 algorithms.
 
@@ -174,18 +174,18 @@ How would our two programs from
 :numref:`foundations/efficiency/sum/loop` and
 :numref:`foundations/efficiency/sum/formula` look like if they were
 written for RAM? :numref:`foundations/efficiency/sum/loop/asm` and
-:numref:`foundations/efficiency/sum/formula/asm` shows two
+:numref:`foundations/efficiency/sum/formula/asm` show two
 possible translations in RAM assembly, which I derived using the
 translation schemes presented in Lecture 1.2.
 
 :numref:`foundations/efficiency/sum/loop/asm` implements a loop,
 whereas :numref:`foundations/efficiency/sum/formula/asm` implements
-formula shown by Equation :eq:`foundations/efficiency/sum/equation` I
+the formula shown by Equation :eq:`foundations/efficiency/sum/equation`. I
 assume here an augmented RAM where all arithmetic operations are
 readily available as machine instructions.
 
 .. code-block:: asm
-   :caption: Summing the :math:`n` first integers using a lopp in
+   :caption: Summing the :math:`n` first integers using a loop in
              assembly code (cf.  :numref:`foundations/efficiency/sum/loop`)
    :name: foundations/efficiency/sum/loop/asm
    :linenos:
@@ -240,7 +240,7 @@ Space
 
 How can we estimate the memory used by these RAM programs? We will count
 the number of memory cells used in the *data segment*. Here there are
-three in each programs. Space-wise, both programs are equivalent. This
+three in each program. Space-wise, both programs are equivalent. This
 departs from our benchmarking, which indicated that our formula consumed
 much more memory.
 
@@ -255,7 +255,7 @@ Time
 ----
 
 To estimate the time spent by the machine, we need to know how much
-time each instruction take. This is known as the *cost model* of the
+time each instruction takes. This is known as the *cost model* of the
 computation model (i.e., the RAM). In this course we assume that every
 instruction takes one unit of time, as shown in
 :numref:`foundations/efficiency/cost-model` below. This is known as
@@ -264,7 +264,7 @@ the *unit cost model* [#other-cost-models]_ .
 .. [#other-cost-models] More "realistic" cost models exist. For
                         example, with the *bit-cost* model, the time
                         spent by an instruction depends on the number
-                        of symbol in its operand. This cost model,
+                        of symbols in its operand. This cost model,
                         assuming an alphabet with 10 symbols, is
                         :math:`cost(\mathtt{ADD}\; a)= \log_{10}
                         \mathrm{Mem}(a)`
@@ -287,7 +287,7 @@ the *unit cost model* [#other-cost-models]_ .
 .. important::
 
    The time spent in a computation is by definition the time spent by
-   the machine to reach to produce a result.
+   the machine to produce a result.
 
    In this course (unless stated otherwise), we shall assume however
    that every instruction takes one unit of time. Time thus
@@ -299,7 +299,7 @@ Example: The Formula
 How does this apply to our example? Consider first our Python program
 shown on :numref:`foundations/efficiency/sum/formula/asm`. The
 execution starts at the “main” label and ends with the ``HALT``
-instruction. The machine executes once an only once every of its seven
+instruction. The machine executes once and only once each of its seven
 instructions (there is no ``JUMP``). So this algorithm takes 7 units of
 time.
 
@@ -308,7 +308,7 @@ Example: The Loop
 
 By contrast, our C program (see
 :numref:`foundations/efficiency/sum/loop/asm`) includes ``JUMP``
-instructions so we have to pay attention to how many time each
+instructions so we have to pay attention to how many times each
 instruction runs. We have to look at each assembly instruction and
 mark down its cost (always 1) and how many times it runs (the
 count). These two combined give us a total cost for each assembly line
@@ -346,7 +346,7 @@ total of 1319.
    "11", "``⁣      STORE  any``", "101", "1", "101"
    "12", "``⁣      LOAD   0``", "101", "1", "101"
    "13", "``⁣      JUMP   main``", "101", "1", "101"
-   "14", "``⁣dome: PRINT  sum``", "1", "1", "1"
+   "14", "``⁣done: PRINT  sum``", "1", "1", "1"
    "15", "``⁣      HALT``", "1", "1", "1"
    "", "", "", "**Total:**", "**1319**"
 ..       ==== ================ ===== ====== =====
@@ -371,9 +371,9 @@ total of 1319.
          ==== ================ ===== ====== =====
 
 Time-wise, this reveals that our loop-based algorithm is much slower
-than our formula: The loop takes instructions against only 7 for the
+than our formula: The loop takes 1319 instructions against only 7 for the
 formula! This is also very different from our benchmarking, where our C
-program run much faster! Again, what we saw with the benchmark is that
+program ran much faster! Again, what we saw with the benchmark is that
 machine code runs much faster than interpreted code.
 
 Higher-level Code
@@ -400,7 +400,7 @@ the loop. The difference (x10) is still there, and this is what matters.
 Conclusion
 ==========
 
-Now we know what are the runtime and space required to run a given
+Now we know what runtime and space are required to run a given
 computation. Time is simply the time it takes before the machine halts
 whereas the space is the number of memory cells it uses to store
 intermediate results. We are not there yet though. We have only looked

@@ -10,7 +10,7 @@ brief overview of what I have used.
 Textbooks
 =========
 
-There are loads of books algorithms and data structures. It's the core
+There are loads of books on algorithms and data structures. It's the core
 topic in Computer Science and this course is only an introduction: I
 am not presenting anything new or innovative.
 
@@ -29,9 +29,9 @@ three books:
 - Skiena, S. S. (2020). The algorithm design manual. : Springer
   International Publishing.
 
-These are the three one I most often used to prepare the content of
-this course. None of them covers everything however. The two first one
-are available in The NTNU library in Ålesund.
+These are the three I most often used to prepare the content of
+this course. None of them covers everything however. The first two
+are available in the NTNU library in Ålesund.
 
 Should none of these fit, below are other "famous" ones that could
 better suit your taste:
@@ -55,7 +55,7 @@ better suit your taste:
 Online Courses
 ==============
    
-There are also online course on platforms such as
+There are also online courses on platforms such as
 `Coursera <https://www.coursera.org>`_ or `EdX <https://www.edx.org>`_
 for instance. They can be a good alternative to my presentations. Check
 however that the content they cover matches the syllabus.

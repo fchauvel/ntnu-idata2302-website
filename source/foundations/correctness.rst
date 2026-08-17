@@ -15,22 +15,22 @@ how random access machines can load and execute programs as sequences of
 
 For this to work in real-life, everything must be right: Our algorithm
 must solve our problem, the program must accurately *implement* our
-algorithm, and the machine must not fail in middle of the execution.
+algorithm, and the machine must not fail in the middle of the execution.
 That is a lot that must be correct at the same time.
 
 *Correctness* is more important than ever. Health, energy, banks,
-transportation …everything rely on software. Algorithms are embedded
-everywhere into these much larger infrastructure where the smallest bug
+transportation …everything relies on software. Algorithms are embedded
+everywhere into these much larger infrastructures where the smallest bug
 is always expensive and sometimes—unfortunately—deadly. For example, on
 June 4, 1996, the European space launch vehicle Ariane 5 exploded after
-40 s. of flight because of a software error. 500 millions USD gone up in
-smoke [#nuseibeh1997]_. Why do software fail? This is a
+40 s. of flight because of a software error. 500 million USD gone up in
+smoke [#nuseibeh1997]_. Why does software fail? This is a
 difficult question that goes way beyond the scope of this course.
 Building a system is difficult and encompasses people, resources,
 project management, software, hardware.
 
 In this lecture, we focus on algorithms and we assume that both the
-machine and the translation into an executable programs work just fine.
+machine and the translation into an executable program work just fine.
 What remains is *functional correctness*: Ensuring that the algorithm
 adheres to its specification. We will look at two techniques, namely
 *testing* and *formal verification*, as means to establish this
@@ -58,9 +58,9 @@ Functional Correctness?
               x = 1
          
 We saw that an algorithm solves a computational problem. This problem is
-often described by a mathematical function that tells us the which
+often described by a mathematical function that tells us which
 output to expect given a valid input. This function forms *the
-specifications* of our what our algorithm should do. This is the
+specifications* of what our algorithm should do. This is the
 *requirements*. To be *totally correct*, an algorithm must do two
 things:
 
@@ -72,7 +72,7 @@ things:
 
 -  When it terminates, it must produce a correct output for all possible
    valid inputs. A correct output satisfies the constraints set by the
-   problem. An algorithm is thus *incorrect* if one can found at least
+   problem. An algorithm is thus *incorrect* if one can find at least
    one set of inputs for which the algorithm output is wrong.
 
 .. important::
@@ -86,8 +86,8 @@ things:
       result.
 
 Equation :eq:`foundations/correctness/problem` gives an example of the challenge we face: How can
-we be sure that an algorithm *correctly* solve a problem?  The
-function defines the problem, which is to multiple to numbers
+we be sure that an algorithm *correctly* solves a problem?  The
+function defines the problem, which is to multiply two numbers
 :math:`x` and :math:`y`.  :numref:`foundations/correctness/product`
 shows a possible algorithm (in pseudocode) which repeatedly adds
 :math:`x`, :math:`y` times.
@@ -122,7 +122,7 @@ shows a possible algorithm (in pseudocode) which repeatedly adds
    - A *pre-condition* is what we assume to hold *before* we execute
      instructions
    
-   - A *post-condition* is what we assume to hold *after* we executed
+   - A *post-condition* is what we assume to hold *after* we execute
      instructions
 
 Formal Proofs
@@ -141,7 +141,7 @@ Deduction System for Algorithms
 
 A formal proof [#harrison2008]_ is *not* a natural
 language argument. It is a calculation that follows precise rules. It
-relies on a formal notation so that that proofs can be checked
+relies on a formal notation so that proofs can be checked
 mechanically—by a so-called *proof assistant*.
 
 .. [#harrison2008] Harrison, J. (2008). Formal proof—theory and
@@ -175,7 +175,7 @@ statement, called the *conclusion*, captures a new fact we logically
 derive from the premises.
 
 The same applies directly to algorithms and data structures. The
-statement we make describe the state of the machine. We use the
+statements we make describe the state of the machine. We use the
 semantic defined for RAM instructions (see
 :numref:`foundations/computer/ram_instructions`) as rules to explain why
 the state of the machine changes over
@@ -192,7 +192,7 @@ about numbers.
 
    The *syntax* and the *semantic* of the language (i.e., the
    computation model) are the basis of the *deduction system* we use to
-   reason about the correctness of algorithm.
+   reason about the correctness of algorithms.
 
 .. _`sec:assignment`:
 
@@ -295,13 +295,13 @@ Section `2.2 <#sec:assignment>`__).
 
 To prove that our algorithm is correct, we first have to expand the
 definition of what is the minimum of a set. One possible definition is
-that the minimum must smaller or equals to all elements, which
+that the minimum must be smaller or equal to all elements, which
 translates as follows:
 
 .. math:: \forall \, (x, y) \in \mathbb{Z}^2, \; m = f(x,y) \implies m \leq x \, \land \, m \leq y
 
 We need to show that this holds whatever is the path taken through the
-conditional. We can use a *prove by cases* here, following the two cases
+conditional. We can use a *proof by cases* here, following the two cases
 of the conditionals as follows.
 
 -  if :math:`x<y`, the machine executes the *then*-clause, where we set
@@ -309,7 +309,7 @@ of the conditionals as follows.
    :math:`m = x`, and, since in that branch we know that :math:`x<y`, we
    can conclude that :math:`m<y`.
 
--  if :math:`x \geq y`, the machine execute sthe *else*-clause, where we
+-  if :math:`x \geq y`, the machine executes the *else*-clause, where we
    set :math:`m` with :math:`y`. The semantics of this assigment (cf.
    Section `2.2 <#sec:assignment>`__) allows us to conclude that
    :math:`m = y`, and, since in this branch we know that
@@ -369,7 +369,7 @@ find the loop *invariant*, a property such that:
 
 -  It holds *right before* the loop
 
--  It hold *before and after* the loop body
+-  It holds *before and after* the loop body
 
 Put simply, the loop invariant is always true [#loop_invariant]_. In our case the loop
 invariant is that :math:`p = c \times x`. To prove the correctness of a
@@ -379,7 +379,7 @@ show that if it holds before the loop body, it will hold after. We can
 do that as follows:
 
 .. [#loop_invariant] Such invariant often relates to what the loop is
-                     doing and finding depends our understanding.
+                     doing and finding it depends on our understanding.
 
 -  Before the loop body, we know that both :math:`p` and :math:`c` are
    equal to zero. So by definition, we get :math:`0 = 0 \times x`, which
@@ -402,7 +402,7 @@ Termination
 Now we know that if we exit the loop we get the correct result, but are
 we sure we will ever exit the loop? Proving termination is difficult and
 there are algorithms for which we do not yet know whether they terminate
-of not [#collatz]_.
+or not [#collatz]_.
 
 .. [#collatz] See for example the `Collatz conjecture
               <https://en.wikipedia.org/wiki/Collatz_conjecture>`_
@@ -413,20 +413,20 @@ follows:
 
 -  :math:`v` decreases (strictly) at each time we go through the loop
 
--  :math:`v \geq 0` steam from the condition of the loop and the
+-  :math:`v \geq 0` stems from the condition of the loop and the
    invariant
 
 The idea is to show that this variant decreases as long as we remain in
-the loop, and that the program exit the loop once it becomes negative,
+the loop, and that the program exits the loop once it becomes negative,
 that is, the program terminates.
 
 Returning to our product algorithm (see
 :numref:`foundations/correctness/product/flowchart`) we can define
-:math:`v=y-c`.  Initially, since :math:`c` is set to zero, we got
+:math:`v=y-c`.  Initially, since :math:`c` is set to zero, we get
 :math:`v=y`. In each iteration, :math:`v` decreases by one, as we
 increment :math:`c`. We know from the pre-condition that :math:`y \in
 \mathbb{N}` so :math:`v` is necessarily positive in the loop, and will
-be zero only when the loop condition breaks. This program terminate.
+be zero only when the loop condition breaks. This program terminates.
 
 .. important::
 
@@ -442,7 +442,7 @@ be zero only when the loop condition breaks. This program terminate.
 We see that reasoning formally about correctness is possible but non
 trivial. This has been formalized by Floyd and Hoare in what is known
 as *axiomatic semantics* [#axiomatic]_. We will see how the same
-concepts can be use for testing our programs more pragmatically.
+concepts can be used for testing our programs more pragmatically.
 
 .. [#axiomatic] This goes beyond the scope of this course, but see the
                 following if you are interested:
@@ -452,8 +452,8 @@ concepts can be use for testing our programs more pragmatically.
                 Chap. 6
 
 .. important:: Building rigorous proofs is difficult and time
-               consuming Reasoning about the correctness nonetheless
-               ground our understanding about why algorithm works.
+               consuming. Reasoning about the correctness nonetheless
+               grounds our understanding about why algorithms work.
                 
 
 Testing
@@ -461,13 +461,13 @@ Testing
 
 .. index :: correctness ; testing
 
-Whereas proofs aims at showing it always work, testing aims at showing
-there are case where our algorithm does not work.
+Whereas proofs aim at showing it always works, testing aims at showing
+there are cases where our algorithm does not work.
 
 In practice, proofs are used mainly in Academia and in safety-critical
-systems, where lives are at stake. So what do we do in other system?
+systems, where lives are at stake. So what do we do in other systems?
 We test. That is, we run our program with selected inputs for which we
-know what output to expect. We get anything else, we have found a
+know what output to expect. If we get anything else, we have found a
 problem.
 
 The Principles
@@ -506,26 +506,26 @@ Test Cases Selection
 
 How many *test cases* do we need? Obviously, there is an infinity of
 possible inputs :math:`(x,y) \in \mathbb{N}^2`. The more test cases our
-program passes, the more confident we get but we never be able to test
+program passes, the more confident we get but we will never be able to test
 them all. This is the main problem with testing: It cannot show the
 absence of errors, only their presence. When all our tests pass, all we
-know if that our program worked for theses cases, but we know nothing
+know is that our program worked for these cases, but we know nothing
 about other cases.
 
 Ideally, we want to test all the relevant scenarios with as few test
 cases as possible. There are many *coverage criteria* that we can use to
 identify relevant scenario. Here are a few common ones [#testing]_:
 
--  *Covering all statements* implies a set of test cases that exercises
-   all the statement of our program. In our product example a single
+-  *Covering all statements* implies a set of test cases that exercise
+   all the statements of our program. In our product example a single
    test case would be needed, for example :math:`(4, 3)`.
 
--  *Covering all edges* implies a set of test cases that exercises every
-   “edge” in associated flow chart (see Figure `6 <#fig:product>`__).
+-  *Covering all edges* implies a set of test cases that exercise every
+   “edge” in the associated flow chart (see Figure `6 <#fig:product>`__).
    Testing our product algorithm with :math:`(0,0)` would not provide
    edge-coverage.
 
--  *Condition coverage* implies a set of test cases that each condition
+-  *Condition coverage* implies a set of test cases such that each condition
    (or sub-condition) has been evaluated to both true and false. In our
    example, testing with :math:`(4,3)` would be sufficient because the
    condition :math:`c \neq y` would initially be false but eventually be
@@ -539,8 +539,8 @@ identify relevant scenario. Here are a few common ones [#testing]_:
 Termination
 ^^^^^^^^^^^
 
-What happen if our program does not terminate for some of our
-test-case?  We will never know. If we decide to interrupt the
+What happens if our program does not terminate for some of our
+test cases?  We will never know. If we decide to interrupt the
 machine, maybe we have been too impatient and a few more seconds might
 have allowed our program to conclude? In practice, we have to decide
 on a maximum duration beyond which we consider that the program will
@@ -560,25 +560,25 @@ Diagnostic Using Assertions
 
 .. index:: testing ; assertions
 
-What should we do when a test case fails. We have found a “bug” and we
+What should we do when a test case fails? We have found a “bug” and we
 need to fix it. To do this we need to understand what has happened:
 Reasoning about our program/algorithm. Fortunately, we have seen how to
 do just that when looked at proofs, and the core ideas are very useful
 to diagnose problems.
 
-We instrument our programs and add assertion to verify that our
-expectation are met. There is no necessity here, but the general
+We instrument our programs and add assertions to verify that our
+expectations are met. There is no necessity here, but the general
 convention is to check the pre-condition and invariants so as to “fail
-fast”. If the execution starts on a wrong premises, if often fails in
-strange and unexpected manner that are difficult to debug.
+fast”. If the execution starts on a wrong premise, it often fails in
+strange and unexpected manners that are difficult to debug.
 :numref:`foundations/correctness/assertions` shows our Java program
-instrumented with additional assertion. Not that Java has built-in
+instrumented with additional assertions. Note that Java has built-in
 exceptions for illegal arguments (and for illegal states). We also use
 the “assert” keyword whose purpose is precisely to check invariants [#assertions]_.
 
 .. [#assertions] In Java, the :code:`assert` keyword require the JVM to
                 run with :code:`--enable-assertions` option. This
-                enable disabling assertions in production.
+                enables disabling assertions in production.
 
 .. code-block:: java
    :caption: Implementing Assertions in Java
@@ -600,7 +600,7 @@ the “assert” keyword whose purpose is precisely to check invariants [#assert
      }
 
 It may look silly to obscure our program with all these assertions. In
-practice however the code will be changed soon or later and these
+practice however the code will be changed sooner or later and these
 assertions act as “executable” documentation of our intention for the
 person in charge.
 
@@ -615,7 +615,7 @@ we need to be able to test quickly and often so that we know if we have
 broken anything.
 
 To do that, we write a separate piece of software that exercises our
-program. We rely on frameworks that help us write and runs our tests,
+program. We rely on frameworks that help us write and run our tests,
 such as `JUnit <https://junit.org/junit5/>`__ for Java,
 `Mocha <https://mochajs.org>`__ or `JEST <https://jestjs.io>`__ in
 JavaScript,
@@ -626,8 +626,8 @@ implementation of our product algorithm and a simple test case. When
 turned into a program, a test case includes three steps: Arrange, act,
 assert.
 
-#. Arrange. First we prepare the input (and possible the state of
-   program).
+#. Arrange. First we prepare the input (and possibly the state of
+   the program).
 
 #. Act. We call our program with the selected inputs and collect the
    results.
@@ -669,10 +669,10 @@ assert.
 Conclusion
 ==========
 
-That is it for algorithms correctness. This was just a peak at the
+That is it for algorithms correctness. This was just a peek at the
 problem of *Software Verification*—a field in itself. We now know
 precisely how to assess the behavior of our algorithms and programs.
 Keep in mind that while these techniques may seem tedious, nothing
-replace them to learn and understand a new algorithm. We will then look
-at comparing algorithms that solve the same problems to which one
-perform better.
+replaces them to learn and understand a new algorithm. We will then look
+at comparing algorithms that solve the same problem to see which one
+performs better.

@@ -4,14 +4,14 @@ Algorithm Analysis
 
 :Lecture: Lecture 1.5 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EWviLJNjT9lChg79Khs5F6oBzNnyk1O1-As_NqcSO2WEig?e=VN8rTl>`
-:Objectives: Understand how different execution scenarios of an
-             algorithm
+:Objectives: Understand how different execution scenarios impact an
+             algorithm's performance
 :Concepts: Best-case, worst-case, average case
 
 A computation requires time and space, as we saw in the previous
 lecture. The RAM model allows us to estimate these: The time is the
 number of instructions the machine executes and the space is the number
-of memory cell it uses to store intermediate results.
+of memory cells it uses to store intermediate results.
 
 But what about algorithms? An algorithm solves a computational problem
 and each problem instance yields its own computation. An algorithm thus
@@ -19,29 +19,29 @@ captures a family of computations, depending on the actual input that is
 given.
 
 Consider the addition algorithm we learned in primary school (see
-Lecture 1.1). Adding 20 to 5 and adding to yield two different
+Lecture 1.1). Adding 20 to 5 and adding 4179 to 967 yield two different
 computations. The latter takes longer because there are more digits
 involved. The same goes for sorting a hand of cards. The more cards, the
 longer it takes to sort.
 
 *Algorithm analysis* (a term coined by D. Knuth in TAOCP [#taocp]_ )
 helps us understand how the problem instance relates to the
-performance of the computation. A detail analysis of a given algorithm
+performance of the computation. A detailed analysis of a given algorithm
 would help answer:
 
 #. Is our algorithm equally efficient on all problem instances?
 
-#. What kind of input are the “easiest” to solve?
+#. What kind of input is the “easiest” to solve?
 
-#. What kind of input are the “hardest” to solve?
+#. What kind of input is the “hardest” to solve?
 
-#. How much resources does it need for easy, hard, and average inputs?
+#. How many resources does it need for easy, hard, and average inputs?
 
 I organized this lecture in two parts. First, we will look at how one
 can model the resource consumed by an algorithm. The size of the input
 is the key factor. Then we will see that often this is not feasible and
-that we need to further distinguish between a worst, and best and
-possible and, possibly an average case.
+that we need to further distinguish between a worst and a best case,
+and possibly an average case.
 
 .. [#taocp] Knuth, D. E. (1978). The art of computer programming:
            fundamental algorithms. USA: Addison-Wesley Longman Publishing Co.
@@ -55,7 +55,7 @@ How can we describe the relationship between the problem instances and
 the computation efficiency?
 
 A problem instance is entirely described by the associated input. For
-example, to add 3 to 17, only requires these digits. At the
+example, to add 3 to 17, we only require these digits. At the
 lowest-level, inputs and outputs are both sequences of symbols. The main
 factor that affects the computation is thus the length of this sequence,
 which is known as the *input size* or the *problem size*.
@@ -68,11 +68,11 @@ which is known as the *input size* or the *problem size*.
 
 In practice though we will not reason about inputs as sequences of
 symbols, but rather as data structures. This allows us to use more
-meaningful input sizes. For example, if our algorithm consumes an
+meaningful input sizes. For example, if our algorithm consumes a
 sequence of numbers, we will define the input size as its length. If
 your algorithm consumes a matrix, the input size could be its number of
 cells. If our algorithm accepts a tree structure as input, the input
-size could be the number of node in the tree, etc. There is no rule of
+size could be the number of nodes in the tree, etc. There is no rule of
 thumb however, we are free to define the input size we see fit.
 
 Example
@@ -144,10 +144,10 @@ our efficiency model, which we can see on
      time\; (n) & = 5n + 4
    \end{aligned}
 
-We have not talk here about space and memory consumption, but the same
+We have not talked here about space and memory consumption, but the same
 approach applies. One can express how the number of memory cells used
 varies according to the input size. In our example, the memory does not
-vary, because whatever sequence our algorithm gets, it always used two
+vary, because whatever sequence our algorithm gets, it always uses two
 variables :math:`i` and :math:`sum`. So we get a model like
 :math:`space(n) = 2`. We will see later in the course dynamic memory
 allocation and recursion yield more “interesting” memory consumption
@@ -156,7 +156,7 @@ models.
 Best, Worst, and Average Cases
 ==============================
 
-In many cases, we cannot directly build an efficiency model tough,
+In many cases, we cannot directly build an efficiency model though,
 because there are things that we do not know. Consider for example the
 algorithm shown on
 :numref:`foundations/analysis/count_even/flowchart`, which counts the
@@ -188,7 +188,7 @@ computation will go through the conditional statement (the red path on
 .. figure:: _static/analysis/images/count_even_flowchart.svg
    :name: foundations/analysis/count_even/flowchart
 
-   An algorithm that count the numbers of the even
+   An algorithm that counts the number of even
    numbers in a given sequence (as a flowchart).
 
 To cope with this, we need to refine our efficiency model and
@@ -197,13 +197,13 @@ will separate:
 
 -  The *best case*, where the least amount of resources is needed. That
    is the fastest scenario if we talk about time or the scenario that
-   use the least memory.
+   uses the least memory.
 
 -  The *worst case*, which requires the most resources. If we consider
-   runtime, that is the slowest execution paths ; if we consider the
+   runtime, that is the slowest execution path ; if we consider the
    memory, that is the scenario that consumes the most memory cells.
 
--  If we make more assumptions about what kind of inputs is most likely,
+-  If we make more assumptions about what kind of input is most likely,
    we can identify an “average” scenario, which reflects the performance
    one should expect reasonably. It generalizes the best and worst
    cases.
@@ -221,16 +221,16 @@ What can we do if we do not know the execution paths taken by a
 computation? We need to understand which “path” through the program
 consumes most resources (or least) and what input triggers it.
 
-In our example, for example we have to understand what input would
+In our example, we have to understand what input would
 *always* exercise the “:math:`c \gets c + 1`” instruction (red path on
 :numref:`foundations/analysis/count_even/flowchart`), and which input
-would necessarily avoids it.
+would necessarily avoid it.
 
 Worst Case
 ^^^^^^^^^^
 
-For the count-even algorithm, the worst case implies to always
-increment the :math:`count` variable. This happens only if every
+For the count-even algorithm, the worst case implies always
+incrementing the :math:`count` variable. This happens only if every
 single given number is even. In that case, we can fill in a cost
 table, because we then know that we will increment :math:`n` times
 (see in :numref:`foundations/analysis/count_even/best_worst`). We
@@ -240,7 +240,7 @@ Best Case
 ^^^^^^^^^
 
 For the count-even algorithm, the best case implies that we *never*
-increment the :math:`count` variable. This occurs when there no even
+increment the :math:`count` variable. This occurs when there is no even
 number at all. In that case, we can also fill our cost in
 :numref:`foundations/analysis/count_even/best_worst` with 0 runs. We
 obtain a “best case” of :math:`time\,(n)=5n+4`.
@@ -271,15 +271,15 @@ Average Case
 ------------
 
 Now we have described the worst and best possible cases, what shall we
-expect in average? Without further information about the input, we
+expect on average? Without further information about the input, we
 cannot say anything for sure. We can make assumptions however.
 
 Returning to our previous example, the only thing we know is that we
 are given a sequence :math:`\mathbf{s}` of length :math:`n`, but we do
-not know how many items are even. Assume we know for a minute, that is
-the sequence contains :math:`k` even item. Then, we could fill our
+not know how many items are even. Assume, for a minute, that we know that
+the sequence contains :math:`k` even items. Then, we could fill our
 cost table (see :numref:`foundations/analysis/count_even/best_worst`),
-because the instruction :math:`c \gets c + 1` would runs exactly
+because the instruction :math:`c \gets c + 1` would run exactly
 :math:`k` times. To model the *average case*, we have to make a guess
 at how likely it is to get an input without any even numbers, how
 likely it is to get only one even number, etc.
@@ -296,14 +296,14 @@ variable :math:`K` that captures how many even numbers there are.
 
 -  By definition, :math:`K` is defined over the set of values
    :math:`\Omega_K` that are lower or equal to :math:`n`, since there
-   cannot be more even number than there are numbers in the sequence.
+   cannot be more even numbers than there are numbers in the sequence.
    That is
    :math:`\Omega_K =\{ k \in \mathbb{N} \, | \, 0 \leq k \leq n \}`.
 
 -  All values are equally probable. Formally, that means that K follows
    a uniform distribution, such that
    :math:`\mathbb{P}[K=k] = \frac{1}{n}, \; \forall \, k \in \Omega_K`.
-   This the weakest assumption we can make: I see no reason to expect
+   This is the weakest assumption we can make: I see no reason to expect
    one input more than another.
 
 This random variable :math:`K` generalizes the best and worst cases with
@@ -352,9 +352,9 @@ Conclusions
 ===========
 
 We saw here how to describe the efficiency of an algorithm using
-functions that maps the size of the given inputs to time, space or any
-else. A single function is however not enough to describe the whole set
+functions that map the size of the given inputs to time, space or
+anything else. A single function is however not enough to describe the whole set
 of computations an algorithm yields, so we characterize this set using a
 worst and best cases. We even went as far as to compute an average case
-that captures how the distribution of inputs affect the performance. In
+that captures how the distribution of inputs affects the performance. In
 the next lecture we will see how to compare such models.

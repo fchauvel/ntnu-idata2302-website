@@ -16,7 +16,7 @@ scheme from `NTNU <https://i.ntnu.no/wiki/-/wiki/English/Grading+scale+using+per
 
    ">=89", ">=77", ">=65", ">=53", ">=41", "<41"
 
-:numref:`exams/previous` list the questions and elements of solutions
+:numref:`exams/previous` lists the questions and elements of solutions
 of the previous years. I encourage you to try one of these
 before the final examination.
   
