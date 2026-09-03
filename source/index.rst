@@ -59,6 +59,7 @@ Algorithms and Data Structures
    :caption: Recaps
 
    maths.rst
+   ram_recap.rst
 
              
 Indices and Tables
