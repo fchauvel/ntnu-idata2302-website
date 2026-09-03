@@ -191,6 +191,22 @@ A program has a data segment and a code segment, introduced by the
    so addresses of variables and labels are computed automatically —
    you never write raw addresses by hand.
 
+.. important:: Segments are a convention, not a machine feature
+
+   Splitting a program into a ``.data`` segment and a ``.code`` segment
+   mirrors *our* mental model of a program: data are the things a
+   computation manipulates, code is the recipe that manipulates them,
+   and we like to keep the two apart. The machine has no such notion.
+   Both segments simply live, one after the other, in the very same
+   memory, addressed the very same way — as
+   :numref:`ram_recap/asm_vs_machine` shows, ``value``, ``one`` and
+   ``result`` sit right next to the numbers that encode ``LOAD``,
+   ``ADD`` and the rest. Nothing stops ``IP`` from wandering into the
+   data segment; the machine would then happily try to *execute*
+   whatever numbers it finds there. The ``.data``/``.code`` split is
+   simply where the assembler decided to place things, for our
+   convenience — it disappears once we drop down to machine code.
+
 Cheat Sheet: Pseudo Code → Assembly
 =====================================
 
