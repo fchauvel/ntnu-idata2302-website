@@ -22,9 +22,9 @@ Algorithms and Data Structures
    :caption: Modules
 
    foundations/index
+   sequences/index
 
 ..
-   sequences/index
    recursion/index
    hashing/index
    trees/index
@@ -38,9 +38,9 @@ Algorithms and Data Structures
 
    labs/setup
    labs/foundations
+   labs/sequences
 
 ..
-   labs/sequences
    labs/recursion
    labs/trees
    labs/graphs/index
