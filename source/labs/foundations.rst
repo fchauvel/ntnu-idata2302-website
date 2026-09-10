@@ -366,7 +366,7 @@ that contains that very fragment.
    Write an algorithm to find all the quotes that contains the fragment
    the user has provided.
 
-   #. Download the file ``quotes_1k.csv`` from Blackboard.
+   #. Download the file ``quotes_1k.csv`` from Canvas.
 
    #. Look at the file ``search/MySearch.java``. Propose an algorithm to
       find all the matching string.

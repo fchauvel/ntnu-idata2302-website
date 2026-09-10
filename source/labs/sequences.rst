@@ -20,8 +20,8 @@
    - Do *not* exceed *8 pages*
    - Do *not* attach a zip of your Java project
 
-   Submit your report, as a **PDF** file, on Blackboard by **Friday
-   September 26, 2025 at 23:30** at the latest. You will find the
+   Submit your report, as a **PDF** file, on Canvas by **Monday
+   September 28, 2026 at 23:30** at the latest. You will find the
    submission form under `Learning material 〉Sequences 〉Lab 2`.
 
    Note that you need to be assigned in a group to see the submission
