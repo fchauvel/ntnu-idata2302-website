@@ -4,14 +4,14 @@ Merge Sort
 
 :Lecture: Lecture 3.5 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Ef7Ac-PmhwxLr7PoXB6_0u4Bo6t6_STQnBzsJYCAnBybFw?e=5URP91>`
-:Objectives: Understand how does merge sort works, and why does it sort fast
+:Objectives: Understand how merge sort works, and why it sorts fast
 :Concepts: Merge sort using split and merge, master theorem
 
-We now look at another well known recursive sorting algorithm: Merge
+We now look at another well-known recursive sorting algorithm: merge
 sort\ [#vonNeumann]_, running among others behind
 :code:`Collections.sort` in Java. In the worst case, merge sort runs
-in :math:`O(n \log n)` and beats quick sort, whose runs in
-:math:`O(n^2)`, in the worst case.
+in :math:`O(n \log n)` and beats quick sort, which runs in
+:math:`O(n^2)`.
 
 .. [#vonNeumann] Yet another great contribution of John Von Neumann.
 
@@ -39,18 +39,18 @@ Principle: Split & Merge
        end      
 
 
-As many recursive algorithms, merge sort is very succinct. It goes as
+As with many recursive algorithms, merge sort is very succinct. It goes as
 follows:
 
-#. Split the sequence into two halves, namely *left* and *right*
+#. Split the sequence into two halves, namely *left* and *right*.
 
-#. Sort both *left* and *right* using merge sort
+#. Sort both *left* and *right* using merge sort.
 
-#. Merge back *left* and *right* into a single, sorted sequence
+#. Merge back *left* and *right* into a single, sorted sequence.
 
 Why does that work? Conceptually, we recursively split the given
 sequence until we get single-item sequences, which are sorted by
-definition. Then we can merge then two by two until have sorted the
+definition. Then we can merge them two by two until we have sorted the
 complete sequence. :numref:`recursion/merge_sort/unfolding`
 illustrates this behaviour.
 
@@ -64,10 +64,10 @@ The Merge Algorithm
 
 To merge two sorted sequences, we proceed as follows:
 
-#. We create a new sequence, which will hold the merge
+#. We create a new sequence, which will hold the merge.
 
 #. We keep track of our position (i.e., an iterator) for each
-   sequences, say left and right. We start by pointing the two first
+   sequence, say left and right. We start by pointing at the first two
    items.
 
 #. As long as we can move in both sequences:
@@ -81,12 +81,12 @@ To merge two sorted sequences, we proceed as follows:
 #. As soon as we have exhausted the items in one sequence, we copy the
    remaining items of the other into the result sequence.
 
-The :numref:`recursion/merge_sort/merging` illustrates this
+:numref:`recursion/merge_sort/merging` illustrates this
 procedure. We are merging two sequences, namely :math:`\textrm{left} =
-(2,7,11,23)` and :math:`\textrm{right}=(5,10,18)`. One each sequence,
-we are comparing the 3\ :sup:`rd` item (10) the 2\ :sup:`nd` item
+(2,7,11,23)` and :math:`\textrm{right}=(5,10,18)`. On each sequence,
+we are comparing the 3\ :sup:`rd` item (10) with the 2\ :sup:`nd` item
 (11). As 10 is the smallest, we insert at the end of the result
-sequence, and we increment the right current pointer.
+sequence, and we increment the current right pointer.
 
    
 .. figure:: _static/merge_sort/images/merging.svg
@@ -120,14 +120,14 @@ sequence, and we increment the right current pointer.
 Efficiency
 ==========
 
-Is there a worst case and best case? Well no. We can see that merge
-sort always does the sane thing: Split the sequence in halves.
+Is there a worst case and best case? Well, no. We can see that merge
+sort always does the same thing: Split the sequence in halves.
 
 Memory
 ------
 
-How much memory does merge sort consumes? Let's break it down. When
-the given sequence contains only one items, it is already sorted and
+How much memory does merge sort consume? Let's break it down. When
+the given sequence contains only one item, it is already sorted and
 there is nothing to do, so no need for any memory. However, when the
 given sequence contains multiple items (say :math:`n` for instance),
 we first split it into two halves: That requires :math:`2 \cdot
@@ -182,19 +182,19 @@ each of these steps. Let's look at each of these:
 
 How much time do we spend splitting?
   If we assume we allocate two new smaller sequences for the left and
-  the right parts, then we will spent time copying items in
-  these. Overall we will copy the whole :math:`n` items.
+  the right parts, then we will spend time copying items in
+  these. Overall we will copy all :math:`n` items.
 
 How much time do we spend sorting the two halves?
   This is our recursive case. The time we spend is the time we
   spent sorting a sequence twice as small. But we do it twice, once
-  for the right part and one for the left part, that is :math:`2 \cdot
-  t(\frac{2}{n})`
+  for the right part and once for the left part, that is :math:`2 \cdot
+  t(\frac{n}{2})`.
 
 How much time do we spend merging?
-  As for spliting, merging is first and foremost about copying the
-  items from both sides into a new sequences. If left and right
-  contains :math:`n_L` and :math:`n_R`, respectively, we shall copy
+  As for splitting, merging is first and foremost about copying the
+  items from both sides into a new sequence. If left and right
+  contain :math:`n_L` and :math:`n_R`, respectively, we shall copy
   all of them regardless of which comes first. In total, we will
   spend :math:`n_L + n_R`.
 
@@ -209,11 +209,11 @@ We can formulate that using the following recurrence relationship
 
    t(n) = \begin{cases}
      0 & \textrm{if } n = 1 \\
-     2n + 2\cdot(\frac{2}{n}) & \textrm{otherwise} 
+     2n + 2\cdot t(\frac{n}{2}) & \textrm{otherwise}
    \end{cases}
 
 This recurrence is a specific form, where the *master theorem*
-applies. That shortcut the calculation:
+applies. That shortcuts the calculation:
 
 
 .. important::

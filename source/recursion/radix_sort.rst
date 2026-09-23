@@ -7,26 +7,26 @@ Sorting Without Comparing
 :Objectives: Understand the limit of sorting by comparing.
 :Concepts: Sorting without comparing, counting sort, radix sort
 
-We depart from recursion a bit to wrap up our discussing about sorting
-algorithms. We have already looked at five: Selection sort, Insertion
-sort, Bubble sort, Quick sort, and Merge sort. What is the common
-trait among them? They all rely on comparisons, that is they compare
+We depart from recursion a bit to wrap up our discussion about sorting
+algorithms. We have already looked at five: selection sort, insertion
+sort, bubble sort, quick sort, and merge sort. What is the common
+trait among them? They all rely on comparisons, that is, they compare
 one item to another to decide where it should go. This type of sorting
 is called *comparison-based*.
 
-In this lecture look at the *problem* of sorting and its inherent
+In this lecture, we look at the *problem* of sorting and its inherent
 limits when one uses comparisons: No comparison-based
 sorting algorithm can run faster than :math:`O(n \log n)`! To
-illustrate a different approach, we shall look at *Counting sort* and
-Radix sort, which offer, under specific conditions, linear runtime.
+illustrate a different approach, we shall look at *counting sort* and
+*radix sort*, which offer, under specific conditions, linear runtime.
 
            
 The Limit of Sorting by Comparing
 =================================
 
-What  is sorting?  From  a theoretical  perspective,  sorting a  given
-sequence  implies finding  a permutation  of its  items so  that every
-items is smaller than all its successors.
+What is sorting? From a theoretical perspective, sorting a given
+sequence implies finding a permutation of its items so that every
+item is smaller than all its successors.
 
 Consider the sequence :math:`s=(a, b, c)` for instance. How many
 permutations exist? There are :math:`6 = 3 \times 2 \times 1 = 3!`. In
@@ -45,9 +45,9 @@ this case these six permutations are:
 - :math:`s_6=(c, b, a)`
 
 Given a random permutation, how can we find one of those that are
-sorted [#sorted]_ ? We need to compare items one another to decide
+sorted [#sorted]_? We need to compare items to one another to decide
 which one is the largest, etc. :numref:`recursion/radix/decision_tree`
-shows the *decision tree* that shows which finds the sorted sequence
+shows the *decision tree* used to find the sorted sequence
 for any given sequence :math:`s=(a,b,c)`. For instance, if we know
 that :math:`a < b` and :math:`a < c`, we still need to assert that
 :math:`c < b` to conclude that the sorted permutation is
@@ -69,8 +69,8 @@ a specific shape. For a sequence of :math:`n` items sitting at the top
 of this decision tree, the bottom includes the :math:`n!` possible
 permutations. Each decision is binary (yes or no) so the tree has a
 height of :math:`\log_2 n!`. This function is bounded below by
-:math:`n \log n`. In other word, the worst case cannot get any better
-than :math:`n \log n`, that is :math:`\log_2 n! \in \Omega(n \log_2
+:math:`n \log n`. In other words, the worst case cannot get any better
+than :math:`n \log n`, that is, :math:`\log_2 n! \in \Omega(n \log_2
 n)`. This is an example of the lower bound applied to the worst case:
 It will never be faster than :math:`n \log n`.
 
@@ -91,7 +91,7 @@ The idea of the counting sort is to count items per category. Consider
 for instance the sequence :math:`s=(0,1,1,2,0,1,1,2,0,1,1,2,0)`. It contains
 only three "categories" of items: 0, 1, and 2. Provided we know the
 order of these categories, we can traverse the sequence once, counting
-how many items falls in each category, and finally rebuild the
+how many items fall in each category, and finally rebuild the
 sequence as follows:
 
 .. math::
@@ -103,18 +103,18 @@ In summary, counting sort proceeds as follows:
 #. Traverse the given sequence, and build a *frequency table*, which
    registers how many items fall into each category.
 
-#. Compute the cumulative frequencies
+#. Compute the cumulative frequencies.
 
 #. Adjust the given sequence, according to the cumulative frequency
-   table
-   
+   table.
 
-:numref:`recursion/radix/counting_sort/code` illustrate this in
+
+:numref:`recursion/radix/counting_sort/code` illustrates this in
 Java. The :code:`countingSort` procedure accepts a sequence (as an
 array) and its largest key. The largest key captures the set of
 categories, implying that the given sequence will contain only values
-from 0 to that largest key. The most tricky part is how we rebuild the
-sorted sequence. The cumulative frequency table also capture the index
+from 0 to that largest key. The trickiest part is how we rebuild the
+sorted sequence. The cumulative frequency table also captures the index
 at which a given category should start. So we proceed backward and for
 each item in the given sequence, we write it down at its latest
 position, decrementing the count (see lines 14-18).
@@ -148,24 +148,24 @@ position, decrementing the count (see lines 14-18).
     }
 
 Runtime Efficiency
-   We see :numref:`recursion/radix/counting_sort/code` that each of
-   the steps if implemented using a loop. We iterate either through
-   the given sequence, or through the set of categories. As the result
+   We see in :numref:`recursion/radix/counting_sort/code` that each of
+   the steps is implemented using a loop. We iterate either through
+   the given sequence, or through the set of categories. As a result,
    counting sort runs in :math:`O(n+k)` where :math:`n` is the length
    of the given sequence and :math:`k` is the number of categories.
 
-Memory efficiency
-   :numref:`recursion/radix/counting_sort/code` provides an out-of-place,
-   where we provision a separate array to hold the result. But besides
-   this, we also need some memory for the frequency table. So counting
-   sort requires (i.e., :math:`O(n+k)`) memory.
+Memory Efficiency
+   :numref:`recursion/radix/counting_sort/code` provides an out-of-place
+   implementation, where we provision a separate array to hold the
+   result. But besides this, we also need some memory for the
+   frequency table. So counting sort requires :math:`O(n+k)` memory.
 
 Counting sort offers a first way to sort without comparing, but it has
 its limitations. Counting works best when we have a few categories and
 many items. For instance, sorting a sequence of 10 items between 0 and
 1 000 000 would be penalized by the very large number of categories
 (i.e., 1 000 000). Besides, in many practical situations, we do not
-know the categories before hand. Let see how *radix sort* builds on
+know the categories beforehand. Let us see how *radix sort* builds on
 *counting sort* to work around these limitations.
   
 Radix Sort
@@ -174,7 +174,7 @@ Radix Sort
 The idea of the radix sort is to apply counting sort
 repeatedly. Consider numbers such as 123 for instance. If we work on
 separate digits, then the number of categories required by counting
-sort is known, it's 10, for the ten digits. Since, counting sort is a
+sort is known, it's 10, for the ten digits. Since counting sort is a
 *stable* sorting algorithm, we can apply it for each digit, from the
 least significant (LSD) to the most significant, without disrupting
 what was sorted before. :numref:`recursion/radix/idea` illustrates
@@ -183,13 +183,13 @@ this idea.
 .. figure:: _static/radix_sort/images/radix_sort.svg
    :name: recursion/radix/idea
 
-   The Radix sort (LSD): Applying repeatedly counting sort on each
-   digits, for the least significant to the most significant.
+   The radix sort (LSD): Applying counting sort repeatedly on each
+   digit, from the least significant to the most significant.
 
-:numref:`recursion/radix/code` shows an possible implementation of
+:numref:`recursion/radix/code` shows a possible implementation of
 radix sort in Java. It uses a modified version of the counting sort
 where the categories are "hard-coded" (i.e., the 10 digits), and that
-accept the significant digit to consider. First we search for the
+accepts the significant digit to consider. First we search for the
 maximum of the given sequence, and compute its number of digits. We
 can then apply counting sort as many times as there are digits in this
 largest item.
@@ -212,21 +212,21 @@ largest item.
 Runtime Efficiency
   Radix sort is basically running counting sort as many times as there
   are digits. The runtime therefore depends on the number of items in
-  the sequence but also in the maximum number of digits in these
+  the sequence but also on the maximum number of digits in these
   items. Radix sort thus runs in :math:`O(d \cdot (k+n))` where
   :math:`n` is the number of items, :math:`k` the number of
   categories, and :math:`d` the number of digits.
 
 Memory Efficiency
-  Radix sort does not requires more memory than what counting sort
+  Radix sort does not require more memory than what counting sort
   does, so the space complexity of radix sort is the same,
   :math:`O(n+k)`.
 
 
 .. important::
 
-   When applicable, non-comparison sorting algorithm offer fast
-   (linear runtime) alternative to more "classical" quick sort and
+   When applicable, non-comparison sorting algorithms offer a fast
+   (linear runtime) alternative to the more "classical" quick sort and
    merge sort.
 
 

@@ -3,20 +3,20 @@ Linked Lists
 ============
 
 :Lecture: Lecture 3.3 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EYkbgdwxCwJIj6snFY0uOakB40JubjlbZRrAzQAWtGmwpA?e=qTxfgj>`
-:Objectives: What is a linked list, and how to implement the Sequence
-             ADT using a linked list
+:Objectives: Understand what a linked list is, and how to implement
+             the Sequence ADT using a linked list
 :Concepts: Linked-lists, Iterators
 
 
-Now we know about :doc:`recursion </recursion/recursion>`, and how it
+Now that we know about :doc:`recursion </recursion/recursion>`, and how it
 applies to both algorithms and data types, we can look at our first
-recursive data type: The *linked List*. We will see how a linked list
+recursive data type: the *linked list*. We will see how a linked list
 yields another implementation of the :doc:`sequence ADT
-</sequences/arrays>` with different efficiency as opposed to
+</sequences/arrays>` with different efficiency as opposed to the
 array-based implementation. We will also briefly look at other members
-of linked-list family, including the doubly linked list, and the
-circular list. Finally, we will look at Iterator, a concepts that
-makes linked-list shine when arrays are inefficient.
+of the linked-list family, including the doubly linked list, and the
+circular list. Finally, we will look at the iterator, a concept that
+makes linked lists shine when arrays are inefficient.
 
 Linked Lists
 ============
@@ -40,13 +40,13 @@ Linked Lists
      
 
 The idea behind linked lists is to store each item in a specific
-record (sometimes called a *node*) that has two fields. The first hold
+record (sometimes called a *node*) that has two fields. The first holds
 the item itself, and the second a reference to the record that
 contains the next item. The sequence is therefore the chain made by
 these records, as shown by
 :numref:`recursion/linked_list/structure`. Additionally, one can also
-add another `list` record that holdss a reference to the first "node",
-as well as any other useful information (length, etc.). 
+add another `list` record that holds a reference to the first "node",
+as well as any other useful information (length, etc.).
 
 .. figure:: _static/linked_list/images/singly_linked_list.svg
    :name: recursion/linked_list/structure
@@ -56,7 +56,7 @@ as well as any other useful information (length, etc.).
 
 In practice, all these references to nodes are implemented with
 pointers or object references. By contrast to an array that allocates
-a single continuous block of memory, a linked list is made of many
+a single contiguous block of memory, a linked list is made of many
 separate fragments of memory, linked using references.
    
 Note that the record type of a node shown on
@@ -87,8 +87,8 @@ and :code:`NULL` for the first item.
 Length
 ------
 
-Computing the length of the sequence can be done easily, if store the
-number of item in a dedicated field, as we did in
+Computing the length of the sequence can be done easily, if we store the
+number of items in a dedicated field, as we did in
 :numref:`recursion/linked_list/node`. :numref:`recursion/linked_list/length/c`
 shows one way to do that in C.
 
@@ -107,7 +107,7 @@ Access
 ------
 
 To implement the :func:`seq.get` function and find the i\ :sup:`th`
-item, we need to follows the chain of nodes until the i\ :sup:`th` node,
+item, we need to follow the chain of nodes until the i\ :sup:`th` node,
 and return the corresponding
 item. :numref:`recursion/linked_list/get/c` shows the corresponding C
 procedure.
@@ -147,18 +147,18 @@ Insertion
 
 To implement :func:`seq.insert`, we allocate a new :code:`Node` record
 and we link it with the appropriate nodes in the chain. In the general
-case, we proceed as follows, althought care must be taken to insert in
+case, we proceed as follows, although care must be taken to insert in
 the front of the list:
 
 #. We create a new :code:`Node` record, that carries the given item.
 
-#. We find the node that precedes the insertion points, so called *previous node*.
-   
-#. We set the next node of the new node to be the next node of previous node
+#. We find the node that precedes the insertion point, also called *previous node*.
 
-#. We set the next node of the previous node to be the new node
+#. We set the next node of the new node to be the next node of the previous node.
 
-#. We increment the length
+#. We set the next node of the previous node to be the new node.
+
+#. We increment the length.
 
 :numref:`recursion/linked_list/insertion` shows the structure of the
 list, the new node (in gray), and how the links are updated.
@@ -201,9 +201,9 @@ follows the links from node to node. Following these links requires
    
 .. important::
 
-   The insertion in linked list runs in :math:`\Theta(n)`. As opposed
-   to array-based implementation, an linked list does not require
-   shifting any item. We simply creates a new node and "link it" to
+   The insertion in a linked list runs in :math:`\Theta(n)`. As opposed
+   to an array-based implementation, a linked list does not require
+   shifting any item. We simply create a new node and "link it" to
    the chain. The "expensive" part is to traverse the chain to
    find the insertion point.
 
@@ -216,12 +216,12 @@ algorithm as follows (care must also be taken to delete the first
 item). :numref:`recursion/linked_list/remove` illustrates this removal
 process.
 
-#. We locate the node that precedes the target (so called previous node)
+#. We locate the node that precedes the target (also called the previous node).
 
-#. We save the reference to the target node, to free that record
+#. We save the reference to the target node, to free that record.
 
 #. We set the :code:`next` field of the previous record to point to
-   the :code:`next` field of the target
+   the :code:`next` field of the target.
 
 #. We free the target record.
 
@@ -285,8 +285,8 @@ Doubly Linked Lists
 The idea of *doubly linked list* is to extend the nodes with a
 reference to the previous node. This permits navigating the list in
 both
-direction. :numref:`recursion/linked_list/doubly_linked_list/node`
-opposite, shows a C implementation of these extended nodes.
+directions. :numref:`recursion/linked_list/doubly_linked_list/node`
+opposite shows a C implementation of these extended nodes.
 
 .. figure:: _static/linked_list/images/doubly_linked_lists.svg
    :name: recursion/linked_list/doubly_linked_list
@@ -294,9 +294,9 @@ opposite, shows a C implementation of these extended nodes.
    Doubly linked list where each node points to the next and to the
    previous node.
 
-Handling this extra reference make the insertion and deletion a little
-more complex, but there is no need to search for "previous" item,
-since we can now navigate the list in both direction.
+Handling this extra reference makes the insertion and deletion a little
+more complex, but there is no need to search for the "previous" item,
+since we can now navigate the list in both directions.
    
 
 Circular Lists
@@ -304,9 +304,9 @@ Circular Lists
 
 A *circular list* is a regular linked list where the last node points
 back to the first one, creating a loop, as shown on
-:numref:`recursion/linked_list/circular_list`.  A common use-case is
+:numref:`recursion/linked_list/circular_list`. A common use-case is
 the rolling log for instance, where one continuously appends new
-observation. Past a given maximum length :math:`n`, the list stops
+observations. Past a given maximum length :math:`n`, the list stops
 growing and one simply overwrites the beginning, preserving only the
 last :math:`n` items.
 
@@ -334,17 +334,17 @@ defined, one could write the program shown by
       // Do something with item ...
    }
 
-If use an array to implement our sequence (see :doc:`Lecture 2.2
+If we use an array to implement our sequence (see :doc:`Lecture 2.2
 </sequences/arrays>`), this traversal would run in :math:`O(n)`. Indeed,
-each access to a specific items (see :code:`seq_get()` takes
+each access to a specific item (see :code:`seq_get()`) takes
 :math:`O(1)` and we will do this for each of the :math:`n` items.
 
 However, if we used a linked list, this traversal would run in
 :math:`O(n^2)`. With a linked list, each access runs in :math:`O(n)`
 because we have to navigate the list from its "head" to the desired
 node, and doing that for the :math:`n` items would take
-:math:`O(n^2)`. But we can do better! Recall the :code:`find_node_at`,
-it also traverses the sequences, and yet runs in :math:`O(n)` because
+:math:`O(n^2)`. But we can do better! Recall the :code:`find_node_at`
+procedure: it also traverses the sequence, and yet runs in :math:`O(n)` because
 it moves from one node to the next without restarting at the
 beginning, as shown on :numref:`recursion/linked_list/traversal`.
 
@@ -380,8 +380,8 @@ following operations:
 
 .. function:: hasNext(i: Iterator) -> Boolean
 
-   Returns true if and only if there are more value beyond the
-   position represented by the iterator,
+   Returns true if and only if there are more values beyond the
+   position represented by the iterator.
 
 .. function:: next(i: Iterator) -> Iterator
 
@@ -410,7 +410,7 @@ Iterators can be implemented against an array, or a linked list, as we
 will do below. To implement an iterator, we must keep track of the
 list of interest, the current node, and its predecessor (if any).
 :numref:`recursion/linked_list/iterator/c` shows how that could look
-like in C, where we use a record to hold a reference to each of these
+in C, where we use a record to hold a reference to each of these
 bits and pieces.
 
 .. margin::

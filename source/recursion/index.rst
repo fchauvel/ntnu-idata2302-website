@@ -2,7 +2,7 @@
 Recursion
 =========
 
-This module focus on *recursion*, a key concept in Computer Science.
+This module focuses on *recursion*, a key concept in Computer Science.
 
 Contents
 ========

@@ -19,23 +19,23 @@ machine-level and how much resources it takes.
 Why Procedure Calls?
 ====================
 
-Procedure call is an early construct that helps us progress from
+Procedure calls are an early construct that helps us progress from
 assembly code towards higher-level languages. They bring numerous
 benefits, including:
 
 - Better code reuse and duplication removal. If the same fragment of
-  code appears in multiple place, we can extract it into a separate
+  code appears in multiple places, we can extract it into a separate
   procedure and get rid of the duplicated code.  That helps with bug
-  fixing in particular and avoid having to roll the same fix in
+  fixing in particular and avoids having to roll the same fix in
   multiple places.
 
-- Better Code readability. Provided the procedures' name are
+- Better code readability. Provided the procedures' names are
   meaningful, the code reads better, and the intention (the algorithm)
   becomes more visible.
 
-- Better Separation of concerns. Procedures are handy to separate
+- Better separation of concerns. Procedures are handy to separate
   different concerns, parameter validation, error handling, etc. That
-  makes the things clearer.
+  makes things clearer.
 
 Remember for instance the :ref:`selection
 sort<sequences/sorting/selection_sort/entry>`, which I reproduce below
@@ -88,23 +88,23 @@ procedure calls incur an extra cost in time and/or in space?
 How Does "Calling" Work?
 ========================
 
-Random access machines (RAM) have no concepts of procedure. Their
+Random access machines (RAM) have no concept of a procedure. Their
 memory only contains symbols, which the machine interprets either as
-data or as instructions. Procedure is a programmer concept: It helps
+data or as instructions. A procedure is a programmer's concept: It helps
 us reduce the complexity by breaking algorithms and programs into
 smaller pieces that are easier to understand.
 
-So *procedures* is something that is handled mainly by the compiler,
+So *procedures* are something that is handled mainly by the compiler,
 which translates our higher-level programming constructs into assembly
-and/or machine code. What does the compiler does with procedures
-declaration and calls. There are two approaches: *inlining* and
+and/or machine code. What does the compiler do with procedure
+declarations and calls? There are two approaches: *inlining* and
 *branching*.
 
 Inlining
 --------
 
 The idea of *inlining* procedure calls is to replace every call to a
-given procedure by itself by the code of that very procedure.
+given procedure by the code of that very procedure.
 
 Consider again our :code:`selection_sort` algorithm shown in
 :numref:`recursion/calls/selection_sort`. Inlining the calls to
@@ -134,7 +134,7 @@ Consider again our :code:`selection_sort` algorithm shown in
    end
 
 In :numref:`recursion/calls/inlining` we have to rename some variables
-to avoid name clashes. In this very example, Inlining shortens the
+to avoid name clashes. In this very example, inlining shortens the
 overall program (15 lines against 22 in
 :numref:`recursion/calls/selection_sort`), but in practice, inlining
 yields *fat code*, because there are always many calls for each
@@ -154,8 +154,8 @@ Branching
 ---------
 
 The idea of *branching* is to replace procedure calls by :code:`JUMP`
-instructions so that the machine "branch" to the body of the procedure
-and then, jumps back and resume execution right after the call, as
+instructions so that the machine "branches" to the body of the procedure
+and then jumps back and resumes execution right after the call, as
 shown on :numref:`recursion/calls/branching`.
 
 .. _recursion/calls/branching:
@@ -171,9 +171,9 @@ arguments and get a result back, if any.
 To do that, we use the *call stack*: A dedicated area in memory, which
 we operate as a :ref:`stack <sequences/stacks/stack>`. For each
 procedure call, the caller and the callee use it to exchange
-informations. The caller *pushes* its arguments and the return
-address, and then jumps to callee. The callee can *pop* these
-information from the stack, pushes the result, and finally jumps back
+information. The caller *pushes* its arguments and the return
+address, and then jumps to the callee. The callee can *pop* this
+information from the stack, push the result, and finally jump back
 to the given return address.
 
 
@@ -203,10 +203,10 @@ bottom, the :code:`main` procedure was active, the
 :code:`findMinimumFrom`.
 
 This information comes straight from the call stack. Each active
-procedure has a dedicate "record", so called its *activation frame*,
+procedure has a dedicated "record", also called its *activation frame*,
 which contains all the information exchanged between the caller and
 the callee. When we call a procedure, a new frame is pushed onto the
-stack, and gets pop out when the procedure returns. 
+stack, and gets popped out when the procedure returns.
 
 The Call Stack Structure
 ------------------------
@@ -215,8 +215,8 @@ Again, the call stack does not exist at the machine-level. It is more
 like a "design pattern", which the compiler generates. The call stack
 generally resides at the end of the available memory, as shown on
 :numref:`recursion/calls/call_stack`, and grows towards the data
-segment. If the stack grows so large that it collides with rest of the
-memory (i.e., data segment), the system raises the well-known
+segment. If the stack grows so large that it collides with the rest of
+the memory (i.e., data segment), the system raises the well-known
 :code:`stack overflow` error.
 
 .. _recursion/calls/call_stack:
@@ -258,21 +258,21 @@ need to track:
   the address of the last item on the stack.
 
 - the frame pointer (aka. :code:`FP`), which acts as a reference
-  points within a single activation frame. Often, :code:`FP` points to
+  point within a single activation frame. Often, :code:`FP` points to
   the first local variable. We access other fields indirectly,
   using :code:`FP+1` to access the return address.
 
 Our RAM model only has a single register, :code:`ACC`, which shall
 contain, by convention, the result of the procedure. So we place
-:code:`SP` and :code:`FP` in the last two memory cell.
+:code:`SP` and :code:`FP` in the last two memory cells.
 
 To simplify the assembly code, we introduce some new features and
 higher level instructions.
 
 - Indirect addressing where we denote by :code:`[SP+1]` the address
   contained at address :code:`SP+1`. Here :code:`SP` is an address,
-  where lays another address. We will use these square brackets and
-  offset to indicate such indirect access (aka. pointers).
+  where lies another address. We will use these square brackets and
+  offsets to indicate such indirect access (aka. pointers).
 
 - :code:`PUSH <address>` which decrements :code:`SP` and writes the
   content at the given address on the top of the stack. That would be
@@ -298,9 +298,9 @@ higher level instructions.
      STORE SP
 
 Equipped with these, we can now make a call to the :code:`swap`
-procedure for instance. The only extract thing we have to do is for
+procedure for instance. The only extra thing we have to do is for
 the callee to save the previous value of the frame pointer :code:`FP`
-before to update it, and to restore it before to return. 
+before updating it, and to restore it before returning.
 
 .. code-block:: nasm
 

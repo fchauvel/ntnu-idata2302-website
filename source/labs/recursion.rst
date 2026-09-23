@@ -13,7 +13,7 @@ Simple Recursions
 =================
 
 We start this lab session with a few small recursive algorithms. Each of
-them can be written either using iteration of recursion, but we focus
+them can be written either using iteration or recursion, but we focus
 here on recursive solutions.
 
 .. exercise::
@@ -80,7 +80,7 @@ here on recursive solutions.
 
           public static int sum(int[] array) {
             if (array == null)
-               throw new IllegalArgumentException("Cannot sum an null!");
+               throw new IllegalArgumentException("Cannot sum a null array!");
             return doSum(array, 0);
           }
 
@@ -188,7 +188,7 @@ Using Iteration
 ---------------
 
 We start with the iterative implementation, which is often more
-“natural”. Figure `1 <#fig:iterative>`__ shows one way to implement the
+“natural”. :numref:`labs/recursion/list/iterative` shows one way to implement the
 ``Sequence``. The ``IterativeList`` class may contain a ``Node``, which,
 in turn, may refer to another ``Node``, and so on and so forth. The list
 is thus formed by “linked” nodes. You will find this design in
@@ -205,7 +205,7 @@ is thus formed by “linked” nodes. You will find this design in
    :nonumber:
 
    Implement the insert method using a loop. As we saw during the
-   lectures, you will the ``getNode`` method, that finds the i\
+   lectures, you will use the ``getNode`` method, that finds the i\
    :sup:`th` node.
 
    #. Implement the ``getNode`` method.
@@ -223,7 +223,7 @@ is thus formed by “linked” nodes. You will find this design in
    front, I first create an initial node and set the ``head`` field with
    it. To insert further, I have to first find the node that precedes
    the insertion point, create a new node that contains the given item,
-   attach it to the next node, and set the next of previous node with my
+   attach it to the next node, and set the next of the previous node with my
    new node. The code below summarizes this approach:
 
    .. code:: java
@@ -256,7 +256,7 @@ is thus formed by “linked” nodes. You will find this design in
    :label: labs/recursion/insertion/runtime
    :nonumber:
 
-   In the worst case, how many comparisons does your algorithm requires?
+   In the worst case, how many comparisons does your algorithm require?
    What is the order of growth? Argue.
 
    #. What is the worst case scenario for the insertion?
@@ -264,7 +264,7 @@ is thus formed by “linked” nodes. You will find this design in
    #. How many comparisons take place in the worst case (a frequency
       table may help you).
 
-   #. Argue for an order of growth
+   #. Argue for an order of growth.
 
 .. solution:: labs/recursion/insertion/runtime
    :class: dropdown
@@ -293,7 +293,7 @@ is thus formed by “linked” nodes. You will find this design in
    :label: labs/recursion/insertion/memory
    :nonumber:
       
-   In the worst case, how much memory does your solution requires?
+   In the worst case, how much memory does your solution require?
 
 .. solution:: labs/recursion/insertion/memory
    :class: dropdown
@@ -306,12 +306,12 @@ is thus formed by “linked” nodes. You will find this design in
    The method ``getNode`` creates two variables in all cases. For the
    ``insert`` method, we have to understand both cases to see which one
    is the worst. If we insert in front, we have to allocate a new
-   ``Node`` object, which has two fields, so that is, two pieces of
+   ``Node`` object, which has two fields, that is, two pieces of
    memory. Otherwise, to insert further in the list we still have to
-   allocate a node, but we also need to invoke the ``getMethod`` that
+   allocate a node, but we also need to invoke the ``getNode`` that
    declares two variables. That is 4 cells in total.
 
-   Overall, we see that this is constant, because it does not depends on
+   Overall, we see that this is constant, because it does not depend on
    the problem size, which is the length of the list.
 
 Using Recursion
@@ -348,7 +348,7 @@ operation, which embodies the actual recursive implementation. The
    :code:`insert` operation in a recursive manner. Here are questions
    that might help to guide you.
 
-   #. Can you identify self-similar sub problems. The structure of the
+   #. Can you identify self-similar sub-problems? The structure of the
       linked list may help you.
 
    #. What are the base cases?
@@ -361,20 +361,20 @@ operation, which embodies the actual recursive implementation. The
 
    A list is recursive by definition. It is just an item followed by
    another shorter list. We can use this definition to build a
-   recursive implementation of the insert function. Insertion in 3\
-   :sup:`rd` position in a list of 5 items, is the same as inserting
-   in the 2\ :sup:`nd` position in the sub-sequence starting at the 2
-   position. Consider these examples:
+   recursive implementation of the insert function. Insertion in the 3\
+   :sup:`rd` position in a list of 5 items is the same as inserting
+   in the 2\ :sup:`nd` position in the sub-sequence starting at the 2\
+   :sup:`nd` position. Consider these examples:
 
    - Inserting Z at the 3\ :sup:`rd` position of a sequence
-     :math:`s=(A, B, C, D)`, is the same skipping A, and insert Z at the
-     2\ :sup:`nd` position of the sequence :math:`s'=(B,C,D)`.
+     :math:`s=(A, B, C, D)` is the same as skipping A and inserting Z at
+     the 2\ :sup:`nd` position of the sequence :math:`s'=(B,C,D)`.
 
    - Inserting Z at the 5\ :sup:`th` position of a sequence
-     :math:`s=(A, B, C, D)`, is the same skipping A, and insert Z at the
-     4\ :sup:`th` position of the sequence :math:`s'=(B,C,D)`.
-   
-   The idea if to create a function that insert *after* a given
+     :math:`s=(A, B, C, D)` is the same as skipping A and inserting Z at
+     the 4\ :sup:`th` position of the sequence :math:`s'=(B,C,D)`.
+
+   The idea is to create a function that inserts *after* a given
    position, but from a given *start* node.
 
    .. code-block:: java
@@ -388,7 +388,7 @@ operation, which embodies the actual recursive implementation. The
    - If we insert a the beginning of the list, we need to update the
      :code:`head` field. This case occurs when the given index is zero.
 
-   - If we have found the node that precedes the insertion points, we
+   - If we have found the node that precedes the insertion point, we
      need to create a new node and wire it into the list. This case
      occurs when :code:`index` is 1.
 
@@ -397,7 +397,7 @@ operation, which embodies the actual recursive implementation. The
    place a recursive call, passing in the node that follows the
    current one, and the given index decremented by one.
    
-   The following piece of code gives illustrates this idea:
+   The following piece of code illustrates this idea:
 
    .. code-block:: java
       :emphasize-lines: 5, 18
@@ -433,8 +433,8 @@ operation, which embodies the actual recursive implementation. The
    :label: labs/recursion/list/recursive/comparisons
    :nonumber:
 
-   In worst case, how many comparisons will your recursive insertion
-   takes?
+   In the worst case, how many comparisons will your recursive insertion
+   take?
 
    #. Identify the worst case. What is it?
 
@@ -452,10 +452,10 @@ operation, which embodies the actual recursive implementation. The
 
    The worst case occurs when one tries to insert an item at the very
    end of the list. For instance, given a sequence
-   :math:`s=(A,B,C,D)`, the worst case would be to insert in 5\
+   :math:`s=(A,B,C,D)`, the worst case would be to insert in the 5\
    :sup:`th` position.
 
-   What happen in this worst case. Only two cases of the algorithm are
+   What happens in this worst case? Only two cases of the algorithm are
    exercised:
 
    - The base case where we have found the node that precedes the
@@ -492,15 +492,15 @@ operation, which embodies the actual recursive implementation. The
    :label: labs/recursion/list/recursive/insert/memory
    :nonumber:
 
-   In the worst case, how much memory will it takes? Remember to account
+   In the worst case, how much memory will it take? Remember to account
    for the call stack.
 
 .. solution:: labs/recursion/list/recursive/insert/memory
    :class: dropdown
 
    Just as we did for counting comparisons, we have to count the
-   pieces of memory that are allocated. Each call to `insertAfter`
-   requires storing three input arguments
+   pieces of memory that are allocated. Each call to ``insertAfter``
+   requires storing three input arguments.
 
    That gives us the following recurrence relationship :math:`m(\ell)`
    where :math:`\ell` denotes the length of the sequence.
@@ -509,17 +509,17 @@ operation, which embodies the actual recursive implementation. The
 
       m(\ell) = \begin{cases}
             0 & \textrm{if } \ell = 1 \\
-            3 + t(\ell + 1)& \textrm{otherwise} \\
+            3 + m(\ell - 1)& \textrm{otherwise} \\
           \end{cases}
 
-   By solving this recurrence, we obtain :math:`m(\ell) = 3(\ell-1);`,
+   By solving this recurrence, we obtain :math:`m(\ell) = 3(\ell-1)`,
    which is linear. By contrast with the iterative approach, a
    recursive algorithm consumes memory on each call.
 
 Benchmark
 =========
 
-Let see now is theory matches practice. To get some concrete evidence,
+Let us see now if theory matches practice. To get some concrete evidence,
 we will try to insert items in both an ``IterativeList`` and in a
 ``RecursiveList``. Take a look at the file ``Benchmark.java``, which
 implements the above scenario.
@@ -528,7 +528,7 @@ implements the above scenario.
    :label: labs/recursion/benchmark/run
    :nonumber:
 
-   Run the benchmark on your machine. What result do you get. To run the
+   Run the benchmark on your machine. What results do you get? To run the
    benchmark, you can use the command:
 
    .. code:: shell
@@ -552,7 +552,7 @@ implements the above scenario.
    :label: labs/recursion/benchmark/why
    :nonumber:
 
-   Why do you think happen to ``RecursiveList``? Why is it
+   What do you think happens to ``RecursiveList``? Why is it
    underperforming?
 
 .. solution:: labs/recursion/benchmark/why
@@ -563,6 +563,6 @@ implements the above scenario.
    are actually catching a ``StackOverflowError`` which, in Java,
    indicates that the program has used all the memory allowed for the
    call stack. That is often the main problem of recursive algorithms:
-   They consume more memory. We will see further in the course, method
+   They consume more memory. We will see, further in the course, methods
    to avoid that in some cases.
 

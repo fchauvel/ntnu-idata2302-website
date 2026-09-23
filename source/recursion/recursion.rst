@@ -3,15 +3,15 @@ Recursion
 =========
 
 :Lecture: Lecture 3.2 :download:`(slides) <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EQ4LCfcFE6RIndFUInByF-kBGjjjcgE8q0YQ62ysOZCGMw?e=Ccqdet>`
-:Objectives: Understand what is recursion, how to use it, and how
-             measure efficiency of recursive algorithms
+:Objectives: Understand what recursion is, how to use it, and how
+             to measure the efficiency of recursive algorithms
 :Concepts: Recursion, recursive procedure, recursive data type
 
 In :doc:`Lecture 3.1 </recursion/procedure_calls>`, we have clarified
 what takes place at the machine level when one calls a procedure. We
-can now look at *recursion*, one of the most important concept in
-Computer Science [#rubioSanchez2017]_ . We will look at two usage of
-recursions: Recursion in data types and recursion in algorithms.
+can now look at *recursion*, one of the most important concepts in
+Computer Science [#rubioSanchez2017]_. We will look at two usages of
+recursion: recursion in data types and recursion in algorithms.
 
 .. [#rubioSanchez2017] If the topic picks your curiosity, there are
                        many goods textbooks on recursion. See for
@@ -36,15 +36,15 @@ Computer Science.
       The structure of the nautilus shell repeats itself at smaller
       scales
 
-Nature offers many example of recursive structures. See for instance
+Nature offers many examples of recursive structures. See for instance
 the Nautilus shell aside, whose structure repeats itself inside a
-spiral at smaller and smaller scale. The shell contains an smaller
-similar shell, which contains and even smaller shell, etc. Trees also
+spiral at smaller and smaller scale. The shell contains a smaller
+similar shell, which contains an even smaller shell, etc. Trees also
 have a recursive structure: Each branch splits itself into more
-branches, which also splits themselves into even more branches, etc.
+branches, which also split themselves into even more branches, etc.
 
-Such recursive patterns generates interesting effects in visual
-Arts. Think for instance of Russian Dolls, which contains another
+Such recursive patterns generate interesting effects in visual
+arts. Think for instance of Russian dolls, which contain other,
 smaller yet similar dolls. Another example is the `Droste effect
 <https://en.wikipedia.org/wiki/Droste_effect>`_ where an image
 contains itself. The key point is these self-similar inner parts.
@@ -57,14 +57,14 @@ contains itself. The key point is these self-similar inner parts.
 
       Sierpinski's Triangle: An example of fractal
              
-In Mathematics recursion takes many forms.  `Fractals
+In Mathematics, recursion takes many forms.  `Fractals
 <https://fractalfoundation.org/>`_ for instance, are complex
 geometrical patterns that are self-similar at different scales, as
 illustrated by :numref:`recursion/recursion/fractal`. Another form of
-recursion---a simpler one---is recurrence relationships. Equation
+recursion---a simpler one---is a recurrence relationship. Equation
 :eq:`recursion/factorial` defines the factorial function :math:`n! = n
-\times n-1 \times \ldots \times 1` as a recurrence.  That is to
-compute :math:`n!`, one must first calculate :math:`(n-1)!`
+\times n-1 \times \ldots \times 1` as a recurrence. That is, to
+compute :math:`n!`, one must first calculate :math:`(n-1)!`.
 
 .. math::
    :label: recursion/factorial
@@ -74,9 +74,9 @@ compute :math:`n!`, one must first calculate :math:`(n-1)!`
    n \times (n-1)! & \textrm{otherwise}\\
    \end{cases}
 
-In this course, we will focus on two key recursion: Recursion in data
-types, where a compound data type refer to itself, and recursion in
-algorithms, where an algorithm calls itself.
+In this course, we will focus on two key forms of recursion: recursion
+in data types, where a compound data type refers to itself, and
+recursion in algorithms, where an algorithm calls itself.
    
 
 .. important::
@@ -93,12 +93,12 @@ Trees. Each comes in many variations.
 Lists
 -----
 
-List is a data structure that we can use to implement the
+A list is a data structure that we can use to implement the
 :doc:`Sequence ADT </sequences/arrays>`, as an alternative to
 arrays. The idea is to see a sequence as an element followed by
 another sequence. :numref:`recursion/recursion/list` shows how one can
-declare such a data type in Java [#javaRecord]_ . We create a class
-`List`, with two fields. The field `item` contains a object of an
+declare such a data type in Java [#javaRecord]_. We create a class
+`List`, with two fields. The field `item` contains an object of an
 arbitrary type `T`, whereas the field `next` holds another list.
      
 .. code-block:: java
@@ -113,12 +113,12 @@ arbitrary type `T`, whereas the field `next` holds another list.
 
 .. [#javaRecord] In Java the classical way to implement a record would
                  be to create a class. Since version 14, Java offers
-                 the concept of record, but these are immutable.
+                 the concept of records, but these are immutable.
 
 This declaration yields structures that closely resemble
 :numref:`recursion/recursion/list/structure`. Each list (the dashed
 boxes) points to another list. This "chain" of objects stops when a
-list has `null` as next field.
+list has `null` as its next field.
 
 .. figure:: _static/recursion/images/lists.svg
    :name: recursion/recursion/list/structure
@@ -129,9 +129,9 @@ list has `null` as next field.
 Trees
 -----
 
-Tree is the other family of recursive data types we will look at. Just
+Trees are the other family of recursive data types we will look at. Just
 like a list, a tree carries an item, but, by contrast to the list, a
-tree has zero or more "next" trees---so called its children.
+tree has zero or more "next" trees---also called its children.
 
 .. code-block:: java
    :name: recursion/recursion/tree/datatype
@@ -143,9 +143,9 @@ tree has zero or more "next" trees---so called its children.
    }
 
 The declaration on :numref:`recursion/recursion/tree/datatype` yields
-structure like the one shown in
+a structure like the one shown in
 :numref:`recursion/recursion/tree/structure`. Each item has links to
-zero, one, or more trees. The whole looks like tree up-side down, or
+zero, one, or more trees. The whole looks like a tree upside down, or
 like the roots of a tree.
    
 .. figure:: _static/recursion/images/trees.svg
@@ -158,17 +158,17 @@ like the roots of a tree.
 Recursive Algorithms
 ====================
 
-Data types are not however the only use of recursion in Computer
+Data types are, however, not the only use of recursion in Computer
 Science. We can also make recursive algorithms:
 
 Consider the two formulas shown by
 :numref:`recursion/recursion/iteration-vs-recursion`. They both sum up
 the :math:`n` first integers, but the left one uses a summation
 whereas the right one uses a recurrence relation. From an algorithmic
-standpoint that yields two alternative algorithms. On the left side,
+standpoint, that yields two alternative algorithms. On the left side,
 we use a loop that updates the intermediate variable `sum`. On the
 right side, we use a *recursive procedure* that mirrors the recurrence
-relation. Both compute the very same thing, but their efficiency are
+relation. Both compute the very same thing, but their efficiency is
 different.
 
 .. list-table:: Two alternative algorithms to sum up the :math:`n`
@@ -209,29 +209,29 @@ different.
 When designing algorithms, *recursion* is an alternative to
 *iteration*. Iteration implies the use of a loop, and some necessary
 intermediate variables. By contrast, recursion yields algorithms that
-invoke themselves different arguments.
-          
+invoke themselves with different arguments.
+
 .. important::
 
-   Recursion is strictly as expressive as iteration. Any algorithms
+   Recursion is strictly as expressive as iteration. Any algorithm
    using a loop has an equivalent recursive version, and vice versa.
 
 How to Design "Recursive" Algorithms?
 -------------------------------------
 
 Designing recursive algorithms boils down to detecting self-similar
-patterns. In general we will try to follows these steps:
+patterns. In general, we will try to follow these steps:
 
-#. Find a self-similar sub problems / sub-structures ;
+#. Find self-similar sub-problems / sub-structures;
 
-#. Identify the base cases, whose answer is known up front ;
-   
-#. Identify the recursive cases, where we call our algorithms with
+#. Identify the base cases, whose answer is known up front;
+
+#. Identify the recursive cases, where we call our algorithm with
    different arguments.
 
 
-Example 1:
-^^^^^^^^^^
+Example 1
+^^^^^^^^^
 
 .. margin::
 
@@ -245,15 +245,15 @@ Consider the sum of the first :math:`n` integers we studied above. How
 can we come up with such a design?
 :numref:`recursion/recursion/sum/v1` portrays such a sum for
 :math:`n=8`. The problem is to count the squares. Note that the
-overall shape forms a triangle. If we remove the first bar on the left
-hand side, we are left with another *smaller* triangle.
+overall shape forms a triangle. If we remove the first bar on the
+left-hand side, we are left with another *smaller* triangle.
 
 Base cases:
-  When do we stop? When the :math:`n=1`, there is no more left hand
-  side bar to be taken, and the result is one.
+  When do we stop? When :math:`n=1`, there is no more left-hand-side
+  bar to be taken, and the result is one.
 
 Recursive case:
-  The height of bar on the left, is the number we start from,
+  The height of the bar on the left is the number we start from,
   :math:`n`. So the overall sum is n plus the size of the remaining
   triangle.
 
@@ -283,16 +283,16 @@ shown on :numref:`recursion/recursion/sum/v2`. These two together
 account for :math:`n + (n-1) = 2n-1`.
 
 Base cases:
-  What are the case cases? There are two. As before, when the given
-  number if 1 one, we still know the answer is 1. However, if
-  :math:`n=2` there is no left-over triangle to add and the answer is
+  What are the base cases? There are two. As before, when the given
+  number is 1, we still know the answer is 1. However, if
+  :math:`n=2`, there is no left-over triangle to add and the answer is
   three.
 
 Recursive cases:
   What are the recursive cases? The sum of a triangle is the left and
   bottom bars, plus the "left-over" triangle.
 
-That gives us the following algorithm
+That gives us the following algorithm:
 
 .. code:: java
 
@@ -315,18 +315,18 @@ Example 3
 
 What other self-similar patterns can we find? We can break a triangle
 into smaller ones, as shown on
-:numref:`recursion/recursion/sum/v3`. We break the large triangles
+:numref:`recursion/recursion/sum/v3`. We break the large triangle
 into 3 triangles of size :math:`\frac{n}{2}` and a smaller one in the
 middle.
 
 Base cases:
-  When do we stop. If :math:`n =2` this decomposition into triangles
+  When do we stop? If :math:`n=2`, this decomposition into triangles
   does not work anymore, but we know the sum is 3 in that
   case. Similarly, if :math:`n=1`, then the sum is 1.
 
 Recursive cases:
   Here we have to be more careful, because the sizes of the triangle
-  depends on whether :math:`n` is odd or even. When :math:`n` is even,
+  depend on whether :math:`n` is odd or even. When :math:`n` is even,
   then it yields 3 triangles of size :math:`\frac{n}{2}` and one
   triangle of height :math:`\frac{n-2}{2}`. If :math:`n` is odd, it
   yields 3 triangles of height :math:`\frac{n-1}{2}` plus one triangle
@@ -352,14 +352,14 @@ That gives us the following *recursive* algorithm:
    Thinking "recursive" is a matter of practice. That said, there are
    some general steps:
 
-   1. Break down the problem into *self-similar sub problems*. Look at
-      the underlying data structure if any, is it recursive?
+   1. Break down the problem into *self-similar sub-problems*. Look at
+      the underlying data structure, if any. Is it recursive?
 
    2. Identify the *base cases*, that is, the cases that we can solve
       directly, without recursion.
 
-   3. Work out the recursive cases, those that requires solving
-      self-similar sub problems. What parameters do we need to pass?
+   3. Work out the recursive cases, those that require solving
+      self-similar sub-problems. What parameters do we need to pass?
 
 
 Runtime Efficiency
@@ -367,7 +367,7 @@ Runtime Efficiency
 
 How can we measure the efficiency of *recursive algorithms*? The main
 difference is that the calculus requires solving a recurrence
-relationship, which captures the recursive nature. Let see an example.
+relationship, which captures the recursive nature. Let us see an example.
 
 .. margin::
 
@@ -393,13 +393,13 @@ integers, which I reproduce opposite.
 
 Our approach does not help much here. We have two challenges:
 
-- We do not know whether we will enter the conditional statement
-  
+- We do not know whether we will enter the conditional statement.
+
 - To know the time spent computing :code:`sum(n)`, we need to know the
   time spent computing :code:`sum(n-1)`.
 
 To work around these, we have to model the runtime as a recurrence
-relationship :math:`t(n)` as follows. Let consider the base case and
+relationship :math:`t(n)` as follows. Let us consider the base case and
 the recursive case separately. In the base case, we evaluate the
 conditional and we return a value. The total cost for that is 2. In
 the recursive case, we still evaluate the conditional, we compute
@@ -459,8 +459,8 @@ efficiency, we have to model this using a recurrence
 relationship. Let's look at the base cases and the recursive cases
 separately:
 
-- The base case, there is no variable besides the input n. The memory
-  consume is 0.
+- In the base case, there is no variable besides the input n. The
+  memory consumption is 0.
 
 - In the recursive case, there is no additional variable either, but
   there is a procedure call. This procedure call requires storing the
@@ -477,7 +477,7 @@ That gives us the following recurrence relationships:
    \end{cases}
    
 Which reduces to :math:`m(n) = n-1`. Interestingly, this shows that
-such a simple recursive algorithm requires memory in quantity that is
+such a simple recursive algorithm requires memory in a quantity that is
 proportional to the size of its input!
 
 .. important::
