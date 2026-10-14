@@ -356,7 +356,7 @@ my opinion. Here are some examples:
   root.
 * When the tree is equivalent to a complete binary tree, we can also
   use an array to store nodes as we will do with :doc:`Heap trees
-  (Lecture 5.3) </trees/heap>`.
+  (Lecture 5.3) </trees/heap/index>`.
 
 
 Tree Traversals

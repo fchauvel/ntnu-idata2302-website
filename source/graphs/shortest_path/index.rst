@@ -908,7 +908,7 @@ How Efficient is it?
 ~~~~~~~~~~~~~~~~~~~~
 
 The time complexity depends on how we implement the priority queue,
-but here we assume we are using a :doc:`binary heap <trees/heaps>`.
+but here we assume we are using a :doc:`binary heap </trees/heap/index>`.
 
 - :math:`O(V)` extract-min operations: :math:`O(V \log V)`
 - :math:`O(E)` decrease-key operations: :math:`O(E \log V)` (remove and

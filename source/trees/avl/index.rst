@@ -94,9 +94,9 @@ build such *self-balancing* trees, such as:
   and enforcing specific constraints.
 
 * B-Trees: Generalize the idea of search trees to n-ary trees (see
-  :doc:`Lecture 5.5 </trees/btrees>`)
+  :doc:`Lecture 5.5 </trees/btree/index>`)
 
-In the remainder, we look at AVL [#avl] trees and see how to implement the
+In the remainder, we look at AVL [#avl]_ trees and see how to implement the
 :func:`oset.add` and :func:`oset.remove` operations.
 
 .. [#avl] Named after the two persons who invented this it:

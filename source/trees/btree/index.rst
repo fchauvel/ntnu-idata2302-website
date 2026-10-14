@@ -220,12 +220,12 @@ used by many database engines to implement indexes for instance.
 The Structure of a B-tree
 -------------------------
 
-Like the :doc:`binary search tree (BST) </trees/bst>`, a B-tree
+Like the :doc:`binary search tree (BST) </trees/bst/index>`, a B-tree
 implements the ordered set ADT. That is, a B-tree represents a set of
 things ordered in some predefined ways. A *time series* (a set of
 observations indexed by time/date) a good example of ordered set. If
 we were measuring the temperature, we could get something like
-:numref:`tress/btrees/temperature`. These temperature readings a
+:numref:`trees/btrees/temperature`. These temperature readings a
 naturally ordered by time but there cannot be two average temperature
 at the same day: It is an ordered set.
 
@@ -818,7 +818,7 @@ the way to the root, which is the only node allowed to have less than
 Why Is This Correct?
   What would be a correct deletion procedure? It has to obey the
   specifications of the deletion in an :doc:`Ordered set ADT
-  </foundations/trees/bst>`, but also has to guarantee that it does
+  </trees/bst/index>`, but also has to guarantee that it does
   not break the b-tree constraint: Every node but the root must have
   at least :math:`\big\lfloor\frac{k}{2}\big\rfloor`
   entries/children.
