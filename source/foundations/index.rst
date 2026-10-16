@@ -20,3 +20,4 @@ Contents
    efficiency
    analysis
    big_o
+   problems
