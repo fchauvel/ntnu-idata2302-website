@@ -19,4 +19,4 @@ Contents
    searching.rst
    sorting.rst
    stacks
-   
+   problems

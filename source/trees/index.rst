@@ -20,3 +20,4 @@ Contents
    avl/index
    btree/index 
    tries/index
+   problems
