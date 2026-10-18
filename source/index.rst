@@ -48,6 +48,12 @@ Algorithms and Data Structures
 
    
 .. toctree::
+   :caption: Self-Checks
+
+   self_check/index
+
+
+.. toctree::
    :caption: Code Examples
    :maxdepth: 1
               
