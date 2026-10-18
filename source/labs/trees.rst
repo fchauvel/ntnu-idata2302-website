@@ -20,8 +20,9 @@ Trees
    - Do *not* exceed *8 pages*
    - Do *not* attach a zip of your Java project
 
-   Submit your report, as a **PDF** file, on Canvas by **Friday
-   November 6, 2025 at 23:30** at the latest.
+   You have two weeks to complete this lab session, starting on
+   Monday October 19, 2026. Submit your report, as a **PDF** file, on
+   Canvas by **Monday November 2, 2026 at 23:30** at the latest.
 
    
 Binary Search Tree (BST)

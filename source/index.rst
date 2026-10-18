@@ -40,9 +40,9 @@ Algorithms and Data Structures
    labs/foundations
    labs/sequences
    labs/recursion
+   labs/trees
 
 ..
-   labs/trees
    labs/graphs/index
    labs/optimization
 
