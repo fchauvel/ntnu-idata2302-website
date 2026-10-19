@@ -50,7 +50,10 @@ Algorithms and Data Structures
 .. toctree::
    :caption: Self-Checks
 
-   self_check/index
+   self_check/mid_term
+
+..
+   self_check/final
 
 
 .. toctree::

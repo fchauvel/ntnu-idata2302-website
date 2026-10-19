@@ -1,16 +1,21 @@
-===========
-Questions
-===========
+========
+Mid-Term
+========
+
+We are halfway through the course. This self-check covers the first
+half of the course: *Foundations*, *Sequences* and *Recursion*. It is
+meant to let you see where you stand, particularly if you have chosen
+not to attend the lectures or the lab sessions.
 
 .. important::
 
-   This problem set is **not graded**. Use it to check where you
-   stand. If some questions feel harder than expected, that is useful
-   to know.
+   This problem set is **not graded**. If some questions feel harder
+   than expected, that is useful to know.
 
-   The solutions will be released later, in a separate document (see
-   :doc:`solutions`). When they are, compare your *reasoning* with
-   them, not just your final answers.
+   The solutions are not yet available. They will be released later,
+   in a separate document, so that you get a chance to try the
+   problems first. When they are, compare your *reasoning* with them,
+   not just your final answers.
 
 Part 1 — Finding the minimum, on-line
 =====================================
