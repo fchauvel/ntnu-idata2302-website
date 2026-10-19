@@ -23,6 +23,10 @@ Part 1 — Finding the minimum, on-line
 The user types values one at a time. Your program must find the
 smallest without storing them all.
 
+.. seealso::
+
+   - :doc:`Computations </foundations/computation>` (what an algorithm is)
+
 .. exercise:: Question 1
    :label: self-check/mid-term/q01
    :nonumber:
@@ -36,6 +40,12 @@ Part 2 — RAM programs
 
 This part connects our thinking to the machine. It is the foundation,
 not what we do day to day. Use the RAM model from the lectures.
+
+.. seealso::
+
+   - :doc:`Computer </foundations/ram>` (the RAM machine and its instructions)
+   - :doc:`RAM Assembly Recap </ram_recap>` (instruction set and translation recipes)
+   - :doc:`Efficiency </foundations/efficiency>` and :doc:`The Big-O Notation </foundations/big_o>`
 
 .. exercise:: Question 2
    :label: self-check/mid-term/q02
@@ -75,6 +85,12 @@ not what we do day to day. Use the RAM model from the lectures.
 Part 3 — Back to pseudo-code
 ============================
 
+.. seealso::
+
+   - :doc:`Efficiency </foundations/efficiency>` (what to measure)
+   - :doc:`Algorithm Analysis </foundations/analysis>` (best and worst cases)
+   - :doc:`The Big-O Notation </foundations/big_o>`
+
 .. exercise:: Question 7
    :label: self-check/mid-term/q07
    :nonumber:
@@ -106,6 +122,11 @@ Part 3 — Back to pseudo-code
 Part 4 — Recursion
 ==================
 
+.. seealso::
+
+   - :doc:`Recursion </recursion/recursion>` (recursive algorithms and recurrences)
+   - :doc:`Procedure Calls </recursion/procedure_calls>` (the call stack and its memory cost)
+
 .. exercise:: Question 11
    :label: self-check/mid-term/q11
    :nonumber:
@@ -133,6 +154,12 @@ Part 5 — Insertion sort
 
 Now we want to store all the values the user provides and keep them
 sorted, not just pick the minimum.
+
+.. seealso::
+
+   - :doc:`Simple Sorting </sequences/sorting>` (insertion sort)
+   - :doc:`Using Arrays </sequences/arrays>` (inserting into an array)
+   - :doc:`Linked Lists </recursion/linked_list>`
 
 .. exercise:: Question 14
    :label: self-check/mid-term/q14
