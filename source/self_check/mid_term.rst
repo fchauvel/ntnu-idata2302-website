@@ -41,6 +41,12 @@ Part 2 — RAM programs
 This part connects our thinking to the machine. It is the foundation,
 not what we do day to day. Use the RAM model from the lectures.
 
+Throughout this part, the "number of instructions" is the number of
+instructions the machine **executes** when it runs your program on a
+given input. It is *not* the number of instructions written in the
+program (its length), because a loop executes the same instructions
+many times.
+
 .. seealso::
 
    - :doc:`Computer </foundations/ram>` (the RAM machine and its instructions)
@@ -65,8 +71,8 @@ not what we do day to day. Use the RAM model from the lectures.
    :label: self-check/mid-term/q04
    :nonumber:
 
-   Express the number of instructions as a function of :math:`n`.
-   Hint: does your answer depend on anything other than :math:`n`?
+   Express the number of instructions executed as a function of
+   :math:`n`. Hint: does your answer depend on anything other than :math:`n`?
 
 .. exercise:: Question 5
    :label: self-check/mid-term/q05
@@ -79,8 +85,8 @@ not what we do day to day. Use the RAM model from the lectures.
    :label: self-check/mid-term/q06
    :nonumber:
 
-   What can you say about the number of instructions using big-O
-   notation?
+   What can you say about the number of instructions executed using
+   big-O notation?
 
 Part 3 — Back to pseudo-code
 ============================
@@ -96,7 +102,8 @@ Part 3 — Back to pseudo-code
    :nonumber:
 
    Back at our original pseudo code program from question 1. Why might
-   we prefer to count comparisons rather than machine instructions?
+   we prefer to count comparisons rather than executed machine
+   instructions?
 
 .. exercise:: Question 8
    :label: self-check/mid-term/q08
