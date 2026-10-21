@@ -14,4 +14,8 @@ Contents
 
    concepts.rst
    collisions.rst
+
+.. toctree::
+   :maxdepth: 1
+
    problems

@@ -17,4 +17,8 @@ Contents
    quick_sort
    merge_sort
    radix_sort
+
+.. toctree::
+   :maxdepth: 1
+
    problems

@@ -19,4 +19,8 @@ Contents
    searching.rst
    sorting.rst
    stacks
+
+.. toctree::
+   :maxdepth: 1
+
    problems
