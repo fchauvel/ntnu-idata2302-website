@@ -16,7 +16,7 @@ gives you everything you need.
 
 .. note::
 
-   This page is a draft. Problems 7 to 11 are placeholders.
+   This page is a draft. Problems 10 and 11 are placeholders.
 
 
 Core Problems
@@ -298,22 +298,202 @@ Core Problems
 .. exercise:: Counting Disk Reads ★★
    :label: trees/problems/btree-disk
 
-   *Placeholder.* B-tree insertions and deletions (splits, borrowing,
-   merging) and their cost in disk accesses.
+   :doc:`Lecture 5.5 </trees/btree/index>` introduces B-trees to
+   reduce the number of disk accesses. We use its conventions with
+   :math:`k = 4`: Only the leaves carry entries, at most four each. An
+   internal node has at most four children, separated by up to three
+   keys, and every key is the smallest key found in the subtree on its
+   right. Every node except the root holds at least
+   :math:`\lfloor k/2 \rfloor = 2` entries or children. Consider the
+   B-tree shown on :numref:`trees/problems/btree-disk/tree`.
+
+   .. figure:: _static/images/btree-disk.svg
+      :name: trees/problems/btree-disk/tree
+
+      A B-tree with :math:`k = 4`, holding ten entries
+
+   To leave no room for doubt, we fix the following rules:
+
+   - An overflowing node (five entries or children) keeps the first
+     three, and moves the last two into a new node, placed just on its
+     right. Its parent gets a new key: The smallest key under the new
+     node.
+   - To repair an underflowing node, first look at its left sibling:
+     If it holds more than two entries (or children), borrow its last
+     one. Otherwise, look at its right sibling, and borrow its first
+     one under the same condition. Otherwise, merge with the left
+     sibling if there is one, or else with the right sibling. In every
+     case, update the keys of the parent.
+
+   We count disk accesses as in the disk-access model. Each node fills
+   exactly one block: Reading a node costs one ``READ_BLOCK``, and
+   writing it costs one ``WRITE_BLOCK``. Memory is small, so every
+   operation starts by reading the root, but a node read during an
+   operation stays in memory until the operation ends. Every node that
+   is created or changed is written exactly once, at the end of the
+   operation. Discarding a node costs nothing, and so does keeping
+   track of where the root is.
+
+   #. Insert the key 28. Draw the tree after every split. Which nodes
+      do you read, and which do you write? How many disk accesses does
+      the insertion cost in total?
+
+   #. Starting from the tree you obtained, delete the keys 30, 10, and
+      50, in this order. Draw the tree after each deletion, say how you
+      repair every underflow (borrowing or merging, and with which
+      sibling), and count the reads and writes.
+
+      After the last deletion, the root is left with a single child.
+      Does this break the B-tree rule? What would you do about it, and
+      why does it matter for later operations?
+
+   #. Consider a B-tree of height :math:`h`, where, as for any tree, a
+      single node has height 0. In the worst case, how many disk
+      accesses does an insertion cost? Which insertion triggers this
+      worst case? Show that a deletion also costs :math:`O(h)` disk
+      accesses.
+
+   #. A database stores :math:`10^9` entries in a B-tree, on a hard
+      drive whose blocks hold 4096 bytes. A key and the address of a
+      block take 8 bytes each, so we choose
+      :math:`k = 4096 / 16 = 256`. What are the smallest and the
+      largest possible heights of this B-tree? How many blocks does a
+      search read at most?
+
+      Compare with a perfectly balanced BST holding the same entries,
+      where every node sits in its own block. Assuming a disk access
+      takes 10 ms, how long does a search take in each case?
+
+      *Hint:* The tree is tallest when its nodes are as empty as the
+      rule allows. At least how many entries does a B-tree of height
+      :math:`h` hold?
 
 
 .. exercise:: Prefix Power ★★
    :label: trees/problems/prefix
 
-   *Placeholder.* Build a prefix tree and its compressed version, then
-   design the prefix search.
+   :doc:`Lecture 5.6 </trees/tries/index>` stores a set of words in a
+   prefix tree: The root carries the empty symbol :math:`\varepsilon`,
+   every other node carries one symbol, and a leaf :math:`\bot` marks
+   the end of each word. The lecture explains how to check whether a
+   word is in the tree, but leaves prefix search, insertion, and
+   deletion open. This problem fills these gaps. Consider the set of
+   eight words
+
+   .. math::
+
+      S = \{ \mathit{in},\, \mathit{inner},\, \mathit{tea},\,
+      \mathit{tear},\, \mathit{ten},\, \mathit{tend},\,
+      \mathit{to},\, \mathit{toe} \}
+
+   #. Draw the prefix tree that holds :math:`S`. How many nodes does it
+      have? Compare with the total number of symbols in the eight
+      words. Explain why the leaves :math:`\bot` are necessary in this
+      tree.
+
+   #. In a *compressed* prefix tree, every chain of nodes that have a
+      single child is merged into a single node, which carries all
+      their symbols. Afterwards, every node except the leaves has at
+      least two children. Draw the compressed version of your tree.
+      How many nodes are left?
+
+      Explain how to check whether the compressed tree contains a word,
+      and run your method on "te", "tend", and "inn".
+
+   #. Design a procedure ``prefixSearch(root, p)`` that returns all the
+      words of a (non-compressed) prefix tree that start with the
+      prefix :math:`p`. Run it on the prefixes "te", "in", "tex", and
+      on the empty prefix. What is its time complexity?
+
+      What changes in a compressed tree? Think in particular of the
+      prefix "inn".
+
+   #. Add the word "i" to your compressed tree, then remove the word
+      "in". Draw the tree after each step. In general, when does an
+      insertion force you to split a node? When does a deletion force
+      you to merge nodes?
 
 
 .. exercise:: One Pass Is Enough ★★★
    :label: trees/problems/one-pass
 
-   *Placeholder.* Check whether a binary tree is AVL-balanced in a
-   single pass, then compute its diameter.
+   Many questions about a binary tree combine answers computed on
+   its subtrees. Computed carelessly, the same answers get recomputed
+   over and over. This problem shows how to compute everything in a
+   single traversal.
+
+   As in :doc:`Lecture 5.4 </trees/avl/index>`, the empty tree has
+   height :math:`-1`, and we say a binary tree is *balanced* when the
+   balance factor of every node lies in :math:`[-1, 1]`. We ignore the
+   items: The tree need not be a BST. The *diameter* of a tree is the
+   number of edges on the longest path between two of its nodes. Such
+   a path climbs up from one node and goes down to the other, and it
+   need not pass through the root.
+
+   .. figure:: _static/images/one-pass.svg
+      :name: trees/problems/one-pass/tree
+
+      A binary tree with ten nodes
+
+   #. A classmate checks the balance as follows, where ``height``
+      returns the height of a subtree, as in
+      :numref:`trees/problems/counting`:
+
+      .. code-block:: text
+
+         isBalanced(node):
+            if node is null:
+               return true
+            if abs(height(node.left) - height(node.right)) > 1:
+               return false
+            return isBalanced(node.left) and isBalanced(node.right)
+
+      Which nodes of the tree shown on
+      :numref:`trees/problems/one-pass/tree` are unbalanced? Which one
+      makes ``isBalanced`` return false?
+
+      Now run ``isBalanced`` on a *perfect* binary tree of height
+      :math:`h`, whose leaves all sit at depth :math:`h`. How many
+      times do the calls to ``height`` visit a node at depth
+      :math:`d`? Deduce the time complexity of ``isBalanced`` on such a
+      tree, in terms of its number of nodes :math:`n`.
+
+   #. Write a procedure that checks the balance in a single traversal,
+      visiting every node at most once. What is its time complexity?
+      Run it on :numref:`trees/problems/one-pass/tree`. Which node
+      reveals the imbalance first? Which nodes are never visited?
+
+      *Hint:* A node needs the heights of its children to check its
+      own balance, and to compute its own height. Let a single
+      procedure return both, and agree on a special value meaning
+      "unbalanced".
+
+   #. What is the diameter of the tree on
+      :numref:`trees/problems/one-pass/tree`? Give a longest path. Does
+      it pass through the root?
+
+      The classmate now writes:
+
+      .. code-block:: text
+
+         diameter(node):
+            if node is null:
+               return 0
+            through = height(node.left) + height(node.right) + 2
+            return max(through, diameter(node.left), diameter(node.right))
+
+      Explain why it is correct. What is its time complexity on a tree
+      where every node has a single child? Write a procedure that
+      computes the diameter in a single traversal.
+
+   #. Adapt your single-pass procedure to the general trees of
+      :numref:`trees/problems/counting`, where a node may have any
+      number of children. Run it on the tree shown on
+      :numref:`trees/problems/counting/tree`: What is its diameter,
+      and which two nodes are the furthest apart?
+
+      *Hint:* A longest path has a single highest node. Through which
+      of its children can it go?
 
 
 Going Further
