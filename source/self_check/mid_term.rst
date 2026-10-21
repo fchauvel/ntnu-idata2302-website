@@ -204,3 +204,8 @@ sorted, not just pick the minimum.
 
    How much memory does this program need, compared with your minimum
    algorithm from question 1?
+
+.. toctree::
+   :hidden:
+
+   mid_term_solutions
