@@ -16,7 +16,7 @@ gives you everything you need.
 
 .. note::
 
-   This page is a draft. Problems 10 and 11 are placeholders.
+   This page is a draft.
 
 
 Core Problems
@@ -497,22 +497,200 @@ Core Problems
 
 
 Going Further
-=================
-  These problems go beyond the lectures: Huffman coding and scapegoat
-  trees are not part of the syllabus. Both build directly on this
-  module, though. Huffman codes are binary prefix trees, and scapegoat
-  trees are another way to keep a search tree balanced. Each problem
-  starts with a short background that introduces everything you need.
+=============
+
+These problems go beyond the lectures: Huffman coding and scapegoat
+trees are not part of the syllabus. Both build directly on this
+module, though. Huffman codes are binary prefix trees, and scapegoat
+trees are another way to keep a search tree balanced. Each problem
+starts with a short background that introduces everything you need.
 
 .. exercise:: Squeezing BANANA BANDANA ★★★
    :label: trees/problems/huffman
 
-   *Placeholder.* Prefix-free codes as binary prefix trees, and
-   Huffman coding.
+   **Background.** A computer stores text as a sequence of bits, so
+   every symbol needs a *code*: A sequence of bits that stands for
+   it. The simplest choice gives every symbol a code of the same
+   length. With five symbols, three bits each are enough, for example
+   A = 000, B = 001, and so on. But some symbols are much more frequent
+   than others. If we give them shorter codes, and give longer codes to
+   the rare ones, the whole text takes fewer bits.
+
+   Codes of different lengths raise a problem, though: Where does one
+   code end and the next begin? A code is *prefix-free* when no code is
+   the beginning (the prefix) of another one. With a prefix-free code,
+   we can read the bits from left to right, and as soon as the bits
+   read so far form a code, we know which symbol it stands for.
+
+   A prefix-free code is a binary tree. Every symbol sits in a leaf,
+   and its code describes the path from the root to that leaf: 0 means
+   "go to the left child" and 1 means "go to the right child". This is
+   the prefix tree of :doc:`Lecture 5.6 </trees/tries/index>`, over the
+   alphabet :math:`\{0, 1\}`. Because no code is the prefix of another,
+   every code ends in a leaf, and we need no :math:`\bot` marker. To
+   decode, we start at the root and follow the bits. Whenever we reach
+   a leaf, we output its symbol and jump back to the root.
+
+   *Huffman's algorithm* builds the best such tree for a given text.
+   It uses a minimum priority queue, as in :doc:`Lecture 5.3
+   </trees/heap/index>`, whose items are trees and whose priorities
+   are *weights*:
+
+   #. Count how often each symbol occurs. For each symbol, enqueue a
+      tree made of a single leaf, whose weight is that count.
+   #. While the queue holds more than one tree, dequeue the two
+      lightest trees, join them as the left and right children of a new
+      root, and enqueue the result, whose weight is the sum of their
+      weights.
+   #. The last tree left in the queue is the code tree.
+
+   The algorithm leaves ties open: When several trees have the same
+   weight, any choice is allowed.
+
+   **Problem.** We want to store the text "BANANA BANDANA", where the
+   space " " counts as a symbol, written ␣. Consider the following
+   three codes:
+
+   .. list-table::
+      :header-rows: 1
+
+      * - Symbol
+        - A
+        - N
+        - B
+        - D
+        - ␣
+      * - Code 1
+        - 0
+        - 1
+        - 01
+        - 10
+        - 11
+      * - Code 2
+        - 00
+        - 01
+        - 10
+        - 110
+        - 111
+      * - Code 3
+        - 000
+        - 001
+        - 010
+        - 011
+        - 100
+
+   #. Which of these codes are prefix-free? For Code 1, find a
+      sequence of bits that can be decoded in two different ways. Draw
+      the trees of the other two codes, and use the tree of Code 2 to
+      decode 110000100.
+
+   #. How many bits does the text take with Code 2? With Code 3?
+
+   #. Run Huffman's algorithm on the text. Give the content of the
+      priority queue after every step, draw the resulting tree, and
+      give the code of every symbol. How many bits does the text take
+      now? Does a different way of breaking the ties change this
+      number?
+
+   #. Show that in a best code tree (one that minimises the total
+      number of bits), every internal node has exactly two children.
+
+      Then show that there is always a best tree where the two least
+      frequent symbols are siblings, at the deepest level. This is the
+      key step in proving that Huffman's algorithm is optimal.
+
+      *Hint:* What happens to the total number of bits if you swap a
+      frequent symbol with a rarer one that sits deeper in the tree?
+
+   #. A text uses :math:`m` different symbols. What is the time
+      complexity of Huffman's algorithm, once the symbols are counted,
+      if the priority queue is a binary heap? Find a text with four
+      different symbols where the Huffman code saves nothing compared
+      with a code where every symbol takes two bits.
 
 
 .. exercise:: Scapegoat Trees ★★★★
    :label: trees/problems/scapegoat
 
-   *Placeholder.* Scapegoat trees: tracing an insertion, proving the
-   height bound, and arguing about the cost of rebuilding.
+   **Background.** AVL trees stay balanced by storing extra
+   information in every node, and by fixing the tree with rotations
+   after every insertion and deletion. Scapegoat trees take a lazier
+   approach: Nodes store nothing but their item and their two
+   children, and the tree is a plain BST most of the time. Only when a
+   new node lands too deep do we pick one subtree, the *scapegoat*,
+   and rebuild it from scratch.
+
+   We fix a parameter :math:`\alpha` with :math:`1/2 < \alpha < 1`. In
+   this problem, :math:`\alpha = 2/3`. The *size* of a node is the
+   number of nodes in its subtree, as in
+   :numref:`trees/problems/counting`, and the root has depth 0. A node
+   :math:`w` is *weight-balanced* when each of its children has a size
+   of at most :math:`\alpha \cdot \mathrm{size}(w)`: Neither side holds
+   much more than its share of the nodes.
+
+   A scapegoat tree with :math:`n` nodes handles an insertion as
+   follows:
+
+   #. Insert the new node :math:`x` as in a plain BST (see
+      :doc:`Lecture 5.2 </trees/bst/index>`).
+   #. If the depth of :math:`x` is at most :math:`\log_{1/\alpha} n`,
+      where :math:`n` now counts :math:`x`, stop here.
+   #. Otherwise, walk up from :math:`x` towards the root, and stop at
+      the first ancestor :math:`w` that is *not* weight-balanced. This
+      node is the scapegoat.
+   #. Rebuild the subtree rooted at :math:`w` into a perfectly
+      balanced tree: List its :math:`m` items in order (with an
+      in-order traversal), make the item at position
+      :math:`\lceil m/2 \rceil` the new root, and build its left and
+      right subtrees the same way, from the items on each side.
+
+   **Problem.**
+
+   #. Starting from an empty scapegoat tree, insert the keys 10, 20,
+      30, 40, 50, 60, and 70, in this order. Draw the tree after every
+      insertion. Whenever the new node lands too deep, give the size
+      of every ancestor you check on the way up, say which node is the
+      scapegoat, and draw the tree after the rebuild.
+
+      Compare the final height with that of a plain BST built from the
+      same insertions.
+
+   #. Show that, whenever the new node :math:`x` lands too deep, the
+      walk up always finds a scapegoat.
+
+      *Hint:* Assume that every ancestor of :math:`x` is
+      weight-balanced. Going down one step from the root, how much can
+      the size shrink at most? What does this give for the size of
+      :math:`x`?
+
+      One can show that the rebuild always brings :math:`x` back within
+      the bound. What is then the largest possible height of a
+      scapegoat tree with :math:`n` nodes, built by insertions only?
+      Compare it with the bound :math:`1.44 \log_2 n` of AVL trees.
+
+   #. How long does it take to rebuild a subtree with :math:`m` nodes?
+      Find a sequence of insertions where a single insertion triggers
+      a rebuild of :math:`\Theta(n)` nodes.
+
+      Since the nodes do not store their size, the walk up must compute
+      it. Show that finding the scapegoat takes
+      :math:`O(\mathrm{size}(w))` time, so it costs no more than the
+      rebuild itself.
+
+      *Hint:* When you step up from a child :math:`u` to its parent,
+      you already know the size of :math:`u`. Which subtree do you
+      still need to count?
+
+   #. Rebuilding is expensive, but it should not happen often. Right
+      after a rebuild, the scapegoat :math:`w` has :math:`m` nodes in
+      its subtree and is perfectly balanced. Show that at least
+      :math:`\Omega(m)` insertions into the subtree of :math:`w` must
+      happen before :math:`w` can be a scapegoat again.
+
+      Deduce that :math:`n` insertions into an empty scapegoat tree
+      take :math:`O(n \log n)` time in total, so that each insertion
+      costs :math:`O(\log n)` on average.
+
+      *Hint:* Pay for each rebuild with the insertions that made it
+      necessary. Under how many scapegoats can a single inserted node
+      sit?
