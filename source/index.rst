@@ -48,6 +48,15 @@ Algorithms and Data Structures
 
    
 .. toctree::
+   :caption: Self-Checks
+
+   self_check/mid_term
+
+..
+   self_check/final
+
+
+.. toctree::
    :caption: Code Examples
    :maxdepth: 1
               
