@@ -20,3 +20,8 @@ Contents
    avl/index
    btree/index 
    tries/index
+
+.. toctree::
+   :maxdepth: 1
+
+   problems
