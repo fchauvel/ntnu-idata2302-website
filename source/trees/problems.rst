@@ -18,10 +18,6 @@ Every problem comes with a solution, hidden in a dropdown below it.
 Give the problem a real try before you open it: Most of the learning
 happens while you are stuck.
 
-.. note::
-
-   This page is a draft.
-
 
 Core Problems
 =============
@@ -1991,9 +1987,9 @@ starts with a short background that introduces everything you need.
       keeps growing until a node high up becomes the scapegoat. For
       instance, the 24th insertion rebuilds a subtree of 23 nodes, the
       413th rebuilds 363 nodes, and the 880th rebuilds 648 nodes.
-      (These figures come from a simulation; it is enough to argue
-      that a subtree holding a constant fraction of the tree
-      gets rebuilt.)
+      You do not need these exact numbers, which come from running
+      the procedure on a computer: It is enough to argue that a
+      subtree holding a constant fraction of the tree gets rebuilt.
 
       To find the scapegoat, we know that :math:`\mathrm{size}(x) = 1`.
       Stepping up from a child :math:`u` to its parent :math:`p`, we
