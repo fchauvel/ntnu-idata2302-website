@@ -6,6 +6,7 @@ Using Dynamic Arrays
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Efm693KhdtlOka_fZCqrSzoBo1n5FQnxuAaL-6o0PrtxCg?e=co0zs0>`
 :Objectives: Understand amortized analysis and dynamic arrays
 :Concepts: Amortized analysis, dynamic arrays, memory allocation
+:Implementation: C `fixed and dynamic arrays <https://github.com/fchauvel/aldast-examples/tree/main/sequences/dynamic-array/c>`_
 
 .. role:: python(code)
    :language: python
