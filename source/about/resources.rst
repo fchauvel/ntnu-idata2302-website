@@ -66,6 +66,14 @@ You will also find many online blog posts and tutorials such as
 as they may contain mistakes (as does this course).
 
 
+Code Examples
+=============
+
+The code examples that accompany the lecture notes (in several
+programming languages) are gathered in the `aldast-examples
+repository <https://github.com/fchauvel/aldast-examples>`_, organised by module and topic.
+
+
 Programming Platforms
 =====================
 
