@@ -26,9 +26,9 @@ Algorithms and Data Structures
    recursion/index
    hashing/index
    trees/index
+   graphs/index
 
 ..
-   graphs/index
    optimization/index
    theory/index
    beyond/index
@@ -41,9 +41,9 @@ Algorithms and Data Structures
    labs/sequences
    labs/recursion
    labs/trees
+   labs/graphs/index
 
 ..
-   labs/graphs/index
    labs/optimization
 
    
