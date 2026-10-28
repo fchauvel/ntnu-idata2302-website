@@ -39,3 +39,8 @@ Contents
    intro/index
    shortest_path/index
    mst/index
+
+.. toctree::
+   :maxdepth: 1
+
+   problems
