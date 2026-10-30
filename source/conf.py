@@ -76,3 +76,23 @@ mathjax3_config = {
     "svg": {"displayAlign": "center", "displayIndent": "2em"},
     "chtml": {"displayAlign": "left", "displayIndent": "2em"},
 }
+
+
+# Sphinx numbers exercises with a single site-wide counter on pages
+# outside a numbered toctree (problem sets, labs), so each page would
+# continue where the previous one stopped. Restart the count on every
+# such page instead.
+def restart_exercise_numbers(app, env):
+    renumbered = []
+    for docname, fignumbers in env.toc_fignumbers.items():
+        exercises = fignumbers.get("exercise", {})
+        if exercises and all(len(n) == 1 for n in exercises.values()):
+            for count, label in enumerate(exercises, start=1):
+                exercises[label] = (count,)
+            renumbered.append(docname)
+    return renumbered
+
+
+def setup(app):
+    # Run after Sphinx's own numbering
+    app.connect("env-get-updated", restart_exercise_numbers, priority=900)
