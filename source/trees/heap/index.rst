@@ -7,7 +7,7 @@ Binary Heaps
 :Objectives: Understand how to implement a priority queue using binary heap
 :Concepts: Priority queue ADT, insertion, minimum extraction,
            "heapification".
-:Implementation: Ruby :download:`heap.rb <_static/code/heap.rb>`
+:Implementation: Ruby `heap.rb <https://github.com/fchauvel/aldast-examples/tree/main/trees/heap/ruby>`_
 
 We explore here the "binary heap", a tree structure use to implement
 the priority queue ADT. Binary heap are also a classical example of

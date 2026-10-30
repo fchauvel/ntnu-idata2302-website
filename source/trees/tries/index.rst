@@ -6,6 +6,7 @@ Prefix and Suffix Trees
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EVJ8rMN7JHdKgxTb2gWmKEwBwvMNLvO0i0k-495CCmBlJw?e=70ie5r>`
 :Objectives: Understand what is a prefix and what is a suffix tree
 :Concepts: Insertion, deletion and search into a Prefix-tree
+:Implementation: Scala `PrefixTree.scala <https://github.com/fchauvel/aldast-examples/tree/main/trees/prefix-tree/scala>`_
 
 
 .. margin::

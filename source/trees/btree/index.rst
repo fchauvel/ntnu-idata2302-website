@@ -9,7 +9,7 @@ B-Trees
              reduce disk usage
 :Concepts: Disk-access Model (DAM), B-Tree principle, insertion and
            deletion in a B-Tree
-:Implementation: in Ruby :download:`btree.rb <_static/code/btree.rb>`
+:Implementation: Ruby `btree.rb <https://github.com/fchauvel/aldast-examples/tree/main/trees/btree/ruby>`_
 
 
            
