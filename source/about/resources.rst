@@ -70,8 +70,7 @@ Code Examples
 =============
 
 The code examples that accompany the lecture notes (in several
-programming languages) are gathered in the `aldast-examples
-repository <https://github.com/fchauvel/aldast-examples>`_, organised by module and topic.
+programming languages) are listed in :doc:`code_samples`.
 
 
 Programming Platforms

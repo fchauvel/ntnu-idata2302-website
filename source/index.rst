@@ -14,6 +14,7 @@ Algorithms and Data Structures
    about/welcome
    about/overview
    about/practicalities
+   about/code_samples
    about/exams
    about/resources
 
@@ -47,14 +48,6 @@ Algorithms and Data Structures
    labs/optimization
 
    
-.. toctree::
-   :caption: Code Examples
-   :maxdepth: 1
-              
-   code/ruby_edge_list
-   code/js_adjacency_list
-   code/c_adjacency_matrix
-    
 .. toctree::
    :caption: Recaps
 
