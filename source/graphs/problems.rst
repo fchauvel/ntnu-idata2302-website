@@ -1228,12 +1228,14 @@ Core Problems
 Going Further
 =============
 
-This problem goes beyond the lectures: The assignment problem and the
-Hungarian algorithm are not part of the syllabus. It builds directly
-on this module, though: It is a problem on a weighted *bipartite*
-graph, and its solution relies on a classic result about matchings.
-The problem starts with a short background that introduces everything
-you need.
+This problem goes beyond the lectures. The *assignment problem*
+itself is fair game: It has come up on an earlier exam, and modelling
+it as a graph (Questions 1 and 2) uses nothing but this module. The
+*Hungarian algorithm*, however, is not part of the syllabus, and you
+are not expected to know it by heart. The background below gives you
+every step, and the exercise simply takes you through them, as a
+guided tour of how a classic algorithm on a weighted *bipartite*
+graph works and why it is correct.
 
 .. exercise:: Mentor Matchmaking ★★★★
    :label: graphs/problems/mentors
@@ -1277,7 +1279,8 @@ you need.
    mentor, and we want the sum of the ranks to be as small as
    possible. This is the *assignment problem*. The *Hungarian
    algorithm* (Kuhn, 1955; Munkres, 1957) solves it on an :math:`n
-   \times n` matrix of costs, here the ranks, as follows:
+   \times n` matrix of costs, here the ranks. There is no need to
+   memorise it; just follow the steps:
 
    #. Subtract from every row its smallest entry.
    #. Subtract from every column its smallest entry.
