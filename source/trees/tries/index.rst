@@ -673,8 +673,8 @@ The Text Index ADT
 ------------------
 
 Let us first state what we want. We have a text, which we will search
-many times, for all sorts of *fragments* (a fragment is a short piece of
-text, such as a word, or part of a word). For each fragment, we want to
+many times, for all sorts of *fragments* (a fragment is simply a short
+:math:`Text`, such as a word, or part of a word). For each fragment, we want to
 know where it occurs in the text. A *text index* is a structure that
 answers this question. It has only two operations: One to build the
 index of a given text, and one to find a fragment in that text.
@@ -691,14 +691,14 @@ index of a given text, and one to find a fragment in that text.
    Postconditions:
       - The resulting index answers questions about the text :math:`t`.
 
-.. function:: find(i: TextIndex, f: Fragment) -> List[Position]
+.. function:: find(i: TextIndex, f: Text) -> Sequence[Position]
 
    Return the positions where the given fragment :math:`f` occurs in the
    text of the index :math:`i`. The first character of the text has
    position 0. For instance, the fragment "ana" occurs twice in the text
-   "banana", at positions 1 and 3, so the result is :math:`(1, 3)`. By
-   contrast, the fragment "x" does not occur, so the result is the empty
-   list.
+   "banana", at positions 1 and 3, so the result is the sequence
+   :math:`(1, 3)`. By contrast, the fragment "x" does not occur, so the
+   result is the empty sequence.
 
    Preconditions:
       None
@@ -780,10 +780,10 @@ positions 1 and 3.
 
       class SuffixTree(text: String):
 
-        def find(fragment: String): List[Int] =
+        def find(fragment: String): Seq[Int] =
           val matchingSuffixes = suffixes.prefixSearch(fragment)
           val positions = matchingSuffixes.map(suffix => text.length - suffix.length)
-          positions.toList.sorted
+          positions.toSeq.sorted
 
 How Efficient Is This?
    Once the tree is built, searching does not depend on how long the
