@@ -663,3 +663,148 @@ How Efficient Is This?
 
 Suffix Trees
 ============
+
+A prefix tree is great when we know how a word *starts*, as in
+auto-completion. But a full-text search, like ``Ctrl-F``, is different:
+The text we look for may appear *anywhere*, in the middle of a word, or
+across several words. How can a prefix tree help with that?
+
+The Text Index ADT
+------------------
+
+Let us first state what we want. We have a text, which we will search
+many times, for all sorts of *fragments* (a fragment is a short piece of
+text, such as a word, or part of a word). For each fragment, we want to
+know where it occurs in the text. A *text index* is a structure that
+answers this question. It has only two operations: One to build the
+index of a given text, and one to find a fragment in that text.
+
+.. module:: text_index
+
+.. function:: create(t: Text) -> TextIndex
+
+   Build an index for the given text :math:`t`.
+
+   Preconditions:
+      None
+
+   Postconditions:
+      - The resulting index answers questions about the text :math:`t`.
+
+.. function:: find(i: TextIndex, f: Fragment) -> List[Position]
+
+   Return the positions where the given fragment :math:`f` occurs in the
+   text of the index :math:`i`. The first character of the text has
+   position 0. For instance, the fragment "ana" occurs twice in the text
+   "banana", at positions 1 and 3, so the result is :math:`(1, 3)`. By
+   contrast, the fragment "x" does not occur, so the result is the empty
+   list.
+
+   Preconditions:
+      None
+
+   Postconditions:
+      - The result contains a position :math:`p` if, and only if, the
+        fragment :math:`f` starts at position :math:`p` in the text.
+
+      - The positions are sorted in increasing order.
+
+      - The result is empty if, and only if, the fragment does not occur
+        in the text.
+
+Some details are worth noticing. Occurrences may overlap: In "banana",
+the two occurrences of "ana" share the letter "a" at position 3. The
+empty fragment occurs everywhere, even at the very end of the text, so
+that, in "banana", it is found at positions 0 to 6.
+
+How could we implement this? The simplest idea is to do nothing when we
+create the index, and, every time we are asked to find a fragment, to
+scan the whole text from the beginning, comparing the fragment with the
+text at each position. This works, but it is slow if the text is long
+and we search it many times. A *suffix tree* does a bit of work upfront,
+to make every search fast.
+
+Suffixes to the Rescue
+----------------------
+
+The trick is to notice that any occurrence of a fragment is the
+*beginning* of some suffix of the text. Consider the text "banana". The
+fragment "nan" occurs in it, and indeed, if we cut away the first two
+letters ("ba"), what remains, "nana", starts with "nan". Whatever the
+fragment, we can always cut the text just before it, and the fragment is
+then a prefix of what remains.
+
+A *suffix tree* is therefore nothing more than a prefix tree that stores
+all the suffixes of a text. The suffixes of "banana" are:
+
+.. math::
+   S = \{ 'banana',\, 'anana',\, 'nana',\, 'ana',\, 'na',\, 'a',\, '' \}
+
+Once we have inserted these seven words in a prefix tree, finding a
+fragment in the text is just a prefix search: The fragment occurs in the
+text if, and only if, there is at least one suffix that starts with it.
+
+But where does it occur? We need to know where each suffix starts in the
+text. This is easy: A suffix that is :math:`k` characters long, in a text
+of :math:`n` characters, starts at position :math:`n - k`.
+
+Let us look for "ana" in "banana". Two suffixes start with "ana":
+"anana" and "ana". The text has 6 characters, so "anana" (5 characters)
+starts at position :math:`6 - 5 = 1`, and "ana" (3 characters) starts at
+position :math:`6 - 3 = 3`. We have found the two occurrences, at
+positions 1 and 3.
+
+.. admonition:: Implementation in Scala
+   :class: hint, dropdown
+
+   Our ``SuffixTree`` simply *uses* a ``PrefixTree``, which we fill
+   with all the suffixes of the text, from the whole text down to the
+   empty one. In Scala, ``text.drop(start)`` is what remains of the text
+   when we skip the first ``start`` characters.
+
+   .. code-block:: scala
+      :linenos:
+
+      class SuffixTree(text: String):
+
+        private val suffixes = PrefixTree()
+
+        for start <- 0 to text.length do
+          suffixes.add(text.drop(start))
+
+   To find a fragment, we search the suffixes that start with it, and we
+   compute where each of them starts in the text, as explained above:
+
+   .. code-block:: scala
+      :linenos:
+
+      class SuffixTree(text: String):
+
+        def find(fragment: String): List[Int] =
+          val matchingSuffixes = suffixes.prefixSearch(fragment)
+          val positions = matchingSuffixes.map(suffix => text.length - suffix.length)
+          positions.toList.sorted
+
+How Efficient Is This?
+   Once the tree is built, searching does not depend on how long the
+   text is: We only walk down the tree, following the fragment, as we do
+   in any prefix search. Our code is a bit wasteful, though. When we only
+   want to know *whether* the fragment occurs, it still collects all the
+   matching suffixes, whereas we could stop as soon as we have followed
+   the whole fragment in the tree. That would take :math:`O(|f|)` steps
+   for a fragment :math:`f`.
+
+   Building the tree is the expensive part. A text of :math:`n`
+   characters has :math:`n + 1` suffixes, which are, on average,
+   :math:`n/2` characters long, so the tree stores about :math:`n^2/2`
+   symbols, and takes about as long to build. This is fine for a short
+   text, but hopeless for a book, or a genome with billions of
+   characters.
+
+   Fortunately, there are better ways. We can *compress* the tree, as we
+   did for prefix trees, and store *positions in the text*, instead of
+   copying the suffixes. There are even clever algorithms that build such
+   a compressed suffix tree in time proportional to :math:`n` (Ukkonen's
+   algorithm is the best known). They are beyond the scope of this
+   course, but the idea is the one we have just seen: A suffix tree is a
+   prefix tree of all the suffixes.
