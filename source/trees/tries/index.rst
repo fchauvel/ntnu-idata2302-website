@@ -66,7 +66,7 @@ Prefix Trees
 
 How can we implement such auto-completion mechanisms efficiently? What
 we need is kind of :doc:`Map ADT </hashing/index>` that could give us
-all the word that starts by the "prefix2 the user has typed. For
+all the word that starts by the "prefix" the user has typed. For
 instance, given a set of words already typed, one could index them by
 prefix, using a hash table.
 
@@ -274,68 +274,70 @@ prefix tree):
 
 1. We start at the root of the tree, which becomes our "current node" :math:`n`.
 
-2. a. If Node :math:`n` is a branch
+2. If Node :math:`n` is a branch
 
-      a. If Node :math:`n` has a child node :math:`c` whose symbol is the
-         :math:`c_1` (the first character)
+   a. If the word :math:`w` is empty, we return true only if Node
+      :math:`n` has a child whose symbol is :math:`\bot`. This child
+      is a leaf, which marks the end of a word.
 
-         1. We remove that first character from Word :math:`w`
-               
-         2. Node :math:`c` becomes our current node and we continue at
-            Step 2.
+   b. Else, if Node :math:`n` has a child node :math:`c` whose symbol is
+      :math:`c_1` (the first character)
 
-      b. Else
+      1. We remove that first character from Word :math:`w`
 
-         - We return False
+      2. Node :math:`c` becomes our current node and we continue at
+         Step 2.
 
-   a. Otherwise (Node :math:`n` is a leaf)
+   c. Else, we return false.
 
-      - We return true only if the given word :math:`w` is empty (i.e.,
-        :math:`w=''`) and if the symbol carried by the Node :math:`n` is
-        :math:`\bot`.
+3. Otherwise (Node :math:`n` is a leaf), we return true only if the given
+   word :math:`w` is empty (i.e., :math:`w=''`).
 
 Figure :numref:`trees/tries/contains` illustrates how this procedure
 operates. It shows how the search for "ape" at the root node, reduces
 to searching for "pe" on the child, which reduces to searching for "e"
 on the grandchild, which reduces to searching for the empty word.
-              
+
 .. figure:: _static/images/contains.svg
    :name: trees/tries/contains
 
    Searching for the word "ape" in the prefix tree initially shown on
    :numref:`trees/tries/prefix_tree`, shortened for the sake
    conciseness.
-             
+
 .. admonition:: Implementation in Scala
    :class: hint, dropdown
 
-   We implement the case where the node is a branch (see Step 2.a) in
-   our `Branch` class as follows. In Scala (and some other languages)
+   We implement the case where the node is a branch (see Step 2) in
+   our ``Branch`` class as follows. In Scala (and some other languages)
    the first character of a string is named "head", and the rest is
-   named "tail".
-                
+   named "tail". The constant ``END`` stands for the symbol
+   :math:`\bot`.
+
    .. code-block:: scala
       :linenos:
 
       class Branch(symbol: Char, val children: Map[Char, Node]) extends Node(symbol):
 
         def contains(word: String): Boolean =
-          children.get(word.head) match {
-            case None => false
-            case Some(n) => n.contains(word.tail)
-          }
+          if word.isEmpty then
+            children.contains(END)
+          else
+            children.get(word.head) match
+              case None => false
+              case Some(child) => child.contains(word.tail)
 
-   The case where the node is a leaf (see Step 2.b) goes as follows:
+   The case where the node is a leaf (see Step 3) goes as follows:
 
    .. code-block:: scala
       :linenos:
 
-      class Leaf(symbol: Char) extends Node(symbol):
+      class Leaf extends Node(END):
 
         def contains(word: String): Boolean =
-          return word.isEmpty && symbol == '⊥'
+          word.isEmpty
 
-   Finally, we complete our `PrefixTree` with the following
+   Finally, we complete our ``PrefixTree`` with the following
    implementation:
 
    .. code-block:: scala
@@ -343,14 +345,21 @@ on the grandchild, which reduces to searching for the empty word.
 
       class PrefixTree:
 
-        private var _root: Node = new Branch('ε', Map())
+        private var root: Node = Branch(ROOT, Map())
 
         def contains(word: String): Boolean =
-          _root.contains(word)      
-              
+          root.contains(word)
 
 Why Is This Correct?
-   Because
+   Every word stored in the tree is spelled by exactly one path, from
+   the root down to a leaf :math:`\bot`. Besides, the children of a node
+   all carry distinct symbols, so, at each step, there is at most one
+   child to follow: The procedure follows the only path that may spell
+   :math:`w`. It reaches the end of that path (i.e., the word is empty)
+   and finds a :math:`\bot` leaf if and only if :math:`w` was added to
+   the tree. In particular, a *prefix* of a stored word is not found
+   (unless it was added too): There is a path for it, but it does not
+   end with a :math:`\bot` leaf.
 
 How Efficient Is This?
 
@@ -376,18 +385,281 @@ As for the memory, the recursive implementation I showed above would
 require at :math:`O(n)` memory, as each node would place a new call to
 progress further down the tree.
           
+
 Prefix Search
 -------------
 
 To find all the words that start with a given prefix :math:`p=(c_1,
-\dots, c_n)` we navigate the tree from the root according to the
-character in the given prefix.
+\dots, c_n)`, we navigate the tree from the root according to the
+characters in the given prefix, and then we collect all the words
+stored below the node we have reached. This is what makes
+auto-completion possible.
+
+1. We start at the root of the tree, which becomes our "current node" :math:`n`.
+
+2. If the prefix :math:`p` is empty, then every word stored below Node
+   :math:`n` starts with :math:`p`. We return all of them (see below how
+   to collect them).
+
+3. Otherwise, if Node :math:`n` has a child node :math:`c` whose symbol
+   is :math:`c_1` (the first character of the prefix)
+
+   a. We remove that first character from the prefix :math:`p`.
+
+   b. We search below Node :math:`c`, which becomes our current node,
+      and we continue at Step 2. Each word found is then preceded by the
+      symbol of Node :math:`c`.
+
+4. Else (there is no such child), no word starts with :math:`p`, and we
+   return the empty set.
+
+To collect all the words stored below a node, we go through all of its
+children. Each path that leads to a leaf :math:`\bot` spells a word:
+Every word below a node is the symbol of one of its children, followed
+by one of the words stored below that child. A leaf has only one word
+below it, the empty word.
+
+For example, to find the words that start with "apa" in the prefix tree
+shown on :numref:`trees/tries/prefix_tree`, we follow the nodes "a", "p"
+and "a". Below that last node, there are two words, "rt" and "rtment", so
+the words that start with "apa" are "apart" and "apartment".
+
+.. admonition:: Implementation in Scala
+   :class: hint, dropdown
+
+   The search itself is a method of our ``Branch`` class. It follows the
+   first character of the prefix, and prepends the symbol of the child to
+   each word found below it. When the prefix is empty, we collect all the
+   words stored below that node.
+
+   .. code-block:: scala
+      :linenos:
+
+      class Branch(symbol: Char, val children: Map[Char, Node]) extends Node(symbol):
+
+        def prefixSearch(prefix: String): Set[String] =
+          if prefix.isEmpty then
+            words
+          else
+            children.get(prefix.head) match
+              case None => Set()
+              case Some(child) =>
+                child.prefixSearch(prefix.tail).map(rest => child.text + rest)
+
+   Collecting the words is done as follows. The ``text`` of a branch is its
+   symbol, whereas the ``text`` of a leaf is empty, because :math:`\bot`
+   is not part of any word.
+
+   .. code-block:: scala
+      :linenos:
+
+      class Branch(symbol: Char, val children: Map[Char, Node]) extends Node(symbol):
+
+        def text: String = symbol.toString
+
+        def words: Set[String] =
+          val result = for
+            child <- children.values
+            rest <- child.words
+          yield child.text + rest
+          result.toSet
+
+      class Leaf extends Node(END):
+
+        def text: String = ""
+
+        def words: Set[String] =
+          Set("")
+
+   A leaf can also be reached when the prefix is not empty yet, in which
+   case, no word can start with that prefix:
+
+   .. code-block:: scala
+      :linenos:
+
+      class Leaf extends Node(END):
+
+        def prefixSearch(prefix: String): Set[String] =
+          if prefix.isEmpty then Set("") else Set()
+
+   The ``PrefixTree`` simply delegates to its root:
+
+   .. code-block:: scala
+      :linenos:
+
+      class PrefixTree:
+
+        def prefixSearch(prefix: String): Set[String] =
+          root.prefixSearch(prefix)
+
+How Efficient Is This?
+   Finding the node that matches the prefix :math:`p` takes at most
+   :math:`|p|` steps, one per character, as for the membership. Collecting
+   the words requires visiting *all* the nodes below that node. Each of
+   these nodes belongs to the path of at least one of the words that are
+   returned, so the number of nodes visited is at most the total length
+   of the words found. The search therefore runs in :math:`O(|p| + m)`,
+   where :math:`m` is the total length of the words returned. It does
+   not depend on how many other words are stored in the tree, which is
+   what makes prefix trees efficient for auto-completion.
 
 Insertion
 ---------
 
+To add a word :math:`w=(c_1,\dots,c_k)` to a prefix tree, we follow the
+path that spells :math:`w`, and we create the nodes that are missing.
+
+1. We start at the root of the tree, which becomes our "current node" :math:`n`.
+
+2. If the word :math:`w` is empty, we add a leaf :math:`\bot` to the
+   children of Node :math:`n`, unless it already has one. We are done.
+
+3. Otherwise
+
+   a. If Node :math:`n` has no child whose symbol is :math:`c_1` (the
+      first character), we create one: A new branch with the symbol
+      :math:`c_1` and no children.
+
+   b. We remove the first character from the word :math:`w`, the child
+      whose symbol is :math:`c_1` becomes our current node, and we
+      continue at Step 2.
+
+For example, adding "apes" to a tree that contains only "ape" follows
+the nodes "a", "p" and "e", which already exist. Node "e" has no child
+"s", so we create it, and we then add a leaf :math:`\bot` below it. The
+tree now contains both "ape" and "apes". Adding a word that is already
+in the tree changes nothing, because all the nodes already exist.
+
+.. admonition:: Implementation in Scala
+   :class: hint, dropdown
+
+   Our nodes are *immutable*: Instead of modifying a node, ``add``
+   returns a new node, which is a copy of the previous one with the
+   updated children. In Scala, ``children + (symbol -> node)`` is a copy
+   of the ``children`` map, where ``symbol`` now leads to ``node``.
+
+   .. code-block:: scala
+      :linenos:
+
+      class Branch(symbol: Char, val children: Map[Char, Node]) extends Node(symbol):
+
+        def add(word: String): Node =
+          if word.isEmpty then
+            Branch(symbol, children + (END -> Leaf()))
+          else
+            val child = children.getOrElse(word.head, Branch(word.head, Map()))
+            Branch(symbol, children + (word.head -> child.add(word.tail)))
+
+   The ``PrefixTree`` replaces its root with the updated one:
+
+   .. code-block:: scala
+      :linenos:
+
+      class PrefixTree:
+
+        def add(word: String): Unit =
+          root = root.add(word)
+
+How Efficient Is This?
+   Adding a word :math:`w` visits at most one node per character, plus
+   the leaf. If branch nodes are implemented using hashing, each step
+   runs in :math:`O(1)`, and the insertion runs in :math:`O(|w|)`. It
+   does not depend on the number of words already in the tree. With a
+   linear search among the children, we would get :math:`O(|w| \cdot
+   |\mathcal{A}|)`.
+
 Deletion
 --------
+
+To remove a word :math:`w=(c_1,\dots,c_k)` from a prefix tree, we follow
+the path that spells :math:`w`, remove its leaf :math:`\bot`, and then
+we *clean up* the nodes that are no longer useful.
+
+1. We start at the root of the tree, which becomes our "current node" :math:`n`.
+
+2. If the word :math:`w` is empty, we remove the leaf :math:`\bot` from
+   the children of Node :math:`n` (if there is one).
+
+3. Otherwise, if Node :math:`n` has a child :math:`c` whose symbol is
+   :math:`c_1` (the first character)
+
+   a. We remove the first character from the word :math:`w`, and we
+      remove the remaining word from Node :math:`c` (we continue at
+      Step 2, with :math:`c` as our current node).
+
+   b. Once this is done, if Node :math:`c` has no children left, we
+      remove it from the children of Node :math:`n`.
+
+4. Else (there is no such child), the word is not in the tree, and
+   nothing changes.
+
+The clean-up of Step 3.b is important, because nodes are shared between
+words. We can only remove a node if it is not on the path of another
+word, that is, if it has no children left. For example, if the tree
+contains "app" and "apple", removing "app" only removes its leaf
+:math:`\bot`: The second "p" still has a child "l", which is needed by
+"apple". By contrast, removing "apple" removes the leaf :math:`\bot`
+and then the nodes "e" and "l", which have no children left. It stops
+at the second "p", which still has a leaf :math:`\bot` for "app".
+
+.. admonition:: Implementation in Scala
+   :class: hint, dropdown
+
+   Again, ``remove`` returns a new node, without the word. In Scala,
+   ``children - symbol`` is a copy of the ``children`` map, without
+   ``symbol``. A branch without children is a "dead end", which the
+   parent removes (see Line 11).
+
+   .. code-block:: scala
+      :linenos:
+
+      class Branch(symbol: Char, val children: Map[Char, Node]) extends Node(symbol):
+
+        def remove(word: String): Node =
+          if word.isEmpty then
+            Branch(symbol, children - END)
+          else
+            children.get(word.head) match
+              case None => this
+              case Some(child) =>
+                val updatedChild = child.remove(word.tail)
+                if updatedChild.isDeadEnd then
+                  Branch(symbol, children - word.head)
+                else
+                  Branch(symbol, children + (word.head -> updatedChild))
+
+        def isDeadEnd: Boolean =
+          children.isEmpty
+
+   A leaf has nothing to remove, and it is never a dead end, because it
+   marks the end of a word:
+
+   .. code-block:: scala
+      :linenos:
+
+      class Leaf extends Node(END):
+
+        def remove(word: String): Node =
+          this
+
+        def isDeadEnd: Boolean =
+          false
+
+   Finally, the ``PrefixTree`` replaces its root with the updated one:
+
+   .. code-block:: scala
+      :linenos:
+
+      class PrefixTree:
+
+        def remove(word: String): Unit =
+          root = root.remove(word)
+
+How Efficient Is This?
+   As for the insertion, removing a word :math:`w` visits at most one
+   node per character, and cleaning up happens along the same path. The
+   deletion runs in :math:`O(|w|)`, if branch nodes are implemented using
+   hashing.
 
 Suffix Trees
 ============
