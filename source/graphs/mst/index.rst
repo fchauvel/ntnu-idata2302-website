@@ -6,8 +6,8 @@ Minimum Spanning Trees
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Ec4c5JnIeVVDqq8LLgg-IykBYjZleUxJ6Y9W3fNvx6BBeQ?e=G7kbBL>`
 :Objectives: Understand what is a *spanning tree* and how to find the
              minimum spanning tree of a weighted graph
-:Concepts: Spanning tree, minimum spanning tree, cut property, greedy
-           algorithms, Prim's algorithm, Kruskal's algorithm, union-find
+:Concepts: Spanning tree, minimum spanning tree, greedy algorithms,
+           Prim's algorithm, Kruskal's algorithm, union-find
 
 In the previous lecture, we studied shortest paths: finding the best
 route from one vertex to another. Now we tackle a different problem:
@@ -21,6 +21,11 @@ designing a circuit board with minimal wire length. In each case, you
 want to connect all locations with the minimum total cost, without
 creating unnecessary loops. This is exactly what a minimum spanning tree
 provides.
+
+The same idea shows up in many other places. Clustering algorithms use
+minimum spanning trees to group similar data points, image segmentation
+uses them to separate the regions of a picture, and they give a quick
+way to approximate the *Traveling Salesperson Problem*.
 
 
 What is a Spanning Tree?
@@ -62,33 +67,6 @@ Key properties of spanning trees:
 - Removing any edge from a spanning tree disconnects it into two
   components
 - A connected graph may have many different spanning trees
-
-
-Why Spanning Trees Matter
---------------------------
-
-Spanning trees appear in many practical applications:
-
-**Network Design**
-   Connect all nodes in a network with minimum infrastructure (cables,
-   pipes, roads). A spanning tree ensures connectivity without redundant
-   connections.
-
-**Broadcast Protocols**
-   In computer networks, broadcasting a message to all nodes without
-   creating loops requires a spanning tree.
-
-**Image Segmentation**
-   Minimum spanning trees help identify connected regions in images for
-   computer vision tasks.
-
-**Cluster Analysis**
-   MSTs reveal natural groupings in data by connecting similar items
-   with low-weight edges.
-
-**Approximation Algorithms**
-   The MST provides a starting point for approximating the Traveling
-   Salesperson Problem (TSP).
 
 
 The Minimum Spanning Tree Problem
@@ -156,18 +134,19 @@ Before studying algorithms, let's understand key MST properties:
    If all edge weights are distinct, the MST is unique. If some weights
    are equal, multiple MSTs may exist with the same total weight.
 
-**Cut Property** (Foundation for Prim's and Kruskal's)
-   For any partition of vertices into two sets :math:`S` and :math:`V -
-   S`, the minimum-weight edge crossing this partition must be in some
-   MST. This is the key correctness principle for greedy MST algorithms.
+**The Cheapest Edge Out of a Group** (Foundation for Prim's and Kruskal's)
+   Pick any group of vertices. Among all the edges that leave this group
+   (one end inside the group, the other outside), the cheapest one can
+   always be part of a minimum spanning tree. This is the key idea
+   behind the greedy MST algorithms.
 
 **Cycle Property**
    For any cycle in the graph, the maximum-weight edge in that cycle
    cannot be in the MST (unless there are multiple edges with the same
    maximum weight).
 
-We'll use the cut property to see why both Prim's and Kruskal's
-algorithms work.
+We'll use the cheapest edge out of a group to see why both Prim's and
+Kruskal's algorithms work.
 
 
 The Greedy Approach
@@ -190,9 +169,17 @@ The algorithms differ in how they choose the "best" edge:
 - **Kruskal's algorithm**: Builds a forest by always adding the
   globally cheapest edge that doesn't create a cycle
 
+.. seealso::
 
-Algorithm 1: Prim's Algorithm
-==============================
+   - Cormen et al., *Introduction to Algorithms*, 4th ed., Chapter 23:
+     Minimum Spanning Trees (Kruskal's, Prim's, and their proofs)
+
+   - Sedgewick & Wayne, *Algorithms*, 4th ed., Section 4.3: Minimum
+     Spanning Trees (excellent visualizations)
+
+
+Prim's Algorithm
+================
 
 .. index:: Prim's algorithm, minimum spanning tree, greedy algorithm
 
@@ -200,6 +187,11 @@ Prim's algorithm grows the MST one vertex at a time, similar to how
 Dijkstra's algorithm explores shortest paths. It starts with an
 arbitrary vertex and repeatedly adds the cheapest edge that connects
 the current tree to a new vertex.
+
+.. seealso::
+
+   Prim, R. C. (1957). "Shortest connection networks and some
+   generalizations." *Bell System Technical Journal*, 36(6), 1389-1401.
 
 
 The Intuition
@@ -341,30 +333,28 @@ for a total weight of 13.
 Why is it Correct?
 ------------------
 
-Prim's algorithm relies on a simple observation, the **cut property**.
-Split the vertices in two groups: those already in the tree, and the
-others. The cheapest edge between the two groups can always be part of
-a minimum spanning tree. This is exactly the edge that Prim's algorithm
-picks at each step.
+Prim's algorithm relies on a simple observation: the cheapest edge
+leaving a group of vertices can always be part of a minimum spanning
+tree. At each step, the group is the tree built so far, and the cheapest
+edge leaving it is exactly the edge that Prim's algorithm picks.
 
 Why is that so? Suppose some minimum spanning tree does *not* use that
 cheapest edge :math:`(u, v)`. That tree still connects :math:`u` and
-:math:`v` through some path, and this path has to cross from one group
-to the other somewhere, through another edge :math:`(x, y)`. As
-:math:`(u, v)` is the cheapest edge between the groups,
-:math:`(x, y)` cannot be cheaper. So we can remove :math:`(x, y)` and add
-:math:`(u, v)` instead: we still have a spanning tree, and it is *no
-heavier*. Therefore, there is a minimum spanning tree that uses
-:math:`(u, v)`.
+:math:`v` through some path, and this path has to leave the group
+somewhere, through another edge :math:`(x, y)`. As :math:`(u, v)` is the
+cheapest edge leaving the group, :math:`(x, y)` cannot be cheaper. So we
+can remove :math:`(x, y)` and add :math:`(u, v)` instead: we still have a
+spanning tree, and it is *no heavier*. Therefore, there is a minimum
+spanning tree that uses :math:`(u, v)`.
 
 .. _mst_prim_correctness:
 
 .. figure:: _static/images/prim_correctness.svg
    :align: center
 
-   If the tree does not use (u,v), its path from u to v crosses the cut
-   at some edge (x,y). Swapping (x,y) for (u,v) does not make the tree
-   any heavier.
+   If the tree does not use (u,v), its path from u to v leaves the group
+   through some edge (x,y). Swapping (x,y) for (u,v) does not make the
+   tree any heavier.
 
 Each choice of Prim's algorithm is thus "safe", and the algorithm ends
 with a minimum spanning tree.
@@ -401,8 +391,8 @@ As for the memory, we need to store the graph, the set of visited
 vertices and the heap, which takes :math:`O(V + E)`.
 
 
-Algorithm 2: Kruskal's Algorithm
-=================================
+Kruskal's Algorithm
+===================
 
 .. index:: Kruskal's algorithm, minimum spanning tree, union-find
 
@@ -410,6 +400,12 @@ While Prim's algorithm grows a single tree, Kruskal's algorithm builds
 a forest of trees that gradually merges into the final MST. It's
 conceptually even simpler: sort all edges by weight and keep adding the
 cheapest edge that doesn't create a cycle.
+
+.. seealso::
+
+   Kruskal, J. B. (1956). "On the shortest spanning subtree of a graph
+   and the traveling salesman problem." *Proceedings of the American
+   Mathematical Society*, 7(1), 48-50.
 
 
 The Intuition
@@ -425,11 +421,14 @@ cheapest to most expensive:
   skip it (it would create a loop).
 - Stop when all towns are connected.
 
-This greedy strategy is exactly Kruskal's algorithm: **consider edges
-in order of increasing weight, adding each edge that doesn't create a
-cycle**.
+This greedy strategy is exactly Kruskal's algorithm. At any time, we
+have several trees under construction. We look at all the edges that
+connect two *different* trees, and we add the cheapest one, which joins
+the two trees into a bigger one. We repeat until a single tree remains.
 
-Here's the algorithm in pseudocode:
+A simple way to find that edge is to sort all the edges once, and to
+go through them in increasing order, skipping the edges whose two ends
+are already in the same tree. Here's the algorithm in pseudocode:
 
 .. code-block:: text
    :caption: Kruskal's algorithm (pseudocode)
@@ -439,73 +438,15 @@ Here's the algorithm in pseudocode:
        sort all edges by weight (ascending)
 
        for each edge (u, v) in sorted order:
-           if u and v are in different components:
+           if u and v are not in the same tree:
                add edge (u, v) to MST
-               merge components containing u and v
+               merge the trees of u and v
 
        return MST
 
-The key challenge is efficiently determining whether two vertices are
-in the same component and merging components. This requires tracking
-**disjoint sets** of vertices.
-
-
-Managing Disjoint Sets
------------------------
-
-.. index:: disjoint sets, components
-
-To implement Kruskal's algorithm, we need a data structure that
-maintains a collection of disjoint sets (components) and supports these
-operations:
-
-**MakeSet(x)**
-   Create a new set containing only element :math:`x`.
-
-**Find(x)**
-   Determine which set contains element :math:`x`. Returns a
-   representative element identifying the set.
-
-**Union(x, y)**
-   Merge the sets containing :math:`x` and :math:`y` into a single set.
-
-For Kruskal's algorithm, we use these operations as follows:
-
-- Initially, each vertex is in its own set: ``MakeSet(v)`` for all
-  :math:`v \in V`
-- ``Find(u) == Find(v)`` tells us if :math:`u` and :math:`v` are in
-  the same component
-- ``Union(u, v)`` merges the components after adding edge :math:`(u, v)`
-  to the MST
-
-Here's how we use this abstract data type in Kruskal's algorithm:
-
-.. code-block:: text
-   :caption: Kruskal's algorithm with disjoint sets
-
-   function kruskal(G):
-       MST ← empty set
-
-       // Initialize: each vertex in its own component
-       for each vertex v:
-           MakeSet(v)
-
-       // Sort edges by weight
-       sort all edges by weight (ascending)
-
-       // Process edges in order
-       for each edge (u, v) in sorted order:
-           if Find(u) ≠ Find(v):           // Different components?
-               add edge (u, v) to MST
-               Union(u, v)                  // Merge components
-
-       return MST
-
-.. note::
-
-   Efficient implementations of these operations exist, based on a data
-   structure called **union-find** (or *disjoint-set forest*). Each
-   operation takes almost constant time, so we can treat them as cheap.
+To check whether two vertices are in the same tree, and to merge two
+trees, we use two operations, ``find`` and ``union``. We describe them
+at the end of this section.
 
 
 A Concrete Example
@@ -577,9 +518,10 @@ different trees, but they always have the same total weight.
    :class: hint, dropdown
 
    This implementation uses a ``DisjointSets`` class, which provides
-   the operations described above: ``find(x)`` returns the
-   representative of the set containing :math:`x`, and ``union(x, y)``
-   merges the sets containing :math:`x` and :math:`y`.
+   the ``find`` and ``union`` operations described at the end of this
+   section: ``find(x)`` returns the representative of the set (the tree)
+   containing :math:`x`, and ``union(x, y)`` merges the sets containing
+   :math:`x` and :math:`y`.
 
    .. code-block:: java
       :linenos:
@@ -619,17 +561,18 @@ different trees, but they always have the same total weight.
 Why is it Correct?
 ------------------
 
-Kruskal's algorithm relies on the same **cut property**. When the
-algorithm is about to add an edge :math:`(u, v)`, the vertices
-:math:`u` and :math:`v` are in different components. Put the component
-of :math:`u` on one side, and all the other vertices on the other side.
+Kruskal's algorithm relies on the same observation as Prim's: the
+cheapest edge leaving a group of vertices can safely be part of a
+minimum spanning tree. When the algorithm is about to add an edge
+:math:`(u, v)`, the vertices :math:`u` and :math:`v` are in different
+trees, and the group is the tree that contains :math:`u`.
 
-Is :math:`(u, v)` the cheapest edge between the two sides? Yes. Any
-cheaper edge leaving the component of :math:`u` would have been looked at
-earlier. It would have connected two different components, so it would
-have been added, and it would no longer leave the component. So
-:math:`(u, v)` is the cheapest edge between the two sides, and the cut
-property tells us it can safely be part of a minimum spanning tree.
+Is :math:`(u, v)` the cheapest edge leaving that tree? Yes. Any cheaper
+edge leaving the tree of :math:`u` would have been looked at earlier. It
+would have connected two different trees, so it would have been added,
+and it would no longer leave the tree. So :math:`(u, v)` is the cheapest
+edge leaving the tree of :math:`u`, and it can safely be part of a
+minimum spanning tree.
 
 .. _mst_kruskal_correctness:
 
@@ -637,11 +580,11 @@ property tells us it can safely be part of a minimum spanning tree.
    :align: center
 
    When Kruskal's algorithm considers (u,v), no cheaper edge leaves the
-   component of u, so (u,v) is the cheapest edge across the cut.
+   tree of u, so (u,v) is the cheapest edge leaving it.
 
 Why does the algorithm never create a cycle? It only adds edges between
-two *different* components, and joining two separate trees with a single
-edge cannot close a loop.
+two *different* trees, and joining two separate trees with a single edge
+cannot close a loop.
 
 .. note::
 
@@ -672,6 +615,53 @@ As for the memory, we need :math:`O(V)` for the disjoint sets and
 Both algorithms therefore run in :math:`O(E \log V)`. They differ in how
 they get there: Kruskal's sorts all the edges upfront, whereas Prim's
 uses a priority queue as it goes.
+
+
+The Union-Find ADT
+------------------
+
+.. index:: union-find, disjoint sets
+
+Kruskal's algorithm needs to remember which vertices are in the same
+tree. This is the job of an abstract data type, usually called
+*union-find*, which keeps track of a collection of *disjoint sets*. In
+Kruskal's algorithm, each set contains the vertices of one tree.
+
+.. module:: union_find
+
+.. function:: create(n: Integer) -> UnionFind
+
+   Create a collection of :math:`n` sets, each containing a single
+   element (the numbers from 0 to :math:`n - 1`). In Kruskal's algorithm,
+   each vertex starts in its own tree.
+
+.. function:: find(u: UnionFind, x: Element) -> Element
+
+   Return the *representative* of the set that contains the element
+   :math:`x`. Two elements are in the same set if, and only if, they
+   have the same representative. Kruskal's algorithm uses this to check
+   whether two vertices are in the same tree.
+
+.. function:: union(u: UnionFind, x: Element, y: Element) -> UnionFind
+
+   Merge the set that contains :math:`x` and the set that contains
+   :math:`y` into a single set. Afterwards, :math:`x` and :math:`y` have
+   the same representative. Kruskal's algorithm uses this to join two
+   trees.
+
+These operations are not as easy to implement efficiently as they
+look. For instance, if we store, for each element, the number of its
+set, then ``find`` is immediate, but ``union`` has to update every
+element of one of the two sets, which is slow for large sets. Other
+simple ideas just move the cost to ``find``. There are clever
+implementations that make *both* operations almost constant time. They
+are beyond the scope of this course, and we simply assume that ``find``
+and ``union`` are cheap.
+
+.. seealso::
+
+   Tarjan, R. E. (1975). "Efficiency of a good but not linear set union
+   algorithm." *Journal of the ACM*, 22(2), 215-225.
 
 
 Comparing Prim's and Kruskal's Algorithms
@@ -779,108 +769,6 @@ down to convenience.
    unique when all edge weights are distinct.
 
 
-Applications of Minimum Spanning Trees
-=======================================
-
-Beyond the obvious network design applications, MSTs appear in
-surprising places:
-
-Approximating the TSP
-----------------------
-
-.. index:: traveling salesperson problem, TSP approximation
-
-The Traveling Salesperson Problem asks for the shortest cycle visiting
-all vertices. This problem is NP-hard, but the MST provides a good
-approximation.
-
-**Algorithm**:
-
-1. Find the MST of the complete graph
-2. Do a depth-first traversal of the MST to get an ordering of vertices
-3. Visit vertices in this order
-
-**Guarantee**: If edge weights satisfy the triangle inequality
-(:math:`w(u,v) \leq w(u,x) + w(x,v)` for all :math:`u, v, x`), this
-gives a tour at most twice the optimal TSP tour length.
-
-This is a **2-approximation** algorithm for metric TSP.
-
-
-Single-Linkage Clustering
---------------------------
-
-.. index:: clustering, single-linkage clustering
-
-In data analysis, we often want to group similar items. The MST
-provides a natural hierarchical clustering:
-
-1. Construct a complete graph where edge weights represent distances
-   between data points
-2. Find the MST
-3. Remove edges in order of decreasing weight to split the tree into
-   clusters
-
-This is called **single-linkage clustering** because the distance
-between clusters is the minimum distance between any pair of points
-from the two clusters.
-
-
-Image Segmentation
-------------------
-
-.. index:: image segmentation, computer vision
-
-In computer vision, MSTs help identify regions in images:
-
-1. Treat pixels as vertices
-2. Edge weights represent differences in color/intensity between
-   adjacent pixels
-3. The MST connects similar pixels with low-weight edges
-4. Removing high-weight edges separates distinct regions
-
-This is the basis of graph-based image segmentation algorithms.
-
-
-Summary
-=======
-
-In this lecture, we've explored minimum spanning trees and two elegant
-algorithms to find them:
-
-**Key Concepts**:
-
-- A **spanning tree** connects all vertices in a graph without cycles,
-  using :math:`|V| - 1` edges
-- A **minimum spanning tree** is a spanning tree with the smallest
-  total edge weight
-- The **cut property** guarantees that the minimum-weight edge crossing
-  any partition must be in some MST
-- Both MST algorithms use a **greedy strategy** that always makes the
-  locally optimal choice
-
-**Algorithms**:
-
-- **Prim's algorithm**: Grows a single tree from a starting vertex,
-  always adding the cheapest edge to a new vertex. Complexity:
-  :math:`O(E \log V)`
-
-- **Kruskal's algorithm**: Considers edges in order of increasing
-  weight, adding those that don't create cycles. Uses union-find to
-  track components efficiently. Complexity: :math:`O(E \log E) =
-  O(E \log V)`
-
-Both algorithms are correct (thanks to the cut property) and efficient.
-The choice between them depends on graph density and whether you have a
-natural starting vertex.
-
-**Applications**:
-
-MSTs appear in network design, clustering, approximation algorithms,
-and image processing. Their simple structure and efficient algorithms
-make them fundamental tools in computer science.
-
-
 .. exercise:: Network Design Problem
 
    A city wants to connect 8 neighborhoods with fiber optic cables. The
@@ -893,45 +781,3 @@ make them fundamental tools in computer science.
    :class: dropdown
 
    .. TO DO: Show solution with both algorithms
-
-
-Further Reading
-===============
-
-.. seealso::
-
-   - **Cormen et al. (CLRS)**, *Introduction to Algorithms*, 4th ed.
-
-     - Chapter 23: Minimum Spanning Trees (Kruskal's, Prim's, proofs)
-
-   - **Sedgewick & Wayne**, *Algorithms*, 4th ed.
-
-     - Section 4.3: Minimum Spanning Trees (excellent visualizations)
-
-   - **Original papers**:
-
-     - Kruskal, J. B. (1956). "On the shortest spanning subtree of a
-       graph and the traveling salesman problem." *Proceedings of the
-       American Mathematical Society*, 7(1), 48-50.
-     - Prim, R. C. (1957). "Shortest connection networks and some
-       generalizations." *Bell System Technical Journal*, 36(6),
-       1389-1401.
-
-   - **Union-Find**:
-
-     - Tarjan, R. E. (1975). "Efficiency of a good but not linear set
-       union algorithm." *Journal of the ACM*, 22(2), 215-225.
-
-
-What's Next?
-============
-
-We've now completed our study of fundamental graph algorithms:
-traversals, shortest paths, and minimum spanning trees. These algorithms
-form the foundation for more advanced graph topics like network flows,
-matching problems, and graph coloring.
-
-In the next module, we'll shift gears to explore **optimization
-algorithms**, where we'll encounter problems that are computationally
-harder and require different algorithmic strategies: exhaustive search,
-heuristics, and dynamic programming.
