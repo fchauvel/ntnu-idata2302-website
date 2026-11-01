@@ -45,6 +45,79 @@ largest group of people who all know one another (clique), and so on. For
 these, no algorithm is known that always finds the best solution fast.
 
 
+Many Objectives
+===============
+
+.. index:: Pareto front, multi-objective optimization
+
+So far, we had a single thing to maximize. Real problems are rarely so
+simple. Suppose we do not know yet how much the box can carry, and we want
+both a *light* box and a *valuable* one. These two objectives pull in
+opposite directions: More items, more value, but more weight. Which box is
+the best? There is no single answer.
+
+We can still discard the clearly bad boxes. A box is *dominated* if another
+box is at least as good on both objectives, and better on at least one.
+For instance, the music instruments and the books (5 kg, 13 000 NOK)
+dominate the laptop and the music instruments (9 kg, 12 000 NOK): They
+are lighter *and* more valuable. The boxes that no other box dominates are
+the best compromises. Together, they form the *Pareto front*, named after
+the economist Vilfredo Pareto. For our four items, six of the sixteen
+boxes are on the front (:numref:`optimization/heuristic/pareto`).
+
+.. figure:: _static/images/pareto.svg
+   :name: optimization/heuristic/pareto
+   :align: center
+
+   The sixteen ways to fill a box, by weight and value. The green boxes
+   form the Pareto front: None is beaten by another box on both objectives.
+   Our 10 kg limit selects one of them.
+
+Along the front, we trade weight for value, and no point is better than
+another: Which one to pick depends on what we want. Our limit of 10 kg
+selects the music instruments and the cooking tools, the most valuable
+box that fits.
+
+With several objectives, the answer is no longer a single solution, but a
+whole *set* of compromises, which is usually much harder to find. And real
+problems have more objectives (cost, time, risk, and so on) and more
+constraints than what we sketch here. This is one more reason why *good
+enough* matters: When even "the best" is not clearly defined, a good
+compromise, found quickly, is often what we need.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   A candidate has a name, a cost we want low, and a gain we want high.
+   Here are the comparison, and the front:
+
+   .. code-block:: java
+      :linenos:
+
+      // Is the first candidate at least as good as the second on both objectives,
+      // and better on at least one?
+      public static boolean dominates(Candidate first, Candidate second) {
+          boolean noWorse = first.cost() <= second.cost() && first.gain() >= second.gain();
+          boolean better = first.cost() < second.cost() || first.gain() > second.gain();
+          return noWorse && better;
+      }
+
+      // The candidates that no other candidate dominates
+      public static List<Candidate> front(List<Candidate> candidates) {
+          var front = new ArrayList<Candidate>();
+          for (var candidate : candidates) {
+              boolean dominated = false;
+              for (var other : candidates) {
+                  dominated = dominated || dominates(other, candidate);
+              }
+              if (!dominated) {
+                  front.add(candidate);
+              }
+          }
+          return front;
+      }
+
+
 Neighbours and Landscapes
 =========================
 
@@ -200,9 +273,24 @@ we are bored: after a given number of steps.
                best ← current
        return best
 
-If we walk long enough, we will eventually visit every solution, and
-therefore the best one. But "long enough" may be longer than the age of
-the universe. A random walk does not learn anything from where it has been.
+If we walk long enough, we will eventually visit every solution, as long
+as we can get from any solution to any other by moving from neighbour to
+neighbour. In particular, we will find the best one: **a random walk is
+guaranteed to find the best solution of any finite set.** On our nine boxes,
+a thousand steps are plenty.
+
+But look at what "long enough" means. A random walk learns nothing from where
+it has been, so it needs, roughly, as many steps as there are solutions, which
+is :math:`2^n` for :math:`n` items. With 100 items, at a million steps per
+second, this is about :math:`4 \times 10^{16}` years, millions of times the
+age of the universe. The guarantee is *correct*, and *useless*.
+
+.. admonition:: Theory and practice
+
+   A random walk is a prototypical example of the limits of theoretical
+   results. A result can be true, and still be of no use. When you read that
+   an algorithm is "guaranteed to find the best solution", always ask:
+   *how long does it take?*
 
 .. admonition:: Implementation in Java
    :class: hint, dropdown
@@ -286,7 +374,7 @@ fitness function is called *gradient descent* (or ascent).
           var current = space.initial();
           path.add(current);
           while (true) {
-              var best = bestNeighbour(space, current);
+              var best = bestNeighbour(space, current, List.of());
               if (best.isEmpty() || space.fitness(best.get()) <= space.fitness(current)) {
                   return path;
               }
@@ -301,9 +389,12 @@ fitness function is called *gradient descent* (or ascent).
           return path.get(path.size() - 1);
       }
 
-      private static <S> Optional<S> bestNeighbour(SearchSpace<S> space, S solution) {
+      private static <S> Optional<S> bestNeighbour(SearchSpace<S> space, S solution, List<S> excluded) {
           S best = null;
           for (var neighbour : space.neighbours(solution)) {
+              if (excluded.contains(neighbour)) {
+                  continue;
+              }
               if (best == null || space.fitness(neighbour) > space.fitness(best)) {
                   best = neighbour;
               }
@@ -408,15 +499,66 @@ temperature and the cooling, and what works depends on the problem.
       }
 
 
+Tabu Search
+===========
+
+.. index:: tabu search
+
+Hill climbing is stuck on a local optimum because it refuses to go down.
+Simulated annealing goes down by chance. Tabu search goes down by
+*design*: It always moves to the best neighbour, even if it is worse than
+where we stand. To avoid going straight back to where it came from, it
+*remembers* the solutions it has just visited, and declares them *tabu*,
+that is, forbidden.
+
+.. code-block:: text
+   :caption: Tabu search (pseudocode)
+
+   function tabu_search(space, steps, tenure):
+       current ← search_space.initial()
+       best ← current
+       tabu ← [current]               # the solutions we remember
+       repeat steps times:
+           candidates ← the neighbours of current that are not in tabu
+           if candidates is empty:
+               stop
+           current ← the candidate with the highest fitness
+                                      # even if it is worse than the current one
+           add current to tabu
+           if tabu holds more than tenure solutions:
+               forget the oldest one
+           if search_space.fitness(current) > search_space.fitness(best):
+               best ← current
+       return best
+
+The *tenure* is how many solutions we remember. A short memory only prevents
+going straight back. A long memory pushes the search further away from
+where it has been, but a memory that is too long may leave no neighbour to
+go to.
+
+Let us follow it on the knapsack, with a tenure of 3, starting from the
+laptop alone, where hill climbing was stuck on a box worth 12 000:
+
+#. We start from the laptop (3 000). Its best neighbour is the laptop and the
+   music instruments (12 000). We move there, and we remember both boxes.
+
+#. From there, the neighbours are the laptop alone, which is tabu, and the
+   music instruments alone (9 000). We have no choice: We move *down*, to the
+   music instruments, even if it is worse. We remember it.
+
+#. From the music instruments, the best neighbour is the cooking tools and
+   the music instruments (16 000), and it is not tabu. We move there: We have
+   found the best box.
+
+Hill climbing stopped at step 1. Tabu search gets out of the local optimum,
+because it has no right to go back, and it must take the step down. The
+Java code is in the examples repository.
+
+
 More Pointers
 =============
 
 There are many other heuristics. Here are a few names to look for:
-
-**Tabu search**
-   Like hill climbing, but it *remembers* the solutions it has visited,
-   and refuses to go back to them. This lets it leave a local optimum,
-   by accepting to move to the best neighbour, even if it is worse.
 
 **Genetic algorithms**
    They mimic evolution: A population of solutions, which are combined
@@ -429,11 +571,6 @@ There are many other heuristics. Here are a few names to look for:
 **Linear programming**
    For problems where the constraints and the fitness are linear, there
    are *exact* methods, much faster than a general search.
-
-**Several objectives**
-   If we want, say, to minimize the weight *and* maximize the value, there
-   is no single best solution, but a set of best compromises, called the
-   *Pareto front*.
 
 In practice, when we face a hard problem, a good approach is to:
 
