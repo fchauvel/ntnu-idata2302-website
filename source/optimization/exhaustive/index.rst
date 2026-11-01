@@ -62,6 +62,16 @@ Here are a few classic examples:
    have a weight and a value. Which items shall we put in the box, to
    maximize their total value?
 
+For four queens, there are exactly two solutions, shown on
+:numref:`optimization/search/queens`.
+
+.. figure:: _static/images/nqueens.svg
+   :name: optimization/search/queens
+   :align: center
+
+   The two ways to place four queens on a four-by-four chessboard so
+   that none can capture another.
+
 We will use the knapsack problem as our running example. Say the box can
 carry 10 kg, and we can choose among these four items:
 
