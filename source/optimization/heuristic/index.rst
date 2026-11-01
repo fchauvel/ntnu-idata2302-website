@@ -161,13 +161,26 @@ to it, and moving to a neighbour means following an edge. In other words,
 a notion we already know, here in a graph of solutions.
 
 There are two differences with the graphs of the previous module. First,
-we *never build* this graph: It is far too big, with :math:`2^{100}`
-vertices for 100 items. The problem tells us the neighbours of a solution
-only when we get there. Second, it is not the tree of the previous
-lecture. The sixteen vertices are the sixteen leaves of that tree, but,
-there, we built each solution choice after choice, whereas here an edge
-connects two *complete* solutions that differ by one thing. By following
-edges, we can come back to a solution we have already visited.
+it makes no sense to hold this graph in memory: With 100 items, it has
+:math:`2^{100}` vertices. What we hold is just a *cursor*, the solution where
+we stand now, and a *rule* that computes its neighbours when we need them. For
+the knapsack, the rule is: remove any item from the box, or add any item that
+is missing, as long as the box can carry it. Moving the cursor means picking
+one of these neighbours. The graph is *implicit*: The rule defines it, and we
+never build it. However large the graph, a hill climber, a random walk or an
+annealer only holds a handful of solutions: Where it stands, and the best
+one so far.
+
+Second, it is not the tree of the previous lecture. The sixteen vertices are
+the sixteen leaves of that tree, but, there, we built each solution choice
+after choice, whereas here an edge connects two *complete* solutions that
+differ by one thing. By following edges, we can come back to a solution we
+have already visited.
+
+So, a heuristic search is a cursor walking on an implicit graph of solutions.
+What it needs from the problem is exactly this: where to put the cursor at
+first, how to compute the neighbours of its position, and how good a
+position is.
 
 .. module:: search_space
 
