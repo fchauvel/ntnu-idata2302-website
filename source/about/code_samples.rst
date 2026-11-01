@@ -50,3 +50,6 @@ To get all of them:
    * - Graphs
      - `Adjacency matrix <https://github.com/fchauvel/aldast-examples/tree/main/graphs/adjacency-matrix/c>`_
      - C
+   * - Graphs
+     - `Minimum spanning trees <https://github.com/fchauvel/aldast-examples/tree/main/graphs/minimum-spanning-tree/java>`_
+     - Java

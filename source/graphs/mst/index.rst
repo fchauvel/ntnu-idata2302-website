@@ -8,6 +8,7 @@ Minimum Spanning Trees
              minimum spanning tree of a weighted graph
 :Concepts: Spanning tree, minimum spanning tree, spanning forest, greedy
            algorithms, Prim's algorithm, Kruskal's algorithm, union-find
+:Implementation: Java `Prim, Kruskal and union-find <https://github.com/fchauvel/aldast-examples/tree/main/graphs/minimum-spanning-tree/java>`_
 
 In the previous lecture, we studied shortest paths: finding the best
 route from one vertex to another. Now we tackle a different problem:
@@ -295,17 +296,17 @@ for a total weight of 13.
    :class: hint, dropdown
 
    The pending edges are kept in a priority queue, ordered by weight, so
-   that we can always take the cheapest one.
+   that we can always take the cheapest one. The complete code, with its
+   tests, is in the `examples repository <https://github.com/fchauvel/aldast-examples/tree/main/graphs/minimum-spanning-tree/java>`_.
 
    .. code-block:: java
       :linenos:
 
-      public Set<Edge> prim(Graph graph, Vertex start) {
+      // The edges of a minimum spanning tree, grown from the given vertex
+      public static Set<Edge> prim(Graph graph, String start) {
           var mst = new HashSet<Edge>();
-          var visited = new HashSet<Vertex>();
-          var pending = new PriorityQueue<Edge>(
-              Comparator.comparingDouble(e -> e.weight)
-          );
+          var visited = new HashSet<String>();
+          var pending = new PriorityQueue<Edge>(Comparator.comparingInt(Edge::weight));
 
           visited.add(start);
           pending.addAll(graph.edgesFrom(start));
@@ -316,15 +317,15 @@ for a total weight of 13.
               }
 
               var edge = pending.poll();
-              var v = edge.target;
+              var vertex = edge.target();
 
-              if (!visited.contains(v)) {
+              if (!visited.contains(vertex)) {
                   mst.add(edge);
-                  visited.add(v);
+                  visited.add(vertex);
 
-                  // Add all edges from v to unvisited vertices
-                  for (var nextEdge : graph.edgesFrom(v)) {
-                      if (!visited.contains(nextEdge.target)) {
+                  // Add all the edges from this vertex to vertices not yet visited
+                  for (var nextEdge : graph.edgesFrom(vertex)) {
+                      if (!visited.contains(nextEdge.target())) {
                           pending.add(nextEdge);
                       }
                   }
@@ -548,38 +549,32 @@ different trees, but they always have the same total weight.
 
    This implementation uses a ``DisjointSets`` class, which provides
    the ``find`` and ``union`` operations described at the end of this
-   section: ``find(x)`` returns the representative of the set (the tree)
-   containing :math:`x`, and ``union(x, y)`` merges the sets containing
-   :math:`x` and :math:`y`.
+   section: ``find(x)`` identifies the set (the tree) containing
+   :math:`x`, and ``union(x, y)`` merges the sets containing :math:`x`
+   and :math:`y`. The complete code, with its tests, is in the
+   `examples repository <https://github.com/fchauvel/aldast-examples/tree/main/graphs/minimum-spanning-tree/java>`_.
 
    .. code-block:: java
       :linenos:
 
-      public Set<Edge> kruskal(Graph graph) {
+      // The edges of a minimum spanning tree, or of a minimum spanning forest
+      // if the graph is not connected
+      public static Set<Edge> kruskal(Graph graph) {
           var mst = new HashSet<Edge>();
-          var sets = new DisjointSets(graph.vertices().size());
+          var trees = new DisjointSets(graph.vertices());
 
-          // Sort all edges by weight
+          // Sort all the edges by weight
           var edges = new ArrayList<>(graph.edges());
-          edges.sort(Comparator.comparingDouble(e -> e.weight));
+          edges.sort(Comparator.comparingInt(Edge::weight));
 
-          // Process edges in order
+          // Process the edges in order
           for (var edge : edges) {
-              int u = edge.source;
-              int v = edge.target;
-
-              if (sets.find(u) != sets.find(v)) {
+              if (trees.find(edge.source()) != trees.find(edge.target())) {
                   mst.add(edge);
-                  sets.union(u, v);
-
-                  // Early termination: MST has |V| - 1 edges
-                  if (mst.size() == graph.vertices().size() - 1) {
-                      break;
-                  }
+                  trees.union(edge.source(), edge.target());
               }
           }
 
-          // If the graph is not connected, this is a spanning forest
           return mst;
       }
 
