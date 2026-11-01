@@ -15,6 +15,16 @@ a different way: By *not solving the same problem twice*. It applies
 when a problem breaks down into smaller problems that *overlap*. The
 best way to see it is on a famous example.
 
+.. note::
+
+   **A word about "programming".** In *dynamic programming*, the word
+   "programming" has nothing to do with writing code. In the 1950s, when
+   Richard Bellman introduced the method, it meant *planning*, as in
+   "linear programming" or "mathematical programming": finding the best
+   plan. Dynamic programming is, first of all, a method to *optimize*, that
+   is, to find the best solution among many, and to do so without trying
+   them all.
+
 
 A Slow Recursion
 ================
@@ -147,15 +157,17 @@ There is another way to look at the problem. To compute
 need the numbers before them, and so on, down to ``fibonacci(0)`` and
 ``fibonacci(1)``. Why not start from there? We compute the numbers in
 *order*, from the smallest to the one we want, and keep them in a table
-(:numref:`optimization/dp/fib_table`). When we need a number, it is
-already in the table.
+(:numref:`optimization/dp/fib_table`). We start from what we already know,
+the *initial state*: ``fibonacci(0)`` and ``fibonacci(1)``, in red. When we
+need a number, it is already in the table.
 
 .. figure:: _static/images/fib_table.svg
    :name: optimization/dp/fib_table
    :align: center
 
-   Computing the Fibonacci numbers bottom-up: Each cell only needs the
-   two cells before it.
+   Computing the Fibonacci numbers bottom-up. The first two cells, in red,
+   are the initial state. Each other cell only needs the two cells before
+   it.
 
 .. code-block:: text
    :caption: The Fibonacci numbers, bottom-up (pseudocode)
@@ -251,7 +263,8 @@ memoization, we make fewer than 500 calls.
 The bottom-up version fills a table, with one row per set of remaining
 items, and one column per amount of room (:numref:`optimization/dp/table`).
 We start from the bottom, where there are no more items and the value is
-0, and go up, one row after the other. Each cell is the better of the
+0: This is the initial state, in red. Then we go up, one row after the
+other. Each cell is the better of the
 two choices: leave the item (the cell right below), or take it (its
 value, plus the cell below for the room that remains). The answer is
 at the top right.
@@ -260,9 +273,10 @@ at the top right.
    :name: optimization/dp/table
    :align: center
 
-   The table for the items of the lecture. The answer, 16 000 NOK, is the
-   better of leaving the music instruments (7 000, the cell below) and
-   taking them (9 000, plus 7 000 for the 8 kg left).
+   The table for the items of the lecture. The bottom row, in red, is the
+   initial state. The answer, 16 000 NOK, is the better of leaving the
+   music instruments (7 000, the cell below) and taking them (9 000, plus
+   7 000 for the 8 kg left).
 
 If we want to know *which* items to take, and not only the value, we walk
 back from the answer: At each cell, we check which of the two choices gave
@@ -355,12 +369,22 @@ in grams instead of kilograms, it would be a thousand times bigger.
 When Does It Work?
 ==================
 
-Dynamic programming works when a problem breaks down into smaller
-problems *of the same kind*, that *overlap*, and that can be described
-by a *few numbers*, such as an index in a sequence and an amount of room.
-It shines on problems with a natural order, such as texts, arrays or
-sequences of points. In the lab, you will apply it to a text problem,
-the edit distance between two words (see :doc:`/labs/optimization`). When
-the subproblems never repeat, there is nothing to remember, and
+Dynamic programming pays off when a problem has two properties:
+
+**Optimal substructure.** The best solution of the problem is built from
+the best solutions of smaller problems of the same kind. In the knapsack,
+what we do with the remaining items and the room left is itself the same
+problem, and its best answer is exactly what we need. (Bellman called this
+the *principle of optimality*.)
+
+**Overlapping subproblems.** The same smaller problems come back many
+times, and there are only a few different ones, each described by a few
+numbers, such as an item and an amount of room, or an index in a sequence.
+When the subproblems never repeat, there is nothing to remember, and
 memoization does not help.
+
+Problems with a natural order, such as texts, arrays or sequences of
+points, often have both. In the lab, you will apply dynamic programming to
+a text problem, the edit distance between two words (see
+:doc:`/labs/optimization`).
 
