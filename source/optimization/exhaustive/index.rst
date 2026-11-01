@@ -131,11 +131,41 @@ we *take* it or *leave* it. We call *configuration* a solution under
 construction, where some choices have been made, and others have not.
 
 The configurations form a tree, shown on :numref:`optimization/search/tree`.
-The root is the *empty* configuration, where nothing is decided. Each
-choice leads to a new configuration, a child. The leaves are the
-*complete* configurations, where everything is decided. With four
-items, the tree has :math:`2^4 = 16` leaves. Enumerating all the
-solutions means visiting all these leaves.
+The root is the *empty* configuration, where nothing is decided. **Each
+level of the tree is one more choice that a solution requires**, and each
+possible choice leads to a new configuration, a child. A solution needs
+*all* its choices to be made. This is why only the **leaves** of the tree,
+the *complete* configurations, can be solutions. The other nodes are
+*partial*: Some choices are still open. With four items, the tree has
+:math:`2^4 = 16` leaves, and enumerating all the solutions means visiting
+all of them.
+
+What the choices are depends on the problem. A level of the tree is
+always something that must be decided for a solution to exist:
+
+.. csv-table:: What is a level of the tree, in each problem?
+   :header: "Problem", "One level is...", "The choices are...", "A leaf is..."
+   :widths: 12, 20, 22, 26
+
+   "Knapsack", "an item", "take it, or leave it", "a decision for every item"
+   "N queens", "a queen (a column of the board)", "the row where it goes", "all the queens placed"
+   "Sudoku", "an empty cell", "the digit to write, from 1 to 9", "all the cells filled"
+   "TSP", "a step of the tour", "the next city to visit", "a tour through all the cities"
+
+The N queens problem, with four queens, is the easiest to picture
+(:numref:`optimization/search/queens/tree`). The first level places the
+queen of the first column, in one of the four rows. The second level
+places the queen of the second column, and so on. A leaf is a board with
+four queens, but it is a *solution* only if no queen can capture
+another.
+
+.. figure:: _static/images/queens_tree.svg
+   :name: optimization/search/queens/tree
+   :align: center
+
+   The first levels of the tree of the four queens problem. Each level
+   places one more queen. In red, boards where two queens can capture
+   one another.
 
 .. figure:: _static/images/knapsack_tree.svg
    :name: optimization/search/tree
@@ -161,7 +191,7 @@ all that the algorithms below know about the problem.
    Postconditions:
       None
 
-.. function:: extensions(c: Configuration) -> Sequence[Configuration]
+.. function:: children(c: Configuration) -> Sequence[Configuration]
 
    Return the configurations we get by making one more choice. For the
    knapsack, there are two: one where we take the next item, and one
@@ -190,19 +220,21 @@ all that the algorithms below know about the problem.
 .. function:: is_valid(c: Configuration) -> Boolean
 
    Tell whether the configuration :math:`c` respects the constraints of
-   the problem. For the knapsack, the items must not weigh more than the
-   box can carry. A complete and valid configuration is a *solution*.
+   the problem *so far*. For the knapsack, the items must not weigh more
+   than the box can carry. A partial configuration can be valid so far,
+   and still not be a solution: A solution is a configuration that is both
+   *complete* and *valid*.
 
    Preconditions:
       None
 
    Postconditions:
     - Once a configuration breaks a constraint, so do all of its
-      extensions. If a configuration is not valid, none of its
-      extensions is.
+      children. If a configuration is not valid, none of its children
+      is.
 
       .. math::
-         \neg \, is\_valid(c) \implies \forall c' \in extensions(c), \, \neg \, is\_valid(c')
+         \neg \, is\_valid(c) \implies \forall c' \in children(c), \, \neg \, is\_valid(c')
 
 The simplest search goes down the tree, always making the next choice,
 until the configuration is complete. Then it *backs up* to the last
@@ -217,7 +249,7 @@ and it is a depth-first traversal of the tree of configurations.
            if problem.is_valid(c):
                process c
        else:
-           for each next in problem.extensions(c):
+           for each next in problem.children(c):
                exhaustive(problem, next)
 
    exhaustive(problem, problem.empty())
@@ -236,7 +268,7 @@ and it is a depth-first traversal of the tree of configurations.
 
           C empty();
 
-          List<C> extensions(C configuration);
+          List<C> children(C configuration);
 
           boolean isComplete(C configuration);
 
@@ -255,7 +287,7 @@ and it is a depth-first traversal of the tree of configurations.
       }
 
       // For the next item, we can take it or leave it
-      public List<List<Boolean>> extensions(List<Boolean> configuration) {
+      public List<List<Boolean>> children(List<Boolean> configuration) {
           return List.of(
               with(configuration, true),
               with(configuration, false)
@@ -289,7 +321,7 @@ and it is a depth-first traversal of the tree of configurations.
                   solutions.add(configuration);
               }
           } else {
-              for (var next : problem.extensions(configuration)) {
+              for (var next : problem.children(configuration)) {
                   exhaustive(problem, next, solutions);
               }
           }
@@ -317,7 +349,7 @@ know it leads nowhere.
 Pruning only needs a small change: We check the constraints at *every*
 configuration, and no longer only at the leaves. This is valid, because
 of the property of ``is_valid``: if a configuration is not valid, none
-of its extensions is.
+of its children is.
 
 .. code-block:: text
    :caption: Enumerating all the solutions, with pruning (pseudocode)
@@ -328,7 +360,7 @@ of its extensions is.
        if problem.is_complete(c):
            process c
        else:
-           for each next in problem.extensions(c):
+           for each next in problem.children(c):
                with_pruning(problem, next)
 
 In our small example, pruning saves little. But on larger problems, it
@@ -354,7 +386,7 @@ rest of the tree.
       :linenos:
 
       // All the solutions, but we give up on a configuration as soon as it is
-      // invalid: none of its extensions can be valid
+      // invalid: none of its children can be valid
       public static <C> List<C> withPruning(Problem<C> problem) {
           var solutions = new ArrayList<C>();
           withPruning(problem, problem.empty(), solutions);
@@ -368,7 +400,7 @@ rest of the tree.
           if (problem.isComplete(configuration)) {
               solutions.add(configuration);
           } else {
-              for (var next : problem.extensions(configuration)) {
+              for (var next : problem.children(configuration)) {
                   withPruning(problem, next, solutions);
               }
           }
@@ -393,7 +425,7 @@ rest of the tree.
           if (problem.isComplete(configuration)) {
               return Optional.of(configuration);
           }
-          for (var next : problem.extensions(configuration)) {
+          for (var next : problem.children(configuration)) {
               var solution = anySolution(problem, next);
               if (solution.isPresent()) {
                   return solution;
@@ -420,13 +452,19 @@ exploring it. We can prune it, just as we prune the invalid
 configurations.
 
 To tell this, we need an *optimistic estimate* of what a configuration
-can still lead to, which we call its *bound*. The bound is allowed to be
+can still lead to, which we call its **upper bound**. It is allowed to be
 too optimistic, but it must *never underestimate*: Nothing below the
-configuration may be worth more than its bound. For the knapsack, a
-simple bound is the value of the items we have already taken, plus the
-value of *all* the items we have not decided about, as if the box could
-carry everything. Reality can only be worse, so this is a valid
-bound.
+configuration may be worth more than its upper bound. For the knapsack, a
+simple upper bound is the value of the items we have already taken,
+plus the value of *all* the items we have not decided about, as if the
+box could carry everything. Reality can only be worse.
+
+So, for each configuration, the best solution below it is worth something
+between *what we already hold* and *what we can hope for at best*. In
+the knapsack, what we hold is the value of the items taken so far, since
+we can always leave the others. The upper bound is the other end of the
+interval. We cut a configuration when this optimistic end is not above the
+best solution we already have.
 
 .. module:: optimization_problem
 
@@ -434,7 +472,8 @@ bound.
 
    Return how good the choices made in the configuration :math:`c` are.
    For the knapsack, this is the total value of the items we take. The
-   higher, the better.
+   higher, the better. For a complete configuration, this is the
+   objective that the problem wants to maximize.
 
    Preconditions:
       None
@@ -442,24 +481,29 @@ bound.
    Postconditions:
       None
 
-.. function:: bound(c: Configuration) -> Number
+.. function:: upper_bound(c: Configuration) -> Number
 
-   Return an optimistic estimate of the value of the configuration
-   :math:`c`: What we can hope for at best.
+   Return an optimistic estimate of what the configuration :math:`c` can
+   lead to: What we can hope for at best.
 
    Preconditions:
       None
 
    Postconditions:
-    - The bound never underestimates. No solution below the
-      configuration :math:`c` is worth more than its bound.
+    - The upper bound never underestimates. No solution below the
+      configuration :math:`c` is worth more than its upper bound.
 
       .. math::
-         is\_valid(c') \, \land \, is\_complete(c') \, \land \, c' \text{ is below } c \implies value(c') \leq bound(c)
+         is\_valid(c') \, \land \, is\_complete(c') \, \land \, c' \text{ is below } c \implies value(c') \leq upper\_bound(c)
+
+    - What we hold never exceeds what we can hope for.
+
+      .. math::
+         value(c) \leq upper\_bound(c)
 
 This is the *branch-and-bound* algorithm. It goes through the tree as
 before, remembering the *best* solution found so far. We *branch*, that
-is, we explore the extensions of a configuration, only if its *bound*
+is, we explore the children of a configuration, only if its *upper bound*
 shows that it still has a chance to beat the best solution so far.
 
 .. code-block:: text
@@ -468,23 +512,24 @@ shows that it still has a chance to beat the best solution so far.
    function branch_and_bound(problem, c):
        if not problem.is_valid(c):
            return
-       if best exists and optimization_problem.bound(c) ≤ value of best:
+       if best exists and optimization_problem.upper_bound(c) ≤ value of best:
            return                      # Even at best, c is not better than best
        if problem.is_complete(c):
            if best does not exist or optimization_problem.value(c) > value of best:
                best ← c
        else:
-           for each next in problem.extensions(c):
+           for each next in problem.children(c):
                branch_and_bound(problem, next)
 
    branch_and_bound(problem, problem.empty())
 
 :numref:`optimization/search/bound` shows the algorithm on our example.
-The number in each circle is the bound of the configuration. The search
-goes down the tree, taking each item first. It finds a first solution,
-worth 12 000, then a second one, worth 13 000, and a third one, worth
-16 000. The right half of the tree starts with a bound of 14 000, below
-what we already have: We never look at it. The algorithm expands only 7
+Each circle shows two numbers: what we hold so far, and the upper bound
+(in thousands of NOK). The search goes down the tree, taking each item
+first. It finds a first solution, worth 12 000, then a second one, worth
+13 000, and a third one, worth 16 000. The right half of the tree starts
+with an upper bound of 14 000, below what we already have: We never look
+at it. The algorithm expands only 7
 of the 15 configurations that are not leaves, whereas the search with
 pruning alone expands 14.
 
@@ -493,21 +538,21 @@ pruning alone expands 14.
    :align: center
 
    Branch-and-bound on the knapsack. Once we have a solution worth
-   16 000, the configurations whose bound is not above are cut.
+   16 000, the configurations whose upper bound is not above are cut.
 
 **The order matters.** Branch-and-bound works best when we find a good
 solution early, because a high "best so far" lets us cut more. Going
 through the choices in a different order can therefore change the work
 a lot (although never the result). Instead of simply going deep first, we can
 always continue with the *most promising* configuration, that is, the
-one with the highest bound. We keep the configurations still to explore
-in a priority queue, where the priority is the bound. As we explore the
-configurations by decreasing bound, we can stop as soon as the best bound
-that remains is not above the best solution found: Nothing left can beat
+one with the highest upper bound. We keep the configurations still to
+explore in a priority queue, where the priority is the upper bound. As we
+explore the configurations by decreasing upper bound, we can stop as soon
+as the best upper bound that remains is not above the best solution found: Nothing left can beat
 it. This is called *best-first* search.
 
-The quality of the bound is what makes branch-and-bound effective. The
-tighter it is, the more we cut. A bound that is too loose cuts nothing,
+The quality of the upper bound is what makes branch-and-bound effective.
+The tighter it is, the more we cut. A bound that is too loose cuts nothing,
 and we are back to trying everything. In the worst case, branch-and-bound
 is no better than exhaustive search, and takes time exponential in the
 number of choices. But on many problems, a good bound makes it practical
@@ -517,7 +562,7 @@ far beyond what brute force can do.
    :class: hint, dropdown
 
    A problem we want to *optimize* offers two more operations, the value
-   and the bound:
+   and the upper bound:
 
    .. code-block:: java
       :linenos:
@@ -526,7 +571,7 @@ far beyond what brute force can do.
 
           int value(C configuration);
 
-          int bound(C configuration);
+          int upperBound(C configuration);
       }
 
    For the knapsack, they are:
@@ -545,7 +590,7 @@ far beyond what brute force can do.
       }
 
       // At best, we will be able to take all the items we have not decided about
-      public int bound(List<Boolean> configuration) {
+      public int upperBound(List<Boolean> configuration) {
           int total = value(configuration);
           for (int i = configuration.size(); i < items.size(); i++) {
               total += items.get(i).value();
@@ -560,7 +605,7 @@ far beyond what brute force can do.
       :linenos:
 
       // The best solution, with branch-and-bound: we give up on a configuration
-      // if even its bound is no better than the best solution found so far
+      // if even its upper bound is no better than the best solution found so far
       public static <C> Optional<C> branchAndBound(OptimizationProblem<C> problem) {
           var best = new Best<C>();
           branchAndBound(problem, problem.empty(), best);
@@ -571,7 +616,7 @@ far beyond what brute force can do.
           if (!problem.isValid(configuration)) {
               return;
           }
-          if (best.configuration != null && problem.bound(configuration) <= best.value) {
+          if (best.configuration != null && problem.upperBound(configuration) <= best.value) {
               return;
           }
           if (problem.isComplete(configuration)) {
@@ -580,7 +625,7 @@ far beyond what brute force can do.
                   best.value = problem.value(configuration);
               }
           } else {
-              for (var next : problem.extensions(configuration)) {
+              for (var next : problem.children(configuration)) {
                   branchAndBound(problem, next, best);
               }
           }
@@ -593,16 +638,16 @@ far beyond what brute force can do.
       }
 
    The best-first variant uses a priority queue, which always gives us the
-   configuration with the highest bound:
+   configuration with the highest upper bound:
 
    .. code-block:: java
       :linenos:
 
       // The same, but we always continue with the most promising configuration
-      // (the one with the highest bound), instead of going deep first
+      // (the one with the highest upper bound), instead of going deep first
       public static <C> Optional<C> bestFirst(OptimizationProblem<C> problem) {
           var promising = new PriorityQueue<C>(
-              (first, second) -> Integer.compare(problem.bound(second), problem.bound(first))
+              (first, second) -> Integer.compare(problem.upperBound(second), problem.upperBound(first))
           );
           promising.add(problem.empty());
 
@@ -612,7 +657,7 @@ far beyond what brute force can do.
               if (!problem.isValid(configuration)) {
                   continue;
               }
-              if (best.configuration != null && problem.bound(configuration) <= best.value) {
+              if (best.configuration != null && problem.upperBound(configuration) <= best.value) {
                   break; // The most promising one is not promising enough: we are done
               }
               if (problem.isComplete(configuration)) {
@@ -621,7 +666,7 @@ far beyond what brute force can do.
                       best.value = problem.value(configuration);
                   }
               } else {
-                  promising.addAll(problem.extensions(configuration));
+                  promising.addAll(problem.children(configuration));
               }
           }
           return Optional.ofNullable(best.configuration);
