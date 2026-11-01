@@ -473,7 +473,8 @@ decide, the two bounds are the same as its value.
 So, for each configuration, the solutions below it are worth something in
 an interval. The search keeps the *floor*: the highest lower bound we have
 seen so far, that is, the value we are sure to reach. We cut a configuration
-when even its upper bound is below the floor.
+when it cannot beat what we already have: when even its upper bound is
+below the floor, or not above the best solution we hold.
 
 .. module:: optimization_problem
 
@@ -543,7 +544,9 @@ before, remembering the *best* solution found so far, and the *floor*. We
            return
        floor ← the maximum of floor and optimization_problem.lower_bound(c)
        if optimization_problem.upper_bound(c) < floor:
-           return                      # Even at best, c is not good enough
+           return                      # Even at best, c cannot reach the floor
+       if best exists and optimization_problem.upper_bound(c) ≤ value of best:
+           return                      # Even at best, c is no better than best
        if problem.is_complete(c):
            if best does not exist or optimization_problem.value(c) > value of best:
                best ← c
@@ -553,10 +556,12 @@ before, remembering the *best* solution found so far, and the *floor*. We
 
    branch_and_bound(problem, problem.empty())
 
-Note that we cut only when the upper bound is *strictly* below the floor.
-A configuration whose best outcome is exactly the floor may hold the
-solution that reaches it, and we want to find that solution, not only its
-value.
+Why two different tests? Once we *hold* a solution, there is no point in
+exploring a configuration that is at best as good as it. But the floor
+may be only a *promise*: a lower bound says that a solution worth that
+much exists, not that we have found it yet. The configuration that holds
+this solution may have exactly the floor as its upper bound. So, until we
+have the solution in hand, we only cut what is strictly below the floor.
 
 :numref:`optimization/search/bound` shows the algorithm on our example.
 Each circle shows the lower and the upper bound of the configuration
@@ -653,7 +658,7 @@ far beyond what brute force can do.
 
       // The best solution, with branch-and-bound. We keep the *floor*: the highest
       // lower bound we have seen, that is, the value we are sure to reach. We give
-      // up on a configuration if even its upper bound is below the floor.
+      // up on a configuration that cannot beat what we already have.
       public static <C> Optional<C> branchAndBound(OptimizationProblem<C> problem) {
           var progress = new Progress<C>();
           branchAndBound(problem, problem.empty(), progress);
@@ -665,7 +670,7 @@ far beyond what brute force can do.
               return;
           }
           progress.floor = Math.max(progress.floor, problem.lowerBound(configuration));
-          if (problem.upperBound(configuration) < progress.floor) {
+          if (progress.isHopeless(problem, configuration)) {
               return;
           }
           if (problem.isComplete(configuration)) {
@@ -682,6 +687,14 @@ far beyond what brute force can do.
       private static class Progress<C> {
           C best = null;
           int floor = Integer.MIN_VALUE;
+
+          // Is it pointless to explore this configuration? It is if it cannot reach
+          // the floor, or if it cannot do better than the best solution we hold.
+          boolean isHopeless(OptimizationProblem<C> problem, C configuration) {
+              int upperBound = problem.upperBound(configuration);
+              return upperBound < floor
+                  || (best != null && upperBound <= problem.value(best));
+          }
 
           void keepIfBetter(OptimizationProblem<C> problem, C solution) {
               if (best == null || problem.value(solution) > problem.value(best)) {
@@ -711,7 +724,7 @@ far beyond what brute force can do.
                   continue;
               }
               progress.floor = Math.max(progress.floor, problem.lowerBound(configuration));
-              if (problem.upperBound(configuration) < progress.floor) {
+              if (progress.isHopeless(problem, configuration)) {
                   break; // The most promising one is not promising enough: we are done
               }
               if (problem.isComplete(configuration)) {
