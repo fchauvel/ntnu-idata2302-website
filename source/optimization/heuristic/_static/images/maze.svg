@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="572" viewBox="0 0 640 572">
+<rect width="640" height="572" fill="white"/>
+<defs><marker id="b" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto"><path d="M 0 1 L 15 8 L 0 15 z" fill="#1f6feb"/></marker><marker id="o" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto"><path d="M 0 1 L 15 8 L 0 15 z" fill="#d95f02"/></marker></defs>
+<text x="320.0" y="28" font-size="15" text-anchor="middle" font-weight="normal" fill="#444444" font-family="Helvetica, Arial, sans-serif" >Each cell is a solution, and the openings between cells are its neighbours</text>
+<text x="320.0" y="50" font-size="13" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >The number in a cell is its fitness: minus the distance to the exit, as the crow flies</text>
+<rect x="68" y="70" width="56" height="56" fill="#555555"/>
+<rect x="124" y="70" width="56" height="56" fill="#555555"/>
+<rect x="180" y="70" width="56" height="56" fill="#555555"/>
+<rect x="236" y="70" width="56" height="56" fill="#555555"/>
+<rect x="292" y="70" width="56" height="56" fill="#555555"/>
+<rect x="348" y="70" width="56" height="56" fill="#555555"/>
+<rect x="404" y="70" width="56" height="56" fill="#555555"/>
+<rect x="460" y="70" width="56" height="56" fill="#555555"/>
+<rect x="516" y="70" width="56" height="56" fill="#555555"/>
+<rect x="68" y="126" width="56" height="56" fill="#555555"/>
+<rect x="124" y="126" width="56" height="56" fill="#fef7e0" stroke="#bbbbbb" stroke-width="1"/>
+<rect x="180" y="126" width="56" height="56" fill="#eef1d6" stroke="#bbbbbb" stroke-width="1"/>
+<text x="230" y="140" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-7</text>
+<rect x="236" y="126" width="56" height="56" fill="#deebcd" stroke="#bbbbbb" stroke-width="1"/>
+<text x="286" y="140" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-6</text>
+<rect x="292" y="126" width="56" height="56" fill="#555555"/>
+<rect x="348" y="126" width="56" height="56" fill="#bedfbb" stroke="#bbbbbb" stroke-width="1"/>
+<text x="398" y="140" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-4</text>
+<rect x="404" y="126" width="56" height="56" fill="#aed9b1" stroke="#bbbbbb" stroke-width="1"/>
+<text x="454" y="140" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-3</text>
+<rect x="460" y="126" width="56" height="56" fill="#9ed3a8" stroke="#bbbbbb" stroke-width="1"/>
+<text x="510" y="140" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-2</text>
+<rect x="516" y="126" width="56" height="56" fill="#555555"/>
+<rect x="68" y="182" width="56" height="56" fill="#555555"/>
+<rect x="124" y="182" width="56" height="56" fill="#eef1d6" stroke="#bbbbbb" stroke-width="1"/>
+<text x="174" y="196" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-7</text>
+<rect x="180" y="182" width="56" height="56" fill="#555555"/>
+<rect x="236" y="182" width="56" height="56" fill="#cee5c4" stroke="#bbbbbb" stroke-width="1"/>
+<text x="286" y="196" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-5</text>
+<rect x="292" y="182" width="56" height="56" fill="#555555"/>
+<rect x="348" y="182" width="56" height="56" fill="#aed9b1" stroke="#bbbbbb" stroke-width="1"/>
+<text x="398" y="196" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-3</text>
+<rect x="404" y="182" width="56" height="56" fill="#555555"/>
+<rect x="460" y="182" width="56" height="56" fill="#8ecd9f" stroke="#bbbbbb" stroke-width="1"/>
+<text x="510" y="196" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-1</text>
+<rect x="516" y="182" width="56" height="56" fill="#555555"/>
+<rect x="68" y="238" width="56" height="56" fill="#555555"/>
+<rect x="124" y="238" width="56" height="56" fill="#deebcd" stroke="#bbbbbb" stroke-width="1"/>
+<text x="174" y="252" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-6</text>
+<rect x="180" y="238" width="56" height="56" fill="#555555"/>
+<rect x="236" y="238" width="56" height="56" fill="#bedfbb" stroke="#bbbbbb" stroke-width="1"/>
+<text x="286" y="252" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-4</text>
+<rect x="292" y="238" width="56" height="56" fill="#aed9b1" stroke="#bbbbbb" stroke-width="1"/>
+<text x="342" y="252" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-3</text>
+<rect x="348" y="238" width="56" height="56" fill="#9ed3a8" stroke="#bbbbbb" stroke-width="1"/>
+<text x="398" y="252" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-2</text>
+<rect x="404" y="238" width="56" height="56" fill="#555555"/>
+<rect x="460" y="238" width="56" height="56" fill="#7ec896" stroke="#bbbbbb" stroke-width="1"/>
+<rect x="516" y="238" width="56" height="56" fill="#555555"/>
+<rect x="68" y="294" width="56" height="56" fill="#555555"/>
+<rect x="124" y="294" width="56" height="56" fill="#eef1d6" stroke="#bbbbbb" stroke-width="1"/>
+<text x="174" y="308" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-7</text>
+<rect x="180" y="294" width="56" height="56" fill="#555555"/>
+<rect x="236" y="294" width="56" height="56" fill="#555555"/>
+<rect x="292" y="294" width="56" height="56" fill="#555555"/>
+<rect x="348" y="294" width="56" height="56" fill="#555555"/>
+<rect x="404" y="294" width="56" height="56" fill="#555555"/>
+<rect x="460" y="294" width="56" height="56" fill="#8ecd9f" stroke="#bbbbbb" stroke-width="1"/>
+<text x="510" y="308" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-1</text>
+<rect x="516" y="294" width="56" height="56" fill="#555555"/>
+<rect x="68" y="350" width="56" height="56" fill="#555555"/>
+<rect x="124" y="350" width="56" height="56" fill="#fef7e0" stroke="#bbbbbb" stroke-width="1"/>
+<text x="174" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-8</text>
+<rect x="180" y="350" width="56" height="56" fill="#eef1d6" stroke="#bbbbbb" stroke-width="1"/>
+<text x="230" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-7</text>
+<rect x="236" y="350" width="56" height="56" fill="#deebcd" stroke="#bbbbbb" stroke-width="1"/>
+<text x="286" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-6</text>
+<rect x="292" y="350" width="56" height="56" fill="#cee5c4" stroke="#bbbbbb" stroke-width="1"/>
+<text x="342" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-5</text>
+<rect x="348" y="350" width="56" height="56" fill="#bedfbb" stroke="#bbbbbb" stroke-width="1"/>
+<text x="398" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-4</text>
+<rect x="404" y="350" width="56" height="56" fill="#aed9b1" stroke="#bbbbbb" stroke-width="1"/>
+<text x="454" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-3</text>
+<rect x="460" y="350" width="56" height="56" fill="#9ed3a8" stroke="#bbbbbb" stroke-width="1"/>
+<text x="510" y="364" font-size="11" text-anchor="end" font-weight="normal" fill="#666666" font-family="Helvetica, Arial, sans-serif" >-2</text>
+<rect x="516" y="350" width="56" height="56" fill="#555555"/>
+<rect x="68" y="406" width="56" height="56" fill="#555555"/>
+<rect x="124" y="406" width="56" height="56" fill="#555555"/>
+<rect x="180" y="406" width="56" height="56" fill="#555555"/>
+<rect x="236" y="406" width="56" height="56" fill="#555555"/>
+<rect x="292" y="406" width="56" height="56" fill="#555555"/>
+<rect x="348" y="406" width="56" height="56" fill="#555555"/>
+<rect x="404" y="406" width="56" height="56" fill="#555555"/>
+<rect x="460" y="406" width="56" height="56" fill="#555555"/>
+<rect x="516" y="406" width="56" height="56" fill="#555555"/>
+<polyline points="376.0,266.0 376.0,210.0 376.0,154.0 432.0,154.0 488.0,154.0 488.0,210.0 488.0,266.0" fill="none" stroke="#d95f02" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 9" marker-end="url(#o)"/>
+<polyline points="152.0,154.0 208.0,154.0 264.0,154.0 264.0,210.0 264.0,266.0 320.0,266.0 376.0,266.0" fill="none" stroke="#1f6feb" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"  marker-end="url(#b)"/>
+<circle cx="152.0" cy="154.0" r="17" fill="white" stroke="#222222" stroke-width="2.5"/><text x="152.0" y="160.0" font-size="17" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >S</text>
+<circle cx="488.0" cy="266.0" r="17" fill="white" stroke="#222222" stroke-width="2.5"/><text x="488.0" y="272.0" font-size="17" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >E</text>
+<circle cx="376.0" cy="266.0" r="10" fill="#c0392b" stroke="white" stroke-width="2"/>
+<line x1="30" y1="487" x2="64" y2="487" stroke="#1f6feb" stroke-width="5"/><text x="72" y="492" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >hill climbing: always the neighbour closest to the exit</text>
+<circle cx="35" cy="543" r="9" fill="#c0392b"/><text x="72" y="548" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >where it stops: a local optimum</text>
+<line x1="30" y1="515" x2="64" y2="515" stroke="#d95f02" stroke-width="5" stroke-dasharray="3 9"/><text x="72" y="520" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >the way out: it first goes away from the exit</text>
+</svg>
