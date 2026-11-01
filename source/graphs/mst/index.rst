@@ -670,8 +670,9 @@ and ``union`` are cheap.
 Comparing Prim's and Kruskal's Algorithms
 ==========================================
 
-Both algorithms produce minimum spanning trees, but they have different
-characteristics:
+Both algorithms always produce a minimum spanning tree, with the same
+total weight. They may pick different trees, but only when several edges
+have the same weight. They differ in how they build it:
 
 .. _mst_comparison:
 
@@ -681,44 +682,27 @@ characteristics:
    +------------------+------------------------+------------------------+
    | Aspect           | Prim's Algorithm       | Kruskal's Algorithm    |
    +==================+========================+========================+
-   | **Strategy**     | Grow single tree from  | Build forest, merge    |
-   |                  | starting vertex        | components             |
+   | **Strategy**     | Grow a single tree,    | Grow a forest, merge   |
+   |                  | one vertex at a time   | trees                  |
    +------------------+------------------------+------------------------+
-   | **Edge Choice**  | Cheapest edge from     | Cheapest edge globally |
-   |                  | tree to new vertex     | that doesn't cycle     |
+   | **Edge Choice**  | Cheapest edge leaving  | Cheapest edge between  |
+   |                  | the tree               | two different trees    |
    +------------------+------------------------+------------------------+
-   | **Data           | Priority queue of      | Disjoint sets for      |
-   | Structure**      | edges                  | components             |
+   | **Data           | Priority queue of      | Sorted edges and       |
+   | Structure**      | edges                  | union-find             |
    +------------------+------------------------+------------------------+
-   | **Time           | O(E log V) with binary | O(E log E) ≈           |
-   | Complexity**     | heap                   | O(E log V)             |
-   +------------------+------------------------+------------------------+
-   | **Best For**     | Growing a network from | Edges already sorted,  |
-   |                  | a known starting point | or given as a list     |
-   +------------------+------------------------+------------------------+
-   | **Starting**     | Requires starting      | No starting vertex     |
-   |                  | vertex                 | needed                 |
+   | **Time           | O(E log V)             | O(E log V)             |
+   | Complexity**     |                        |                        |
    +------------------+------------------------+------------------------+
 
-
-When to Use Which Algorithm?
------------------------------
-
-**Use Prim's algorithm when**:
-
-- You have a natural starting vertex, for instance the capital city
-  from which the network grows
-- The graph is given as adjacency lists, so that the edges leaving a
-  vertex are easy to find
-
-**Use Kruskal's algorithm when**:
-
-- The edges are already sorted, or nearly sorted
-- The graph is given as an edge list
-- You want a simpler conceptual algorithm
-
-In practice, both algorithms are efficient and the choice often comes
-down to convenience.
+Which one should we use? Since both run in :math:`O(E \log V)`, there
+is no clear winner: the choice mostly comes down to convenience, such as
+whether the graph is easier to access as adjacency lists (Prim's) or as a
+list of edges (Kruskal's). Prim's algorithm can start from *any* vertex,
+as a spanning tree includes all of them anyway. One practical difference
+is that Kruskal's algorithm still works if the graph is not connected: it
+then yields one tree per connected component, whereas Prim's algorithm
+only reaches the component of its starting vertex.
 
 
 .. exercise:: MST Algorithm Trace
