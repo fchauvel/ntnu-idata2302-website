@@ -421,14 +421,15 @@ cheapest to most expensive:
   skip it (it would create a loop).
 - Stop when all towns are connected.
 
-This greedy strategy is exactly Kruskal's algorithm. At any time, we
-have several trees under construction. We look at all the edges that
-connect two *different* trees, and we add the cheapest one, which joins
-the two trees into a bigger one. We repeat until a single tree remains.
+This greedy strategy is exactly Kruskal's algorithm: **go through the
+edges in increasing order of weight, and skip those that would create a
+cycle**.
 
-A simple way to find that edge is to sort all the edges once, and to
-go through them in increasing order, skipping the edges whose two ends
-are already in the same tree. Here's the algorithm in pseudocode:
+Seen from the vertices, this is a process of *merging trees*. At the
+start, every vertex is a tree on its own. Each edge we add joins two
+different trees into a bigger one. An edge whose two ends are already in
+the same tree would close a loop, so we skip it. When a single tree
+remains, we are done. Here's the algorithm in pseudocode:
 
 .. code-block:: text
    :caption: Kruskal's algorithm (pseudocode)
@@ -651,10 +652,12 @@ Kruskal's algorithm, each set contains the vertices of one tree.
 
 These operations are not as easy to implement efficiently as they
 look. For instance, if we store, for each element, the number of its
-set, then ``find`` is immediate, but ``union`` has to update every
-element of one of the two sets, which is slow for large sets. Other
-simple ideas just move the cost to ``find``. There are clever
-implementations that make *both* operations almost constant time. They
+set, then ``find`` is immediate, but a single ``union`` has to relabel
+every element of one of the two sets, which is slow for large sets. If
+we always relabel the *smaller* set, an element is relabeled at most
+:math:`\log n` times (each time, its set at least doubles in size), which
+is cheap enough for Kruskal's algorithm. There are cleverer
+implementations where *both* operations take almost constant time. They
 are beyond the scope of this course, and we simply assume that ``find``
 and ``union`` are cheap.
 
