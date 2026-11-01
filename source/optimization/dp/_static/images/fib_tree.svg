@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="401" viewBox="0 0 520 401">
+<rect width="520" height="401" fill="white"/>
+<line x1="60.0" y1="250" x2="30" y2="320" stroke="#222222" stroke-width="1.8"/>
+<line x1="60.0" y1="250" x2="90" y2="320" stroke="#222222" stroke-width="1.8"/>
+<line x1="105.0" y1="180" x2="60.0" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="105.0" y1="180" x2="150" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="240.0" y1="180" x2="210" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="240.0" y1="180" x2="270" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="172.5" y1="110" x2="105.0" y2="180" stroke="#222222" stroke-width="1.8"/>
+<line x1="172.5" y1="110" x2="240.0" y2="180" stroke="#222222" stroke-width="1.8"/>
+<line x1="360.0" y1="180" x2="330" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="360.0" y1="180" x2="390" y2="250" stroke="#222222" stroke-width="1.8"/>
+<line x1="405.0" y1="110" x2="360.0" y2="180" stroke="#222222" stroke-width="1.8"/>
+<line x1="405.0" y1="110" x2="450" y2="180" stroke="#222222" stroke-width="1.8"/>
+<line x1="288.75" y1="40" x2="172.5" y2="110" stroke="#222222" stroke-width="1.8"/>
+<line x1="288.75" y1="40" x2="405.0" y2="110" stroke="#222222" stroke-width="1.8"/>
+<circle cx="30" cy="320" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="30" y="325" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(1)</text>
+<circle cx="90" cy="320" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="90" y="325" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(0)</text>
+<circle cx="60.0" cy="250" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="60.0" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(2)</text>
+<circle cx="150" cy="250" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="150" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(1)</text>
+<circle cx="105.0" cy="180" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="105.0" y="185" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(3)</text>
+<circle cx="210" cy="250" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="210" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(1)</text>
+<circle cx="270" cy="250" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="270" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(0)</text>
+<circle cx="240.0" cy="180" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="240.0" y="185" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(2)</text>
+<circle cx="172.5" cy="110" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="172.5" y="115" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(4)</text>
+<circle cx="330" cy="250" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="330" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(1)</text>
+<circle cx="390" cy="250" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="390" y="255" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(0)</text>
+<circle cx="360.0" cy="180" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="360.0" y="185" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(2)</text>
+<circle cx="450" cy="180" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="450" y="185" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(1)</text>
+<circle cx="405.0" cy="110" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="405.0" y="115" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(3)</text>
+<circle cx="288.75" cy="40" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="288.75" y="45" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >F(5)</text><circle cx="29" cy="373" r="9" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="44" y="378" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >computed</text>
+<circle cx="134.2" cy="373" r="9" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="149.2" y="378" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >computed again: we already did it elsewhere</text>
+</svg>
