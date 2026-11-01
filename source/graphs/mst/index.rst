@@ -380,36 +380,25 @@ with a minimum spanning tree.
 How Efficient is it?
 --------------------
 
-The complexity of Prim's algorithm depends on how we implement the
-priority queue:
+Prim's algorithm keeps the candidate edges in a priority queue, which
+we implement with a binary heap (see :doc:`/trees/heap/index`). With
+a binary heap, finding the cheapest candidate, adding a candidate, or
+removing one costs :math:`O(\log E)`.
 
-**With a binary heap** (standard ``PriorityQueue`` in Java):
+How many times do we do that? Each edge is added to the heap at most
+once, and taken out at most once, so we have at most :math:`2E` heap
+operations. In total, Prim's algorithm runs in :math:`O(E \log E)`.
+As a graph has at most :math:`V^2` edges, :math:`\log E` is at most
+:math:`2 \log V`, so this is the same as :math:`O(E \log V)`.
 
-- Initialize: :math:`O(1)`
-- Main loop: :math:`O(V)` iterations
-- Extract minimum from heap: :math:`O(\log E)` per iteration
-- Add edges to heap: :math:`O(E)` total insertions, :math:`O(\log E)`
-  each
-- **Total**: :math:`O(E \log E)` = :math:`O(E \log V)` (since
-  :math:`E \leq V^2`, :math:`\log E = O(\log V)`)
+.. margin::
 
-**With a Fibonacci heap**:
+   With a more sophisticated heap, called a *Fibonacci heap*, Prim's
+   algorithm can run in :math:`O(E + V \log V)`. It is complicated, and
+   beyond the scope of this course.
 
-- Extract minimum: :math:`O(\log V)` amortized per operation
-- Decrease key: :math:`O(1)` amortized per operation
-- **Total**: :math:`O(E + V \log V)`
-
-**With a simple array** (for dense graphs):
-
-- Finding minimum among edges: :math:`O(E)` per iteration
-- :math:`V` iterations
-- **Total**: :math:`O(VE)` = :math:`O(V^3)` for dense graphs
-
-For most practical purposes, the binary heap implementation with
-:math:`O(E \log V)` is excellent.
-
-**Space complexity**: :math:`O(V + E)` for the graph representation,
-visited set, and priority queue.
+As for the memory, we need to store the graph, the set of visited
+vertices and the heap, which takes :math:`O(V + E)`.
 
 
 Algorithm 2: Kruskal's Algorithm
@@ -664,34 +653,25 @@ edge cannot close a loop.
 How Efficient is it?
 --------------------
 
-The complexity of Kruskal's algorithm:
+Kruskal's algorithm has two main costs:
 
-**Steps**:
+1. **Sorting the edges** takes :math:`O(E \log E)`.
 
-1. **Sort edges**: :math:`O(E \log E)`
-2. **Process each edge**: :math:`O(E)` iterations
-3. **Disjoint set operations**: For each edge, we call ``Find`` (twice)
-   and possibly ``Union`` (once). With an efficient implementation,
-   these operations take nearly constant time: :math:`O(\alpha(V))` per
-   operation, where :math:`\alpha` is the inverse Ackermann function
-4. **Total for disjoint sets**: :math:`O(E \cdot \alpha(V)) \approx
-   O(E)` (since :math:`\alpha(V) < 5` for all practical :math:`V`)
+2. **Going through the edges** takes :math:`O(E)` steps. At each step,
+   we call ``Find`` twice, and possibly ``Union`` once. With the
+   union-find structure, these operations are nearly constant time, so
+   this part is cheap.
 
-**Total time complexity**: :math:`O(E \log E)` = :math:`O(E \log V)`
+The sorting dominates, so the total is :math:`O(E \log E)`. As a graph
+has at most :math:`V^2` edges, :math:`\log E` is at most :math:`2 \log
+V`, so this is the same as :math:`O(E \log V)`.
 
-The sorting step dominates. Since :math:`E \leq V^2`, we have
-:math:`\log E = O(\log V)`.
+As for the memory, we need :math:`O(V)` for the disjoint sets and
+:math:`O(E)` for the list of edges.
 
-**Space complexity**: :math:`O(V)` for the disjoint sets structure,
-:math:`O(E)` for the edge list.
-
-**Comparison with Prim's**: Both have :math:`O(E \log V)` complexity,
-but:
-
-- Kruskal's requires sorting all edges upfront
-- Prim's uses a priority queue dynamically
-- For dense graphs, Prim's with an array can be :math:`O(V^2)`, faster
-  than Kruskal's :math:`O(E \log E) = O(V^2 \log V)`
+Both algorithms therefore run in :math:`O(E \log V)`. They differ in how
+they get there: Kruskal's sorts all the edges upfront, whereas Prim's
+uses a priority queue as it goes.
 
 
 Comparing Prim's and Kruskal's Algorithms
@@ -720,8 +700,8 @@ characteristics:
    | **Time           | O(E log V) with binary | O(E log E) ≈           |
    | Complexity**     | heap                   | O(E log V)             |
    +------------------+------------------------+------------------------+
-   | **Best For**     | Dense graphs (array    | Sparse graphs, already |
-   |                  | implementation O(V²))  | sorted edges           |
+   | **Best For**     | Growing a network from | Edges already sorted,  |
+   |                  | a known starting point | or given as a list     |
    +------------------+------------------------+------------------------+
    | **Starting**     | Requires starting      | No starting vertex     |
    |                  | vertex                 | needed                 |
@@ -733,20 +713,19 @@ When to Use Which Algorithm?
 
 **Use Prim's algorithm when**:
 
-- The graph is dense (:math:`E \approx V^2`)
-- You have a natural starting vertex
-- You want to implement with simple array for :math:`O(V^2)` on dense
-  graphs
+- You have a natural starting vertex, for instance the capital city
+  from which the network grows
+- The graph is given as adjacency lists, so that the edges leaving a
+  vertex are easy to find
 
 **Use Kruskal's algorithm when**:
 
-- The graph is sparse (fewer edges)
-- Edges are already sorted or nearly sorted
-- You want a simpler conceptual algorithm
+- The edges are already sorted, or nearly sorted
 - The graph is given as an edge list
+- You want a simpler conceptual algorithm
 
 In practice, both algorithms are efficient and the choice often comes
-down to implementation convenience and graph density.
+down to convenience.
 
 
 .. exercise:: MST Algorithm Trace
