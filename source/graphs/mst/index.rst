@@ -6,8 +6,8 @@ Minimum Spanning Trees
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Ec4c5JnIeVVDqq8LLgg-IykBYjZleUxJ6Y9W3fNvx6BBeQ?e=G7kbBL>`
 :Objectives: Understand what is a *spanning tree* and how to find the
              minimum spanning tree of a weighted graph
-:Concepts: Spanning tree, minimum spanning tree, greedy algorithms,
-           Prim's algorithm, Kruskal's algorithm, union-find
+:Concepts: Spanning tree, minimum spanning tree, spanning forest, greedy
+           algorithms, Prim's algorithm, Kruskal's algorithm, union-find
 
 In the previous lecture, we studied shortest paths: finding the best
 route from one vertex to another. Now we tackle a different problem:
@@ -95,6 +95,14 @@ Problem Definition
 
 The MST problem asks: among all possible spanning trees, which one has
 the smallest sum of edge weights?
+
+Note that the graph must be *connected*. If it is not, there is no
+spanning tree, because no tree can reach all the vertices. The best we
+can do then is a *spanning forest*, that is, one spanning tree for each
+connected component of the graph. Looking for the cheapest one is a
+variation of the same problem, which we will call the *minimum spanning
+forest* problem. It is the same as the MST problem when the graph is
+connected.
 
 .. _mst_example:
 
@@ -391,13 +399,33 @@ As for the memory, we need to store the graph, the set of visited
 vertices and the heap, which takes :math:`O(V + E)`.
 
 
+When the Graph Is Not Connected
+-------------------------------
+
+Prim's algorithm has a limitation: it grows a *single* tree from its
+starting vertex, so it can only reach the vertices that are connected to
+it. If the graph is not connected, the priority queue runs out of edges
+before all the vertices are visited, and the algorithm cannot continue.
+This is why our implementation throws an exception, "Graph is not
+connected". Prim's algorithm solves the MST problem, which is only
+defined for connected graphs.
+
+We could run Prim's algorithm again, from a new starting vertex, for each
+component. But we would first need to find the components, and pick a
+starting vertex in each. Can we do better, with an algorithm that deals
+with a disconnected graph naturally? This is what Kruskal's algorithm
+does.
+
+
 Kruskal's Algorithm
 ===================
 
 .. index:: Kruskal's algorithm, minimum spanning tree, union-find
 
 While Prim's algorithm grows a single tree, Kruskal's algorithm builds
-a forest of trees that gradually merges into the final MST. It's
+a *forest* of trees that gradually merge. If the graph is connected, they
+end up as a single minimum spanning tree. If it is not, they end up as a
+minimum spanning forest, one tree per connected component. It's
 conceptually even simpler: sort all edges by weight and keep adding the
 cheapest edge that doesn't create a cycle.
 
@@ -551,10 +579,7 @@ different trees, but they always have the same total weight.
               }
           }
 
-          if (mst.size() < graph.vertices().size() - 1) {
-              throw new IllegalArgumentException("Graph is not connected");
-          }
-
+          // If the graph is not connected, this is a spanning forest
           return mst;
       }
 
@@ -694,15 +719,19 @@ have the same weight. They differ in how they build it:
    | **Time           | O(E log V)             | O(E log V)             |
    | Complexity**     |                        |                        |
    +------------------+------------------------+------------------------+
+   | **Graph**        | Connected graphs only  | Any graph (spanning    |
+   |                  | (spanning tree)        | forest)                |
+   +------------------+------------------------+------------------------+
 
-Which one should we use? Since both run in :math:`O(E \log V)`, there
-is no clear winner: the choice mostly comes down to convenience, such as
-whether the graph is easier to access as adjacency lists (Prim's) or as a
-list of edges (Kruskal's). Prim's algorithm can start from *any* vertex,
-as a spanning tree includes all of them anyway. One practical difference
-is that Kruskal's algorithm still works if the graph is not connected: it
-then yields one tree per connected component, whereas Prim's algorithm
-only reaches the component of its starting vertex.
+These are really two flavors of the same problem. Prim's algorithm
+finds a minimum spanning tree, and therefore needs a connected graph. It
+can start from *any* vertex, as a spanning tree includes all of them
+anyway. Kruskal's algorithm finds a minimum spanning forest, which is
+the minimum spanning tree when the graph is connected, and still makes
+sense when it is not. Since both run in :math:`O(E \log V)`, the choice
+otherwise comes down to convenience, such as whether the graph is
+easier to access as adjacency lists (Prim's) or as a list of edges
+(Kruskal's).
 
 
 .. exercise:: MST Algorithm Trace
