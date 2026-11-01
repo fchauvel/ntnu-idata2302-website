@@ -139,37 +139,35 @@ start from, a way to move from a solution to its *neighbours* (the
 solutions that differ by one small change), and a measure of how good a
 solution is, which we call its *fitness*.
 
-**A graph of solutions.** Look at what we have: Solutions, and a relation
-between them, *being neighbours*. This is a *graph*: Each solution is a
-vertex, and two neighbours are joined by an edge (see the
-:doc:`Graph ADT </graphs/intro/index>`). Moving to a neighbour means
-following an edge. In that sense, ``neighbours(s)`` plays the role of
-``graph.edges_from(g, s)``. The difference is that we never *build* this
-graph: It is far too big, with :math:`2^{100}` vertices for 100 items. The
-problem tells us the neighbours of a solution only when we get there.
+**A graph of solutions.** There is nothing new here: This is a *graph*, as in
+the previous module. Take the knapsack with four items. Each way to fill the
+box is a *vertex*, and two vertices are joined by an *edge* when they differ
+by one item: We add an item, or we remove one
+(:numref:`optimization/heuristic/graph`). Seven of the sixteen vertices break
+the 10 kg limit. They are not solutions, so the *graph of solutions* is
+made of the nine others.
 
-A maze makes it concrete (:numref:`optimization/heuristic/maze`). Where we
-stand is a solution: A cell of the maze. Its neighbours are the open cells
-next to it, and its fitness is how close it is to the exit, as the crow
-flies. The search space is the graph of the cells, a landscape in two
-dimensions. A hill climber always steps on the neighbour closest to the
-exit. From the start, it goes right, then down, and stops in front of the
-wall: The exit is just behind it, but the way out *first goes away* from
-the exit.
-
-.. figure:: _static/images/maze.svg
-   :name: optimization/heuristic/maze
+.. figure:: _static/images/knapsack_graph.svg
+   :name: optimization/heuristic/graph
    :align: center
 
-   A maze as a search space. Always stepping to the neighbour closest to
-   the exit leads to a dead end that is a local optimum. The way out first
-   goes away from the exit.
+   The graph of the ways to fill the box with four items. The nine
+   solutions are joined by the changes that turn one into another.
 
-Note the difference with the previous lecture. There, we walked down a
-*tree* of partial solutions, where each level was one more choice. Here,
-every vertex is a *complete* solution, and following an edge changes just
-one thing. The structure has cycles: We can come back to a solution we
-have already visited.
+In this graph, the *neighbours* of a solution are simply the vertices next
+to it, and moving to a neighbour means following an edge. In other words,
+``neighbours(s)`` plays the role of ``graph.edges_from(g, s)`` (see the
+:doc:`Graph ADT </graphs/intro/index>`). "Neighbours" is only a new name for
+a notion we already know, here in a graph of solutions.
+
+There are two differences with the graphs of the previous module. First,
+we *never build* this graph: It is far too big, with :math:`2^{100}`
+vertices for 100 items. The problem tells us the neighbours of a solution
+only when we get there. Second, it is not the tree of the previous
+lecture. The sixteen vertices are the sixteen leaves of that tree, but,
+there, we built each solution choice after choice, whereas here an edge
+connects two *complete* solutions that differ by one thing. By following
+edges, we can come back to a solution we have already visited.
 
 .. module:: search_space
 
@@ -188,8 +186,7 @@ have already visited.
 
    Return the solutions we reach from the solution :math:`s` by one small
    change: The vertices next to :math:`s` in the graph of solutions. For the
-   knapsack, we add one item to the box, or remove one. In the maze, we
-   step to an open cell next to us.
+   knapsack, we add one item to the box, or remove one.
 
    Preconditions:
       None
@@ -291,31 +288,6 @@ best.
               }
           }
           return total;
-      }
-
-   A maze is another search space. A solution is a cell, its neighbours are
-   the open cells next to it, and its fitness is minus the distance to the
-   exit:
-
-   .. code-block:: java
-      :linenos:
-
-      // The open cells to the north, east, south and west
-      public List<Cell> neighbours(Cell cell) {
-          var result = new ArrayList<Cell>();
-          int[][] moves = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-          for (var move : moves) {
-              var next = new Cell(cell.row() + move[0], cell.column() + move[1]);
-              if (isOpen(next)) {
-                  result.add(next);
-              }
-          }
-          return result;
-      }
-
-      // Minus the distance to the exit, as the crow flies
-      public int fitness(Cell cell) {
-          return -(Math.abs(cell.row() - exit.row()) + Math.abs(cell.column() - exit.column()));
       }
 
 
