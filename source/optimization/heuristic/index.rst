@@ -183,8 +183,8 @@ first, how to compute the neighbours of its position, and how good a
 position is.
 
 The edges are implicit, and they depend on what we allow as a *change*.
-Suppose we also allow to *swap* an item of the box for one that is missing
-(:numref:`optimization/heuristic/swaps`). The graph has the same nine
+Suppose we also allow to *swap* an item of the box for one that is missing.
+The graph has the same nine
 vertices, but 23 edges instead of 12: It is *denser*. There are more ways to
 go from any solution to the best one, and fewer traps. The laptop and the
 music instruments, a local optimum with the former changes, now lead to the
@@ -193,13 +193,6 @@ the best box becomes the only local optimum. The price is that each
 solution has more neighbours to look at. Deciding what a change is, that is,
 what the neighbours of a solution are, is one of the main design choices of
 a heuristic search.
-
-.. figure:: _static/images/knapsack_swaps.svg
-   :name: optimization/heuristic/swaps
-   :align: center
-
-   The same solutions with a richer change. The orange edges are the swaps:
-   They give more paths to the best box.
 
 .. module:: search_space
 
