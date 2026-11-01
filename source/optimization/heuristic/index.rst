@@ -19,8 +19,17 @@ rule of thumb that gives good answers fast, but no guarantee that they are
 the best.
 
 
+Complex Optimization
+====================
+
+Some optimization problems are too complex for the exact methods we have
+seen. This section explains why we settle for a *good enough* solution, why
+"the best" is not always well defined, and what a problem must offer for us
+to improve a solution by small changes.
+
+
 Good Enough
-===========
+-----------
 
 .. index:: heuristic
 
@@ -46,7 +55,7 @@ these, no algorithm is known that always finds the best solution fast.
 
 
 Many Objectives
-===============
+---------------
 
 .. index:: Pareto front, multi-objective optimization
 
@@ -119,7 +128,7 @@ compromise, found quickly, is often what we need.
 
 
 Neighbours and Landscapes
-=========================
+-------------------------
 
 .. index:: neighbourhood, fitness landscape
 
