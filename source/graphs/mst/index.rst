@@ -6,8 +6,8 @@ Minimum Spanning Trees
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/Ec4c5JnIeVVDqq8LLgg-IykBYjZleUxJ6Y9W3fNvx6BBeQ?e=G7kbBL>`
 :Objectives: Understand what is a *spanning tree* and how to find the
              minimum spanning tree of a weighted graph
-:Concepts: Spanning tree, minimum spanning tree, spanning forest, greedy
-           algorithms, Prim's algorithm, Kruskal's algorithm, union-find
+:Concepts: Spanning tree, minimum spanning tree, spanning forest,
+           Prim's algorithm, Kruskal's algorithm, union-find
 :Implementation: Java `Prim, Kruskal and union-find <https://github.com/fchauvel/aldast-examples/tree/main/graphs/minimum-spanning-tree/java>`_
 
 In the previous lecture, we studied shortest paths: finding the best
@@ -147,7 +147,7 @@ Before studying algorithms, let's understand key MST properties:
    Pick any group of vertices. Among all the edges that leave this group
    (one end inside the group, the other outside), the cheapest one can
    always be part of a minimum spanning tree. This is the key idea
-   behind the greedy MST algorithms.
+   behind the two algorithms below.
 
 **Cycle Property**
    For any cycle in the graph, the maximum-weight edge in that cycle
@@ -157,26 +157,6 @@ Before studying algorithms, let's understand key MST properties:
 We'll use the cheapest edge out of a group to see why both Prim's and
 Kruskal's algorithms work.
 
-
-The Greedy Approach
--------------------
-
-Both MST algorithms we'll study use a **greedy strategy**: make the
-locally optimal choice at each step, trusting it will lead to a
-globally optimal solution. For MSTs, this strategy works!
-
-The general greedy template is:
-
-1. Start with an empty tree (or forest)
-2. Repeatedly add the "best" edge that doesn't create a cycle
-3. Stop when we have :math:`|V| - 1` edges (a spanning tree)
-
-The algorithms differ in how they choose the "best" edge:
-
-- **Prim's algorithm**: Grows a single tree by always adding the
-  cheapest edge that connects the tree to a new vertex
-- **Kruskal's algorithm**: Builds a forest by always adding the
-  globally cheapest edge that doesn't create a cycle
 
 .. seealso::
 
@@ -190,7 +170,7 @@ The algorithms differ in how they choose the "best" edge:
 Prim's Algorithm
 ================
 
-.. index:: Prim's algorithm, minimum spanning tree, greedy algorithm
+.. index:: Prim's algorithm, minimum spanning tree
 
 Prim's algorithm grows the MST one vertex at a time, similar to how
 Dijkstra's algorithm explores shortest paths. It starts with an
@@ -450,7 +430,7 @@ cheapest to most expensive:
   skip it (it would create a loop).
 - Stop when all towns are connected.
 
-This greedy strategy is exactly Kruskal's algorithm: **go through the
+This strategy is exactly Kruskal's algorithm: **go through the
 edges in increasing order of weight, and skip those that would create a
 cycle**.
 
@@ -727,68 +707,3 @@ sense when it is not. Since both run in :math:`O(E \log V)`, the choice
 otherwise comes down to convenience, such as whether the graph is
 easier to access as adjacency lists (Prim's) or as a list of edges
 (Kruskal's).
-
-
-.. exercise:: MST Algorithm Trace
-
-   Given the following weighted graph, trace both Prim's algorithm
-   (starting from A) and Kruskal's algorithm. Do they produce the same
-   MST? Why or why not?
-
-   .. TO DO: Insert a small weighted graph with 5-6 vertices
-
-.. solution::
-   :class: dropdown
-
-   .. TO DO: Show step-by-step trace for both algorithms
-
-
-.. exercise:: Unique MST
-
-   Prove that if all edge weights in a connected graph are distinct,
-   then the MST is unique.
-
-.. solution::
-   :class: dropdown
-
-   **Proof by contradiction**:
-
-   Suppose there are two different MSTs, :math:`T_1` and :math:`T_2`.
-   Since they're different, there exists an edge :math:`e = (u, v)` in
-   :math:`T_1` but not in :math:`T_2`.
-
-   When we add :math:`e` to :math:`T_2`, we create exactly one cycle
-   (since :math:`T_2` is a tree). This cycle must contain at least one
-   other edge :math:`f \neq e` that connects the same two components as
-   :math:`e` does.
-
-   Since all weights are distinct, either :math:`\text{weight}(e) <
-   \text{weight}(f)` or :math:`\text{weight}(e) >
-   \text{weight}(f)`.
-
-   - If :math:`\text{weight}(e) < \text{weight}(f)`: We could replace
-     :math:`f` with :math:`e` in :math:`T_2` to get a spanning tree
-     with smaller total weight, contradicting that :math:`T_2` is an
-     MST.
-
-   - If :math:`\text{weight}(e) > \text{weight}(f)`: We could replace
-     :math:`e` with :math:`f` in :math:`T_1` to get a spanning tree
-     with smaller total weight, contradicting that :math:`T_1` is an
-     MST.
-
-   Either way, we reach a contradiction. Therefore, the MST must be
-   unique when all edge weights are distinct.
-
-
-.. exercise:: Network Design Problem
-
-   A city wants to connect 8 neighborhoods with fiber optic cables. The
-   cost matrix (in millions) is given below. Find the MST using both
-   Prim's and Kruskal's algorithms. What is the minimum total cost?
-
-   .. TO DO: Insert cost matrix or graph
-
-.. solution::
-   :class: dropdown
-
-   .. TO DO: Show solution with both algorithms
