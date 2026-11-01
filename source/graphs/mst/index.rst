@@ -195,27 +195,38 @@ always choosing the cheapest connection to a new city.
 This is exactly Prim's algorithm: **grow the tree by always adding the
 minimum-weight edge that extends the tree to a new vertex**.
 
-Here's the algorithm in pseudocode:
+Here's the algorithm in pseudocode. It uses the operations of the
+:doc:`Graph ADT </graphs/intro/index>`, such as ``graph.edges_from(g, v)``,
+which gives the edges that start from the vertex :math:`v`, and
+``edge.source(e)`` and ``edge.target(e)``, which give the two ends of the
+edge :math:`e`. As our graphs are weighted, we also use
+``edge.weight(e)``, the weight of the edge :math:`e`. The pending edges
+are kept in a *minimum* priority queue, where the priority of an edge is
+its weight (see the :doc:`Priority Queue ADT </trees/heap/index>`).
 
 .. code-block:: text
    :caption: Prim's algorithm (pseudocode)
 
-   function prim(G, start):
-       MST ← empty tree
+   function prim(g, start):
+       mst ← empty set of edges
        visited ← {start}
-       pending ← priority queue of edges from start, by weight
+       pending ← pq.create()
+       for each edge f in graph.edges_from(g, start):
+           pending ← pq.enqueue(pending, f, edge.weight(f))
 
-       while |visited| < |V|:
-           edge (u, v) ← extract minimum from pending
+       while |visited| < |graph.vertices(g)|:
+           pending, e, _ ← pq.dequeue(pending)
+           v ← edge.target(e)
 
            if v not in visited:
-               add edge (u, v) to MST
+               add e to mst
                add v to visited
 
-               for each edge (v, w) where w not in visited:
-                   add edge (v, w) to pending
+               for each edge f in graph.edges_from(g, v):
+                   if edge.target(f) not in visited:
+                       pending ← pq.enqueue(pending, f, edge.weight(f))
 
-       return MST
+       return mst
 
 
 A Concrete Example
@@ -443,20 +454,24 @@ remains, we are done. Here's the algorithm in pseudocode:
 .. code-block:: text
    :caption: Kruskal's algorithm (pseudocode)
 
-   function kruskal(G):
-       MST ← empty set
-       sort all edges by weight (ascending)
+   function kruskal(g):
+       mst ← empty set of edges
+       trees ← union_find.create(graph.vertices(g))
 
-       for each edge (u, v) in sorted order:
-           if u and v are not in the same tree:
-               add edge (u, v) to MST
-               merge the trees of u and v
+       for each edge e in graph.edges(g), by increasing edge.weight:
+           u ← edge.source(e)
+           v ← edge.target(e)
 
-       return MST
+           if union_find.find(trees, u) ≠ union_find.find(trees, v):
+               add e to mst
+               trees ← union_find.union(trees, u, v)
 
-To check whether two vertices are in the same tree, and to merge two
-trees, we use two operations, ``find`` and ``union``. We describe them
-at the end of this section.
+       return mst
+
+The ``union_find`` operations keep track of the trees: At the start, each
+vertex is in a tree of its own. ``find`` tells us in which tree a vertex
+is, so we can check whether two vertices are in the same tree, and
+``union`` merges two trees. We describe them at the end of this section.
 
 
 A Concrete Example
@@ -630,11 +645,12 @@ Kruskal's algorithm, each set contains the vertices of one tree.
 
 .. module:: union_find
 
-.. function:: create(n: Integer) -> UnionFind
+.. function:: create(s: Sequence[Element]) -> UnionFind
 
-   Create a collection of :math:`n` sets, each containing a single
-   element (the numbers from 0 to :math:`n - 1`). In Kruskal's algorithm,
-   each vertex starts in its own tree.
+   Create a collection of sets, one for each element of the sequence
+   :math:`s`, each containing that single element. In Kruskal's
+   algorithm, the elements are the vertices, and each of them starts in
+   its own tree.
 
 .. function:: find(u: UnionFind, x: Element) -> Element
 
