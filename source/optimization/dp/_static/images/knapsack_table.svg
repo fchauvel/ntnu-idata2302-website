@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="822" height="318" viewBox="0 0 822 318">
-<rect width="822" height="318" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="822" height="343" viewBox="0 0 822 343">
+<rect width="822" height="343" fill="white"/>
 <text x="230" y="25" font-size="14" text-anchor="start" font-weight="normal" fill="#444444" font-family="Helvetica, Arial, sans-serif" >The best value (in thousands of NOK) with the items from this row on, and this much room</text>
 <text x="256.0" y="58" font-size="14" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >0</text>
 <text x="308.0" y="58" font-size="14" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >1</text>
@@ -107,30 +107,32 @@
 <rect x="750" y="190" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
 <text x="776.0" y="216" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >7</text>
 <text x="218" y="256" font-size="14" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >no more items</text>
-<rect x="230" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="256.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="282" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="308.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="334" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="360.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="386" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="412.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="438" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="464.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="490" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="516.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="542" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="568.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="594" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="620.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="646" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="672.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="698" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="724.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
-<rect x="750" y="230" width="52" height="40" fill="white" stroke="#222222" stroke-width="1.5"/>
-<text x="776.0" y="256" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="230" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="256.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="282" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="308.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="334" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="360.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="386" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="412.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="438" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="464.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="490" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="516.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="542" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="568.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="594" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="620.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="646" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="672.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="698" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="724.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<rect x="750" y="230" width="52" height="40" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="776.0" y="256" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
 <rect x="230" y="285" width="16" height="16" fill="#d6efd8" stroke="#222222" stroke-width="1.5"/>
 <text x="254" y="298" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >the answer: 16</text>
 <rect x="380" y="285" width="16" height="16" fill="#cfe0fb" stroke="#222222" stroke-width="1.5"/>
 <text x="404" y="298" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >its two choices: leave the instruments (7), or take them (9 + 7)</text>
+<rect x="230" y="315" width="16" height="16" fill="#f8d7da" stroke="#222222" stroke-width="1.5"/>
+<text x="254" y="328" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >initial state: no item left, so nothing to gain</text>
 </svg>
