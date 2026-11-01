@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="570" viewBox="0 0 940 570">
+<rect width="940" height="570" fill="white"/>
+<marker id="g" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto"><path d="M 0 1 L 15 8 L 0 15 z" fill="#2e8b57"/></marker>
+<marker id="r" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto"><path d="M 0 1 L 15 8 L 0 15 z" fill="#c0392b"/></marker>
+<text x="470.0" y="24" font-size="15" text-anchor="middle" font-weight="normal" fill="#444444" font-family="Helvetica, Arial, sans-serif" >Each solution is a box; its height is its value. Neighbours differ by one item</text>
+<line x1="130" y1="440" x2="450" y2="242" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="130" y1="440" x2="500" y2="374" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="130" y1="440" x2="400" y2="352" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="130" y1="440" x2="450" y2="286" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="450" y1="242" x2="810" y2="176" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="450" y1="242" x2="710" y2="154" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="450" y1="242" x2="760" y2="88" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="500" y1="374" x2="760" y2="286" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="500" y1="374" x2="810" y2="176" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="400" y1="352" x2="760" y2="286" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="400" y1="352" x2="710" y2="154" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="450" y1="286" x2="760" y2="88" stroke="#aaaaaa" stroke-width="2"/>
+<line x1="164.01513578459688" y1="418.95313473328065" x2="410.88259384771357" y2="266.2038950567272" stroke="#2e8b57" stroke-width="5" marker-end="url(#g)"/>
+<line x1="485.8231916728232" y1="224.20396284640395" x2="718.8033295762533" y2="108.46544272663544" stroke="#2e8b57" stroke-width="5" marker-end="url(#g)"/>
+<line x1="533.7105910601483" y1="352.4687192583569" x2="771.2328202808295" y2="200.76097285288955" stroke="#c0392b" stroke-width="5" marker-end="url(#r)"/>
+<rect x="94" y="423" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="1.8"/>
+<text x="130" y="445" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{ }  0</text>
+<rect x="464" y="357" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="1.8"/>
+<text x="500" y="379" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{L}  3</text>
+<rect x="364" y="335" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="1.8"/>
+<text x="400" y="357" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{B}  4</text>
+<rect x="414" y="269" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="1.8"/>
+<text x="450" y="291" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{C}  7</text>
+<rect x="724" y="269" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="4"/>
+<text x="760" y="291" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{L, B}  7</text>
+<rect x="414" y="225" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="1.8"/>
+<text x="450" y="247" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{M}  9</text>
+<rect x="774" y="159" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="4"/>
+<text x="810" y="181" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{L, M}  12</text>
+<rect x="674" y="137" width="72" height="34" rx="9" fill="white" stroke="#222222" stroke-width="4"/>
+<text x="710" y="159" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{B, M}  13</text>
+<rect x="724" y="71" width="72" height="34" rx="9" fill="#d6efd8" stroke="#222222" stroke-width="4"/>
+<text x="760" y="93" font-size="15" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >{C, M}  16</text>
+<text x="150" y="490" font-size="13" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >level 0: no item</text>
+<text x="450" y="490" font-size="13" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >level 1: one item</text>
+<text x="750" y="490" font-size="13" text-anchor="middle" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >level 2: two items</text>
+<rect x="20" y="522" width="22" height="16" rx="4" fill="white" stroke="#222222" stroke-width="4"/><text x="50" y="535" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >local optimum: no better neighbour</text>
+<rect x="300" y="522" width="22" height="16" rx="4" fill="#d6efd8" stroke="#222222" stroke-width="1.8"/><text x="330" y="535" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >the best box</text>
+<line x1="440" y1="530" x2="470" y2="530" stroke="#2e8b57" stroke-width="5"/><text x="478" y="535" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >hill climbing from { }</text>
+<line x1="650" y1="530" x2="680" y2="530" stroke="#c0392b" stroke-width="5"/><text x="688" y="535" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >from {L}: stuck</text>
+<text x="20" y="46" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >M = music instruments, L = laptop, B = books, C = cooking tools. Values in thousands of NOK</text>
+</svg>
