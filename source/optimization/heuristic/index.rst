@@ -182,6 +182,25 @@ What it needs from the problem is exactly this: where to put the cursor at
 first, how to compute the neighbours of its position, and how good a
 position is.
 
+The edges are implicit, and they depend on what we allow as a *change*.
+Suppose we also allow to *swap* an item of the box for one that is missing
+(:numref:`optimization/heuristic/swaps`). The graph has the same nine
+vertices, but 23 edges instead of 12: It is *denser*. There are more ways to
+go from any solution to the best one, and fewer traps. The laptop and the
+music instruments, a local optimum with the former changes, now lead to the
+best box, by swapping the laptop for the cooking tools. In this tiny example,
+the best box becomes the only local optimum. The price is that each
+solution has more neighbours to look at. Deciding what a change is, that is,
+what the neighbours of a solution are, is one of the main design choices of
+a heuristic search.
+
+.. figure:: _static/images/knapsack_swaps.svg
+   :name: optimization/heuristic/swaps
+   :align: center
+
+   The same solutions with a richer change. The orange edges are the swaps:
+   They give more paths to the best box.
+
 .. module:: search_space
 
 .. function:: initial() -> Solution
@@ -271,14 +290,23 @@ best.
 
    For the knapsack, a solution is the set of the items in the box. Its
    neighbours are the sets we get by adding or removing one item, as long as
-   the box can carry them:
+   the box can carry them, and, if we allow it, by swapping an item:
 
    .. code-block:: java
       :linenos:
 
-      // Add or remove one item, if the box can still carry what is in it
+      // The solutions we reach by one change
       public List<Set<String>> neighbours(Set<String> solution) {
           var result = new ArrayList<Set<String>>();
+          addOrRemoveOneItem(solution, result);
+          if (allowSwaps) {
+              swapOneItem(solution, result);
+          }
+          return result;
+      }
+
+      // Add or remove one item, if the box can still carry what is in it
+      private void addOrRemoveOneItem(Set<String> solution, List<Set<String>> result) {
           for (var item : items) {
               var changed = new HashSet<>(solution);
               if (solution.contains(item.name())) {
@@ -290,7 +318,23 @@ best.
                   result.add(Set.copyOf(changed));
               }
           }
-          return result;
+      }
+
+      // Replace one item of the box with an item that is missing, if the box can
+      // carry the result
+      private void swapOneItem(Set<String> solution, List<Set<String>> result) {
+          for (var inBox : items) {
+              for (var missing : items) {
+                  if (solution.contains(inBox.name()) && !solution.contains(missing.name())) {
+                      var changed = new HashSet<>(solution);
+                      changed.remove(inBox.name());
+                      changed.add(missing.name());
+                      if (weightOf(changed) <= capacity) {
+                          result.add(Set.copyOf(changed));
+                      }
+                  }
+              }
+          }
       }
 
       public int fitness(Set<String> solution) {
@@ -336,14 +380,18 @@ But look at what "long enough" means. A random walk learns nothing from where
 it has been, so it needs, roughly, as many steps as there are solutions, which
 is :math:`2^n` for :math:`n` items. With 100 items, at a million steps per
 second, this is about :math:`4 \times 10^{16}` years, millions of times the
-age of the universe. The guarantee is *correct*, and *useless*.
+age of the universe. This is a strong result, but an impractical one, from an
+engineering perspective.
 
-.. admonition:: Theory and practice
+.. admonition:: Putting theory in perspective
 
-   A random walk is a prototypical example of the limits of theoretical
-   results. A result can be true, and still be of no use. When you read that
-   an algorithm is "guaranteed to find the best solution", always ask:
-   *how long does it take?*
+   Theoretical results have to be put in perspective. The guarantee of the
+   random walk is strong: It holds for any finite set, whatever the
+   problem. But it holds *eventually*, which is of little help when we have
+   a deadline. This does not make theory useless, though. Simulated
+   annealing, below, comes with a similar guarantee, and it is, in
+   practice, a very effective algorithm. When you read that an algorithm is
+   "guaranteed to find the best solution", ask yourself *how long* it takes.
 
 .. admonition:: Implementation in Java
    :class: hint, dropdown
@@ -506,8 +554,11 @@ best box, where hill climbing is stuck. Without any heat, it only goes up,
 like hill climbing, and gets stuck too.
 
 In theory, with enough time and a slow enough cooling, simulated annealing
-will find the best solution. In practice, we have to choose the starting
-temperature and the cooling, and what works depends on the problem.
+will find the best solution, a guarantee similar to the random walk's. But,
+unlike the random walk, it is very effective in practice, and it has few
+parameters to tune: a starting temperature, a cooling rate and a number of
+steps. What works depends on the problem, so we try a few values on typical
+instances.
 
 .. admonition:: Implementation in Java
    :class: hint, dropdown
@@ -608,7 +659,7 @@ because it has no right to go back, and it must take the step down. The
 Java code is in the examples repository.
 
 
-More Pointers
+And Many More
 =============
 
 There are many other heuristics. Here are a few names to look for:
