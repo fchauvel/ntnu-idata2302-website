@@ -101,14 +101,14 @@
 <text x="10" y="267.0" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >3 kg · 4 000 NOK</text>
 <text x="10" y="327.0" font-size="15" text-anchor="start" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >cooking tools</text>
 <text x="10" y="345.0" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >8 kg · 7 000 NOK</text>
-<text x="532.0" y="22" font-size="14" text-anchor="middle" font-weight="normal" fill="#444444" font-family="Helvetica, Arial, sans-serif" >In each circle: what we hold so far, and the upper bound (in thousands of NOK)</text><circle cx="19" cy="438" r="9" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="532.0" y="22" font-size="14" text-anchor="middle" font-weight="normal" fill="#444444" font-family="Helvetica, Arial, sans-serif" >In each circle: the lower and the upper bound (in thousands of NOK). The floor rises as we go: 0, 9, 12, 13, 16</text><circle cx="19" cy="438" r="9" fill="white" stroke="#222222" stroke-width="2"/>
 <text x="34" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >expanded</text>
 <circle cx="124.2" cy="438" r="9" fill="#d6efd8" stroke="#222222" stroke-width="2"/>
 <text x="139.2" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >a solution (new best)</text>
 <circle cx="325.6" cy="438" r="9" fill="#f4c7c3" stroke="#222222" stroke-width="2"/>
 <text x="340.6" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >too heavy</text>
 <circle cx="438.20000000000005" cy="438" r="9" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
-<text x="453.20000000000005" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >upper bound too low: cut</text>
-<circle cx="661.8000000000001" cy="438" r="9" fill="#eeeeee" stroke="#bbbbbb" stroke-width="2"/>
-<text x="676.8000000000001" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >never visited</text>
+<text x="453.20000000000005" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >upper bound below the floor: cut</text>
+<circle cx="721.0" cy="438" r="9" fill="#eeeeee" stroke="#bbbbbb" stroke-width="2"/>
+<text x="736.0" y="443" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >never visited</text>
 </svg>

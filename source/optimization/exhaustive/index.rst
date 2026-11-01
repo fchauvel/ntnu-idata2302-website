@@ -445,66 +445,95 @@ the first solution we find: A better one may be hiding in another branch.
 The obvious approach is to enumerate all the solutions, and to keep the
 best one, but that brings us back to trying everything.
 
-Yet, we can use what we have found so far. Suppose we have already found
+Yet, we can use what we have found so far. Suppose we are sure to reach
 a solution worth 16 000 NOK. If we can tell that *nothing* below some
 configuration can be worth more than 16 000, there is no point in
 exploring it. We can prune it, just as we prune the invalid
 configurations.
 
-To tell this, we need an *optimistic estimate* of what a configuration
-can still lead to, which we call its **upper bound**. It is allowed to be
-too optimistic, but it must *never underestimate*: Nothing below the
-configuration may be worth more than its upper bound. For the knapsack, a
-simple upper bound is the value of the items we have already taken,
-plus the value of *all* the items we have not decided about, as if the
-box could carry everything. Reality can only be worse.
+To tell this, we need the problem to *anticipate* what exploring a
+configuration further can lead to. Only a solution has a value, but for
+any other configuration, we want the worst and the best outcome:
 
-So, for each configuration, the best solution below it is worth something
-between *what we already hold* and *what we can hope for at best*. In
-the knapsack, what we hold is the value of the items taken so far, since
-we can always leave the others. The upper bound is the other end of the
-interval. We cut a configuration when this optimistic end is not above the
-best solution we already have.
+- A **lower bound**: the worst outcome. From this configuration, we can
+  reach a solution worth *at least* this.
+
+- An **upper bound**: the best outcome, an optimistic estimate. *Nothing*
+  below this configuration is worth more.
+
+The bounds may be loose, but the upper bound must *never underestimate*,
+and the lower bound must be *reachable*. For the knapsack, the items we
+have already taken are certain, and we can always leave the others: The
+lower bound is the value of the items taken so far. At best, we can take
+*all* the remaining items, as if the box could carry everything: The upper
+bound is the value of the items taken so far, plus the value of all the
+others. Reality can only be worse. For a solution, where nothing remains to
+decide, the two bounds are the same as its value.
+
+So, for each configuration, the solutions below it are worth something in
+an interval. The search keeps the *floor*: the highest lower bound we have
+seen so far, that is, the value we are sure to reach. We cut a configuration
+when even its upper bound is below the floor.
 
 .. module:: optimization_problem
 
-.. function:: value(c: Configuration) -> Number
+.. function:: value(s: Configuration) -> Number
 
-   Return how good the choices made in the configuration :math:`c` are.
-   For the knapsack, this is the total value of the items we take. The
-   higher, the better. For a complete configuration, this is the
-   objective that the problem wants to maximize.
+   Return how good the solution :math:`s` is. For the knapsack, this is the
+   total value of the items we take. The higher, the better.
 
    Preconditions:
-      None
+    - The configuration :math:`s` is a solution, that is, it is complete
+      and valid.
+
+      .. math::
+         is\_complete(s) \, \land \, is\_valid(s)
 
    Postconditions:
       None
+
+.. function:: lower_bound(c: Configuration) -> Number
+
+   Return the worst outcome of exploring the configuration :math:`c`
+   further.
+
+   Preconditions:
+    - The configuration :math:`c` is valid.
+
+      .. math::
+         is\_valid(c)
+
+   Postconditions:
+    - We can reach a solution below :math:`c` that is worth at least
+      its lower bound.
+
+      .. math::
+         \exists s \text{ below } c, \, is\_complete(s) \, \land \, is\_valid(s) \, \land \, value(s) \geq lower\_bound(c)
 
 .. function:: upper_bound(c: Configuration) -> Number
 
-   Return an optimistic estimate of what the configuration :math:`c` can
-   lead to: What we can hope for at best.
+   Return the best outcome of exploring the configuration :math:`c`
+   further: What we can hope for at best.
 
    Preconditions:
       None
 
    Postconditions:
-    - The upper bound never underestimates. No solution below the
-      configuration :math:`c` is worth more than its upper bound.
+    - The upper bound never underestimates. No solution below :math:`c` is
+      worth more than its upper bound.
 
       .. math::
-         is\_valid(c') \, \land \, is\_complete(c') \, \land \, c' \text{ is below } c \implies value(c') \leq upper\_bound(c)
+         is\_complete(s) \, \land \, is\_valid(s) \, \land \, s \text{ is below } c \implies value(s) \leq upper\_bound(c)
 
-    - What we hold never exceeds what we can hope for.
+    - For a solution, both bounds are its value.
 
       .. math::
-         value(c) \leq upper\_bound(c)
+         is\_complete(s) \, \land \, is\_valid(s) \implies lower\_bound(s) = upper\_bound(s) = value(s)
 
 This is the *branch-and-bound* algorithm. It goes through the tree as
-before, remembering the *best* solution found so far. We *branch*, that
-is, we explore the children of a configuration, only if its *upper bound*
-shows that it still has a chance to beat the best solution so far.
+before, remembering the *best* solution found so far, and the *floor*. We
+*branch*, that is, we explore the children of a configuration, only if its
+*upper bound* shows that it still has a chance to reach the floor.
 
 .. code-block:: text
    :caption: Branch-and-bound (pseudocode)
@@ -512,8 +541,9 @@ shows that it still has a chance to beat the best solution so far.
    function branch_and_bound(problem, c):
        if not problem.is_valid(c):
            return
-       if best exists and optimization_problem.upper_bound(c) ≤ value of best:
-           return                      # Even at best, c is not better than best
+       floor ← the maximum of floor and optimization_problem.lower_bound(c)
+       if optimization_problem.upper_bound(c) < floor:
+           return                      # Even at best, c is not good enough
        if problem.is_complete(c):
            if best does not exist or optimization_problem.value(c) > value of best:
                best ← c
@@ -523,13 +553,18 @@ shows that it still has a chance to beat the best solution so far.
 
    branch_and_bound(problem, problem.empty())
 
+Note that we cut only when the upper bound is *strictly* below the floor.
+A configuration whose best outcome is exactly the floor may hold the
+solution that reaches it, and we want to find that solution, not only its
+value.
+
 :numref:`optimization/search/bound` shows the algorithm on our example.
-Each circle shows two numbers: what we hold so far, and the upper bound
+Each circle shows the lower and the upper bound of the configuration
 (in thousands of NOK). The search goes down the tree, taking each item
-first. It finds a first solution, worth 12 000, then a second one, worth
-13 000, and a third one, worth 16 000. The right half of the tree starts
-with an upper bound of 14 000, below what we already have: We never look
-at it. The algorithm expands only 7
+first. The floor rises as it goes: 9 000, then 12 000, 13 000 and
+finally 16 000. It finds a first solution, worth 12 000, then a second one,
+worth 13 000, and a third one, worth 16 000. The right half of the tree
+starts with an upper bound of 14 000, below the floor: We never look at it. The algorithm expands only 7
 of the 15 configurations that are not leaves, whereas the search with
 pruning alone expands 14.
 
@@ -537,19 +572,19 @@ pruning alone expands 14.
    :name: optimization/search/bound
    :align: center
 
-   Branch-and-bound on the knapsack. Once we have a solution worth
-   16 000, the configurations whose upper bound is not above are cut.
+   Branch-and-bound on the knapsack. Once the floor reaches 16 000, the
+   configurations whose upper bound is below are cut.
 
 **The order matters.** Branch-and-bound works best when we find a good
-solution early, because a high "best so far" lets us cut more. Going
+solution early, because a high floor lets us cut more. Going
 through the choices in a different order can therefore change the work
 a lot (although never the result). Instead of simply going deep first, we can
 always continue with the *most promising* configuration, that is, the
 one with the highest upper bound. We keep the configurations still to
 explore in a priority queue, where the priority is the upper bound. As we
 explore the configurations by decreasing upper bound, we can stop as soon
-as the best upper bound that remains is not above the best solution found: Nothing left can beat
-it. This is called *best-first* search.
+as the best upper bound that remains is below the floor: Nothing left can
+reach it. This is called *best-first* search.
 
 The quality of the upper bound is what makes branch-and-bound effective.
 The tighter it is, the more we cut. A bound that is too loose cuts nothing,
@@ -569,7 +604,9 @@ far beyond what brute force can do.
 
       public interface OptimizationProblem<C> extends Problem<C> {
 
-          int value(C configuration);
+          int value(C solution);
+
+          int lowerBound(C configuration);
 
           int upperBound(C configuration);
       }
@@ -579,7 +616,26 @@ far beyond what brute force can do.
    .. code-block:: java
       :linenos:
 
-      public int value(List<Boolean> configuration) {
+      // The total value of the items we take
+      public int value(List<Boolean> solution) {
+          return valueOfTakenItems(solution);
+      }
+
+      // At worst, we leave all the items we have not decided about
+      public int lowerBound(List<Boolean> configuration) {
+          return valueOfTakenItems(configuration);
+      }
+
+      // At best, we will be able to take all the items we have not decided about
+      public int upperBound(List<Boolean> configuration) {
+          int total = valueOfTakenItems(configuration);
+          for (int i = configuration.size(); i < items.size(); i++) {
+              total += items.get(i).value();
+          }
+          return total;
+      }
+
+      private int valueOfTakenItems(List<Boolean> configuration) {
           int total = 0;
           for (int i = 0; i < configuration.size(); i++) {
               if (configuration.get(i)) {
@@ -589,52 +645,49 @@ far beyond what brute force can do.
           return total;
       }
 
-      // At best, we will be able to take all the items we have not decided about
-      public int upperBound(List<Boolean> configuration) {
-          int total = value(configuration);
-          for (int i = configuration.size(); i < items.size(); i++) {
-              total += items.get(i).value();
-          }
-          return total;
-      }
-
-   Branch-and-bound keeps the best configuration found so far, and its
-   value, in a small helper, ``Best``:
+   Branch-and-bound keeps what it knows so far, the best solution found
+   and the floor, in a small helper, ``Progress``:
 
    .. code-block:: java
       :linenos:
 
-      // The best solution, with branch-and-bound: we give up on a configuration
-      // if even its upper bound is no better than the best solution found so far
+      // The best solution, with branch-and-bound. We keep the *floor*: the highest
+      // lower bound we have seen, that is, the value we are sure to reach. We give
+      // up on a configuration if even its upper bound is below the floor.
       public static <C> Optional<C> branchAndBound(OptimizationProblem<C> problem) {
-          var best = new Best<C>();
-          branchAndBound(problem, problem.empty(), best);
-          return Optional.ofNullable(best.configuration);
+          var progress = new Progress<C>();
+          branchAndBound(problem, problem.empty(), progress);
+          return Optional.ofNullable(progress.best);
       }
 
-      private static <C> void branchAndBound(OptimizationProblem<C> problem, C configuration, Best<C> best) {
+      private static <C> void branchAndBound(OptimizationProblem<C> problem, C configuration, Progress<C> progress) {
           if (!problem.isValid(configuration)) {
               return;
           }
-          if (best.configuration != null && problem.upperBound(configuration) <= best.value) {
+          progress.floor = Math.max(progress.floor, problem.lowerBound(configuration));
+          if (problem.upperBound(configuration) < progress.floor) {
               return;
           }
           if (problem.isComplete(configuration)) {
-              if (best.configuration == null || problem.value(configuration) > best.value) {
-                  best.configuration = configuration;
-                  best.value = problem.value(configuration);
-              }
+              progress.keepIfBetter(problem, configuration);
           } else {
               for (var next : problem.children(configuration)) {
-                  branchAndBound(problem, next, best);
+                  branchAndBound(problem, next, progress);
               }
           }
       }
 
-      // The best configuration found so far, and its value
-      private static class Best<C> {
-          C configuration = null;
-          int value = 0;
+      // What we know so far: the best solution found, and the value we are sure
+      // to reach, even if we have not found the solution yet
+      private static class Progress<C> {
+          C best = null;
+          int floor = Integer.MIN_VALUE;
+
+          void keepIfBetter(OptimizationProblem<C> problem, C solution) {
+              if (best == null || problem.value(solution) > problem.value(best)) {
+                  best = solution;
+              }
+          }
       }
 
    The best-first variant uses a priority queue, which always gives us the
@@ -651,23 +704,21 @@ far beyond what brute force can do.
           );
           promising.add(problem.empty());
 
-          var best = new Best<C>();
+          var progress = new Progress<C>();
           while (!promising.isEmpty()) {
               var configuration = promising.poll();
               if (!problem.isValid(configuration)) {
                   continue;
               }
-              if (best.configuration != null && problem.upperBound(configuration) <= best.value) {
+              progress.floor = Math.max(progress.floor, problem.lowerBound(configuration));
+              if (problem.upperBound(configuration) < progress.floor) {
                   break; // The most promising one is not promising enough: we are done
               }
               if (problem.isComplete(configuration)) {
-                  if (best.configuration == null || problem.value(configuration) > best.value) {
-                      best.configuration = configuration;
-                      best.value = problem.value(configuration);
-                  }
+                  progress.keepIfBetter(problem, configuration);
               } else {
                   promising.addAll(problem.children(configuration));
               }
           }
-          return Optional.ofNullable(best.configuration);
+          return Optional.ofNullable(progress.best);
       }
