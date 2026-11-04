@@ -6,6 +6,7 @@ Using Arrays
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ERDXnLUKJdpDoxCfwbwf26sBckbk0sdSrlSV4Y8xdWohYA?e=piGwcH>`
 :Objectives: Understand how to implement sequences using arrays
 :Concepts: Insertion, deletion and searching through sequences
+:Implementation: C `fixed-size array <https://github.com/fchauvel/aldast-examples/tree/main/sequences/dynamic-array/c>`_ (`fixed_sequence.c`)
 
 Let us now look at "sequences", our first abstract data type. Our
 objectives are:

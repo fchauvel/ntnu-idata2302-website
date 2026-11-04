@@ -8,3 +8,13 @@ build
 a.out
 **/.scala-build
 **/.bsp
+
+# Generated files
+*.class
+*.exe
+*.pyc
+__pycache__/
+*.dSYM/
+
+# Office lock files
+~$*

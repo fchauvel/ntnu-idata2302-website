@@ -9,6 +9,9 @@ Graph Theory
              structures.
 :Concepts: Graph, path, circuit, edge list, adjacency list, adjacency
            matrix, depth-first traversal, breadth-first traversal,
+:Implementation: `Edge list (Ruby) <https://github.com/fchauvel/aldast-examples/tree/main/graphs/edge-list/ruby>`_,
+                 `adjacency list (JavaScript) <https://github.com/fchauvel/aldast-examples/tree/main/graphs/adjacency-list/javascript>`_,
+                 `adjacency matrix (C) <https://github.com/fchauvel/aldast-examples/tree/main/graphs/adjacency-matrix/c>`_
 
 We started by looking at *sequences*, implemented either using arrays
 or linked lists. In a sequence, each item has at most one predecessor

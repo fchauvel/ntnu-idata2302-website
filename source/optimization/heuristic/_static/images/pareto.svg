@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="500" viewBox="0 0 780 500">
+<rect width="780" height="500" fill="white"/>
+<line x1="80" y1="390" x2="750" y2="390" stroke="#222222" stroke-width="2"/>
+<line x1="80" y1="390" x2="80" y2="30" stroke="#222222" stroke-width="2"/>
+<text x="410.0" y="442" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >weight of the box (kg), the lower the better</text>
+<g transform="translate(22 215.0) rotate(-90)"><text x="0" y="0" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >value of the box (thousands of NOK), the higher the better</text></g>
+<line x1="80.0" y1="390" x2="80.0" y2="395" stroke="#222222" stroke-width="2"/><text x="80.0" y="412" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<line x1="237.14285714285714" y1="390" x2="237.14285714285714" y2="395" stroke="#222222" stroke-width="2"/><text x="237.14285714285714" y="412" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >5</text>
+<line x1="394.2857142857143" y1="390" x2="394.2857142857143" y2="395" stroke="#222222" stroke-width="2"/><text x="394.2857142857143" y="412" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text>
+<line x1="551.4285714285714" y1="390" x2="551.4285714285714" y2="395" stroke="#222222" stroke-width="2"/><text x="551.4285714285714" y="412" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >15</text>
+<line x1="708.5714285714286" y1="390" x2="708.5714285714286" y2="395" stroke="#222222" stroke-width="2"/><text x="708.5714285714286" y="412" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >20</text>
+<line x1="75" y1="390.0" x2="80" y2="390.0" stroke="#222222" stroke-width="2"/><text x="70" y="395.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<line x1="75" y1="317.0833333333333" x2="80" y2="317.0833333333333" stroke="#222222" stroke-width="2"/><text x="70" y="322.0833333333333" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >5</text>
+<line x1="75" y1="244.16666666666666" x2="80" y2="244.16666666666666" stroke="#222222" stroke-width="2"/><text x="70" y="249.16666666666666" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text>
+<line x1="75" y1="171.25" x2="80" y2="171.25" stroke="#222222" stroke-width="2"/><text x="70" y="176.25" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >15</text>
+<line x1="75" y1="98.33333333333331" x2="80" y2="98.33333333333331" stroke="#222222" stroke-width="2"/><text x="70" y="103.33333333333331" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >20</text>
+<line x1="394.2857142857143" y1="390" x2="394.2857142857143" y2="40" stroke="#c0392b" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="400.2857142857143" y="52" font-size="13" text-anchor="start" font-weight="bold" fill="#c0392b" font-family="Helvetica, Arial, sans-serif" >the 10 kg box</text>
+<polyline points="80.0,390.0 142.85714285714286,390.0 142.85714285714286,258.75 237.14285714285714,258.75 237.14285714285714,200.41666666666666 394.2857142857143,200.41666666666666 394.2857142857143,156.66666666666666 488.57142857142856,156.66666666666666 488.57142857142856,98.33333333333331 708.5714285714286,98.33333333333331 708.5714285714286,54.583333333333314" fill="none" stroke="#2e8b57" stroke-width="3" stroke-dasharray="2 0"/>
+<circle cx="300.0" cy="346.25" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="362.85714285714283" cy="215.0" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="174.28571428571428" cy="331.6666666666667" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="394.2857142857143" cy="287.9166666666667" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="457.14285714285717" cy="156.66666666666666" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="331.42857142857144" cy="287.9166666666667" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="551.4285714285714" cy="244.16666666666666" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="614.2857142857143" cy="112.91666666666669" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="425.7142857142857" cy="229.58333333333334" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="645.7142857142857" cy="185.83333333333334" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/>
+<circle cx="80.0" cy="390.0" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="80.0" y="376.0" font-size="13" text-anchor="middle" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{ }</text>
+<circle cx="142.85714285714286" cy="258.75" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="142.85714285714286" y="244.75" font-size="13" text-anchor="middle" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{M}</text>
+<circle cx="237.14285714285714" cy="200.41666666666666" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="237.14285714285714" y="186.41666666666666" font-size="13" text-anchor="middle" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{M, B}</text>
+<circle cx="394.2857142857143" cy="156.66666666666666" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="380.2857142857143" y="148.66666666666666" font-size="13" text-anchor="end" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{M, C}</text>
+<circle cx="488.57142857142856" cy="98.33333333333331" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="488.57142857142856" y="84.33333333333331" font-size="13" text-anchor="middle" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{M, B, C}</text>
+<circle cx="708.5714285714286" cy="54.583333333333314" r="9" fill="#2e8b57" stroke="#222222" stroke-width="2"/>
+<text x="704.5714285714286" y="40.583333333333314" font-size="13" text-anchor="end" font-weight="bold" fill="#2e8b57" font-family="Helvetica, Arial, sans-serif" >{M, L, B, C}</text>
+<circle cx="362.85714285714283" cy="215.0" r="0" fill="none"/>
+<circle cx="85" cy="466" r="8" fill="#2e8b57" stroke="#222222" stroke-width="2"/><text x="102" y="470" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >best compromises (not beaten on both objectives)</text>
+<circle cx="460" cy="466" r="7" fill="#bbbbbb" stroke="#222222" stroke-width="1.5"/><text x="476" y="470" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >beaten by a box of the front</text>
+<text x="80" y="20" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >M = music instruments, L = laptop, B = books, C = cooking tools</text>
+</svg>

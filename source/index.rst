@@ -14,6 +14,7 @@ Algorithms and Data Structures
    about/welcome
    about/overview
    about/practicalities
+   about/code_samples
    about/exams
    about/resources
 
@@ -26,10 +27,10 @@ Algorithms and Data Structures
    recursion/index
    hashing/index
    trees/index
-
-..
    graphs/index
    optimization/index
+
+..
    theory/index
    beyond/index
 
@@ -41,9 +42,9 @@ Algorithms and Data Structures
    labs/sequences
    labs/recursion
    labs/trees
+   labs/graphs/index
 
 ..
-   labs/graphs/index
    labs/optimization
 
    
@@ -56,14 +57,6 @@ Algorithms and Data Structures
    self_check/final
 
 
-.. toctree::
-   :caption: Code Examples
-   :maxdepth: 1
-              
-   code/ruby_edge_list
-   code/js_adjacency_list
-   code/c_adjacency_matrix
-    
 .. toctree::
    :caption: Recaps
 

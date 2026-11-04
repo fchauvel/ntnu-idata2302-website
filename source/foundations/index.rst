@@ -20,3 +20,8 @@ Contents
    efficiency
    analysis
    big_o
+
+.. toctree::
+   :maxdepth: 1
+
+   problems

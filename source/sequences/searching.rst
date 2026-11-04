@@ -7,6 +7,7 @@ Searching
              sequences.
 :Concepts: Sequences (ADT), jump search (algorithm), binary search
            (algorithm), interpolation search (algorithm)
+:Implementation: Java `JumpSearch.java <https://github.com/fchauvel/aldast-examples/tree/main/sequences/jump-search/java>`_
      
 
 When we looked at sequences, we specified the function

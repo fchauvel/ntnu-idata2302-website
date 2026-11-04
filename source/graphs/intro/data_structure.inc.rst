@@ -4,7 +4,8 @@ Graphs as Data Structures
 .. index:: Data Structure ; Graph, Graph ; Data Structure
 
 Besides being a mathematical concept, a graph is also a data
-structure. Intuitively, the queries one runs against a graph include:
+structure. To use it in a program, we first need to decide which
+operations it offers.
 
 
 Graph ADT
@@ -13,40 +14,202 @@ Graph ADT
 .. index:: Abstract Data Type ; Graph
 
 There is no agreement on what the graph abstract data type should
-be. There are indeed many operations that one can perform on a graph,
-finding cycles, components, unreachable vertices, etc. Graphs are
-highly application dependent. I put below what seems to me like a
-common minimal set of operations:
+be. There are indeed many operations that one can perform on a graph:
+finding cycles, components, unreachable vertices, etc. Graphs are highly
+application dependent. We describe below a minimal set of operations,
+enough to run the algorithms of this module.
 
-empty
-   Create a new empty graph, that is an graph with no vertex or edge.
+Our ADT is made of three types: the *graph*, its *vertices* and its
+*edges*. The graph owns the vertices and the edges: They only exist
+inside a graph, which creates them (see ``create_vertex`` and
+``connect``) and deletes them. What a vertex or an edge *carries* (a
+name, coordinates, a weight, etc.) depends on the application. A vertex
+is just an identity: We can compare two vertices to know whether they are
+the same, and nothing else. An edge, for its part, can tell us which are
+its two ends.
 
-add vertex
-   Add a new vertex to the given graph.  What identifies the
-   vertex, as well as the information its carries depend on the problem
-   and or the selected internal representation.
+.. module:: graph
 
-remove vertex
-   Delete a specific vertex from the given graph. Either this raises an
-   error if the selected vertex still has incoming or outgoing edges, or
-   it removes these edges as well.
+.. function:: create() -> Graph
 
-add edge
-   Create a new edge between the two given vertices. What identifies this
-   edge as well as the information it carries depend on the problem and the
-   chosen internal representation.
+   Create a new empty graph, denoted as :math:`g`.
 
-remove edge
-   Remove the selected edge.
+   Preconditions:
+      None
 
-edges from
-   Returns the list of edges whose *source* is the given vertex
+   Postconditions:
+    - The resulting graph :math:`g` has neither vertex nor edge.
 
-edges to
-   Returns the list of edges whose *target* is the given vertex
+      .. math::
+         g = create() \implies vertices(g) = \emptyset \, \land \,
+         edges(g) = \emptyset
 
-is_adjacent
-   True if an only if there exist an edge between the two given vertices
+.. function:: vertices(g: Graph) -> Sequence[Vertex]
+
+   Return the vertices of the graph :math:`g`, each of them once, in no
+   particular order.
+
+   Preconditions:
+      None
+
+   Postconditions:
+    - The graph :math:`g` is not changed.
+
+.. function:: edges(g: Graph) -> Sequence[Edge]
+
+   Return the edges of the graph :math:`g`, each of them once, in no
+   particular order.
+
+   Preconditions:
+      None
+
+   Postconditions:
+    - The graph :math:`g` is not changed.
+
+.. function:: create_vertex(g: Graph) -> Graph, Vertex
+
+   Add a new vertex to the graph :math:`g`. The operation returns the
+   updated graph and the new vertex, so that we can refer to it later.
+
+   Preconditions:
+      None
+
+   Postconditions:
+    - The new vertex :math:`v` is not one of the previous vertices, and
+      is now a vertex of the updated graph :math:`g'`. The edges do not
+      change.
+
+      .. math::
+         create\_vertex(g) = (g', v) \implies v \notin vertices(g)
+         \, \land \, vertices(g') = vertices(g) \cup \{v\}
+         \, \land \, edges(g') = edges(g)
+
+.. function:: remove_vertex(g: Graph, v: Vertex) -> Graph
+
+   Delete the vertex :math:`v` from the graph :math:`g`.
+
+   Preconditions:
+    - The vertex :math:`v` is a vertex of the graph :math:`g`.
+
+      .. math::
+         v \in vertices(g)
+
+    - No edge is connected to the vertex :math:`v`. If there are some,
+      we must first remove them with ``disconnect``.
+
+      .. math::
+         \nexists e \in edges(g), \, source(e) = v \, \lor \, target(e) = v
+
+   Postconditions:
+    - The vertex :math:`v` is no longer a vertex of the updated graph
+      :math:`g'`. The edges do not change.
+
+      .. math::
+         remove\_vertex(g, v) = g' \implies vertices(g') = vertices(g)
+         \setminus \{v\} \, \land \, edges(g') = edges(g)
+
+.. function:: connect(g: Graph, s: Vertex, t: Vertex) -> Graph, Edge
+
+   Create a new edge from the vertex :math:`s` (its *source*) to the
+   vertex :math:`t` (its *target*), in the graph :math:`g`. The operation
+   returns the updated graph and the new edge. In an undirected graph, the
+   order of :math:`s` and :math:`t` does not matter.
+
+   Preconditions:
+    - Both vertices are vertices of the graph :math:`g`.
+
+      .. math::
+         s \in vertices(g) \, \land \, t \in vertices(g)
+
+   Postconditions:
+    - The new edge :math:`e` goes from :math:`s` to :math:`t`, and is now
+      an edge of the updated graph :math:`g'`. The vertices do not
+      change.
+
+      .. math::
+         connect(g, s, t) = (g', e) \implies source(e) = s \, \land \,
+         target(e) = t \, \land \, edges(g') = edges(g) \cup \{e\}
+         \, \land \, vertices(g') = vertices(g)
+
+   Nothing prevents us from connecting the same two vertices twice: We then
+   get two *parallel* edges. In a weighted graph, ``connect`` also takes
+   the weight of the new edge, as a fourth argument.
+
+.. function:: disconnect(g: Graph, e: Edge) -> Graph
+
+   Remove the edge :math:`e` from the graph :math:`g`.
+
+   Preconditions:
+    - The edge :math:`e` is an edge of the graph :math:`g`.
+
+      .. math::
+         e \in edges(g)
+
+   Postconditions:
+    - The edge :math:`e` is no longer an edge of the updated graph
+      :math:`g'`. The vertices do not change.
+
+      .. math::
+         disconnect(g, e) = g' \implies edges(g') = edges(g) \setminus
+         \{e\} \, \land \, vertices(g') = vertices(g)
+
+.. function:: edges_from(g: Graph, v: Vertex) -> Sequence[Edge]
+
+   Return the edges of the graph :math:`g` that start from the vertex
+   :math:`v`, that is, whose *source* is :math:`v`. In an undirected
+   graph, we can follow an edge from either of its ends: The operation then
+   returns all the edges that have :math:`v` as one of their ends, each of
+   them seen from :math:`v`, so that its source is :math:`v` and its
+   target is the vertex at the other end.
+
+   Preconditions:
+    - The vertex :math:`v` is a vertex of the graph :math:`g`.
+
+   Postconditions:
+    - The graph :math:`g` is not changed.
+
+.. function:: edges_to(g: Graph, v: Vertex) -> Sequence[Edge]
+
+   Return the edges of the graph :math:`g` that lead to the vertex
+   :math:`v`, that is, whose *target* is :math:`v`. In an undirected
+   graph, this is the same as ``edges_from``.
+
+   Preconditions:
+    - The vertex :math:`v` is a vertex of the graph :math:`g`.
+
+   Postconditions:
+    - The graph :math:`g` is not changed.
+
+.. function:: is_adjacent(g: Graph, s: Vertex, t: Vertex) -> Boolean
+
+   Tell whether there is an edge from the vertex :math:`s` to the vertex
+   :math:`t` in the graph :math:`g` (in either direction, if the graph is
+   undirected).
+
+   Preconditions:
+    - Both vertices are vertices of the graph :math:`g`.
+
+   Postconditions:
+    - The graph :math:`g` is not changed.
+
+An edge only offers queries. These tell us its two ends, which are always
+vertices of the graph that owns the edge, and, in a weighted graph, its
+weight.
+
+.. module:: edge
+
+.. function:: source(e: Edge) -> Vertex
+
+   Return the vertex where the edge :math:`e` starts.
+
+.. function:: target(e: Edge) -> Vertex
+
+   Return the vertex where the edge :math:`e` ends.
+
+.. function:: weight(e: Edge) -> Real
+
+   Return the weight of the edge :math:`e`. This only exists in weighted
+   graphs.
 
 
 Graph Representations
@@ -67,19 +230,19 @@ operations.
 +------------------+-------------+-------------------+-----------------------+
 | Operations       | Edge List   | Adjacency List    | Adjacency Matrix      |
 +==================+=============+===================+=======================+
-| add vertex       | O(1)        | O(1)              |                       |
+| create_vertex    | O(1)        | O(1)              |                       |
 +------------------+-------------+-------------------+-----------------------+
-| remove vertex    | O(V)        | O(V)              |                       |
+| remove_vertex    | O(V)        | O(V)              |                       |
 +------------------+-------------+-------------------+-----------------------+
-| add edge         | O(1)        | O(1)              |                       |
+| connect          | O(1)        | O(1)              |                       |
 +------------------+-------------+-------------------+-----------------------+
-| remove edge      | O(E)        | O(V+E)            |                       |
+| disconnect       | O(E)        | O(V+E)            |                       |
 +------------------+-------------+-------------------+-----------------------+
-| edges from       | O(E)        | O(deg(v))         |                       |
+| edges_from       | O(E)        | O(deg(v))         |                       |
 +------------------+-------------+-------------------+-----------------------+
-| edges to         | O(E)        | O(deg(v))         |                       |
+| edges_to         | O(E)        | O(deg(v))         |                       |
 +------------------+-------------+-------------------+-----------------------+
-| is adjacent      | O(E)        | O(1)              |                       |
+| is_adjacent      | O(E)        | O(1)              |                       |
 +------------------+-------------+-------------------+-----------------------+
 
 

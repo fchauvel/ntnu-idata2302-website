@@ -1,11 +1,683 @@
-=================
-Exhaustive Search
-=================
+=====================
+Combinatorial Search
+=====================
 
 :Lecture: Lecture 7.1 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ETyREBpmCvBNqJ3imnxIzwMBfAq_rZpfDgXejitSeoXAPA?e=nwhFjy>`
 :Objectives: Understand what is combinatorial search, and how to
              approach it
 :Concepts: Combinations, pruning, branch-and-bound, Knapsack problem
+:Implementation: Java `Backtracking and branch-and-bound <https://github.com/fchauvel/aldast-examples/tree/main/optimization/combinatorial-search/java>`_
 
-To be completed
+In the previous module, we have already solved two *optimization
+problems*: finding the :doc:`shortest path </graphs/shortest_path/index>`
+between two vertices of a graph, and finding its
+:doc:`minimum spanning tree </graphs/mst/index>`. In both cases, there are
+many possible answers (many paths, many spanning trees), and we want the
+*best* one. We were lucky: These problems have enough structure for a
+clever algorithm, such as Dijkstra's or Prim's, to find the best answer
+without looking at all the possibilities.
+
+Many optimization problems are not so kind. Which items shall we pack in a
+box to take the most valuable? How shall we place queens on a chessboard so
+that none of them can capture another? Which route visits all our customers
+with the least driving? For these, no such shortcut is known, and we have
+to *search*.
+
+In this lecture, we look at the simplest way to search: *trying all the
+possibilities*, and then at how to be smart about it, so that we do not
+try them all.
+
+
+Optimization Problems
+=====================
+
+.. index:: optimization problem
+
+An optimization problem asks us to find, among a set of possible
+*solutions*, one that satisfies some *constraints* and that is the best
+according to some *objective*. Sometimes we do not even care about the
+best: Any solution that satisfies the constraints will do.
+
+In this lecture, the set of possible solutions is *finite*, or at least
+*countable*: We can, in principle, list all the solutions, one after the
+other. This is called *discrete* optimization. When the possible
+solutions form a continuum, such as all the real numbers between 0 and
+1, we speak of *continuous* optimization, which needs other tools (see
+the lecture on heuristic search).
+
+Here are a few classic examples:
+
+**The N Queens Problem**
+   Place :math:`n` queens on a chessboard with :math:`n` rows and
+   :math:`n` columns, so that no queen can capture another one. Here,
+   any solution will do.
+
+**Sudoku**
+   Fill a grid with digits so that every row, column and block contains
+   each digit once.
+
+**Motion Planning**
+   Find a path for a robot among obstacles, as short as possible.
+
+**The Traveling Salesperson Problem (TSP)**
+   Find the shortest tour that visits a set of cities exactly once and
+   comes back to the starting point.
+
+**The Knapsack Problem**
+   We have a box that can carry a limited weight, and items that each
+   have a weight and a value. Which items shall we put in the box, to
+   maximize their total value?
+
+For four queens, there are exactly two solutions, shown on
+:numref:`optimization/search/queens`.
+
+.. figure:: _static/images/nqueens.svg
+   :name: optimization/search/queens
+   :align: center
+
+   The two ways to place four queens on a four-by-four chessboard so
+   that none can capture another.
+
+We will use the knapsack problem as our running example. Say the box can
+carry 10 kg, and we can choose among these four items:
+
+.. csv-table:: The items we can put in the box
+   :header: "Item", "Weight", "Value"
+   :widths: 10, 5, 5
+
+   "Music instruments", "2 kg", "9 000 NOK"
+   "Laptop", "7 kg", "3 000 NOK"
+   "Books", "3 kg", "4 000 NOK"
+   "Cooking tools", "8 kg", "7 000 NOK"
+
+The constraint is that the items we take must not weigh more than 10 kg,
+and the objective is to maximize their total value.
+
+
+Brute Force
+===========
+
+.. index:: brute force, exhaustive search
+
+Suppose you are locked out of a vault that opens with a four-digit
+code. There is no clever way to find the code: You try 0000, then 0001,
+then 0002, and so on, until the vault opens. There are only 10 000 codes
+to try, so this *brute force*, also called *exhaustive search*, will
+succeed in a few minutes at worst.
+
+Brute force is simple, and always works. The question is whether we can
+afford it. Computers perform millions of operations per second, so
+a million possibilities is easy, and a billion is manageable. How
+quickly do we reach these numbers?
+
+.. csv-table:: How many possibilities?
+   :header: "What we enumerate", "How many", "Example"
+   :widths: 20, 10, 15
+
+   "Subsets of :math:`n` items", ":math:`2^n`", "20 items: 1 048 576"
+   "Orders of :math:`n` items", ":math:`n!`", "10 items: 3 628 800"
+   "Words of :math:`k` letters", ":math:`26^k`", "5 letters: 11 881 376"
+
+Brute force works for small problems: With 20 items, we can try all the
+subsets in a second. But the numbers grow explosively: Each additional
+item *doubles* the number of subsets. With 100 items, there are about
+:math:`1.3 \times 10^{30}` subsets, which no computer will ever
+enumerate. We need to be smarter.
+
+
+Enumerating the Solutions
+=========================
+
+.. index:: backtracking, configuration
+
+How do we list all the possible solutions of a problem, without missing
+any, and without any twice? We build them *step by step*, by making one
+*choice* at a time. For the knapsack, we decide, item after item, whether
+we *take* it or *leave* it. We call *configuration* a solution under
+construction, where some choices have been made, and others have not.
+
+The configurations form a tree, shown on :numref:`optimization/search/tree`.
+The root is the *empty* configuration, where nothing is decided. **Each
+level of the tree is one more choice that a solution requires**, and each
+possible choice leads to a new configuration, a child. A solution needs
+*all* its choices to be made. This is why only the **leaves** of the tree,
+the *complete* configurations, can be solutions. The other nodes are
+*partial*: Some choices are still open. With four items, the tree has
+:math:`2^4 = 16` leaves, and enumerating all the solutions means visiting
+all of them.
+
+What the choices are depends on the problem. A level of the tree is
+always something that must be decided for a solution to exist:
+
+.. csv-table:: What is a level of the tree, in each problem?
+   :header: "Problem", "One level is...", "The choices are...", "A leaf is..."
+   :widths: 12, 20, 22, 26
+
+   "Knapsack", "an item", "take it, or leave it", "a decision for every item"
+   "N queens", "a queen (a column of the board)", "the row where it goes", "all the queens placed"
+   "Sudoku", "an empty cell", "the digit to write, from 1 to 9", "all the cells filled"
+   "TSP", "a step of the tour", "the next city to visit", "a tour through all the cities"
+
+The N queens problem, with four queens, is the easiest to picture
+(:numref:`optimization/search/queens/tree`). The first level places the
+queen of the first column, in one of the four rows. The second level
+places the queen of the second column, and so on. A leaf is a board with
+four queens, but it is a *solution* only if no queen can capture
+another.
+
+.. figure:: _static/images/queens_tree.svg
+   :name: optimization/search/queens/tree
+   :align: center
+
+   The first levels of the tree of the four queens problem. Each level
+   places one more queen. In red, boards where two queens can capture
+   one another.
+
+.. figure:: _static/images/knapsack_tree.svg
+   :name: optimization/search/tree
+   :align: center
+
+   All the ways to fill the box, with the weight carried in each
+   configuration. The leaves in red weigh more than 10 kg, so they are
+   not solutions.
+
+A search needs only a few things from the problem. We describe them
+as an abstract data type, which we call the *Search Problem*. This is
+all that the algorithms below know about the problem.
+
+.. module:: problem
+
+.. function:: empty() -> Configuration
+
+   Return the configuration where nothing is decided yet.
+
+   Preconditions:
+      None
+
+   Postconditions:
+      None
+
+.. function:: children(c: Configuration) -> Sequence[Configuration]
+
+   Return the configurations we get by making one more choice. For the
+   knapsack, there are two: one where we take the next item, and one
+   where we leave it.
+
+   Preconditions:
+    - The configuration :math:`c` is not complete.
+
+      .. math::
+         \neg \, is\_complete(c)
+
+   Postconditions:
+      None
+
+.. function:: is_complete(c: Configuration) -> Boolean
+
+   Tell whether everything is decided in the configuration :math:`c`,
+   that is, whether it is a leaf of the tree.
+
+   Preconditions:
+      None
+
+   Postconditions:
+      None
+
+.. function:: is_valid(c: Configuration) -> Boolean
+
+   Tell whether the configuration :math:`c` respects the constraints of
+   the problem *so far*. For the knapsack, the items must not weigh more
+   than the box can carry. A partial configuration can be valid so far,
+   and still not be a solution: A solution is a configuration that is both
+   *complete* and *valid*.
+
+   Preconditions:
+      None
+
+   Postconditions:
+    - Once a configuration breaks a constraint, so do all of its
+      children. If a configuration is not valid, none of its children
+      is.
+
+      .. math::
+         \neg \, is\_valid(c) \implies \forall c' \in children(c), \, \neg \, is\_valid(c')
+
+The simplest search goes down the tree, always making the next choice,
+until the configuration is complete. Then it *backs up* to the last
+choice, and tries the other possibility. This is called *backtracking*,
+and it is a depth-first traversal of the tree of configurations.
+
+.. code-block:: text
+   :caption: Enumerating all the solutions (pseudocode)
+
+   function exhaustive(problem, c):
+       if problem.is_complete(c):
+           if problem.is_valid(c):
+               process c
+       else:
+           for each next in problem.children(c):
+               exhaustive(problem, next)
+
+   exhaustive(problem, problem.empty())
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   A *problem* is anything that offers the operations above. In Java, we
+   describe them with an interface, which the problems we want to search
+   implement:
+
+   .. code-block:: java
+      :linenos:
+
+      public interface Problem<C> {
+
+          C empty();
+
+          List<C> children(C configuration);
+
+          boolean isComplete(C configuration);
+
+          boolean isValid(C configuration);
+      }
+
+   Here is how the knapsack provides them. A configuration is the list of
+   the choices made so far, where ``true`` means that we take the item,
+   and ``false`` that we leave it.
+
+   .. code-block:: java
+      :linenos:
+
+      public List<Boolean> empty() {
+          return List.of();
+      }
+
+      // For the next item, we can take it or leave it
+      public List<List<Boolean>> children(List<Boolean> configuration) {
+          return List.of(
+              with(configuration, true),
+              with(configuration, false)
+          );
+      }
+
+      public boolean isComplete(List<Boolean> configuration) {
+          return configuration.size() == items.size();
+      }
+
+      // The items we take must not weigh more than the box can carry
+      public boolean isValid(List<Boolean> configuration) {
+          return weightOf(configuration) <= capacity;
+      }
+
+   Backtracking is then a short recursive method:
+
+   .. code-block:: java
+      :linenos:
+
+      // All the solutions, found by trying every possible sequence of choices
+      public static <C> List<C> exhaustive(Problem<C> problem) {
+          var solutions = new ArrayList<C>();
+          exhaustive(problem, problem.empty(), solutions);
+          return solutions;
+      }
+
+      private static <C> void exhaustive(Problem<C> problem, C configuration, List<C> solutions) {
+          if (problem.isComplete(configuration)) {
+              if (problem.isValid(configuration)) {
+                  solutions.add(configuration);
+              }
+          } else {
+              for (var next : problem.children(configuration)) {
+                  exhaustive(problem, next, solutions);
+              }
+          }
+      }
+
+
+Pruning
+=======
+
+.. index:: pruning
+
+Look at the tree again. Once the box is too heavy, it does not matter
+what we decide for the remaining items: It will stay too heavy. All the
+configurations below are invalid, so there is no point in building them.
+This is *pruning*: Cutting off a whole branch of the tree as soon as we
+know it leads nowhere.
+
+.. figure:: _static/images/knapsack_pruning.svg
+   :name: optimization/search/pruning
+   :align: center
+
+   With pruning, we stop at the first configuration that is too heavy,
+   and never visit what is below it.
+
+Pruning only needs a small change: We check the constraints at *every*
+configuration, and no longer only at the leaves. This is valid, because
+of the property of ``is_valid``: if a configuration is not valid, none
+of its children is.
+
+.. code-block:: text
+   :caption: Enumerating all the solutions, with pruning (pseudocode)
+
+   function with_pruning(problem, c):
+       if not problem.is_valid(c):
+           return
+       if problem.is_complete(c):
+           process c
+       else:
+           for each next in problem.children(c):
+               with_pruning(problem, next)
+
+In our small example, pruning saves little. But on larger problems, it
+makes the difference between hopeless and instantaneous. Take the N
+queens problem, which we solve by placing the queens one column after the
+other. For six queens, trying everything means looking at 9 331
+configurations, whereas pruning looks at only 149. For eight queens,
+pruning finds all the 92 solutions by looking at fewer than 2 000
+configurations, although there are over 16 million ways to place eight
+queens, one per column.
+
+If we only need *one* solution, we can do even better: We stop at the
+first complete and valid configuration we find, and do not visit the
+rest of the tree.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   The search with pruning is the same as before, with the validity
+   check at every configuration:
+
+   .. code-block:: java
+      :linenos:
+
+      // All the solutions, but we give up on a configuration as soon as it is
+      // invalid: none of its children can be valid
+      public static <C> List<C> withPruning(Problem<C> problem) {
+          var solutions = new ArrayList<C>();
+          withPruning(problem, problem.empty(), solutions);
+          return solutions;
+      }
+
+      private static <C> void withPruning(Problem<C> problem, C configuration, List<C> solutions) {
+          if (!problem.isValid(configuration)) {
+              return;
+          }
+          if (problem.isComplete(configuration)) {
+              solutions.add(configuration);
+          } else {
+              for (var next : problem.children(configuration)) {
+                  withPruning(problem, next, solutions);
+              }
+          }
+      }
+
+   To stop at the first solution, each call returns what it found
+   (an ``Optional`` is either a solution, or nothing), and we stop looking
+   as soon as there is one:
+
+   .. code-block:: java
+      :linenos:
+
+      // Any solution: we stop as soon as we find one
+      public static <C> Optional<C> anySolution(Problem<C> problem) {
+          return anySolution(problem, problem.empty());
+      }
+
+      private static <C> Optional<C> anySolution(Problem<C> problem, C configuration) {
+          if (!problem.isValid(configuration)) {
+              return Optional.empty();
+          }
+          if (problem.isComplete(configuration)) {
+              return Optional.of(configuration);
+          }
+          for (var next : problem.children(configuration)) {
+              var solution = anySolution(problem, next);
+              if (solution.isPresent()) {
+                  return solution;
+              }
+          }
+          return Optional.empty();
+      }
+
+
+Branch-and-Bound
+================
+
+.. index:: branch-and-bound
+
+What if we want the *best* solution, and not just any? We cannot stop at
+the first solution we find: A better one may be hiding in another branch.
+The obvious approach is to enumerate all the solutions, and to keep the
+best one, but that brings us back to trying everything.
+
+Yet, we can use what we have found so far. Suppose we have already found a
+solution worth 16 000 NOK. If we can tell that *nothing* below some
+configuration can be worth more than 16 000, there is no point in
+exploring it. We can prune it, just as we prune the invalid
+configurations.
+
+To tell this, the problem must *anticipate* what exploring a configuration
+further can lead to. Only a solution has a value. For any other
+configuration, we need an optimistic estimate of the best outcome, which we
+call its **upper bound**. It is allowed to be too optimistic, but it must
+*never underestimate*: Nothing below the configuration may be worth more
+than its upper bound. For the knapsack, a simple upper bound is the value
+of the items we have already taken, plus the value of *all* the items we
+have not decided about, as if the box could carry everything. Reality can
+only be worse. For a solution, where nothing remains to decide, the upper
+bound is simply its value.
+
+.. module:: optimization_problem
+
+.. function:: value(s: Configuration) -> Number
+
+   Return how good the solution :math:`s` is. For the knapsack, this is the
+   total value of the items we take. The higher, the better.
+
+   Preconditions:
+    - The configuration :math:`s` is a solution, that is, it is complete
+      and valid.
+
+      .. math::
+         is\_complete(s) \, \land \, is\_valid(s)
+
+   Postconditions:
+      None
+
+.. function:: upper_bound(c: Configuration) -> Number
+
+   Return an optimistic estimate of the best outcome of exploring the
+   configuration :math:`c` further: What we can hope for at best.
+
+   Preconditions:
+      None
+
+   Postconditions:
+    - The upper bound never underestimates. No solution below :math:`c` is
+      worth more than its upper bound.
+
+      .. math::
+         is\_complete(s) \, \land \, is\_valid(s) \, \land \, s \text{ is below } c \implies value(s) \leq upper\_bound(c)
+
+    - For a solution, the upper bound is its value.
+
+      .. math::
+         is\_complete(s) \, \land \, is\_valid(s) \implies upper\_bound(s) = value(s)
+
+This is the *branch-and-bound* algorithm. It goes through the tree as
+before, remembering the *best* solution found so far. We *branch*, that
+is, we explore the children of a configuration, only if its *upper bound*
+shows that it still has a chance to beat the best solution. As long as we
+have not found any solution, we cannot cut anything: We simply go down
+to the first leaf.
+
+.. code-block:: text
+   :caption: Branch-and-bound (pseudocode)
+
+   function branch_and_bound(problem, c):
+       if not problem.is_valid(c):
+           return
+       if best exists and optimization_problem.upper_bound(c) ≤ value of best:
+           return                      # Even at best, c is no better than best
+       if problem.is_complete(c):
+           best ← c
+       else:
+           for each next in problem.children(c):
+               branch_and_bound(problem, next)
+
+   branch_and_bound(problem, problem.empty())
+
+:numref:`optimization/search/bound` shows the algorithm on our example.
+The number in each circle is the upper bound of the configuration, in
+thousands of NOK. The search goes down the tree, taking each item first.
+Until it reaches its first solution, worth 12 000, it cannot cut anything.
+Then it finds a second solution, worth 13 000, and a third one, worth
+16 000. The right half of the tree starts with an upper bound of 14 000,
+below what we already have: We never look at it. The algorithm expands
+only 7 of the 15 configurations that are not leaves, whereas the search
+with pruning alone expands 14.
+
+.. figure:: _static/images/knapsack_bound.svg
+   :name: optimization/search/bound
+   :align: center
+
+   Branch-and-bound on the knapsack. Once we have a solution worth
+   16 000, the configurations whose upper bound is not above are cut.
+
+**The order matters.** Branch-and-bound works best when we find a good
+solution early, because a high "best so far" lets us cut more. Going
+through the choices in a different order can therefore change the work
+a lot (although never the result). Instead of simply going deep first, we can
+always continue with the *most promising* configuration, that is, the
+one with the highest upper bound. We keep the configurations still to
+explore in a priority queue, where the priority is the upper bound. As we
+explore the configurations by decreasing upper bound, we can stop as soon
+as the best upper bound that remains is not above the best solution found:
+Nothing left can beat it. This is called *best-first* search.
+
+The quality of the upper bound is what makes branch-and-bound effective.
+The tighter it is, the more we cut. A bound that is too loose cuts nothing,
+and we are back to trying everything. In the worst case, branch-and-bound
+is no better than exhaustive search, and takes time exponential in the
+number of choices. But on many problems, a good bound makes it practical
+far beyond what brute force can do.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   A problem we want to *optimize* offers two more operations, the value
+   and the upper bound:
+
+   .. code-block:: java
+      :linenos:
+
+      public interface OptimizationProblem<C> extends Problem<C> {
+
+          int value(C solution);
+
+          int upperBound(C configuration);
+      }
+
+   For the knapsack, they are:
+
+   .. code-block:: java
+      :linenos:
+
+      // The total value of the items we take
+      public int value(List<Boolean> solution) {
+          return valueOfTakenItems(solution);
+      }
+
+      // At best, we will be able to take all the items we have not decided about
+      public int upperBound(List<Boolean> configuration) {
+          int total = valueOfTakenItems(configuration);
+          for (int i = configuration.size(); i < items.size(); i++) {
+              total += items.get(i).value();
+          }
+          return total;
+      }
+
+      private int valueOfTakenItems(List<Boolean> configuration) {
+          int total = 0;
+          for (int i = 0; i < configuration.size(); i++) {
+              if (configuration.get(i)) {
+                  total += items.get(i).value();
+              }
+          }
+          return total;
+      }
+
+   Branch-and-bound keeps the best solution found so far in a small
+   helper, ``Best``:
+
+   .. code-block:: java
+      :linenos:
+
+      // The best solution, with branch-and-bound. Once we have found a solution, we
+      // give up on a configuration if even its upper bound is no better than it
+      public static <C> Optional<C> branchAndBound(OptimizationProblem<C> problem) {
+          var best = new Best<C>();
+          branchAndBound(problem, problem.empty(), best);
+          return Optional.ofNullable(best.solution);
+      }
+
+      private static <C> void branchAndBound(OptimizationProblem<C> problem, C configuration, Best<C> best) {
+          if (!problem.isValid(configuration)) {
+              return;
+          }
+          if (best.isAtLeastAsGoodAs(problem, configuration)) {
+              return;
+          }
+          if (problem.isComplete(configuration)) {
+              best.solution = configuration;
+          } else {
+              for (var next : problem.children(configuration)) {
+                  branchAndBound(problem, next, best);
+              }
+          }
+      }
+
+      // The best solution found so far, if any
+      private static class Best<C> {
+          C solution = null;
+
+          // Is the best solution at least as good as anything this configuration
+          // can lead to? Before we have found any solution, nothing is.
+          boolean isAtLeastAsGoodAs(OptimizationProblem<C> problem, C configuration) {
+              return solution != null && problem.upperBound(configuration) <= problem.value(solution);
+          }
+      }
+
+   The best-first variant uses a priority queue, which always gives us the
+   configuration with the highest upper bound:
+
+   .. code-block:: java
+      :linenos:
+
+      // The same, but we always continue with the most promising configuration
+      // (the one with the highest upper bound), instead of going deep first
+      public static <C> Optional<C> bestFirst(OptimizationProblem<C> problem) {
+          var promising = new PriorityQueue<C>(
+              (first, second) -> Integer.compare(problem.upperBound(second), problem.upperBound(first))
+          );
+          promising.add(problem.empty());
+
+          var best = new Best<C>();
+          while (!promising.isEmpty()) {
+              var configuration = promising.poll();
+              if (!problem.isValid(configuration)) {
+                  continue;
+              }
+              if (best.isAtLeastAsGoodAs(problem, configuration)) {
+                  break; // The most promising one is not promising enough: we are done
+              }
+              if (problem.isComplete(configuration)) {
+                  best.solution = configuration;
+              } else {
+                  promising.addAll(problem.children(configuration));
+              }
+          }
+          return Optional.ofNullable(best.solution);
+      }

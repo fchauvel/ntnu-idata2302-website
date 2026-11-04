@@ -8,6 +8,7 @@ Binary Search Trees
              search tree
 :Concepts: Ordered Set ADT, insertion, deletion, min/max,
            predecessor/successor in a BST
+:Implementation: TypeScript `bst.ts and iterative.ts <https://github.com/fchauvel/aldast-examples/tree/main/trees/bst/typescript>`_
 
 
 We focus here on the *binary search tree* (BST), a tree data structure
