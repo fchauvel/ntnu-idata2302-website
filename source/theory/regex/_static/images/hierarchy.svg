@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'>
+<rect width='720' height='480' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<ellipse cx='360' cy='240' rx='350' ry='225' fill='#f4f4f4' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='240' rx='310' ry='180' fill='#eaf1fe' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='240' rx='250' ry='130' fill='#dde9fd' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='240' rx='160' ry='72' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
+<text x='360' y='40' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Anything a Turing machine can recognize</text>
+<text x='360' y='58' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>any program, in C, Java, Python or TeX</text>
+<text x='360' y='84' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Beyond context-free</text>
+<text x='360' y='102' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a variable is declared before it is used,  aⁿbⁿcⁿ</text>
+<text x='360' y='137' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-free</text>
+<text x='360' y='155' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>balanced brackets, aⁿbⁿ, the syntax of Java or JSON</text>
+<text x='360' y='232' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Regular</text>
+<text x='360' y='250' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>dates, identifiers, a*|b</text>
+</svg>

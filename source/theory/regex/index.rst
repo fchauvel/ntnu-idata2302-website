@@ -4,56 +4,38 @@ Regular Expressions
 
 :Lecture: Lecture 8.1 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ESOpzEspsN5Dk-IdmSry_rwBDfjkWiBK7ToMb6JAnaXldQ?e=y4Wpsk>`
-:Objectives: Understand what is a regular expression, an automaton and a
-             grammar, and how trees, recursion and graphs come together to
-             connect them
+:Objectives: Understand what regular expressions, grammars and automata are, and
+             see how trees, recursion and graphs come together to connect them
 :Concepts: Regular expression, language, grammar, expression tree, finite
            automaton, non-determinism, determinisation, hierarchy of languages
-
-..
-   OUTLINE. This page is an expanded outline of the lecture notes, to be
-   turned into prose, figures and code. Hand-offs between sections are in
-   italics. Items marked (optional) are the first to cut.
-
-   The point of this lecture is NOT to make students experts in automata.
-   It is to show how concepts they have already studied come together:
-
-   - the expression is a *tree* (Trees module),
-   - the construction of the automaton is a *recursion* on that tree
-     (Recursion module),
-   - the automaton is a *graph* (Graphs module),
-   - determinisation is a *graph search* over sets of states, with a work list
-     and a hash set (Graphs and Hashing modules).
-
-   The story of the three lectures is "machine, resource, bound". Here, the
-   machine is the simplest one, an automaton, the resource is its memory, and
-   the bound is a constant.
-
-   What students should take away:
-
-   - A pattern is a set of words, a language, and matching is a membership
-     problem.
-   - A pattern is a tree, which a grammar describes.
-   - An automaton, which is a graph, can be built from a pattern by recursion
-     on that tree.
-   - Guessing does not make an automaton more powerful (determinisation).
-   - Some languages are out of reach of automata, and there is a hierarchy
-     of languages, each level needing a stronger machine.
-
+:Implementation: Java `Regular expressions, automata and determinisation <https://github.com/fchauvel/aldast-examples/tree/main/theory/regular-expressions/java>`_
 
 Introduction
 ============
 
+Let us be clear from the start: This lecture is **not** a course on
+automata theory, and it is **not** a course on compilers. Both are
+fascinating, and both deserve a course of their own. What I want to
+show you is something different. Advanced topics, such as the
+compilation of a programming language, are not built from exotic new
+ideas. They are built from the very concepts we have studied together:
+*trees*, *recursion*, *graphs* and *hash sets*. Regular expressions are
+a small and friendly place to see this happening.
+
 Patterns Everywhere
 -------------------
 
-- Hook: A date, an e-mail address or a phone number typed in a form. ``grep``
-  in a terminal. A compiler reading ``x1 = 42`` and splitting it in an
-  identifier, a symbol and a number.
-- The question: How do we describe a set of strings, possibly infinite, with a
-  short and precise description? And how does a machine check it?
+You type a date, an e-mail address or a phone number in a form, and the
+page tells you right away that something is wrong. You search a log with
+``grep`` and find every line that looks like an error. Your editor
+colours ``x1 = 42`` by recognizing that ``x1`` is a name, ``=`` is a
+symbol and ``42`` is a number. In each case, a program checks whether
+some text *matches a pattern*.
 
-*Hand-off: Let us start with the smallest possible example.*
+Patterns are everywhere, and so a question comes up: How do we describe
+a pattern, which may match infinitely many texts, with something short
+and precise? And how can a machine check it? This is the topic of this
+lecture.
 
 
 Automata and Regular Expressions
@@ -62,79 +44,329 @@ Automata and Regular Expressions
 A First Example
 ---------------
 
-- One small pattern, and its automaton, side by side. For instance ``a*|b``, or
-  something funnier, such as the "sheep language" ``baa*!`` (``baa!``,
-  ``baaaaa!``, but not ``ba!``).
-- Choose an example whose automaton is *deterministic*, so that running it is
-  easy.
-- The automaton, as a machine: States, transitions, an initial state, accepting
-  states. A trace on a word.
-- The automaton as a *program on the RAM*: A loop with one variable,
-  ``state ← table[state][symbol]``, then check that the final state accepts.
-- What it costs: One pass, and only the state to remember, whatever the length
-  of the word. The resource is *memory*, and the bound is a *constant*.
+Let us start with a small pattern. Sheep say ``b``, then a number of
+``a``, then ``!``. So ``b!``, ``ba!`` and ``baaaa!`` are all sheep, but
+``baaaa`` (no final ``!``) and ``ab!`` are not.
 
-*Hand-off: Which words does this pattern describe, exactly?*
+A way to describe them is to draw a small *automaton*, as shown in
+:numref:`theory/regex/sheep`. It is a *graph*: The vertices are the
+*states*, and the edges are the *transitions*, each one labelled with the
+symbol it reads. The arrow coming from nowhere marks the *initial state*,
+and the double circle marks the *accepting state*.
+
+.. figure:: _static/images/sheep.svg
+   :name: theory/regex/sheep
+   :align: center
+
+   An automaton that accepts the sheep: ``b``, then any number of ``a``,
+   then ``!``.
+
+To check a text, we start in the initial state, and we follow one
+transition per symbol. The text matches if we end in the accepting state.
+For ``baaa!``, we go through the states 0, 1, 1, 1, 1 and then 2: It
+matches. For ``ba``, we stop in state 1, which is not accepting: It does
+not match. And for ``ab!``, there is no transition labelled ``a`` from
+state 0, so we are stuck: It does not match either.
+
+This is a program we know how to write. The graph is stored as a table
+(for each state and each symbol, which state is next), and the whole
+check is a single loop over the text:
+
+.. code-block:: text
+
+   state ← initial state
+   for each symbol in text:
+       state ← next[state][symbol]       (stuck if there is none)
+   return state is accepting
+
+What does it cost? We read the text once, and *all we remember is the
+current state*. Whether the text is ten symbols or ten million, the memory
+is the same. Keep this in mind: The machine is the automaton, the resource
+is its memory, and the bound is a *constant*. We will come back to this.
 
 
 Words and Languages
 -------------------
 
-- The vocabulary, as at the very start of the course: *symbols*, an *alphabet*
-  (a set of symbols), a *word* (a sequence of symbols), and a *language* (a set
-  of words). A caution: This "word" is not the machine word of the RAM.
-- A pattern describes a language, which may be infinite. We cannot list it, so
-  we need a notation: This is what a regular expression is.
-- Matching a word is answering a yes/no question: Is this word in the
-  language? **A problem is a language**: Deciding membership.
-- The building blocks, which are enough: a symbol, two expressions in a row
-  (concatenation), an alternative (``|``), and a repetition (``*``).
+Let us fix some vocabulary. A *symbol* is a character, and an *alphabet*
+is a set of symbols, such as ``{a, b, !}``. A *word* is a sequence of
+symbols, such as ``baa!``, possibly empty. And a *language* is a set of
+words, possibly infinite, such as all the sheep.
 
-*Hand-off: The tools offer many more operators.*
+.. note::
 
+   Here, a "word" is a sequence of symbols, as in a sentence. It has
+   nothing to do with the *word* of the RAM, the group of bits we
+   manipulate in one instruction.
+
+A pattern describes a language, and checking a text is answering a
+yes/no question: *Is this word in the language?* That is a *problem*, as
+defined in the first lecture, and every language is one: The problem of
+deciding whether a word belongs to it. This is one of the most useful
+shift of views in this course: **a problem is a language**.
+
+Since a language may be infinite, we cannot list its words. We need a
+notation, and *regular expressions* are one. They are built from only
+four ingredients:
+
+- a **symbol**, such as ``a``, which matches the word ``a``;
+- **two expressions in a row** (concatenation), such as ``ab``, which
+  matches whatever the first matches, followed by whatever the second
+  matches;
+- **one or the other**, written ``|``, such as ``a|b``, which matches
+  what either side matches;
+- **repetition**, written ``*``, such as ``a*``, which matches the
+  empty word, or whatever the inner expression matches, any number of
+  times in a row.
+
+The sheep are ``ba*!``, and a run of ``a``, or a single ``b``, is
+``a*|b``. Parentheses group things: ``(ab)*`` matches ``ab``, ``abab``,
+``ababab``, and so on.
 
 Wildcards
 ---------
 
-- ``+`` (one or more), ``?`` (optional), ``[a-z]`` (a class), ``.`` (anything).
-- They are only *sugar*: Each one is rewritten with the building blocks.
-  ``E+`` is ``E E*``, ``E?`` is ``E`` or nothing, ``[a-z]`` is
-  ``a|b|...|z``.
-- So the core is small, and it is what we work with from now on.
-- A taste of compilation: New notation, with no new machine, by rewriting to
-  the core.
+Real tools offer many more operators. A few examples are ``+`` (one or more),
+``?`` (optional), ``[a-z]`` (any symbol from a range) and ``.``
+(anything). They are handy, but they are *not new*. Each one can be
+rewritten with the four ingredients:
 
-*Hand-off: To build an automaton for any pattern, we need to describe all
-possible patterns.*
+- ``E+`` is ``EE*``: The expression, and then any number of it;
+- ``E?`` is ``E`` or nothing at all;
+- ``[a-c]`` is ``a|b|c``.
+
+So the sheep, who say at least two ``a``, are ``baa+!``, which is just a
+shorthand for ``baaa*!``.
+
+.. margin::
+
+   This is a first, tiny taste of *compilation*: A new notation, that
+   needs no new machine, since we translate it into the old one.
+
+From now on, we only work with the four ingredients. If we can handle
+those, we can handle all the others. The code does exactly this: When it reads
+a ``+``, it builds the tree of ``EE*``.
 
 
 Grammars
 ========
 
+How can we build an automaton for *any* pattern? We need first to
+describe *all the possible patterns*, and see what a pattern really is.
+
 Operator Precedence and the Expression Tree
 -------------------------------------------
 
-- Parentheses and precedence: Repetition binds tighter than concatenation, which
-  binds tighter than the alternative. ``ab*|c`` means ``(a(b*))|c``.
-- Figure: The *expression tree* of ``ab*|c``. The leaves are symbols, the other
-  nodes are operators. (Trees module.)
+What does ``ab*|c`` mean? Is it ``(ab)*`` or ``a(b*)``? Is it ``ab`` or
+``c``, or ``a`` followed by ``b*|c``? We need rules, just as in
+arithmetic where ``1 + 2 * 3`` means ``1 + (2 * 3)``. The rules are that
+repetition binds tighter than concatenation, which binds tighter than
+the alternative. So ``ab*|c`` means ``(a(b*))|c``.
+
+Do you see a *tree* appearing? Each operator has its operands as children,
+and the symbols are the leaves. :numref:`theory/regex/tree` shows the
+tree of ``ab*|c``. The pattern is only a way to write the tree down
+as a sequence of characters, and the parentheses and the precedence rules
+are what let us recover the tree.
+
+.. figure:: _static/images/expression_tree.svg
+   :name: theory/regex/tree
+   :align: center
+
+   The expression tree of ``ab*|c``. The leaves are symbols, the other
+   nodes are operators.
 
 Tree Folding and Grammars
 -------------------------
 
-- How do we describe *all* the possible patterns? With a **grammar**: A few
-  recursive rules. An expression is a symbol, or two expressions in a row, or two
-  expressions joined by ``|``, or an expression followed by ``*``, or an
-  expression in parentheses.
-- The grammar says which trees are valid. A pattern is a tree.
-- *Folding* a tree: Compute a value from the leaves up, combining the results of
-  the children. (Recursion module.)
-- A tiny fold as a warm-up: Can this expression match the empty word? A symbol:
-  no. ``E*``: yes. ``E F``: if both can. ``E|F``: if one can.
-- The same shape, the same code, with a richer result: Next, the value we
-  compute is a *machine*.
+Since a pattern is a tree, we can describe all the possible patterns by
+describing all the possible trees. We do it with a *grammar*, which is a
+small set of *recursive* rules. Here is one for our four ingredients,
+written to also take the precedence into account:
 
-*Hand-off: Let us fold an expression into an automaton.*
+.. code-block:: text
+
+   expression := term ( '|' term )*
+   term       := factor factor*
+   factor     := atom ( '*' | '+' )*
+   atom       := a symbol  |  '(' expression ')'
+
+Read it aloud. An expression is a term, possibly followed by ``|`` and
+another term, as many times as needed. A term is one or more factors in
+a row. A factor is an atom followed by any number of ``*`` (or ``+``, which we just saw is a shorthand). And an atom
+is either a symbol, or an *expression in parentheses*, which sends us
+back to the first rule. The rules call each other, and that is exactly how
+trees contain trees. The lower a rule, the tighter it binds, which is how
+the grammar encodes the precedence.
+
+A grammar is also a *recipe to write the program that reads patterns*:
+One method per rule. The method of ``atom`` calls the method of
+``expression`` when it meets a parenthesis, and so on. The result is a
+tree of Java objects.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   The tree has one class per kind of node. ``Regex.parse`` reads a
+   pattern and builds the tree, with one method per rule of the grammar.
+
+   .. code-block:: java
+
+      // A regular expression is a tree. There are only four kinds of nodes.
+      public sealed interface Regex {
+
+          record Symbol(char symbol) implements Regex {}
+
+          record Then(Regex first, Regex second) implements Regex {}
+
+          record Or(Regex left, Regex right) implements Regex {}
+
+          record Star(Regex inner) implements Regex {}
+
+          // Can this expression match the empty word? We "fold" the tree: we
+          // compute the answer for each child, and combine them.
+          static boolean matchesEmptyWord(Regex expression) {
+              return switch (expression) {
+                  case Symbol s -> false;
+                  case Then t -> matchesEmptyWord(t.first()) && matchesEmptyWord(t.second());
+                  case Or o -> matchesEmptyWord(o.left()) || matchesEmptyWord(o.right());
+                  case Star s -> true;
+              };
+          }
+
+          // The way we write patterns back, with as few parentheses as possible
+          static String show(Regex expression) {
+              return switch (expression) {
+                  case Symbol s -> String.valueOf(s.symbol());
+                  case Then t -> showInside(t.first(), Or.class) + showInside(t.second(), Or.class);
+                  case Or o -> show(o.left()) + "|" + show(o.right());
+                  case Star s -> showInside(s.inner(), Or.class, Then.class, Star.class) + "*";
+              };
+          }
+
+          private static String showInside(Regex child, Class<?>... needingParentheses) {
+              for (var each : needingParentheses) {
+                  if (each.isInstance(child)) {
+                      return "(" + show(child) + ")";
+                  }
+              }
+              return show(child);
+          }
+
+          static Regex parse(String pattern) {
+              return new RegexParser(pattern).parse();
+          }
+      }
+
+   .. code-block:: java
+
+      // One method per rule of the grammar:
+      //
+      //   expression := term ( '|' term )*
+      //   term       := factor factor*
+      //   factor     := atom ( '*' | '+' )*
+      //   atom       := a symbol | '(' expression ')'
+      //
+      // The rules call each other just like the nodes of the tree contain each other.
+      // The lower a rule is, the tighter it binds: this is the operator precedence.
+      //
+      // The wildcard '+' brings no new kind of node: "E+" is read as "EE*".
+      class RegexParser {
+
+          private final String pattern;
+          private int position = 0;
+
+          RegexParser(String pattern) {
+              this.pattern = pattern;
+          }
+
+          Regex parse() {
+              var result = expression();
+              if (position < pattern.length()) {
+                  throw new IllegalArgumentException("Unexpected '" + peek() + "' at " + position);
+              }
+              return result;
+          }
+
+          private Regex expression() {
+              var result = term();
+              while (hasNext() && peek() == '|') {
+                  position++;
+                  result = new Regex.Or(result, term());
+              }
+              return result;
+          }
+
+          private Regex term() {
+              var result = factor();
+              while (hasNext() && peek() != '|' && peek() != ')') {
+                  result = new Regex.Then(result, factor());
+              }
+              return result;
+          }
+
+          private Regex factor() {
+              var result = atom();
+              while (hasNext() && (peek() == '*' || peek() == '+')) {
+                  if (peek() == '*') {
+                      result = new Regex.Star(result);
+                  } else {
+                      result = new Regex.Then(result, new Regex.Star(result));
+                  }
+                  position++;
+              }
+              return result;
+          }
+
+          private Regex atom() {
+              if (!hasNext()) {
+                  throw new IllegalArgumentException("Unexpected end of pattern");
+              }
+              var next = peek();
+              position++;
+              if (next == '(') {
+                  var result = expression();
+                  expect(')');
+                  return result;
+              }
+              if (next == '|' || next == '*' || next == '+' || next == ')') {
+                  throw new IllegalArgumentException("Unexpected '" + next + "' at " + (position - 1));
+              }
+              return new Regex.Symbol(next);
+          }
+
+          private void expect(char expected) {
+              if (!hasNext() || peek() != expected) {
+                  throw new IllegalArgumentException("Expected '" + expected + "' at " + position);
+              }
+              position++;
+          }
+
+          private boolean hasNext() {
+              return position < pattern.length();
+          }
+
+          private char peek() {
+              return pattern.charAt(position);
+          }
+      }
+
+Now that we have trees, we can do what we do with trees: *fold* them. We
+compute a result for each child, and we combine these results at each
+node, from the leaves up. Let us warm up with a simple question: Can this
+expression match the empty word?
+
+- A symbol cannot.
+- ``E*`` always can: We repeat ``E`` zero times.
+- Two expressions in a row can if *both* can.
+- ``E|F`` can if *either* can.
+
+That is the whole algorithm. It is the function ``matchesEmptyWord`` in
+the listing above. It has one case per kind of node, and it calls itself
+on the children. It is a plain recursion on a tree.
+
+And now comes the point of this lecture. The *same shape* of recursion,
+with a richer result, will build a machine.
 
 
 Building an Automaton for a Regular Expression
@@ -143,54 +375,322 @@ Building an Automaton for a Regular Expression
 One Piece per Rule
 ------------------
 
-- Four constructions, one per rule: A symbol (two states and one transition),
-  concatenation, alternative, repetition.
-- The pieces are glued with *ε-transitions*, moves that read nothing.
-- Figures: The four pieces, and the automaton of ``ab*|c`` assembled.
+Let us fold the tree into an *automaton*, instead of a boolean. The
+result for each node is a small automaton, and each kind of node says how
+to assemble the automata of its children. There are four cases, shown in
+:numref:`theory/regex/pieces`. In the figure, ``E`` and ``F`` are the
+automata we already built for the children, each seen as a box with one
+initial state on the left, and one accepting state on the right.
+
+.. figure:: _static/images/pieces.svg
+   :name: theory/regex/pieces
+   :align: center
+
+   One way to assemble an automaton for each of the four ingredients. The
+   dashed arrows are *silent*: They read nothing.
+
+The pieces are glued with *silent transitions* (they are labelled with
+``ε``), which let the machine move from one state to another without
+reading any symbol. Just like the wires between the boxes of a
+circuit. Check each case with its meaning. For a symbol, we read it. For
+two expressions in a row, we run ``E``, then silently continue with
+``F``. For one or the other, we silently pick a side. And for a repetition,
+we may skip ``E`` altogether, or after each run of ``E``, silently go
+back and start another.
 
 The Construction Is a Recursion on the Tree
 -------------------------------------------
 
-- Base case: a symbol. Recursive cases: the operators. Same code as the tiny
-  fold, with automata as values. (Recursion and Graphs modules: The result is a
-  graph.)
-- This is an *algorithm that manipulates machines*.
+The code is the fold we have just seen. A base case for the symbol, and
+one recursive case per operator, each one assembling the automata the
+recursive calls return. :numref:`theory/regex/assembled` shows the result
+for ``ab*|c``.
+
+.. figure:: _static/images/assembled.svg
+   :name: theory/regex/assembled
+   :align: center
+
+   The automaton for ``ab*|c``, built by folding the tree of
+   :numref:`theory/regex/tree`. The boxes show which part comes from which
+   subtree.
+
+The result is a graph, and the Java code stores it as a list of
+transitions (the edge list from the Graphs module).
+This is also what an *algorithm that manipulates machines* looks like: It
+reads a tree, and writes a graph. This is, in miniature, what a compiler
+does.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   ``Automaton.from`` folds the tree. The ``closure`` and ``step``
+   methods, as well as ``accepts``, are explained in the next section.
+
+   .. code-block:: java
+
+      import java.util.ArrayDeque;
+      import java.util.HashSet;
+      import java.util.List;
+      import java.util.Set;
+      import java.util.ArrayList;
+
+      // A graph: states are the vertices, moves are the edges. A move may read a
+      // symbol, or nothing at all (a "silent" move, whose symbol is null).
+      //
+      // The automaton may have several moves for the same symbol, or silent moves:
+      // it is "non-deterministic". It accepts a word if *some* path reads the word
+      // and ends in the accepting state.
+      public record Automaton(int start, int accepting, List<Move> moves) {
+
+          public record Move(int from, Character symbol, int to) {
+              boolean isSilent() {
+                  return symbol == null;
+              }
+          }
+
+          // The construction is a recursion on the tree: one case per kind of node.
+          public static Automaton from(Regex expression) {
+              return new Builder().build(expression);
+          }
+
+          private static class Builder {
+              private int stateCount = 0;
+
+              private int newState() {
+                  return stateCount++;
+              }
+
+              Automaton build(Regex expression) {
+                  return switch (expression) {
+                      case Regex.Symbol s -> symbol(s.symbol());
+                      case Regex.Then t -> then(build(t.first()), build(t.second()));
+                      case Regex.Or o -> or(build(o.left()), build(o.right()));
+                      case Regex.Star s -> star(build(s.inner()));
+                  };
+              }
+
+              private Automaton symbol(char symbol) {
+                  var start = newState();
+                  var accepting = newState();
+                  return new Automaton(start, accepting, List.of(new Move(start, symbol, accepting)));
+              }
+
+              private Automaton then(Automaton first, Automaton second) {
+                  var moves = union(first.moves, second.moves);
+                  moves.add(new Move(first.accepting, null, second.start));
+                  return new Automaton(first.start, second.accepting, moves);
+              }
+
+              private Automaton or(Automaton left, Automaton right) {
+                  var start = newState();
+                  var accepting = newState();
+                  var moves = union(left.moves, right.moves);
+                  moves.add(new Move(start, null, left.start));
+                  moves.add(new Move(start, null, right.start));
+                  moves.add(new Move(left.accepting, null, accepting));
+                  moves.add(new Move(right.accepting, null, accepting));
+                  return new Automaton(start, accepting, moves);
+              }
+
+              private Automaton star(Automaton inner) {
+                  var start = newState();
+                  var accepting = newState();
+                  var moves = new ArrayList<>(inner.moves);
+                  moves.add(new Move(start, null, inner.start));
+                  moves.add(new Move(start, null, accepting));
+                  moves.add(new Move(inner.accepting, null, inner.start));
+                  moves.add(new Move(inner.accepting, null, accepting));
+                  return new Automaton(start, accepting, moves);
+              }
+
+              private List<Move> union(List<Move> first, List<Move> second) {
+                  var result = new ArrayList<>(first);
+                  result.addAll(second);
+                  return result;
+              }
+          }
+
+          public int stateCount() {
+              var states = new HashSet<Integer>();
+              states.add(start);
+              states.add(accepting);
+              for (var move : moves) {
+                  states.add(move.from);
+                  states.add(move.to);
+              }
+              return states.size();
+          }
+
+          public Set<Character> alphabet() {
+              var result = new HashSet<Character>();
+              for (var move : moves) {
+                  if (!move.isSilent()) {
+                      result.add(move.symbol);
+                  }
+              }
+              return result;
+          }
+
+          // All the states we can reach from the given ones, by silent moves only.
+          // This is a plain graph traversal, with a work list.
+          public Set<Integer> closure(Set<Integer> states) {
+              var reached = new HashSet<>(states);
+              var toVisit = new ArrayDeque<>(states);
+              while (!toVisit.isEmpty()) {
+                  var current = toVisit.pop();
+                  for (var move : moves) {
+                      if (move.from == current && move.isSilent() && reached.add(move.to)) {
+                          toVisit.push(move.to);
+                      }
+                  }
+              }
+              return reached;
+          }
+
+          // The states we reach from the given ones by reading one symbol
+          public Set<Integer> step(Set<Integer> states, char symbol) {
+              var reached = new HashSet<Integer>();
+              for (var move : moves) {
+                  if (states.contains(move.from) && !move.isSilent() && move.symbol == symbol) {
+                      reached.add(move.to);
+                  }
+              }
+              return closure(reached);
+          }
+
+          // Follows all the paths at once: we keep the set of states we may be in.
+          public boolean accepts(String word) {
+              var current = closure(Set.of(start));
+              for (var symbol : word.toCharArray()) {
+                  current = step(current, symbol);
+              }
+              return current.contains(accepting);
+          }
+      }
 
 The Result Is Non-Deterministic
 -------------------------------
 
-- The alternative and the repetition offer *choices*: Several possible next
-  states. A word is accepted if *some* sequence of choices ends in an accepting
-  state: a lucky guess.
-- This is a *non-deterministic* automaton. It is easy to build, but we cannot
-  run a machine that guesses.
+Look at the state 8 of :numref:`theory/regex/assembled`. Two silent moves
+leave it. Which one should we take? Look at state 4 as well: We may enter
+the repetition, or skip it. The automaton makes *choices*.
 
-*Hand-off: Can we get rid of the guessing?*
+We say that the automaton is *non-deterministic*. A word is accepted if
+*some* sequence of choices leads to the accepting state, as if the
+machine could always guess right. This is easy to build, but we cannot run
+a machine that guesses. So how could we run it?
 
 
 Determinisation
 ===============
 
-- Instead of following one branch, follow *all of them at once*: Keep track of
-  the *set* of states where we could be. This set is the state of a new,
-  deterministic automaton.
-- The ε-closure: All the states reachable without reading a symbol. It is a
-  graph traversal. (Graphs module.)
-- The construction: Start from the closure of the initial state, and explore the
-  sets reachable by each symbol, with a work list and a set of the sets already
-  seen. It is a search over an implicit graph. (Graphs and Hashing modules.)
-- Worked example on a small pattern: The table of sets, and the resulting
-  automaton.
-- Result: Same language, and a machine that does not guess. **Guessing does not
-  add power to an automaton.**
-- The price: The deterministic automaton can have exponentially more states.
-  The classic example: "the n-th letter from the end is an a".
-- (Optional) There is a smallest automaton for every regular language
-  (*minimisation*). One sentence, no algorithm.
-- Foreshadowing, said out loud: A lucky guess does not help an automaton. We
-  will see what it does for other machines.
+The trick is to stop choosing. Instead of following one path, we follow
+*all of them at once*. We keep track of the *set* of states in which the
+machine could be. Here, the set of states we may be in at the beginning is
+the initial state, plus every state we can reach from it by silent
+moves (this is called the *closure*, and it is a simple graph
+traversal, with a work list, just as in the Graphs module). For ``ab*|c``,
+this is ``{0, 6, 8}``. After reading an ``a``, we may be in the state
+1, and then everywhere we can go silently: ``{1, 2, 4, 5, 9}``. After a ``c``,
+we may be in 7, and then 9: ``{7, 9}``.
 
-*Hand-off: Automata are simple and cheap. Are they enough?*
+Here is the beautiful part. *Each such set can be seen as one state of a new
+automaton*. We build it by exploring the sets we can reach, starting from the
+initial one, and remembering the sets we have already seen so that we do not
+explore any of them twice. That is a graph search with a work list and a hash
+set, in a graph we never write down in memory: the vertices are
+sets of states, and the edges are discovered as we go. It is the implicit graph we met in the
+optimization module, again. :numref:`theory/regex/determinised` shows the
+result for ``ab*|c``.
+
+.. figure:: _static/images/determinised.svg
+   :name: theory/regex/determinised
+   :align: center
+
+   The deterministic automaton for ``ab*|c``. Each state is a set of the
+   states of :numref:`theory/regex/assembled`. A set is accepting when it
+   contains the state 9.
+
+There is no choice left: In every state, at most one transition for each
+symbol. And the automaton accepts exactly the same words. The ten
+states of the non-deterministic automaton collapse into four.
+
+.. admonition:: Implementation in Java
+   :class: hint, dropdown
+
+   The constructor explores the sets of states, with a work list, and the
+   map of sets we have already seen. ``Automaton.closure`` and
+   ``Automaton.step`` are in the listing of the previous section.
+
+   .. code-block:: java
+
+      import java.util.ArrayDeque;
+      import java.util.HashMap;
+      import java.util.HashSet;
+      import java.util.Map;
+      import java.util.Set;
+
+      // An automaton where each state has at most one move per symbol: no choice,
+      // no guess. Each of its states is a *set* of states of the original automaton:
+      // all the places where the original may be, after reading the same symbols.
+      public class DeterministicAutomaton {
+
+          private final Set<Integer> start;
+          private final Set<Set<Integer>> accepting = new HashSet<>();
+          private final Map<Set<Integer>, Map<Character, Set<Integer>>> moves = new HashMap<>();
+
+          // We explore the sets we can reach, starting from the initial one, and
+          // remembering those we have already seen. It is a search in a graph.
+          public DeterministicAutomaton(Automaton original) {
+              start = original.closure(Set.of(original.start()));
+              var toVisit = new ArrayDeque<Set<Integer>>();
+              moves.put(start, new HashMap<>());
+              toVisit.push(start);
+              while (!toVisit.isEmpty()) {
+                  var current = toVisit.pop();
+                  if (current.contains(original.accepting())) {
+                      accepting.add(current);
+                  }
+                  for (var symbol : original.alphabet()) {
+                      var next = original.step(current, symbol);
+                      if (next.isEmpty()) {
+                          continue;
+                      }
+                      if (!moves.containsKey(next)) {
+                          moves.put(next, new HashMap<>());
+                          toVisit.push(next);
+                      }
+                      moves.get(current).put(symbol, next);
+                  }
+              }
+          }
+
+          public int stateCount() {
+              return moves.size();
+          }
+
+          public boolean accepts(String word) {
+              var current = start;
+              for (var symbol : word.toCharArray()) {
+                  current = moves.get(current).get(symbol);
+                  if (current == null) {
+                      return false;
+                  }
+              }
+              return accepting.contains(current);
+          }
+      }
+
+This tells us something important: **guessing does not make an automaton
+more powerful**. Whatever a non-deterministic automaton can recognize, a
+deterministic one can too. This is not free, though. In the worst case, the
+deterministic automaton has *exponentially more* states: The pattern
+"an ``a``, then exactly ``n`` symbols" (as in ``(a|b)*a(a|b)(a|b)``, for
+``n = 2``) needs at least :math:`2^n` states, because the machine must
+remember the last :math:`n` symbols it read.
+
+Remember this. A lucky guess does not help an automaton. We will see what
+it does for other machines.
 
 
 Limits
@@ -199,37 +699,61 @@ Limits
 What an Automaton Cannot Do
 ---------------------------
 
-- The language of ``aⁿbⁿ``: some ``a``, then the same number of ``b``. Balanced
-  brackets are the same problem.
-- Intuition, with no proof: An automaton with ``k`` states cannot tell ``aᵏ⁺¹``
-  from a shorter run of ``a``, because it has to reuse a state. To count, we need
-  memory that grows with the word.
-- This is not a corner case: Nested structure, as in a program, is made of
-  balanced brackets.
+Automata are simple and cheap, but there are languages they cannot
+recognize. The classical one is ``aⁿbⁿ``: Some ``a``, followed by *the same
+number* of ``b``. So ``ab`` and ``aaabbb`` are in, but ``aab`` is not.
+Balanced brackets are the same problem in disguise.
+
+No proof here, but here is the intuition. An automaton with ``k`` states
+that reads ``k + 1`` times the symbol ``a`` must go through the same state
+twice. After that, it cannot tell a run of ``k + 1`` symbols ``a`` from a
+shorter one, so it cannot check that the number of ``b`` matches. To count
+with no limit, we need a memory that grows with the input, and the
+automaton has none.
+
+And this is not a corner case! Any structure with *nesting*, like the
+brackets, the blocks and the calls of a program, is of this kind.
 
 A Hierarchy of Languages
 ------------------------
 
-- Figure: Nested sets, with an example at each level.
-- **Regular** (an automaton, or a regular expression): identifiers, numbers,
-  dates, the patterns of ``grep``.
-- **Context-free** (a grammar, or an automaton with a stack, next lecture):
-  balanced brackets, arithmetic expressions. The *syntax* of C, Java, JSON or
-  HTML.
-- **Beyond context-free**: "a variable must be declared before it is used",
-  ``aⁿbⁿcⁿ``. A compiler checks these after reading the program.
-- **Anything a Turing machine can recognize** (next lecture): Programming
-  languages, seen as a way to *write programs*. C, Java and TeX can compute
-  anything a computer can.
-- Warning, on one slide: *Language* has two meanings here. A *set of words*
-  (what a machine recognizes), and a *notation to program a machine*. The syntax
-  of C is a set of words in the middle of the ladder. The language C, as a whole,
-  is at the top.
-- **Closing the loop:** The grammar of regular expressions, written earlier,
-  needs balanced parentheses. So the *language of regular expressions is not
-  regular*: It is context-free. Grammars are the next level up.
-- The table so far: (automaton, memory, constant) is the class of the *regular
-  languages*.
+So some languages are harder than others, and we can *rank* them by the
+kind of machine they need. :numref:`theory/regex/hierarchy` shows the usual
+ladder.
 
-*Hand-off: Each level needs a stronger machine. What is a machine, and which ones
-exist? This is the next lecture.*
+.. figure:: _static/images/hierarchy.svg
+   :name: theory/regex/hierarchy
+   :align: center
+
+   A hierarchy of languages. Each level contains the one inside it, and
+   needs a stronger machine.
+
+- **Regular languages** are the ones that regular expressions, or
+  automata, describe: Names, numbers, dates, the patterns of ``grep``.
+- **Context-free languages** need a grammar like the one we wrote
+  earlier, or an automaton with a *stack*: Balanced brackets,
+  arithmetic expressions, and the *syntax* of most programming languages
+  (Java, JSON, HTML).
+- **Beyond context-free** are the rules such as "a variable must be
+  declared before it is used", which a compiler checks after reading the
+  program.
+- And at the top, **anything a Turing machine can recognize**: This is
+  what a computer can do. We will meet that machine in the next
+  lecture.
+
+.. margin::
+
+   The word *language* has two meanings here. A set of words, which is
+   what a machine recognizes, and a notation to write programs, such as
+   Java. The *syntax* of Java is a language of the first kind, and sits in
+   the middle of the ladder. Java itself, as a way to program, sits at the
+   top.
+
+Here comes a small twist. We wrote earlier the grammar of the regular
+expressions, and it needs *balanced parentheses*. So the language of the
+regular expressions is **not regular**: No automaton can read a pattern
+and tell whether it is well formed! We needed a grammar, which is one step
+up the ladder.
+
+Each level needs a stronger machine, and so we should ask: What is a
+machine, and which ones exist? This is the topic of the next lecture.
