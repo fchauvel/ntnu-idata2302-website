@@ -925,6 +925,61 @@ Core Problems
      two vertices.
 
 
+..
+   Added from the first version of this problem set. This problem may be a
+   duplicate of "Cheapest Cables" below: Feel free to merge, rewrite or remove
+   one of them.
+
+.. exercise:: Prim and Kruskal by Hand ★★
+   :label: graphs/problems/by-hand
+
+   Consider the weighted graph shown on
+   :numref:`graphs/problems/by-hand/graph`.
+
+   .. figure:: _static/images/spanning_exercise.svg
+      :name: graphs/problems/by-hand/graph
+
+      A weighted graph with six vertices
+
+   #. Trace Prim's algorithm, starting from A. List the edges in the
+      order in which the algorithm adds them to the tree.
+
+   #. Trace Kruskal's algorithm. List the edges in the order in which
+      it adds them, and say which ones it skips.
+
+   #. Do the two algorithms produce the same tree? Why, or why not?
+
+.. solution:: graphs/problems/by-hand
+   :label: graphs/problems/by-hand/solution
+   :class: dropdown
+
+   #. Starting from A, the edges leaving the tree are AB (6) and AC
+      (4), so Prim's algorithm takes AC. It then takes the cheapest edge
+      leaving {A, C}, which is CD (2), then BD (3), then DE (5), and
+      finally EF (7). The edges are added in this order:
+
+      AC (4), CD (2), BD (3), DE (5), EF (7).
+
+   #. Kruskal's algorithm goes through the edges in increasing order of
+      weight. It adds CD (2), BD (3), AC (4) and DE (5). It then skips AB
+      (6), because A and B are already connected, through C and D: adding
+      it would create a cycle. It adds EF (7), which gives the five edges
+      we need for six vertices. The two remaining edges, CF (8) and BE
+      (9), would both be skipped.
+
+   #. Yes, they produce the same tree, which weighs 21 and is shown on
+      :numref:`graphs/problems/by-hand/tree`. They only differ in the
+      order in which they add the edges. This is no coincidence: all the
+      weights in this graph are different, and then there is only *one*
+      minimum spanning tree (see the last problem). Both algorithms must
+      find it.
+
+      .. figure:: _static/images/spanning_exercise_solution.svg
+         :name: graphs/problems/by-hand/tree
+
+         The minimum spanning tree (in bold), with a total weight of 21
+
+
 .. exercise:: Cheapest Cables ★★★
    :label: graphs/problems/cables
 
@@ -1064,6 +1119,11 @@ Core Problems
      them.
 
 
+..
+   Added from the first version of this problem set. It may overlap with the
+   other problems on spanning trees ("Cheapest Cables"): Feel free to merge,
+   rewrite or remove it.
+
 .. exercise:: Network Design ★★★
    :label: graphs/problems/network
 
@@ -1188,6 +1248,11 @@ Core Problems
 
       2 + 3 + 4 + 8 + 13 + 18 + 19 = 67 \text{ million.}
 
+
+..
+   Added from the first version of this problem set. It may overlap with the
+   last question of "Cheapest Cables" (how many different MSTs?): Feel free to
+   merge, rewrite or remove it.
 
 .. exercise:: Why Is the Cheapest Tree Unique? ★★★
    :label: graphs/problems/unique
