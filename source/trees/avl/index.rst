@@ -8,7 +8,7 @@ AVL Trees
              how this is done in AVL trees.
 :Concepts: balancing factor, tree rotations, insertion and deletion in
            AVL trees
-:Implementation: Python :download:`avl.py <_static/code/avl.py>`
+:Implementation: Python `avl.py <https://github.com/fchauvel/aldast-examples/tree/main/trees/avl/python>`_
 
 
 Binary search trees (BST) offer an overall efficient implement of the

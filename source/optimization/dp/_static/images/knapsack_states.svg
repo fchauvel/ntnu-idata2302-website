@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="899" height="355" viewBox="0 0 899 355">
+<rect width="899" height="355" fill="white"/>
+<line x1="242.0" y1="196" x2="210" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="242.0" y1="196" x2="274" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="370.0" y1="196" x2="338" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="370.0" y1="196" x2="402" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="306.0" y1="118" x2="242.0" y2="196" stroke="#222222" stroke-width="1.8"/>
+<line x1="306.0" y1="118" x2="370.0" y2="196" stroke="#222222" stroke-width="1.8"/>
+<line x1="498.0" y1="196" x2="466" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="498.0" y1="196" x2="530" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="626.0" y1="196" x2="594" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="626.0" y1="196" x2="658" y2="274" stroke="#222222" stroke-width="1.8"/>
+<line x1="562.0" y1="118" x2="498.0" y2="196" stroke="#222222" stroke-width="1.8"/>
+<line x1="562.0" y1="118" x2="626.0" y2="196" stroke="#222222" stroke-width="1.8"/>
+<line x1="434.0" y1="40" x2="306.0" y2="118" stroke="#222222" stroke-width="1.8"/>
+<line x1="434.0" y1="40" x2="562.0" y2="118" stroke="#222222" stroke-width="1.8"/>
+<circle cx="210" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="210" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >0</text>
+<circle cx="274" cy="274" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="274" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >5</text>
+<circle cx="242.0" cy="196" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="242.0" y="201" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >5</text>
+<circle cx="338" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="338" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >3</text>
+<circle cx="402" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="402" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >8</text>
+<circle cx="370.0" cy="196" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="370.0" y="201" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >8</text>
+<circle cx="306.0" cy="118" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="306.0" y="123" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >8</text>
+<circle cx="466" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="466" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >2</text>
+<circle cx="530" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="530" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >7</text>
+<circle cx="498.0" cy="196" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="498.0" y="201" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >7</text>
+<circle cx="594" cy="274" r="21" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="594" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >5</text>
+<circle cx="658" cy="274" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="658" y="279" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text>
+<circle cx="626.0" cy="196" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="626.0" y="201" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text>
+<circle cx="562.0" cy="118" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="562.0" y="123" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text>
+<circle cx="434.0" cy="40" r="21" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="434.0" y="45" font-size="14" text-anchor="middle" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >10</text><text x="10" y="76" font-size="15" text-anchor="start" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >item A</text>
+<text x="10" y="94" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >2 kg</text>
+<text x="10" y="154" font-size="15" text-anchor="start" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >item B</text>
+<text x="10" y="172" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >3 kg</text>
+<text x="10" y="232" font-size="15" text-anchor="start" font-weight="bold" fill="#222222" font-family="Helvetica, Arial, sans-serif" >item C</text>
+<text x="10" y="250" font-size="13" text-anchor="start" font-weight="normal" fill="#555555" font-family="Helvetica, Arial, sans-serif" >5 kg</text><circle cx="29" cy="327" r="9" fill="white" stroke="#222222" stroke-width="2"/>
+<text x="44" y="332" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >the room left in the box (kg)</text>
+<circle cx="289.6" cy="327" r="9" fill="#fbe3c2" stroke="#222222" stroke-width="2"/>
+<text x="304.6" y="332" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" font-family="Helvetica, Arial, sans-serif" >the same room left, with the same items to decide</text>
+</svg>

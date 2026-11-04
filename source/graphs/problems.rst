@@ -1064,6 +1064,171 @@ Core Problems
      them.
 
 
+.. exercise:: Network Design ★★★
+   :label: graphs/problems/network
+
+   A city wants to connect eight neighborhoods, A to H, with fiber optic
+   cables. The table below gives the cost (in millions) of laying a cable
+   directly between two neighborhoods. A dash means that no cable can be
+   laid between them.
+
+   .. list-table::
+      :header-rows: 1
+      :stub-columns: 1
+      :align: center
+
+      * - 
+        - **A**
+        - **B**
+        - **C**
+        - **D**
+        - **E**
+        - **F**
+        - **G**
+        - **H**
+      * - **A**
+        - ·
+        - 13
+        - 8
+        - 26
+        - 27
+        - 14
+        - –
+        - 21
+      * - **B**
+        - 13
+        - ·
+        - –
+        - –
+        - –
+        - 3
+        - 2
+        - 28
+      * - **C**
+        - 8
+        - –
+        - ·
+        - –
+        - –
+        - –
+        - 25
+        - 18
+      * - **D**
+        - 26
+        - –
+        - –
+        - ·
+        - 19
+        - –
+        - 29
+        - –
+      * - **E**
+        - 27
+        - –
+        - –
+        - 19
+        - ·
+        - –
+        - 4
+        - –
+      * - **F**
+        - 14
+        - 3
+        - –
+        - –
+        - –
+        - ·
+        - –
+        - –
+      * - **G**
+        - –
+        - 2
+        - 25
+        - 29
+        - 4
+        - –
+        - ·
+        - –
+      * - **H**
+        - 21
+        - 28
+        - 18
+        - –
+        - –
+        - –
+        - –
+        - ·
+
+   Find a minimum spanning tree using Prim's algorithm, starting from A,
+   and then using Kruskal's algorithm. What is the minimum total cost?
+
+.. solution:: graphs/problems/network
+   :label: graphs/problems/network/solution
+   :class: dropdown
+
+   **Prim's algorithm**, starting from A, adds the edges in this
+   order:
+
+   AC (8), AB (13), BG (2), BF (3), EG (4), CH (18), DE (19).
+
+   For instance, the first step takes AC (8), the cheapest of the six
+   cables leaving A. Once B is in the tree, the cheap edges BG (2) and BF
+   (3) become available, and so does EG (4) after that.
+
+   **Kruskal's algorithm** goes through the cables from the cheapest to
+   the most expensive. It adds BG (2), BF (3), EG (4), AC (8) and AB (13).
+   It skips AF (14), because A and F are already connected through B. It
+   adds CH (18) and DE (19), which gives the seven edges we need for eight
+   neighborhoods.
+
+   Both algorithms find the same seven cables: AB, AC, BF, BG, CH, DE and
+   EG. The minimum total cost is
+
+   .. math::
+
+      2 + 3 + 4 + 8 + 13 + 18 + 19 = 67 \text{ million.}
+
+
+.. exercise:: Why Is the Cheapest Tree Unique? ★★★
+   :label: graphs/problems/unique
+
+   If all the edge weights in a connected graph are different, then there
+   is only one minimum spanning tree. Explain, in your own words, why this
+   is the case.
+
+   *Hint*: Suppose there are two different minimum spanning trees, and
+   think about swapping one edge for another.
+
+.. solution:: graphs/problems/unique
+   :label: graphs/problems/unique/solution
+   :class: dropdown
+
+   Suppose there are two different minimum spanning trees, :math:`T_1`
+   and :math:`T_2`. Since they are different, one of them has an edge
+   :math:`e` that the other does not. Say :math:`e` is in :math:`T_1`.
+
+   If we remove :math:`e` from :math:`T_1`, the tree falls apart in two
+   groups of vertices. But :math:`T_2` also connects the two ends of
+   :math:`e`, through a path. This path has to go from one group to the
+   other somewhere, through some edge :math:`f` of :math:`T_2`. The edge
+   :math:`f` is not :math:`e`, since :math:`T_2` does not have :math:`e`.
+
+   Now compare the weights of :math:`e` and :math:`f`. They are different,
+   since all the weights are.
+
+   - If :math:`e` is cheaper than :math:`f`, we can swap :math:`f` for
+     :math:`e` in :math:`T_2`. We still have a spanning tree, but a
+     cheaper one: :math:`T_2` was not a minimum spanning tree.
+
+   - If :math:`f` is cheaper than :math:`e`, we can swap :math:`e` for
+     :math:`f` in :math:`T_1`, and :math:`T_1` was not a minimum spanning
+     tree.
+
+   Either way, one of the two trees was not minimal, which contradicts
+   our assumption. So there cannot be two different minimum spanning
+   trees.
+
+
 .. exercise:: Who's in Charge? ★★★
    :label: graphs/problems/unionfind
 

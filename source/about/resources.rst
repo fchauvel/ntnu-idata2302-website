@@ -66,6 +66,13 @@ You will also find many online blog posts and tutorials such as
 as they may contain mistakes (as does this course).
 
 
+Code Examples
+=============
+
+The code examples that accompany the lecture notes (in several
+programming languages) are listed in :doc:`code_samples`.
+
+
 Programming Platforms
 =====================
 
