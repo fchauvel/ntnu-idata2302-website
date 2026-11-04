@@ -44,6 +44,14 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [".DS_Store", "**/*inc.rst"]
 
+# Solutions of the self-checks are not published yet. To release the
+# mid-term solutions, un-comment the line below (or build with
+# "-t mid_term_solutions", to preview them).
+# tags.add("mid_term_solutions")
+if "mid_term_solutions" not in tags:
+    exclude_patterns.append("self_check/mid_term_solutions.rst")
+    suppress_warnings = ["toc.excluded"]
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

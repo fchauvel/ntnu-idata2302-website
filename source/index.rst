@@ -49,6 +49,15 @@ Algorithms and Data Structures
 
    
 .. toctree::
+   :caption: Self-Checks
+
+   self_check/mid_term
+
+..
+   self_check/final
+
+
+.. toctree::
    :caption: Recaps
 
    maths.rst
