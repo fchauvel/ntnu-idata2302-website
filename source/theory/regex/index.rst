@@ -50,9 +50,10 @@ Let us start with a small pattern. Sheep say ``b``, then a number of
 
 A way to describe them is to draw a small *automaton*, as shown in
 :numref:`theory/regex/sheep`. It is a *graph*: The vertices are the
-*states*, and the edges are the *transitions*, each one labelled with the
-symbol it reads. The arrow coming from nowhere marks the *initial state*,
-and the double circle marks the *accepting state*.
+*states*, and the edges are the *transitions*. If you remember the
+prefix trees, this is the same idea: Each edge is labelled with the
+symbol it reads. The arrow coming from nowhere marks the *initial
+state*, and the double circle marks the *accepting state*.
 
 .. figure:: _static/images/sheep.svg
    :name: theory/regex/sheep
@@ -61,12 +62,25 @@ and the double circle marks the *accepting state*.
    An automaton that accepts the sheep: ``b``, then any number of ``a``,
    then ``!``.
 
+What does a state stand for? It is *what we know* about the text at that
+point. In state 0, we have not read anything yet. In state 1, we have read
+a ``b``, and possibly some ``a`` after it: We are in the middle of a
+sheep. In state 2, we have read a complete sheep, ``!`` included. The
+automaton has no other memory: When it moves, it forgets everything but
+the state it lands in.
+
 To check a text, we start in the initial state, and we follow one
 transition per symbol. The text matches if we end in the accepting state.
 For ``baaa!``, we go through the states 0, 1, 1, 1, 1 and then 2: It
 matches. For ``ba``, we stop in state 1, which is not accepting: It does
 not match. And for ``ab!``, there is no transition labelled ``a`` from
-state 0, so we are stuck: It does not match either.
+state 0: We are stuck, and it does not match either.
+
+In general, a state has transitions only for the symbols that make sense
+there. Any other symbol is a *failure*. We could draw an extra *error
+state*, where every symbol leads back to itself, and add a transition to
+it wherever one is missing. It would clutter every figure, so we leave it
+out, and we read a missing transition as "the text does not match".
 
 This is a program we know how to write. The graph is stored as a table
 (for each state and each symbol, which state is next), and the whole
@@ -74,15 +88,20 @@ check is a single loop over the text:
 
 .. code-block:: text
 
-   state ← initial state
-   for each symbol in text:
-       state ← next[state][symbol]       (stuck if there is none)
-   return state is accepting
+   match(text):
+       state ← initial state
+       for each symbol in text:
+           if there is no transition from state on symbol:
+               return false
+           state ← next[state][symbol]
+       return state is accepting
 
-What does it cost? We read the text once, and *all we remember is the
-current state*. Whether the text is ten symbols or ten million, the memory
-is the same. Keep this in mind: The machine is the automaton, the resource
-is its memory, and the bound is a *constant*. We will come back to this.
+What does it cost? Each symbol triggers exactly one transition, so the
+time is *linear* in the length of the text. And *all we remember is the
+current state*: Whether the text is ten symbols or ten million, the
+memory is the same. Keep this in mind: The machine is the automaton, the
+resource we look at is its memory, and the bound is a *constant*. We will
+come back to this.
 
 
 Words and Languages
