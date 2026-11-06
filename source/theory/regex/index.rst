@@ -747,10 +747,13 @@ examples at each level.
    A hierarchy of languages. Each level contains the one inside it.
 
 - **Regular languages**: E-mail addresses, URLs, dates, identifiers,
-  the patterns of ``grep``, etc.
+  the patterns of ``grep``, and the *tokens* of a programming language
+  (names, numbers, symbols). This is the *lexical* analysis of a
+  compiler: Cutting the text into words, etc.
 - **Context-free languages**: Arithmetic expressions, JSON, HTML,
-  balanced brackets, ``aⁿbⁿ``, and the *syntax* of most programming
-  languages, etc.
+  balanced brackets, ``aⁿbⁿ``, and the *structure* of programs, how
+  tokens nest into blocks and expressions. This is the *syntactic*
+  analysis of a compiler: Building the tree, etc.
 - **Context-sensitive languages**: ``aⁿbⁿcⁿ``, or a word written twice,
   such as ``abab`` or ``bobbob``, etc.
 - **Recursively enumerable languages**: Whatever *a program can
