@@ -7,12 +7,12 @@
 <ellipse cx='360' cy='280' rx='255' ry='140' fill='#dde9fd' stroke='#222222' stroke-width='1.6'/>
 <ellipse cx='360' cy='280' rx='190' ry='70' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
 <text x='360' y='44' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Recursively enumerable languages</text>
-<text x='360' y='63' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>the programs that eventually stop, etc.</text>
+<text x='360' y='63' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>TeX, where the text being read rewrites how to read it</text>
 <text x='360' y='102' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-sensitive languages</text>
-<text x='360' y='121' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>aⁿbⁿcⁿ, a word written twice (abab, bobbob), etc.</text>
+<text x='360' y='121' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>here-documents: &lt;&lt;END ... END, a word written twice</text>
 <text x='360' y='168' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-free languages</text>
-<text x='360' y='187' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>arithmetic expressions, JSON, HTML,</text>
-<text x='360' y='204' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>balanced brackets, aⁿbⁿ, etc.</text>
+<text x='360' y='187' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>nested comments: /* a /* b */ c */</text>
+<text x='360' y='204' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>raw strings: r##"..."##, as many # on both sides</text>
 <text x='360' y='272' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Regular languages</text>
-<text x='360' y='291' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>e-mails, URLs, dates, identifiers, etc.</text>
+<text x='360' y='291' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>identifiers, numbers, whitespace, dates, e-mails</text>
 </svg>

@@ -737,44 +737,48 @@ A Hierarchy of Languages
 ------------------------
 
 So some languages are harder than others, and we can *rank* them.
-:numref:`theory/regex/hierarchy` shows the usual ladder, with a few
-examples at each level.
+Let us stay in the world of this lecture, *reading text*, and see what
+a compiler meets when it cuts source code into pieces (this is called
+*lexical analysis*). :numref:`theory/regex/hierarchy` shows the usual
+ladder, with an example at each level.
 
 .. figure:: _static/images/hierarchy.svg
    :name: theory/regex/hierarchy
    :align: center
 
-   A hierarchy of languages. Each level contains the one inside it.
+   A hierarchy of languages, with examples from the lexical analysis of
+   programs. Each level contains the one inside it.
 
-- **Regular languages**: E-mail addresses, URLs, dates, identifiers,
-  the patterns of ``grep``, and the *tokens* of a programming language
-  (names, numbers, symbols). This is the *lexical* analysis of a
-  compiler: Cutting the text into words, etc.
-- **Context-free languages**: Arithmetic expressions, JSON, HTML,
-  balanced brackets, ``aⁿbⁿ``, and the *structure* of programs, how
-  tokens nest into blocks and expressions. This is the *syntactic*
-  analysis of a compiler: Building the tree, etc.
-- **Context-sensitive languages**: ``aⁿbⁿcⁿ``, or a word written twice,
-  such as ``abab`` or ``bobbob``, etc.
-- **Recursively enumerable languages**: Whatever *a program can
-  recognize*. For instance, the programs that eventually stop. It is a
-  mouthful, so remember it as "the top of the ladder".
+- **Regular languages**: Identifiers, numbers, whitespace, but also dates
+  and e-mail addresses. All the pieces of a program that regular
+  expressions describe well. No memory beyond "which kind of piece am I
+  reading?" is needed.
+- **Context-free languages**: *Nested* comments, such as
+  ``/* a /* b */ c */``, which are allowed in Rust, Haskell or Swift: Each
+  ``/*`` must be closed by its own ``*/``. Or Rust raw strings, such as
+  ``r##"..."##``, where the closing quote must be followed by as many ``#``
+  as the opening one. These are balanced-brackets problems, like
+  ``aⁿbⁿ``: We count up, and then count down.
+- **Context-sensitive languages**: Here-documents in a shell. After
+  ``cat <<END``, the text goes on until a line that says ``END``, where
+  ``END`` is *whatever word you chose* at the start. It is a word written
+  twice, such as ``abab`` or ``bobbob``: We must remember an arbitrary
+  word, and compare it later.
+- **Recursively enumerable languages**: TeX, where the text being read
+  can change how the rest is read: A command can give a new meaning to a
+  character, or define a new command. Reading the text *is* running a
+  program. This one is a mouthful, so remember it as "the top of the
+  ladder".
 
-A word on ``aⁿbⁿ`` versus ``aⁿbⁿcⁿ``, which look alike. To check
-``aⁿbⁿ``, we count the ``a`` up, and then count them down against the
-``b``: One counter is enough, and nesting needs no more. To check
-``aⁿbⁿcⁿ``, the ``b`` have used up our count, and there is nothing left to
-check the ``c`` against. We would need to count *twice*.
+Why is the third level harder than the second? Think of a *stack* of
+plates: It gives back the last plate first. This is just right for the
+nested comments, since the last ``/*`` opened is the first one to
+close. But for ``END``, we need the *first* letter back first, and the
+stack gives us the last one. (A pattern like ``aⁿbⁿcⁿ``, which has to
+count twice, is another example at this level.)
 
 The names come from linguistics, where this ladder was first drawn to
 study the grammar of human languages. We only need the examples.
-
-.. margin::
-
-   The word *language* has two meanings here. A set of words, which is
-   what we have studied so far, and a notation to write programs, such as
-   Java. The *syntax* of Java is a language of the first kind. Java itself,
-   as a way to program, is something else.
 
 Here comes a small twist. We wrote earlier the grammar of the regular
 expressions, and it needs *balanced parentheses*. So the language of the
