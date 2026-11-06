@@ -774,6 +774,14 @@ ladder, with an example at each level.
   program. This one is a mouthful, so remember it as "the top of the
   ladder".
 
+.. margin::
+
+   Careful with XML: Checking that ``</name>`` spells the same letters
+   as ``<name>``, for *any* name, is the "word written twice" problem
+   again. In practice, the lexer reads a whole name as one token, so the
+   grammar only sees one symbol per tag. Once more, lexing and parsing
+   share the work.
+
 Why is the third level harder than the second? Think of a *stack* of
 plates: It gives back the last plate first. This is just right for the
 nested comments, or the open tags of an XML document, since the last one
