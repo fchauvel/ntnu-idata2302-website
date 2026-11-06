@@ -758,6 +758,9 @@ ladder, with an example at each level.
   lexers meet it with *nested* comments, such as ``/* a /* b */ c */``,
   which are allowed in Rust, Haskell or Swift: Each ``/*`` must be closed
   by its own ``*/``.
+  Beyond lexers, it is also the world of *nested structures*: JSON
+  objects inside JSON objects, HTML tags inside HTML tags, arithmetic
+  expressions inside parentheses.
 - **Context-sensitive languages**: Here-documents in a shell. After
   ``cat <<END``, the text goes on until a line that says ``END``, where
   ``END`` is *whatever word you chose* at the start. It is a word written
