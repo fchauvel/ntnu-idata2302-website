@@ -13,6 +13,10 @@ Machines
    turned into prose, figures and code. Hand-offs between sections are in
    italics. Items marked (optional) are the first to cut.
 
+   Vocabulary: We speak of the *state* of a machine, as for the automaton ("means
+   to remember"), rather than of its "memory". It is the same thing, but it keeps
+   one word across the lecture.
+
    Where this lecture stands: It is the middle of the story "machine,
    resource, bound". Lecture 1 gave the simplest machine. Here, we look at
    what a machine is, and at others, up to the Turing machine, the reference.
@@ -21,8 +25,8 @@ Machines
 
    Thread of the lecture: Lecture 1 ended on a ladder of languages, each
    level harder than the previous one. Here, each level gets its machine, and
-   the machines differ by *the interface of their memory* (an ADT, as in the
-   Sequences module): None beyond the state (automaton), a stack (push, pop at
+   the machines differ by *the interface of their state* (an ADT, as in the
+   Sequences module): Only a state to replace (automaton), a stack (push, pop at
    the top), a tape (read, write, move, anywhere). Computation is a walk
    from configuration to configuration, as in the search lectures.
 
@@ -51,17 +55,35 @@ The Automaton Is a Machine
 So, What Is a Machine?
 ======================
 
-- A working definition, not a formal one: A machine is **memory** plus
-  **rules** that say what to do next, step by step.
-- The memory is an ADT: What matters is not how it is stored, but which
-  operations it offers. This is what makes machines differ.
-- The *configuration* is what the machine remembers right now. One step moves
+- A working definition, not a formal one: A machine is a **state**, that is,
+  a means to *remember*, plus **rules** that say what to do next, step by step,
+  given the state and what we read. We keep the vocabulary of the automata:
+  The state is what the machine knows right now.
+- The *configuration* is the state at a given moment. One step moves
   it from a configuration to the next. A computation is a *walk* from
   configuration to configuration, the cursor we met in the heuristic search
   lecture, on a graph that is implicit.
+- Grounding, with the machine of this course: **the RAM fits the definition**.
+
+  - Its *state* is what it remembers: The two registers, ``ACC`` and ``IP``,
+    and the memory cells (the program is in there, too).
+  - Its *rules* are the same at every step: Read the two cells at the address
+    in ``IP`` (the instruction), look at the operation code, and, depending on
+    it, change ``ACC``, a cell or ``IP``; then go on. One rule per operation
+    code, picked by what was read: A table, just like the transitions of an
+    automaton.
+  - A computation on the RAM is a walk from one configuration of
+    (``ACC``, ``IP``, cells) to the next.
+  - So the automaton and the RAM differ in *what they can remember*, not in the
+    kind of thing they are. The RAM has registers *and* many cells it can
+    touch anywhere.
 - *Deterministic*: One possible next step, or none. *Non-deterministic*:
-  several. The same notions as for the automata of lecture 1.
-- Machines differ by what they can remember, and how they can touch it.
+  several. The same notions as for the automata of lecture 1. (The RAM is
+  deterministic.)
+- The state is an ADT: What matters is not how it is stored, but which
+  operations it offers. This is what makes machines differ. An automaton: Only a
+  state to read and replace. A stack machine: A stack. A Turing machine: A
+  tape. The RAM: Registers and an array of cells.
 
 *Hand-off: Which machines exist?*
 
@@ -69,10 +91,10 @@ So, What Is a Machine?
 Models of Computation
 =====================
 
-- A zoo, on one slide each or as a table. For each: what is its memory, what
+- A zoo, on one slide each or as a table. For each: what can it remember, what
   is its rule?
-- The **automaton**: constant memory.
-- The **stack machine**: an automaton with a stack. (A stack is memory that can
+- The **automaton**: a state, and nothing else, so a bounded way to remember.
+- The **stack machine**: an automaton with a stack. (A stack is a state that can
   only be touched at the top.)
 - The **RAM**: the machine of this course.
 - The **parallel machine**: many processors, working at the same time.
@@ -84,7 +106,7 @@ Models of Computation
 - How to compare them? A machine is **more powerful** if it can *simulate*
   another one, or if it solves more problems.
 
-*Hand-off: Let us look at two of them, to see what more memory buys.*
+*Hand-off: Let us look at two of them, to see what a richer state buys.*
 
 
 The Stack Machine
@@ -102,13 +124,13 @@ The Stack Machine
 - The level in between, context-sensitive, needs a tape of limited size. We skip
   it: It brings no new idea.
 
-*Hand-off: What if the memory could be touched anywhere, and freely?*
+*Hand-off: What if the state could be touched anywhere, and freely?*
 
 
 The Turing Machine
 ==================
 
-- A *tape* (unbounded memory), a *head* that reads and writes one cell and moves
+- A *tape* (unbounded state), a *head* that reads and writes one cell and moves
   left or right, and a *state*. The rules are a table: In this state, reading
   this symbol, write this one, move, and go to that state.
 - Figure: a tape, a head, and a trace of a very small machine (for instance,
