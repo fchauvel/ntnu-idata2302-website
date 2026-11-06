@@ -751,12 +751,17 @@ examples at each level.
 - **Context-free languages**: Arithmetic expressions, JSON, HTML,
   balanced brackets, ``aⁿbⁿ``, and the *syntax* of most programming
   languages, etc.
-- **Context-sensitive languages**: ``aⁿbⁿcⁿ``, rules such as "a
-  variable must be declared before it is used", which a compiler checks
-  after reading the program, etc.
+- **Context-sensitive languages**: ``aⁿbⁿcⁿ``, or a word written twice,
+  such as ``abab`` or ``bobbob``, etc.
 - **Recursively enumerable languages**: Whatever *a program can
   recognize*. For instance, the programs that eventually stop. It is a
   mouthful, so remember it as "the top of the ladder".
+
+A word on ``aⁿbⁿ`` versus ``aⁿbⁿcⁿ``, which look alike. To check
+``aⁿbⁿ``, we count the ``a`` up, and then count them down against the
+``b``: One counter is enough, and nesting needs no more. To check
+``aⁿbⁿcⁿ``, the ``b`` have used up our count, and there is nothing left to
+check the ``c`` against. We would need to count *twice*.
 
 The names come from linguistics, where this ladder was first drawn to
 study the grammar of human languages. We only need the examples.
