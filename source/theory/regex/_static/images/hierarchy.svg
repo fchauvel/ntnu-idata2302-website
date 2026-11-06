@@ -1,15 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<svg xmlns='http://www.w3.org/2000/svg' width='720' height='460' viewBox='0 0 720 460'>
-<rect width='720' height='460' fill='white'/>
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='560' viewBox='0 0 720 560'>
+<rect width='720' height='560' fill='white'/>
 <defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
-<ellipse cx='360' cy='230' rx='350' ry='215' fill='#eaf1fe' stroke='#222222' stroke-width='1.6'/>
-<ellipse cx='360' cy='230' rx='300' ry='150' fill='#dde9fd' stroke='#222222' stroke-width='1.6'/>
-<ellipse cx='360' cy='230' rx='200' ry='70' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
-<text x='360' y='46' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>And beyond</text>
-<text x='360' y='65' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a variable is declared before it is used,  aⁿbⁿcⁿ, etc.</text>
-<text x='360' y='108' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-free languages</text>
-<text x='360' y='127' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>arithmetic expressions, JSON, HTML,</text>
-<text x='360' y='144' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>balanced brackets, aⁿbⁿ, etc.</text>
-<text x='360' y='222' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Regular languages</text>
-<text x='360' y='241' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>e-mails, URLs, dates, identifiers, etc.</text>
+<ellipse cx='360' cy='280' rx='350' ry='265' fill='#f4f4f4' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='315' ry='205' fill='#eaf1fe' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='255' ry='140' fill='#dde9fd' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='190' ry='70' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
+<text x='360' y='44' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Recursively enumerable languages</text>
+<text x='360' y='63' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>the programs that eventually stop, etc.</text>
+<text x='360' y='102' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-sensitive languages</text>
+<text x='360' y='121' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>aⁿbⁿcⁿ, a variable is declared before it is used, etc.</text>
+<text x='360' y='168' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-free languages</text>
+<text x='360' y='187' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>arithmetic expressions, JSON, HTML,</text>
+<text x='360' y='204' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>balanced brackets, aⁿbⁿ, etc.</text>
+<text x='360' y='272' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Regular languages</text>
+<text x='360' y='291' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>e-mails, URLs, dates, identifiers, etc.</text>
 </svg>
