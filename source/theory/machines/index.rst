@@ -170,8 +170,37 @@ own state, and its own rules.
 
 The general name for such a machine is a *model of computation*. How do we
 compare them? One machine is *more powerful* than another if it can
-*simulate* it, or if it solves more problems. Among all these models, one is
-the reference.
+*simulate* it, or if it solves more problems.
+
+The Ladder, with Its Machines
+-----------------------------
+
+Remember the ladder of languages at the end of the previous lecture. Now that
+we know about machines, we can complete the picture. For each level, here is
+the *least powerful machine* that can recognize all the languages of that level
+(:numref:`theory/machines/ladder`).
+
+.. figure:: _static/images/ladder_machines.svg
+   :name: theory/machines/ladder
+   :align: center
+
+   The ladder of languages, with the least powerful machine that recognizes
+   each level.
+
+- **Regular languages**: The finite-state machine, our automaton.
+- **Context-free languages**: The pushdown automaton. A stack is just what
+  nested comments, tags and brackets ask for.
+- **Context-sensitive languages**: The
+  `linear bounded automaton <https://en.wikipedia.org/wiki/Linear_bounded_automaton>`_,
+  which is a Turing machine allowed to use only as much tape as the input is
+  long. We skip it, as it brings no new idea.
+- **Recursively enumerable languages**: The Turing machine, which has no limit
+  on its tape. This is the topic of the next section.
+
+Each machine does at least what the previous one does: A pushdown automaton
+can ignore its stack and behave like an automaton. Harder languages need
+machines that remember more, or touch what they remember more freely. Among
+all the models of this zoo, the last one is the reference.
 
 
 Turing Machines
@@ -184,7 +213,7 @@ Alan Turing imagined this machine in 1936, long before computers existed.
 It has three parts. A *tape*, as long as needed in both directions, cut in
 cells that each hold one symbol. A *head*, which sits on one cell, reads
 it, writes it and moves one cell to the left or to the right. And a *control
-state*, which is a name, such as "find the end" or "carry".
+state*, which is a name, such as "start" or "middle".
 
 Let us ask our three questions.
 
@@ -197,10 +226,12 @@ Let us ask our three questions.
 - A **computation** starts with the input on the tape, and goes on until
   the machine reaches a special *halting* state.
 
-Here is a very small machine. It adds one to a binary number written on the
-tape, with the head on the leftmost digit. It walks to the end of the number.
-Then it comes back, turning every ``1`` into a ``0`` (this is the carry),
-until it finds a ``0``, or a blank, to turn into a ``1``. The rules are:
+Let us reuse our sheep, ``ba*!``. Here is a Turing machine that
+recognizes them. The head starts on the first symbol. It checks a ``b``,
+then any number of ``a``, then a ``!``, then a blank (the end of the text), and
+it moves to the right after each symbol. If it reaches the state ``accept``,
+the text is a sheep. If no rule applies, the machine is stuck, and the text
+is not a sheep. The rules are:
 
 .. list-table::
    :header-rows: 1
@@ -211,48 +242,45 @@ until it finds a ``0``, or a blank, to turn into a ``1``. The rules are:
      - write
      - move
      - new state
-   * - find the end
-     - ``0`` or ``1``
-     - the same
+   * - start
+     - ``b``
+     - ``b``
      - right
-     - find the end
-   * - find the end
+     - middle
+   * - middle
+     - ``a``
+     - ``a``
+     - right
+     - middle
+   * - middle
+     - ``!``
+     - ``!``
+     - right
+     - end
+   * - end
      - blank
      - blank
-     - left
-     - carry
-   * - carry
-     - ``1``
-     - ``0``
-     - left
-     - carry
-   * - carry
-     - ``0``
-     - ``1``
-     - left
-     - halt
-   * - carry
-     - blank
-     - ``1``
-     - left
-     - halt
+     - right
+     - accept
 
-:numref:`theory/machines/trace` shows it adding one to ``1011``
-(eleven, in binary), and getting ``1100`` (twelve). Each row is one
+:numref:`theory/machines/trace` shows it on ``baa!``. Each row is one
 configuration. The head is the blue triangle.
 
 .. figure:: _static/images/turing_trace.svg
    :name: theory/machines/trace
    :align: center
 
-   A Turing machine adding one to ``1011``. It takes eight steps.
+   A Turing machine recognizing ``baa!``. It takes five steps.
 
-Why do we care about such an odd and slow machine? Because it is the
-simplest machine that is *general*: Anything we can compute, it can compute
-too, and its simplicity makes it easy to reason about. A Turing machine
-writes on its tape, as much as it needs, wherever it needs. This is what the
-automaton lacks, and what lets the Turing machine do all the things the
-previous ladder was missing, such as comparing a word with a copy of itself.
+Look closely: This machine never changes what it reads, it only moves to the
+right, and its rules are our triplets with a few more columns. *It is
+our automaton!* So the Turing machine can do everything the automaton does.
+What it has in more is that it can *write*, and *go back*. This is what the
+previous ladder was missing. To check ``aⁿbⁿ``, for instance, a Turing machine
+can cross out the first ``a``, walk to the right to cross out the first ``b``,
+come back to the next ``a``, and so on. If, in the end, nothing is left but
+crosses, the numbers were equal. It uses the tape as a counter that
+nothing consumes, and it can walk it as many times as needed.
 
 The RAM and the Turing Machine Are Equivalent
 ---------------------------------------------
@@ -276,12 +304,18 @@ works both ways, they are equivalent.
   head to find the cell it needs, read it or write it, and come back.
 
 So the RAM and the Turing machine solve exactly the same problems. And we
-could say more: Every machine that anyone has proposed, that we could
-actually build, turned out to be equivalent to the Turing machine. This is the
-*Church-Turing thesis*. It cannot be proved, since "reasonable machine" is not
-a mathematical notion, but nobody has found a counter-example in almost a
-century. This is why we are comfortable using the Turing machine as a
-reference.
+could say more:
+
+.. important::
+
+   **The Church-Turing thesis.** Every reasonable machine is equivalent to the
+   Turing machine: Whatever any machine we could build can compute, a Turing
+   machine can compute too.
+
+It cannot be proved, since "reasonable machine" is not a mathematical notion.
+But nobody has found a counter-example in almost a century, and every machine
+anyone proposed turned out to be equivalent. This is why we are comfortable
+using the Turing machine as a reference.
 
 One thing we do not look at here is *how long* the simulation takes. We only
 care that it can be done. The time will matter in the next lecture.
@@ -291,27 +325,37 @@ The Machine We Search For
 =========================
 
 There is one more machine, and it does not exist. It is the
-**non-deterministic Turing machine**. At each step, it may have several
-rules to choose from, and it **always chooses the right one**.
+**non-deterministic Turing machine**: At some steps, it has *several* rules
+to choose from. There are two ways to picture it, which give the same result.
 
-Imagine we give it a Sudoku to solve. It writes a digit in the first
-empty cell. Which one? It does not matter: It *guesses*, and it guesses
-right. Then the next cell, and so on until all the cells are filled, which takes
-a number of steps proportional to the number of cells. Finally, it checks
-that every row, every column and every block has no repeated digit. If
-there is a solution, one sequence of lucky guesses leads to it, and the machine
-finds it. :numref:`theory/machines/choices` shows the tree of the choices, and
-the machine going straight to the leaf that works.
+- **A machine that always guesses right.** It picks the rule that leads to
+  the answer, if there is one.
+- **A machine with infinite parallelism.** At each choice, it makes as many
+  copies of itself as there are rules, and all the copies go on at the same
+  time. It answers yes as soon as *one* copy says yes.
+
+Imagine we give it a Sudoku to solve. It writes a digit in the first empty
+cell. Which one? The lucky machine *guesses*, and it guesses right. The
+parallel machine writes all of them, one in each copy. Then the next cell,
+and so on until all the cells are filled, which takes a number of steps
+proportional to the number of cells. Finally, it checks that every row, every
+column and every block has no repeated digit. If there is a solution, one
+sequence of choices leads to it. :numref:`theory/machines/choices` shows the
+tree of the choices. The lucky machine goes straight to the leaf that works.
+The parallel machine explores every branch at once, and so, *timewise*, it
+needs the same: The length of one branch, not the size of the tree.
 
 .. figure:: _static/images/choices.svg
    :name: theory/machines/choices
    :align: center
 
-   The choices of a non-deterministic machine, as a tree. It always follows the
-   blue path, and ends on a valid leaf.
+   The choices of a non-deterministic machine, as a tree. The lucky machine
+   follows the blue path. The parallel machine follows them all, and the blue
+   one is the one that says yes.
 
-Of course, we cannot build it. It is a *yardstick*: A way to say how hard a
-problem is, by asking how long this lucky machine would need.
+Of course, we cannot build either of them: Nobody has infinitely many
+processors, or a lucky streak that never ends. It is a *yardstick*: A way to
+say how hard a problem is, by asking how long such a machine would need.
 
 An ordinary machine can imitate it, by trying *all* the choices, one after the
 other. You know this tree: It is the search tree of the combinatorial search

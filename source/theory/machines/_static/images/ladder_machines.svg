@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='560' viewBox='0 0 720 560'>
+<rect width='720' height='560' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<ellipse cx='360' cy='280' rx='350' ry='265' fill='#f4f4f4' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='315' ry='205' fill='#eaf1fe' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='255' ry='140' fill='#dde9fd' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='360' cy='280' rx='190' ry='70' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
+<text x='360' y='44' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Recursively enumerable languages</text>
+<text x='360' y='63' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Turing machine</text>
+<text x='360' y='102' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-sensitive languages</text>
+<text x='360' y='121' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>linear bounded automaton (a tape as long as the input)</text>
+<text x='360' y='168' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Context-free languages</text>
+<text x='360' y='187' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>pushdown automaton (an automaton with a stack)</text>
+<text x='360' y='272' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Regular languages</text>
+<text x='360' y='291' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>finite-state machine (our automaton)</text>
+</svg>
