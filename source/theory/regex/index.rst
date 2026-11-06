@@ -736,37 +736,31 @@ brackets, the blocks and the calls of a program, is of this kind.
 A Hierarchy of Languages
 ------------------------
 
-So some languages are harder than others, and we can *rank* them by the
-kind of machine they need. :numref:`theory/regex/hierarchy` shows the usual
-ladder.
+So some languages are harder than others, and we can *rank* them.
+:numref:`theory/regex/hierarchy` shows the usual ladder, with a few
+examples at each level.
 
 .. figure:: _static/images/hierarchy.svg
    :name: theory/regex/hierarchy
    :align: center
 
-   A hierarchy of languages. Each level contains the one inside it, and
-   needs a stronger machine.
+   A hierarchy of languages. Each level contains the one inside it.
 
-- **Regular languages** are the ones that regular expressions, or
-  automata, describe: Names, numbers, dates, the patterns of ``grep``.
-- **Context-free languages** need a grammar like the one we wrote
-  earlier, or an automaton with a *stack*: Balanced brackets,
-  arithmetic expressions, and the *syntax* of most programming languages
-  (Java, JSON, HTML).
-- **Beyond context-free** are the rules such as "a variable must be
-  declared before it is used", which a compiler checks after reading the
-  program.
-- And at the top, **anything a Turing machine can recognize**: This is
-  what a computer can do. We will meet that machine in the next
-  lecture.
+- **Regular languages**: E-mail addresses, URLs, dates, identifiers,
+  the patterns of ``grep``, etc.
+- **Context-free languages**: Arithmetic expressions, JSON, HTML,
+  balanced brackets, ``aⁿbⁿ``, and the *syntax* of most programming
+  languages, etc.
+- **And beyond**: Rules such as "a variable must be declared before it
+  is used", which a compiler checks after reading the program,
+  ``aⁿbⁿcⁿ``, etc.
 
 .. margin::
 
    The word *language* has two meanings here. A set of words, which is
-   what a machine recognizes, and a notation to write programs, such as
-   Java. The *syntax* of Java is a language of the first kind, and sits in
-   the middle of the ladder. Java itself, as a way to program, sits at the
-   top.
+   what we have studied so far, and a notation to write programs, such as
+   Java. The *syntax* of Java is a language of the first kind. Java itself,
+   as a way to program, is something else.
 
 Here comes a small twist. We wrote earlier the grammar of the regular
 expressions, and it needs *balanced parentheses*. So the language of the
@@ -774,5 +768,6 @@ regular expressions is **not regular**: No automaton can read a pattern
 and tell whether it is well formed! We needed a grammar, which is one step
 up the ladder.
 
-Each level needs a stronger machine, and so we should ask: What is a
-machine, and which ones exist? This is the topic of the next lecture.
+Harder, but harder for *what*? To rank languages, we need to say what
+solves them, that is, what a *machine* is, and which ones exist. This is
+the topic of the next lecture.
