@@ -753,12 +753,11 @@ ladder, with an example at each level.
   and e-mail addresses. All the pieces of a program that regular
   expressions describe well. No memory beyond "which kind of piece am I
   reading?" is needed.
-- **Context-free languages**: *Nested* comments, such as
-  ``/* a /* b */ c */``, which are allowed in Rust, Haskell or Swift: Each
-  ``/*`` must be closed by its own ``*/``. Or Rust raw strings, such as
-  ``r##"..."##``, where the closing quote must be followed by as many ``#``
-  as the opening one. These are balanced-brackets problems, like
-  ``aⁿbⁿ``: We count up, and then count down.
+- **Context-free languages**: ``aⁿbⁿ``, some ``a`` followed by *as many*
+  ``b``, as in ``aaabbb``. We count up, and then count down. Real
+  lexers meet it with *nested* comments, such as ``/* a /* b */ c */``,
+  which are allowed in Rust, Haskell or Swift: Each ``/*`` must be closed
+  by its own ``*/``.
 - **Context-sensitive languages**: Here-documents in a shell. After
   ``cat <<END``, the text goes on until a line that says ``END``, where
   ``END`` is *whatever word you chose* at the start. It is a word written
