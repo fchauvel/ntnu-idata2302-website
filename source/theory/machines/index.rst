@@ -45,8 +45,19 @@ The Automaton Is a Machine
 
 - Recap of lecture 1: An automaton reads a word, and keeps a state. The ladder
   of languages ended with a question: Harder, but harder for *what*?
-- What we did last time, on the RAM, was to *simulate* this machine with a
-  loop. A machine, simpler than the RAM, but a machine.
+- Let us look at the automaton as a machine, with three questions that we will
+  ask of every machine in this lecture.
+- *What is the machine?* A graph, which we read one symbol at a time: The text
+  is the input, read once, from left to right.
+- *What is its state?* The vertex we are in. It is all the automaton
+  remembers: What we know about the text so far (not read anything yet, in the
+  middle of a sheep, a complete sheep). Nothing else is kept, so the state
+  is a bounded way to remember.
+- *What are its rules?* The transition table: For each state and each symbol
+  read, the next state. The same table at every step. (Show it again for the
+  sheep automaton.)
+- What we did last time on the RAM was to *simulate* this machine with a loop
+  and a table. A machine, simpler than the RAM, but a machine.
 - The question: So, what is a machine?
 
 *Hand-off: Let us try to say what a machine is, without a formal definition.*
