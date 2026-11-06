@@ -19,6 +19,13 @@ Machines
    The cost of simulating a machine with another is *not* discussed: The point
    is only that there are many machines, and that some are equivalent.
 
+   Thread of the lecture: Lecture 1 ended on a ladder of languages, each
+   level harder than the previous one. Here, each level gets its machine, and
+   the machines differ by *the interface of their memory* (an ADT, as in the
+   Sequences module): None beyond the state (automaton), a stack (push, pop at
+   the top), a tape (read, write, move, anywhere). Computation is a walk
+   from configuration to configuration, as in the search lectures.
+
    What students should take away:
 
    - There are many machines, or *models of computation*.
@@ -32,7 +39,8 @@ Machines
 The Automaton Is a Machine
 ==========================
 
-- Recap of lecture 1: An automaton reads a word, and keeps a state.
+- Recap of lecture 1: An automaton reads a word, and keeps a state. The ladder
+  of languages ended with a question: Harder, but harder for *what*?
 - What we did last time, on the RAM, was to *simulate* this machine with a
   loop. A machine, simpler than the RAM, but a machine.
 - The question: So, what is a machine?
@@ -45,6 +53,8 @@ So, What Is a Machine?
 
 - A working definition, not a formal one: A machine is **memory** plus
   **rules** that say what to do next, step by step.
+- The memory is an ADT: What matters is not how it is stored, but which
+  operations it offers. This is what makes machines differ.
 - The *configuration* is what the machine remembers right now. One step moves
   it from a configuration to the next. A computation is a *walk* from
   configuration to configuration, the cursor we met in the heuristic search
@@ -82,13 +92,15 @@ The Stack Machine
 
 - ``aⁿbⁿ``, the language that automata cannot recognize, becomes easy with a
   stack: Push on each ``a``, pop on each ``b``, and check that the stack is
-  empty.
+  empty. Same for nested comments, or the open tags of an XML document.
 - Figure: a trace on ``aaabbb``.
-- This is the middle rung of the hierarchy of lecture 1: The **context-free**
-  languages, such as the syntax of C or Java, are exactly what a stack machine
-  recognizes.
-- Still not everything: ``aⁿbⁿcⁿ`` is out of reach, because the stack can be
-  emptied only once.
+- This is the **context-free** level of the ladder of lecture 1: Exactly what a
+  stack machine recognizes.
+- Still not everything: The stack gives back the *last* item first, and is
+  emptied as it is read. So ``aⁿbⁿcⁿ`` and the word written twice (the
+  here-document) are out of reach.
+- The level in between, context-sensitive, needs a tape of limited size. We skip
+  it: It brings no new idea.
 
 *Hand-off: What if the memory could be touched anywhere, and freely?*
 
@@ -101,6 +113,9 @@ The Turing Machine
   this symbol, write this one, move, and go to that state.
 - Figure: a tape, a head, and a trace of a very small machine (for instance,
   adding one to a binary number).
+- Example of what the stack could not do: Checking that a word is written twice,
+  by crossing off the letters one at a time. Code: A tiny simulator, with
+  tests.
 - Why it matters: It is the simplest machine that is *general*, and simple
   enough to reason about.
 - Memory is unbounded and can be rewritten: This is what a stack and an automaton
@@ -121,8 +136,11 @@ The RAM and the Turing Machine Are Equivalent
   equivalent to the Turing machine. It cannot be proved, since "reasonable" is
   not a mathematical word, but nobody has found a counter-example.
 - Not covered here, on purpose: How long the simulations take.
-- (Optional) A word about the *halting problem*: Some problems are solved by no
-  machine. One slide, at the top of the ladder.
+- The *halting problem*, in one slide: Some problems are solved by no machine,
+  for instance "does this program eventually stop?". This closes the loop with
+  the top of the ladder of lecture 1 ("recursively enumerable"): The machine for
+  this level is the Turing machine, but a machine that *recognizes* a language
+  may run forever on the words outside of it.
 
 *Hand-off: Machines can be compared. But there is one more machine, which does
 not exist, and which we need.*
