@@ -40,6 +40,10 @@ Bounds Depend on the Machine
 - So, when we say "this problem needs ``n²``", we must say *on which machine*.
 - From algorithms to *problems*: How much does the best possible algorithm cost,
   on a given machine?
+- (Optional) A first limit, before the classes: Some problems are solved by *no*
+  machine, whatever the bound. The *halting problem* ("does this program
+  eventually stop?") is the classic one, and it is *undecidable*. One slide, to
+  say that complexity classes are about the problems that *can* be solved.
 
 *Hand-off: Let us give a name to this idea.*
 

@@ -8,7 +8,6 @@ Machines
              non-deterministic machine is
 :Concepts: Machine, state, rules, model of computation, Turing machine,
            equivalence by simulation, non-deterministic machine
-:Implementation: Java `A Turing machine <https://github.com/fchauvel/aldast-examples/tree/main/theory/turing-machine/java>`_
 
 In fact, the automaton we used in the previous lecture is a *machine*,
 just like the RAM at the beginning of the course. We ended the last
@@ -64,37 +63,33 @@ of ``a``, then ``!``.
   remembers: what we know about the text so far (nothing read yet, in the
   middle of a sheep, a complete sheep). It keeps nothing else, so the
   state is a very small, bounded way to remember.
-- Its **rules** are the transition table: For each state and each symbol
-  read, the next state. It is the same table at every step.
+- Its **rules** are the transitions, each one a triplet: In this
+  *source* state, on reading this *symbol*, go to that *target* state. The
+  same triplets apply at every step.
 
   .. list-table::
      :header-rows: 1
-     :stub-columns: 1
      :align: center
 
-     * - state
-       - ``b``
-       - ``a``
-       - ``!``
+     * - source state
+       - symbol read
+       - target state
      * - 0
+       - ``b``
        - 1
-       -
-       -
      * - 1
-       -
+       - ``a``
        - 1
+     * - 1
+       - ``!``
        - 2
-     * - 2
-       -
-       -
-       -
 
 - A **computation** reads the text one symbol at a time, from left to
   right, and follows the table from the initial state. The text is accepted
   if we end in an accepting state.
 
 Remember what we did with this machine on the RAM: We *simulated* it, with
-a table and a loop. The automaton is a machine simpler than the RAM, but it
+its triplets and a loop. The automaton is a machine simpler than the RAM, but it
 is a machine.
 
 The RAM as a Machine
@@ -123,6 +118,10 @@ definition? Let us ask the same questions.
   next. The RAM is deterministic: Given a configuration, there is only one
   next one.
 
+Registers and memory cells are, conceptually, the same thing: A place to
+store a word. The registers are just the two cells the CPU keeps close at
+hand.
+
 So the automaton and the RAM are two machines of the same family. They
 differ in *what they can remember*, and *how they can touch it*. The
 automaton has a state, and that is it. The RAM has registers, and also
@@ -133,19 +132,41 @@ offers. That is an ADT, again.
 A Zoo of Machines
 -----------------
 
-There are many other machines, which we will not study. Here are a few,
-just to tickle your curiosity. Each one has its own state, and its own
-rules.
+There are many other machines, which we will not study. Here are a few, just
+to tickle your curiosity, with a link to read more about each. Each one has its
+own state, and its own rules.
 
-- The **stack machine** (or *pushdown automaton*) is an automaton with a
-  stack. It is the machine of the context-free level of our ladder: The
-  stack remembers the open comments or the open tags.
-- **Parallel machines** have many processors working at the same time, and
-  we will say a word about them in the *Beyond* module.
-- **Quantum computers** are a different kind of machine, which obeys the
-  rules of quantum physics. See the *Beyond* module as well.
-- **DNA computers** compute with molecules, and the Game of Life, with
-  its cells that live and die, can compute too!
+- The `finite-state machine <https://en.wikipedia.org/wiki/Finite-state_machine>`_,
+  our automaton: A state, and nothing else.
+- The `pushdown automaton <https://en.wikipedia.org/wiki/Pushdown_automaton>`_,
+  or *stack machine*: An automaton with a stack. It is the machine of the
+  context-free level of our ladder, where the stack remembers the open comments
+  or the open tags.
+- The `counter machine <https://en.wikipedia.org/wiki/Counter_machine>`_:
+  An automaton with a few counters, which it can increase, decrease and test
+  against zero.
+- The `random-access machine <https://en.wikipedia.org/wiki/Random-access_machine>`_,
+  the RAM of this course.
+- The `Turing machine <https://en.wikipedia.org/wiki/Turing_machine>`_: Next
+  section!
+- The `lambda calculus <https://en.wikipedia.org/wiki/Lambda_calculus>`_:
+  No state to speak of, only functions applied to functions. It is the
+  ancestor of functional programming.
+- `Parallel machines <https://en.wikipedia.org/wiki/Parallel_RAM>`_ have many
+  processors working at the same time. (See the *Beyond* module.)
+- `Systolic arrays <https://en.wikipedia.org/wiki/Systolic_array>`_: A grid of
+  small processors passing data to their neighbours, as in the chips that
+  speed up neural networks.
+- `Quantum computers <https://en.wikipedia.org/wiki/Quantum_computing>`_, a
+  different kind of machine, which obeys the rules of quantum physics. (See the
+  *Beyond* module.)
+- `DNA computers <https://en.wikipedia.org/wiki/DNA_computing>`_ compute with
+  molecules.
+- `Cellular automata <https://en.wikipedia.org/wiki/Cellular_automaton>`_, such
+  as the `Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_,
+  where cells on a grid live and die by simple rules, and which can compute too.
+- `Analog computers <https://en.wikipedia.org/wiki/Analog_computer>`_ compute
+  with continuous quantities, such as voltages, instead of symbols.
 
 The general name for such a machine is a *model of computation*. How do we
 compare them? One machine is *more powerful* than another if it can
@@ -233,146 +254,6 @@ writes on its tape, as much as it needs, wherever it needs. This is what the
 automaton lacks, and what lets the Turing machine do all the things the
 previous ladder was missing, such as comparing a word with a copy of itself.
 
-.. admonition:: Implementation in Java
-   :class: hint, dropdown
-
-   The rules are a table, stored as a map from (state, symbol read) to
-   (symbol written, move, new state). The machine runs until it reaches
-   the halting state.
-
-   .. code-block:: java
-
-      import java.util.HashMap;
-      import java.util.Map;
-
-      // A Turing machine. Its state is a tape, as long as needed in both
-      // directions, a head on one cell of the tape, and a control state. Its rules
-      // are a table: In a given state, reading a given symbol, write a symbol, move
-      // the head by one cell, and go to the next state.
-      public class TuringMachine {
-
-          public static final char BLANK = '_';
-
-          public enum Move { LEFT, RIGHT }
-
-          private record Situation(String state, char read) {}
-
-          private record Action(char write, Move move, String nextState) {}
-
-          public record Outcome(String tape, int steps) {}
-
-          private final String initialState;
-          private final String haltingState;
-          private final Map<Situation, Action> rules = new HashMap<>();
-
-          public TuringMachine(String initialState, String haltingState) {
-              this.initialState = initialState;
-              this.haltingState = haltingState;
-          }
-
-          public TuringMachine rule(String state, char read, char write, Move move, String nextState) {
-              var situation = new Situation(state, read);
-              if (rules.containsKey(situation)) {
-                  throw new IllegalArgumentException("Two rules for " + situation);
-              }
-              rules.put(situation, new Action(write, move, nextState));
-              return this;
-          }
-
-          // Runs until the machine reaches its halting state. A machine may run
-          // forever, so we give up after a number of steps.
-          public Outcome run(String input, int maxSteps) {
-              var tape = new Tape(input);
-              var head = 0;
-              var state = initialState;
-              var steps = 0;
-              while (!state.equals(haltingState)) {
-                  if (steps == maxSteps) {
-                      throw new IllegalStateException("Still running after " + maxSteps + " steps");
-                  }
-                  var action = rules.get(new Situation(state, tape.read(head)));
-                  if (action == null) {
-                      throw new IllegalStateException("Stuck in state " + state + " on '" + tape.read(head) + "'");
-                  }
-                  tape.write(head, action.write);
-                  head += (action.move == Move.RIGHT) ? 1 : -1;
-                  state = action.nextState;
-                  steps++;
-              }
-              return new Outcome(tape.contents(), steps);
-          }
-
-          // Unbounded in both directions: every cell we never wrote is blank
-          private static class Tape {
-              private final Map<Integer, Character> cells = new HashMap<>();
-
-              Tape(String input) {
-                  for (int i = 0; i < input.length(); i++) {
-                      cells.put(i, input.charAt(i));
-                  }
-              }
-
-              char read(int position) {
-                  return cells.getOrDefault(position, BLANK);
-              }
-
-              void write(int position, char symbol) {
-                  cells.put(position, symbol);
-              }
-
-              // From the first to the last cell that is not blank
-              String contents() {
-                  var text = new StringBuilder();
-                  var first = cells.keySet().stream().min(Integer::compare).orElse(0);
-                  var last = cells.keySet().stream().max(Integer::compare).orElse(-1);
-                  for (int i = first; i <= last; i++) {
-                      text.append(read(i));
-                  }
-                  return text.toString().replaceAll("^_+|_+$", "");
-              }
-          }
-      }
-
-   The machine that adds one is just a list of rules.
-
-   .. code-block:: java
-
-      // Adds one to a binary number written on the tape, the head starting on the
-      // leftmost digit. It walks to the end of the number, and comes back, turning
-      // every 1 into a 0, until it finds a 0 (or a blank) to turn into a 1.
-      public class BinaryIncrement {
-
-          private static final TuringMachine.Move LEFT = TuringMachine.Move.LEFT;
-          private static final TuringMachine.Move RIGHT = TuringMachine.Move.RIGHT;
-
-          public static TuringMachine machine() {
-              return new TuringMachine("find the end", "halt")
-                  .rule("find the end", '0', '0', RIGHT, "find the end")
-                  .rule("find the end", '1', '1', RIGHT, "find the end")
-                  .rule("find the end", TuringMachine.BLANK, TuringMachine.BLANK, LEFT, "carry")
-                  .rule("carry", '1', '0', LEFT, "carry")
-                  .rule("carry", '0', '1', LEFT, "halt")
-                  .rule("carry", TuringMachine.BLANK, '1', LEFT, "halt");
-          }
-      }
-
-A Machine May Never Stop
-------------------------
-
-There is a catch. Nothing says that a Turing machine ever reaches its
-halting state. Give it a rule that moves right forever, and it will run
-forever (the code above gives up after a number of steps for this reason).
-That is why the top of our ladder was called the languages that a program
-*recognizes*: On a word that is in the language, the machine eventually says
-yes. On a word that is not in it, it may just run forever.
-
-Can we tell in advance whether a program will stop? We can't, and this is a
-famous result. There is no machine that, given any program and its input,
-always answers correctly "this one stops" or "this one runs forever". Some
-problems are solved by no machine at all. We will not prove it here. It
-is worth remembering that some questions are out of reach, whatever the
-machine we pick.
-
 The RAM and the Turing Machine Are Equivalent
 ---------------------------------------------
 
@@ -389,8 +270,7 @@ works both ways, they are equivalent.
 
 - **The RAM simulates a Turing machine.** The tape is an array, the head is an
   index in that array, and the rules are a table. A step of the Turing machine
-  is a few instructions of the RAM. (This is more or less what the code above
-  does!)
+  is a few instructions of the RAM.
 - **The Turing machine simulates a RAM.** We write the registers and the memory
   cells on the tape, one after the other. A step of the RAM is a walk of the
   head to find the cell it needs, read it or write it, and come back.

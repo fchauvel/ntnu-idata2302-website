@@ -82,31 +82,26 @@ state*, where every symbol leads back to itself, and add a transition to
 it wherever one is missing. It would clutter every figure, so we leave it
 out, and we read a missing transition as "the text does not match".
 
-This is a program we know how to write. The graph is stored as a
-*transition table*: For each state (a row) and each symbol (a column),
-which state comes next. A blank means that there is no transition.
+This is a program we know how to write. The graph is stored as a list of
+*transitions*, each one a triplet: The *source* state, the *symbol* read, and
+the *target* state.
 
-.. list-table:: The transition table of the sheep automaton
+.. list-table:: The transitions of the sheep automaton
    :header-rows: 1
-   :stub-columns: 1
    :align: center
 
-   * - state
-     - ``b``
-     - ``a``
-     - ``!``
+   * - source state
+     - symbol read
+     - target state
    * - 0 (initial)
+     - ``b``
      - 1
-     -
-     -
    * - 1
-     -
+     - ``a``
      - 1
+   * - 1
+     - ``!``
      - 2
-   * - 2 (accepting)
-     -
-     -
-     -
 
 The whole check is then a single loop over the text:
 
@@ -117,7 +112,7 @@ The whole check is then a single loop over the text:
        for each symbol in text:
            if there is no transition from state on symbol:
                return false
-           state ← next[state][symbol]
+           state ← target of the transition from state on symbol
        return state is accepting
 
 What does it cost? Each symbol triggers exactly one transition, so the
