@@ -759,8 +759,10 @@ ladder, with an example at each level.
   which are allowed in Rust, Haskell or Swift: Each ``/*`` must be closed
   by its own ``*/``.
   Beyond lexers, it is also the world of *nested structures*: JSON
-  objects inside JSON objects, HTML tags inside HTML tags, arithmetic
-  expressions inside parentheses.
+  objects inside JSON objects, arithmetic expressions inside
+  parentheses, and HTML or XML tags inside tags. There, a plain count is not
+  enough: We must remember *which* tags are open, so that ``</b>`` closes
+  a ``<b>`` and not an ``<i>``.
 - **Context-sensitive languages**: Here-documents in a shell. After
   ``cat <<END``, the text goes on until a line that says ``END``, where
   ``END`` is *whatever word you chose* at the start. It is a word written
@@ -774,8 +776,8 @@ ladder, with an example at each level.
 
 Why is the third level harder than the second? Think of a *stack* of
 plates: It gives back the last plate first. This is just right for the
-nested comments, since the last ``/*`` opened is the first one to
-close. But for ``END``, we need the *first* letter back first, and the
+nested comments, or the open tags of an XML document, since the last one
+opened is the first one to close. But for ``END``, we need the *first* letter back first, and the
 stack gives us the last one. (A pattern like ``aⁿbⁿcⁿ``, which has to
 count twice, is another example at this level.)
 
