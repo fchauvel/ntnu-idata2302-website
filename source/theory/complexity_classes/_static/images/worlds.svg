@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='780' height='340' viewBox='0 0 780 340'>
+<rect width='780' height='340' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<ellipse cx='200' cy='185' rx='170' ry='125' fill='#eaf1fe' stroke='#222222' stroke-width='1.6'/>
+<ellipse cx='200' cy='225' rx='110' ry='62' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
+<text x='200' y='30' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>If P ≠ NP</text>
+<text x='200' y='238' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>P</text>
+<text x='200' y='257' font-size='12' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>sorting, shortest paths</text>
+<text x='200' y='100' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>NP</text>
+<text x='200' y='119' font-size='12' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>easy to check, hard to find?</text>
+<text x='200' y='142' font-size='12' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>the hardest of them, NP-complete:</text>
+<text x='200' y='158' font-size='12' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>knapsack, traveling salesperson</text>
+<ellipse cx='580' cy='185' rx='170' ry='125' fill='#c9dcfb' stroke='#222222' stroke-width='1.6'/>
+<text x='580' y='30' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>If P = NP</text>
+<text x='580' y='175' font-size='18' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>P = NP</text>
+<text x='580' y='198' font-size='12' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>everything that is easy to check</text>
+<text x='580' y='215' font-size='12' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>is also easy to find</text>
+</svg>

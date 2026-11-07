@@ -4,191 +4,263 @@ Complexity Classes
 
 :Lecture: Lecture 8.3 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EXxGuQ6duiJMpPVzNyQq6CsBct3rHRF5nXujbv43iILsow?e=gYK2An>`
-:Objectives: Understand what is a complexity class, and what P, NP and
-             NP-complete mean
-:Concepts: Complexity class, resource, bound, P, NP, NP-completeness,
-           NP-hardness
+:Objectives: Understand what is a complexity class, what P and NP mean, and
+             why the question "P = NP?" matters
+:Concepts: Complexity class, machine, resource, bound, P, NP, finding versus
+           checking, NP-completeness, P = NP
 
-..
-   OUTLINE. This page is an expanded outline of the lecture notes, to be
-   turned into prose, figures and code. Hand-offs between sections are in
-   italics. Items marked (optional) are the first to cut.
+Let us take a step back. Throughout this course, we have met many problems:
+Sorting, searching, shortest paths, spanning trees, knapsacks. For each of
+them, we have met many algorithms, with different efficiencies. And in the last
+lecture we learned that the efficiency of an algorithm depends on the *machine*
+that runs it: What takes ``n log n`` steps on a RAM may take fewer on a parallel
+machine, and what takes forever on a RAM may take a handful of steps on a
+machine that always guesses right.
 
-   Where this lecture stands: It closes the story "machine, resource,
-   bound". Lecture 1 gave a machine and a first class. Lecture 2 gave more
-   machines, and the imaginary one. Here, we put them together.
-
-   The hook, which takes up the end of lecture 2: Every problem has two sides,
-   *finding* a solution and *verifying* that a solution is correct. The lucky
-   machine does both, in this order: It guesses, then it checks. Verifying is a
-   membership problem ("is this solution in the set of the valid ones?"), and so
-   it is a problem about a language, as in lecture 1. The whole lecture plays
-   with the gap between the two sides.
-
-   The aim, as for the whole module: A good enough *intuition* for the general
-   results of computer science, not their proofs.
-
-   What students should take away:
-
-   - Every problem has two sides: Finding a solution, and verifying one.
-     Verifying is often much easier than finding.
-   - There are machines, and some are more powerful than others.
-   - A complexity class is a set of problems that can be solved with a given
-     amount of resource, by a specific machine, or an equivalent one.
-   - Some classes are defined with an imaginary machine, the non-deterministic
-     one, which always guesses right.
-   - The two most common classes are P and NP.
-   - Whether P = NP is an open problem.
+That is a bit of a mess! Problems, algorithms, machines, each one changing the
+answer to "how hard is it?". In this lecture, we clean it up, with one idea: We
+stop looking at algorithms, and we look at the *problems*.
 
 
-Two Sides of a Problem
-======================
+Complexity Classes
+==================
 
-- The lucky machine of lecture 2 solved the Sudoku in two moves: It *guessed*
-  every cell, then it *checked* the rows, the columns and the blocks.
-- These are the two sides of any problem. **Finding** a solution: Hard, in
-  general, since it is a search in a tree that may be exponential. **Verifying**
-  a solution: Given a candidate, is it correct? Often easy. A Sudoku grid is
-  checked at a glance, and finding it can take hours. (The same as for a
-  jigsaw puzzle, or a lock and its key.)
-- Examples, in the vocabulary of the course: The ``is_valid`` of the Search
-  Problem of the combinatorial search lecture is the verification. The search
-  that finds a complete and valid solution is the finding.
-- Verifying is a *yes/no question*: "Is this candidate a valid solution of this
-  instance?". It is a *membership problem*: Is the pair (instance, candidate) in
-  the set of valid pairs? So it is a problem about a *language*, and the machines
-  of lecture 2 can be asked how fast they solve it. This is the link with the
-  first lecture.
-- So we can ask how much *time* each side takes, on a given machine. This is
-  what a complexity class will measure.
+From Algorithms to Problems
+---------------------------
 
-*Hand-off: But time depends on the machine.*
+A problem usually has many algorithms, and most of them are not good. What
+really matters is how much the *best possible* algorithm costs. This is the
+*difficulty of the problem*. It does not belong to any particular algorithm: It
+is a property of the problem itself.
 
+And for the machine, we look only at the most powerful ones: The Turing machine,
+or the RAM, which we know to be equivalent. Weaker machines, such as the
+automaton, can only solve some of the problems, which we saw in the first
+lecture.
 
-Bounds Depend on the Machine
-============================
+To keep things simple, we look at problems that are *yes/no questions*: "Is
+there a path shorter than ``k``?", "Is the list sorted?". We have seen that this
+is no loss: A yes/no question is a *membership problem*, and so it is a problem
+about a language.
 
-- Until now, we measured algorithms with big-O, on the RAM.
-- But the bound depends on the machine. Sorting ``n`` numbers: ``n log n`` on the
-  RAM, but far faster on a parallel machine with many processors. A Sudoku:
-  exponential on the RAM (a search), proportional to the number of cells on the
-  machine that always guesses right.
-- So, when we say "this problem needs ``n²``", we must say *on which machine*.
-- From algorithms to *problems*: How much does the best possible algorithm cost,
-  on a given machine?
-- (Optional) A first limit, before the classes: Some problems are solved by *no*
-  machine, whatever the bound. The *halting problem* ("does this program
-  eventually stop?") is the classic one, and it is *undecidable*. One slide, to
-  say that complexity classes are about the problems that *can* be solved.
+Machine, Resource, Bound
+------------------------
 
-*Hand-off: Let us give a name to this idea.*
+We can now define the central notion of this lecture. A **complexity class** is
+a set of problems, defined by three choices:
 
+- a **machine**: Which one do we use to solve the problem?
+- a **resource**: What do we count? The number of steps (*time*), the amount of
+  state to remember (*memory*), the number of processors?
+- a **bound**: How much of this resource may it use, as a function of the size
+  of the input? A constant, ``n``, ``n²``, ``2ⁿ``?
 
-What Is a Complexity Class?
-===========================
+A class is then *the set of problems that can be solved by this machine, using
+at most this amount of this resource*. For instance, "the problems that a Turing
+machine can solve in a number of steps that is logarithmic in the size of the
+input", or "the problems that an automaton solves with a constant amount of
+state". The second one should ring a bell: These are the *regular languages* of
+the first lecture!
 
-- A **complexity class** is a set of problems that a given machine can solve with
-  a given amount of a given resource.
-- Three choices: a **machine**, a **resource** (time, memory, number of
-  processors), and a **bound** (constant, ``n``, ``n²``, ``2ⁿ``).
-- The table, started in lecture 1:
+There are countless such triplets, and thus countless classes. Fortunately, only
+a few are of real interest, and we will meet only two, which have names:
 
-  ===========  ==================  ========  =================
-  Class        Machine             Resource  Bound
-  ===========  ==================  ========  =================
-  Regular      Automaton           Memory    Constant
-  P            RAM, or equivalent  Time      Polynomial
-  NC           Parallel machine    Time      Polylogarithmic
-  NP           Lucky machine       Time      Polynomial
-  ===========  ==================  ========  =================
-
-- "Or its equivalent": For polynomial bounds, the machines of lecture 2 that are
-  equivalent give the same class. (Stated, not proved.)
-- (Optional) The class NC, "solved efficiently by a parallel machine", links with
-  the parallel computing module.
-- Problems are, for the classes below, *yes/no questions*: This is why lecture 1
-  introduced languages.
-
-*Hand-off: The most famous class is the one of the machine we know.*
+======================  ==========================  ===========  ================
+Class                   Machine                     Resource     Bound
+======================  ==========================  ===========  ================
+Regular languages       Automaton                   State        Constant
+**P**                   Turing machine (or RAM)     Time         Polynomial
+**NP**                  Non-deterministic machine   Time         Polynomial
+======================  ==========================  ===========  ================
 
 
 P
 =
 
-- The problems that a deterministic machine, the RAM, solves in *polynomial
-  time*: ``n``, ``n²``, ``n³``...
-- "Efficient" means polynomial. The growth, as in "how big is a million":
-  ``n²`` against ``2ⁿ``.
-- The problems of this course: Sorting, searching, shortest path, minimum
-  spanning tree. In the yes/no form: "Is there a path shorter than ``k``?".
-- A nuance (optional): The knapsack, solved by dynamic programming in time
-  proportional to the capacity.
+The class **P** is the set of problems that a Turing machine (or a RAM) solves
+in *polynomial time*: A number of steps that grows as ``n``, ``n²``, ``n³``, or
+any other power of the size ``n`` of the input.
 
-*Hand-off: What about the problems that need a search?*
+We call these problems *efficient*, or *tractable*. All the problems of this
+course that we could solve with a reasonable algorithm are in P: Sorting,
+searching, the shortest path, the minimum spanning tree. In their yes/no form,
+"is there a path shorter than ``k``?" or "is there a spanning tree cheaper than
+``k``?" belong to P.
+
+Why Polynomial?
+---------------
+
+Why draw the line at polynomial, and not at ``n²``, or ``n log n``? There are
+two reasons.
+
+The first is that polynomials do not blow up, but exponentials do.
+:numref:`theory/complexity_classes/growth` shows how many steps a problem needs,
+for a few sizes of input.
+
+.. list-table:: Number of steps, as the input grows
+   :name: theory/complexity_classes/growth
+   :header-rows: 1
+   :stub-columns: 1
+   :align: center
+
+   * - ``n``
+     - ``n²``
+     - ``n³``
+     - ``2ⁿ``
+   * - 10
+     - 100
+     - 1 000
+     - 1 024
+   * - 50
+     - 2 500
+     - 125 000
+     - about 10¹⁵
+   * - 100
+     - 10 000
+     - 1 000 000
+     - about 10³⁰
+
+Doubling the size of the input makes a polynomial algorithm a few times slower. It
+makes an exponential algorithm a *different* algorithm, one that never ends.
+(For ``n = 100``, ``2ⁿ`` is a number with 31 digits: More than the number of
+grains of sand on Earth.)
+
+The second reason is the one we left open in the last lecture. We did not look
+at *how long* it takes for a RAM to simulate a Turing machine, or the other way
+around. It turns out that the slowdown is only *polynomial*. So a problem solved
+in polynomial time by a RAM is also solved in polynomial time by a Turing
+machine, and the other way around. Polynomial time does not depend on which of
+the two machines we pick, which is exactly what we want from a definition of
+"efficient". (We state this without proof. It is a convenient property of
+polynomials, which stay polynomial when we plug a polynomial into another.)
+
+.. margin::
+
+   A classical nuance: The knapsack problem can be solved by dynamic
+   programming in a time proportional to the *capacity* of the knapsack. This
+   looks polynomial, but it is not, because the capacity is a number, and a
+   number written with ``k`` digits can be as large as ``10ᵏ``. This is a story
+   for another course.
+
+So P is the set of problems that are easy to *solve*. But there are many other
+problems, which we do not know how to solve fast. Can we say anything about them?
 
 
 NP
 ==
 
-- The problems whose solutions can be **verified** in polynomial time. This is
-  the ``is_valid`` of the Search Problem of the combinatorial search lecture.
-- The same thing, with the machine of lecture 2: The problems that the *lucky
-  machine* solves in polynomial time. It guesses a candidate, which takes a
-  polynomial number of steps, then verifies it, in polynomial time. A fast
-  verifier is exactly what the guess needs. (Stated, with this intuition, not
-  proved. This is why NP is not "not polynomial", which is a common mistake:
-  It stands for *non-deterministic* polynomial.)
-- Examples, as yes/no questions: the knapsack ("is there a box worth at least
-  15 000?"), the traveling salesperson, satisfiability of a formula, the Sudoku.
-- Easy to check, hard to find (as far as we know): A Sudoku grid is checked in a
-  glance. This is the gap of the first section.
-- P is contained in NP: What an ordinary machine does, the lucky machine does
-  too. If we can *find* in polynomial time, we can certainly *verify*: Just
-  find again, and compare.
+The class **NP** is the set of problems that a *non-deterministic* Turing
+machine solves in polynomial time. This is our lucky machine of the last
+lecture, which always chooses the right rule at each step (or, if you prefer,
+which explores all the branches at the same time).
 
-*Hand-off: Are some problems of NP harder than others?*
+The name stands for *non-deterministic polynomial time*. It does **not** mean
+"not polynomial", which is a common mistake!
 
+Finding versus Checking
+-----------------------
+
+To see what NP really contains, let us look again at what the lucky machine did
+for the Sudoku. It first *guessed* every cell. Then it *checked* the rows, the
+columns and the blocks. These are the two sides of any problem:
+
+- **Finding** a solution. This is the hard side, in general. It is a search in a
+  tree, which may be exponential. This is what we did in the combinatorial
+  search lecture.
+- **Checking** that a given solution is correct. This is often much easier. It
+  is the ``is_valid`` of our Search Problem. A solved Sudoku grid can be checked
+  at a glance, whereas finding the grid can take hours. It is the same for a
+  jigsaw puzzle, or a lock and its key.
+
+Checking is a yes/no question: "Is this candidate a valid solution of this
+instance?". It is a *membership problem*, as in the first lecture: Is the pair
+(instance, candidate) in the set of valid pairs?
+
+Here is the link with the lucky machine. It *guesses* a candidate, which takes
+a polynomial number of steps, and then *checks* it, in polynomial time. If the
+check is fast, the whole run is fast. So, a problem is in NP *exactly* when a
+candidate solution can be **checked in polynomial time**. That is the
+description of NP we will keep in mind: *easy to check*, but maybe hard to find.
+
+Some examples, as yes/no questions:
+
+- The **knapsack**: "Is there a set of items that fits in the box and is worth at
+  least 15 000?". Given a set, we add up the weights and the values.
+- The **traveling salesperson**: "Is there a tour that visits every city and is
+  shorter than ``k``?". Given a tour, we add up its length.
+- The **satisfiability** of a formula: "Is there a way to set the variables so
+  that the formula is true?". Given the values, we evaluate the formula.
+- The **Sudoku**: "Can this grid be completed?". Given a completed grid, we check
+  every row, column and block.
+
+Every problem of P is also in NP: If we can *find* a solution in polynomial
+time, we can certainly *check* one. We just find it again, and compare. So P is
+inside NP. The question is whether it is the *whole* of it.
 
 NP-Complete
-===========
+-----------
 
-- Some problems are the *hardest* of NP. The idea: A problem can be *translated*
-  into another, quickly. If A translates into B, a fast solver for B solves A.
-- Satisfiability was the first one shown to be at the top. The knapsack, the
-  traveling salesperson, and thousands of others translate into it, and into
-  each other.
-- So, a fast algorithm for *one* of them would give a fast algorithm for *all*
-  of them. They are **NP-complete**.
-- **NP-hard**: At least as hard as the NP-complete ones, including the
-  optimization versions of the problems. One sentence.
-- What it means in practice, back to the Optimization module: Do not look for a
-  fast exact algorithm. Use branch-and-bound, dynamic programming when numbers
-  are small, or a heuristic.
+Are some problems in NP harder than the others? Yes, and here is a beautiful
+idea. A problem can sometimes be *translated* into another, quickly. If we have a
+fast way to turn any question of a problem A into a question of a problem B, with
+the same answer, then a fast solver for B gives us a fast solver for A, as shown
+in :numref:`theory/complexity_classes/translation`.
 
-*Hand-off: Is there really no fast algorithm?*
+.. figure:: _static/images/translation.svg
+   :name: theory/complexity_classes/translation
+   :align: center
+
+   If A translates quickly into B, a fast solver for B is also a fast solver
+   for A.
+
+So B is *at least as hard as* A. And it turns out that some problems of NP are
+so general that *every* problem of NP translates into them. The first one that
+was shown to be of this kind was the satisfiability of a formula, in the 1970s.
+Since then, thousands of others have been found, including the knapsack and the
+traveling salesperson. We call them **NP-complete**: They are the *hardest* of
+NP.
+
+What does that mean? If we found a fast algorithm for *just one* of them, we
+would get a fast algorithm for *all* of NP, since all the others translate into
+it. Despite decades of efforts, nobody has found one.
+
+.. margin::
+
+   The optimization versions of these problems ("what is the *best* knapsack?"
+   instead of "is there one worth at least ``k``?") are at least as hard as the
+   NP-complete ones. They are called **NP-hard**.
+
+What does it mean for you, in practice? That when you recognize an NP-complete
+problem in the wild, you should not hunt for a fast and exact algorithm.
+Instead, go back to the Optimization module: Branch-and-bound, dynamic
+programming when the numbers are small, or a heuristic.
 
 
 P = NP?
 =======
 
-- The question: Does the lucky machine really help? Can an ordinary machine solve
-  in polynomial time what the lucky machine solves, or is the exponential tree
-  unavoidable? In the words of the first section: *Is finding really harder than
-  verifying*, or have we just not been clever enough?
-- It is **open**. Most specialists believe the answer is no, but nobody has
-  proved it. It is one of the Millennium Prize Problems of the Clay Mathematics
-  Institute, worth one million dollars.
-- What would change: Every NP-complete problem would be easy. Many things we
-  rely on, such as cryptography, would be in danger.
+So we have two classes, P and NP, and we know that P is inside NP. Here is the
+question that remains. Does the lucky machine *really* help? Can an ordinary
+machine solve, in polynomial time, everything that the lucky machine solves, or
+is the exponential tree unavoidable? In the words we used above: *Is finding
+really harder than checking*, or have we just not been clever enough?
 
-*Hand-off: The map.*
+.. figure:: _static/images/worlds.svg
+   :name: theory/complexity_classes/worlds
+   :align: center
 
+   The two possible worlds. Either P is strictly inside NP, or they are the
+   same.
 
-The Map
-=======
+This question is **open**. Most specialists believe that the answer is no, that
+finding really is harder than checking, but nobody has proved it. It is one of
+the Millennium Prize Problems of the Clay Mathematics Institute, and comes with
+a prize of one million dollars.
 
-- Figure: nested classes, regular inside P, P inside NP, NC inside P, with an
-  example in each.
-- The take-aways, as in the objectives above.
-- Where to go next: The "Beyond" module, with the parallel and quantum machines,
-  which shift some of these boundaries.
+What is at stake? If P were equal to NP, then every NP-complete problem would
+be easy, and so would thousands of problems we consider hard: Planning,
+scheduling, routing, the design of circuits. Many things we rely on, such as
+cryptography, which counts on some problems being hard to solve and easy to
+check, would be in danger. And if P is not equal to NP, then we know that our
+intuition is right, and that *some* problems are hopeless in general. Either
+way, the answer would tell us a lot about what computers can do.
