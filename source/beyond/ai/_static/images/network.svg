@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='360' viewBox='0 0 720 360'>
+<rect width='720' height='360' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<line x1='90' y1='118.0' x2='270' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='118.0' x2='270' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='118.0' x2='270' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='118.0' x2='270' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='180.0' x2='270' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='180.0' x2='270' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='180.0' x2='270' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='180.0' x2='270' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='242.0' x2='270' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='242.0' x2='270' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='242.0' x2='270' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='90' y1='242.0' x2='270' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='87.0' x2='450' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='87.0' x2='450' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='87.0' x2='450' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='87.0' x2='450' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='149.0' x2='450' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='149.0' x2='450' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='149.0' x2='450' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='149.0' x2='450' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='211.0' x2='450' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='211.0' x2='450' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='211.0' x2='450' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='211.0' x2='450' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='273.0' x2='450' y2='87.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='273.0' x2='450' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='273.0' x2='450' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='270' y1='273.0' x2='450' y2='273.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='87.0' x2='630' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='87.0' x2='630' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='149.0' x2='630' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='149.0' x2='630' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='211.0' x2='630' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='211.0' x2='630' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='273.0' x2='630' y2='149.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<line x1='450' y1='273.0' x2='630' y2='211.0' stroke='#b9c4d6' stroke-width='1.2'/>
+<circle cx='90' cy='118.0' r='17' fill='white' stroke='#222222' stroke-width='1.8'/>
+<circle cx='90' cy='180.0' r='17' fill='white' stroke='#222222' stroke-width='1.8'/>
+<circle cx='90' cy='242.0' r='17' fill='white' stroke='#222222' stroke-width='1.8'/>
+<text x='90' y='335' font-size='14' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>inputs</text>
+<circle cx='270' cy='87.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='270' cy='149.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='270' cy='211.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='270' cy='273.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<text x='270' y='335' font-size='14' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>hidden layer</text>
+<circle cx='450' cy='87.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='450' cy='149.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='450' cy='211.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<circle cx='450' cy='273.0' r='17' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<text x='450' y='335' font-size='14' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>hidden layer</text>
+<circle cx='630' cy='149.0' r='17' fill='white' stroke='#222222' stroke-width='1.8'/>
+<circle cx='630' cy='211.0' r='17' fill='white' stroke='#222222' stroke-width='1.8'/>
+<text x='630' y='335' font-size='14' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>outputs</text>
+<text x='360' y='28' font-size='14' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Each line is a weight. Each circle is a neuron.</text>
+</svg>
