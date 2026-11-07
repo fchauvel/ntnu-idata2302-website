@@ -95,70 +95,40 @@ improve on this very aspect? Do not improve what is already good enough.
 What We Did Not Cover
 =====================
 
-A bachelor course has to choose, and a lot was left out. If something here picked
-your curiosity, here are a few directions, each with a link to start with. None of
-it is needed for the exam.
+A bachelor course has to choose, and a lot was left out. If you want to go further,
+here are the broad directions, each with one place to start. None of it is needed
+for the exam.
 
-**Algorithms and the machine**
-
-- **Cache-friendly algorithms.** We used the RAM, where every memory access costs
-  the same. A real computer has a *hierarchy* of memories, and an access to the
-  `CPU cache <https://en.wikipedia.org/wiki/CPU_cache>`_ is far faster than one to the
-  main memory. Two algorithms with the same ``O(n)`` can differ by a factor of ten,
-  because of the way they walk through memory. This is why an array often beats a
-  linked list in practice, and why B-trees exist. See `cache-oblivious algorithms
-  <https://en.wikipedia.org/wiki/Cache-oblivious_algorithm>`_.
-- **Concurrent data structures.** What if many threads use the same hash table or the
-  same queue? See `lock-free (non-blocking) algorithms
-  <https://en.wikipedia.org/wiki/Non-blocking_algorithm>`_.
-
-**Data structures**
-
-- **Persistent data structures.** Ours are *ephemeral*: An update destroys the
-  previous version. A `persistent data structure
-  <https://en.wikipedia.org/wiki/Persistent_data_structure>`_ keeps all its versions,
-  and shares what did not change, so that an update costs little. It is the idea
-  behind functional programming and version control.
-- **Probabilistic data structures.** Trade a little accuracy for a lot of space: The
-  `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_ tells whether an
-  element is *probably* in a set, the `count-min sketch
-  <https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch>`_ counts events in a
-  stream, and the `skip list <https://en.wikipedia.org/wiki/Skip_list>`_ is a
-  randomized alternative to balanced trees.
-- **Other trees.** The `splay tree <https://en.wikipedia.org/wiki/Splay_tree>`_
-  rearranges itself as it is used, and its cost is only good *on average*, which
-  leads to `amortized analysis <https://en.wikipedia.org/wiki/Amortized_analysis>`_.
-
-**Problems and algorithms**
-
-- **More graph problems.** `Topological sorting
-  <https://en.wikipedia.org/wiki/Topological_sorting>`_ (ordering tasks that depend
-  on one another) and the `maximum flow
-  <https://en.wikipedia.org/wiki/Maximum_flow_problem>`_ in a network are the two
-  classics we skipped.
-- **Text.** The `Knuth-Morris-Pratt algorithm
-  <https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm>`_
-  searches a pattern in a text without going back, and the `suffix array
-  <https://en.wikipedia.org/wiki/Suffix_array>`_ is a compact cousin of the suffix
-  tree. `Huffman coding <https://en.wikipedia.org/wiki/Huffman_coding>`_ shows how
-  a tree compresses a file.
-- **Geometry.** `Computational geometry
-  <https://en.wikipedia.org/wiki/Computational_geometry>`_ asks questions such as
-  "what is the closest point?" or "which points are on the border?".
-- **Optimization, again.** `Linear programming
-  <https://en.wikipedia.org/wiki/Linear_programming>`_, `approximation algorithms
-  <https://en.wikipedia.org/wiki/Approximation_algorithm>`_ (with a guarantee on how
-  far from the best they are), and `online algorithms
-  <https://en.wikipedia.org/wiki/Online_algorithm>`_ (which decide without knowing
-  the future).
-- **Big data.** `Streaming algorithms
-  <https://en.wikipedia.org/wiki/Streaming_algorithm>`_ see each item once, and
-  `locality-sensitive hashing
-  <https://en.wikipedia.org/wiki/Locality-sensitive_hashing>`_ finds similar items,
-  which is behind the search for similar documents or images.
-- **Numbers.** The `fast Fourier transform
-  <https://en.wikipedia.org/wiki/Fast_Fourier_transform>`_ is a divide-and-conquer
-  that is everywhere, from audio to multiplying huge numbers.
+- **The machine is not a RAM.** We counted steps as if every memory access had the
+  same cost. A real computer has a hierarchy of memories, and a well-chosen layout
+  can make an algorithm many times faster with the same ``O(n)``. This is the world of
+  `cache-friendly algorithms <https://en.wikipedia.org/wiki/Cache-oblivious_algorithm>`_,
+  and, with many threads sharing the same structures,
+  `lock-free algorithms <https://en.wikipedia.org/wiki/Non-blocking_algorithm>`_.
+- **Data structures that remember, or that approximate.** Ours forget the previous
+  version when they are updated. A `persistent data structure
+  <https://en.wikipedia.org/wiki/Persistent_data_structure>`_ keeps them all, which
+  is the idea behind functional programming and version control. Others trade
+  a little accuracy for a lot of space, such as the
+  `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_.
+- **Richer problems.** Graphs, strings and numbers hide problems with a lot more
+  structure than we met: `network flows
+  <https://en.wikipedia.org/wiki/Maximum_flow_problem>`_ and `linear programming
+  <https://en.wikipedia.org/wiki/Linear_programming>`_, `text indexing
+  <https://en.wikipedia.org/wiki/Suffix_array>`_, `computational geometry
+  <https://en.wikipedia.org/wiki/Computational_geometry>`_.
+- **Relaxing the guarantee.** When exact is too expensive, we can accept less:
+  `approximation algorithms <https://en.wikipedia.org/wiki/Approximation_algorithm>`_
+  (guaranteed to be close to the best), `online algorithms
+  <https://en.wikipedia.org/wiki/Online_algorithm>`_ (which decide without knowing the
+  future), and `streaming algorithms
+  <https://en.wikipedia.org/wiki/Streaming_algorithm>`_ (which see each item once).
+  This is the natural continuation of the lecture on complexity classes: What do we
+  do when a problem is hard?
+- **Sharper analysis.** Big-O is a blunt tool. `Amortized analysis
+  <https://en.wikipedia.org/wiki/Amortized_analysis>`_ explains why a dynamic array is
+  fast although one of its insertions is slow, and the analysis of randomized
+  algorithms explains why a random pivot works.
 
 
 Preparing for a Tech Interview
