@@ -47,6 +47,17 @@ processor executes one instruction.
 
    A P-RAM: Many CPUs that share one memory, and one clock.
 
+.. admonition:: Is the P-RAM realistic?
+   :class: caution
+
+   Not really. On the P-RAM, every processor reaches any memory cell at the same
+   cost, and they all share one perfect clock. On a real machine, the memory is far
+   away for some processors, they fight to use it (*contention*), they must wait
+   for one another (*synchronization*), and keeping them on one clock is hard. So
+   do not trust the numbers of the P-RAM too much. Its value is the other way
+   around: If a problem is *not* fast on a P-RAM, no real parallel machine will
+   make it fast.
+
 Searching in Parallel
 ---------------------
 
@@ -211,12 +222,12 @@ P = NP.
 
    NC is inside P, which is inside NP.
 
-Is the P-RAM Realistic?
------------------------
-
-Not really. On the P-RAM, every processor reaches any memory cell at the same
-cost, and they all share one perfect clock. On a real machine, the memory is far
-away for some processors, they fight to use it (*contention*), they must wait for
-one another (*synchronization*), and keeping them on one clock is hard. So do not
-trust the numbers of the P-RAM too much. Its value is the other way around: If a
-problem is *not* fast on a P-RAM, no real parallel machine will make it fast.
+Parallel computing is, in the end, not quite the machine that computer scientists
+were hoping for. In the last module, we imagined a machine that explores *all* the
+branches of a search tree at the same time. To do that for the hardest problems of
+NP, we would need one processor per branch, and the number of branches is
+*exponential*. With only a polynomial number of processors, the time stays
+exponential, unless NP turns out to be inside NC, which would make P equal to NP.
+Many processors make us faster, within the limits of Amdahl's law, and they are
+essential for big data and for the cloud. But they do not turn a hard problem
+into an easy one. The machine that always guesses right is still out of reach.
