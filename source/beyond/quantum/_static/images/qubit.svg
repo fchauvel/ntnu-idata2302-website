@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='780' height='330' viewBox='0 0 780 330'>
+<rect width='780' height='330' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<text x='110' y='30' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a bit</text>
+<text x='110' y='50' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>is 0 or 1</text>
+<rect x='50' y='85' width='60' height='60' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='80.0' y='120.0' font-size='22' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>0</text>
+<rect x='120' y='85' width='60' height='60' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='150.0' y='120.0' font-size='22' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>1</text>
+<text x='110' y='190' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>we can read it</text>
+<text x='110' y='207' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>as often as we like</text>
+<text x='390' y='30' font-size='15' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a qubit</text>
+<text x='390' y='50' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a mix of 0 and 1: two weights</text>
+<rect x='330' y='115.0' width='50' height='65.0' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.6'/>
+<text x='355' y='205' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>0</text>
+<text x='355' y='107.0' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>½</text>
+<rect x='420' y='115.0' width='50' height='65.0' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.6'/>
+<text x='445' y='205' font-size='16' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>1</text>
+<text x='445' y='107.0' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>½</text>
+<text x='390' y='235' font-size='12' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>(equal superposition, which the</text>
+<text x='390' y='251' font-size='12' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Hadamard gate makes from a 0)</text>
+<line x1='470' y1='150' x2='560' y2='150' stroke='#222222' stroke-width='1.8' marker-end='url(#ar)'/>
+<text x='515' y='135' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>measure</text>
+<rect x='585' y='100' width='60' height='50' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='615.0' y='130.0' font-size='20' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>0</text>
+<rect x='585' y='170' width='60' height='50' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='615.0' y='200.0' font-size='20' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>1</text>
+<text x='710' y='131' font-size='14' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>50%</text>
+<text x='710' y='201' font-size='14' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>50%</text>
+<text x='615' y='270' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>we see only one of them,</text>
+<text x='615' y='287' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>and the mix is gone</text>
+</svg>
