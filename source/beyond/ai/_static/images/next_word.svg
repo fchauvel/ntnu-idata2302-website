@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='300' viewBox='0 0 760 300'>
+<rect width='760' height='300' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<text x='380' y='34' font-size='20' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>A sheep says …</text>
+<text x='190' y='87' font-size='16' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>baa</text>
+<rect x='205' y='70' width='327.6' height='26' fill='#1f6feb'/>
+<text x='542.6' y='89' font-size='14' text-anchor='start' fill='#1f6feb' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>78%</text>
+<text x='190' y='127' font-size='16' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>bleats</text>
+<rect x='205' y='110' width='37.800000000000004' height='26' fill='#b9c4d6'/>
+<text x='252.8' y='129' font-size='14' text-anchor='start' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>9%</text>
+<text x='190' y='167' font-size='16' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>hello</text>
+<rect x='205' y='150' width='21.0' height='26' fill='#b9c4d6'/>
+<text x='236.0' y='169' font-size='14' text-anchor='start' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>5%</text>
+<text x='190' y='207' font-size='16' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>moo</text>
+<rect x='205' y='190' width='12.600000000000001' height='26' fill='#b9c4d6'/>
+<text x='227.6' y='209' font-size='14' text-anchor='start' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>3%</text>
+<text x='190' y='247' font-size='16' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>…</text>
+<rect x='205' y='230' width='21.0' height='26' fill='#b9c4d6'/>
+<text x='236.0' y='249' font-size='14' text-anchor='start' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>5%</text>
+<text x='380' y='290' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Made-up odds, for illustration.</text>
+</svg>

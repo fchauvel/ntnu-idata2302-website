@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='300' viewBox='0 0 720 300'>
+<rect width='720' height='300' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<circle cx='60' cy='70' r='22' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='60' y='76' font-size='17' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>x₁</text>
+<line x1='82' y1='70' x2='342' y2='127.6' stroke='#222222' stroke-width='1.6' marker-end='url(#ar)'/>
+<text x='186.0' y='81.03999999999999' font-size='16' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='italic' font-family='Helvetica, Arial, sans-serif'>w₁</text>
+<circle cx='60' cy='150' r='22' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='60' y='156' font-size='17' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>x₂</text>
+<line x1='82' y1='150' x2='342' y2='150.0' stroke='#222222' stroke-width='1.6' marker-end='url(#ar)'/>
+<text x='186.0' y='138.0' font-size='16' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='italic' font-family='Helvetica, Arial, sans-serif'>w₂</text>
+<circle cx='60' cy='230' r='22' fill='white' stroke='#222222' stroke-width='1.6'/>
+<text x='60' y='236' font-size='17' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>x₃</text>
+<line x1='82' y1='230' x2='342' y2='172.4' stroke='#222222' stroke-width='1.6' marker-end='url(#ar)'/>
+<text x='186.0' y='194.96' font-size='16' text-anchor='middle' fill='#1f6feb' font-weight='normal' font-style='italic' font-family='Helvetica, Arial, sans-serif'>w₃</text>
+<circle cx='400' cy='150' r='56' fill='#e8f0fe' stroke='#1f6feb' stroke-width='2'/>
+<line x1='400' y1='94' x2='400' y2='206' stroke='#1f6feb' stroke-width='1.2'/>
+<text x='372' y='159' font-size='28' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Σ</text>
+<text x='428' y='159' font-size='24' text-anchor='middle' fill='#222222' font-weight='bold' font-style='italic' font-family='Helvetica, Arial, sans-serif'>f</text>
+<line x1='456' y1='150' x2='540' y2='150' stroke='#222222' stroke-width='1.6' marker-end='url(#ar)'/>
+<text x='560' y='156' font-size='18' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>y</text>
+<text x='394' y='234' font-size='13' text-anchor='end' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>weighted sum</text>
+<text x='406' y='234' font-size='13' text-anchor='start' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>activation</text>
+<text x='360' y='290' font-size='15' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>y = f( w₁·x₁ + w₂·x₂ + w₃·x₃ )</text>
+</svg>
