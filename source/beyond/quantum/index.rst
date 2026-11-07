@@ -125,6 +125,16 @@ things:
    is a *constraint*, not a source of speed. (Ordinary computers can be made
    reversible too, and they are not faster.)
 
+A way to picture it: An ordinary register is like a *particle*. It is in one place,
+out of ``2ⁿ`` possible places. A quantum register is more like a *wave*. It is spread
+over all the places at once, with a height, a weight, at each of them, and a gate
+pushes the whole wave in one move. Like waves in a pool, the parts of the wave can
+cancel or reinforce each other. Note that a register of *random* bits also has a
+probability for each value, and nobody says a random number generator is faster.
+The difference is that probabilities only add up, whereas weights can cancel. So
+the extra storage is not what helps by itself. What helps is that we can *steer*
+the wave, so that, in the end, almost all of it sits on the answer.
+
 Putting it differently: the speed-up does not come from computing all the answers
 at once, because the measurement gives us only one. It comes from the *interference*
 that lets us extract a useful property of all of them.
