@@ -206,65 +206,28 @@ fix it.
 What It Changes for Engineers
 =============================
 
-Up to here, I told you facts. This section is different: It is my *take*, as a
-software engineer, and it could be wrong. Lecturing is a side job for me. My main job
-is to build software, in a company that gives us full access to AI, and encourages us
-to use it. Here is what I see.
+Up to here, I told you facts. This section is my *take*, as a software engineer, and
+it could be wrong. In my company, we have full access to AI, and we are encouraged to
+use it. I do not write code anymore. Too bad, I liked it, and I miss it at times. But I
+cannot help reviewing it. The AI has injected errors that bit me, and it has also
+surprised me with designs I would never have thought of. It is a very fast colleague,
+whose work I check. And understanding by *reviewing* feels, as of today, a bit
+shallower than understanding by writing. Maybe it is just me, but I suspect it is
+one more reason to write code yourself while you learn.
 
-I do not write code anymore. Too bad, I liked it, and I miss it at times. I describe
-what I want, and the AI writes it. But I cannot help reviewing the code, and maybe I
-will be shown wrong, one day. The AI has injected errors that bit me, and it has also
-surprised me with really clever designs that I would never have thought of. So it is
-neither a fool nor a genius: It is a very fast colleague whose work I check.
+Does it still matter how the code is written? Less than before, because changing code
+has become so cheap. Changes that were too risky or too expensive a few years ago are
+now real options. But the generated code is far from perfect, and the further we zoom
+out, from the function to the components to the whole architecture, the more it shows.
 
-Something is lost, too. When I wrote the code, I had to understand the problem to its
-very bitter end, otherwise the code would not work. Understanding by *reviewing*
-feels, as of today, always a bit shallow. Maybe it is just me. But I suspect it is one
-more reason to write code yourself while you learn: You cannot check what you do not
-understand.
+So what matters, when *doing* is cheap? **Understanding what a change will do to the
+rest**: How it disturbs the system, and even the ecosystem around it, such as the load
+on a third-party API, our business partners, or the way users interact with it. Think
+of Amdahl's law: Writing code got fast, understanding the consequences did not, and
+that is what now limits us. This is where the tools of this course are precious:
+Contracts and clear interfaces, to reason about components (a large, spaghetti-like
+system cannot be reasoned about), knowing the cost of what we ask for, and choosing
+the right structure.
 
-Does It Still Matter How the Code Is Written?
----------------------------------------------
-
-I used to say that it matters a lot. Now my answer is that it matters *less*, because
-changing code has become so much cheaper. Changes that, a few years ago, were too
-risky or too expensive, such as rewriting a component, are now real options on the
-table. But the code that the AI writes is far from perfect, and the further we zoom
-out, the more this shows:
-
-- *Programming in the small*: A function, a class. It does well.
-- *Programming in the middle*: Several components that must fit together. It is less
-  reliable.
-- *Programming in the large*: The architecture, the evolution over years, the
-  requirements. This is where it struggles most.
-
-So what matters, when *doing* has become cheap? It is **understanding what a change
-will do to the rest**. How will a change in this component disturb the system? Or
-even the ecosystem around it: The load on a third-party API, the business partners
-who depend on us, the way users interact with it. Think of the lecture on parallel
-computing: With Amdahl's law, speeding up one part of a program is limited by the
-parts that did not get faster. Writing code got fast. Understanding the consequences
-did not, and this is what now limits us.
-
-This is where the tools of this course are still precious, more than ever.
-
-- **Contracts and clear interfaces.** I rely on preconditions and postconditions more
-  than before, to reason about the components of a system: What does it promise, and
-  what does it expect? Without clear interfaces, a large and spaghetti-like system is
-  simply impossible to reason about. The ADTs we used throughout the course are this.
-- **Knowing the cost.** The AI does not know how large your data is. That a change
-  makes one call per item, and that it becomes ``n²`` calls to a partner, is
-  something we must see.
-- **Choosing the structure and recognizing the problem.** Is it a known problem? Is it
-  one of the hard ones? Which structure fits?
-- **Checking.** Finding is cheap, and checking is what we trust, as in the lecture on
-  complexity classes.
-
-And there are things that did not get cheaper. A change is cheap to *make*, but not
-always cheap to *undo*, once it has reached the outside world: A partner who was
-called, a user who was confused. And, since changing is cheap, we change *more* often,
-and each change can disturb something.
-
-I do not know where it will stop. The field moves fast, and in a few years this
-section may look naive. What I believe will not change is the lens of this course: A
+I do not know where it will stop. But I believe the lens of this course will hold: A
 guess is cheap, and a check is what we trust.
