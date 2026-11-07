@@ -96,39 +96,33 @@ What We Did Not Cover
 =====================
 
 A bachelor course has to choose, and a lot was left out. If you want to go further,
-here are the broad directions, each with one place to start. None of it is needed
-for the exam.
+here are four directions, each with a place to start. None of it is needed for the
+exam.
 
-- **The machine is not a RAM.** We counted steps as if every memory access had the
-  same cost. A real computer has a hierarchy of memories, and a well-chosen layout
-  can make an algorithm many times faster with the same ``O(n)``. This is the world of
-  `cache-friendly algorithms <https://en.wikipedia.org/wiki/Cache-oblivious_algorithm>`_,
-  and, with many threads sharing the same structures,
+- **Other data structures.** Ours forget the previous version when they are updated,
+  and they assume that every memory access costs the same. A
+  `persistent data structure <https://en.wikipedia.org/wiki/Persistent_data_structure>`_
+  keeps all its versions, which is the idea behind functional programming and version
+  control. A `cache-friendly <https://en.wikipedia.org/wiki/Cache-oblivious_algorithm>`_
+  one is laid out in memory so that the computer reads it fast, and a real computer
+  can be many times faster with the same ``O(n)``. A `probabilistic
+  <https://en.wikipedia.org/wiki/Bloom_filter>`_ one trades a little accuracy for a lot
+  of space.
+- **Distributed and concurrent algorithms.** What happens when many computers or many
+  threads work together, and share data? Then we need to talk about `distributed
+  computing <https://en.wikipedia.org/wiki/Distributed_computing>`_, locks, and
   `lock-free algorithms <https://en.wikipedia.org/wiki/Non-blocking_algorithm>`_.
-- **Data structures that remember, or that approximate.** Ours forget the previous
-  version when they are updated. A `persistent data structure
-  <https://en.wikipedia.org/wiki/Persistent_data_structure>`_ keeps them all, which
-  is the idea behind functional programming and version control. Others trade
-  a little accuracy for a lot of space, such as the
-  `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_.
-- **Richer problems.** Graphs, strings and numbers hide problems with a lot more
-  structure than we met: `network flows
-  <https://en.wikipedia.org/wiki/Maximum_flow_problem>`_ and `linear programming
-  <https://en.wikipedia.org/wiki/Linear_programming>`_, `text indexing
-  <https://en.wikipedia.org/wiki/Suffix_array>`_, `computational geometry
-  <https://en.wikipedia.org/wiki/Computational_geometry>`_.
-- **Relaxing the guarantee.** When exact is too expensive, we can accept less:
+- **Online algorithms.** We always knew the whole input in advance. An `online
+  algorithm <https://en.wikipedia.org/wiki/Online_algorithm>`_ must decide before it
+  sees the rest, as a cache that must choose what to evict without knowing what will
+  be asked next.
+- **Digging into a direction.** Each module of this course opens a field of its own:
+  `network flows <https://en.wikipedia.org/wiki/Maximum_flow_problem>`_ for graphs,
+  `linear programming <https://en.wikipedia.org/wiki/Linear_programming>`_ and
   `approximation algorithms <https://en.wikipedia.org/wiki/Approximation_algorithm>`_
-  (guaranteed to be close to the best), `online algorithms
-  <https://en.wikipedia.org/wiki/Online_algorithm>`_ (which decide without knowing the
-  future), and `streaming algorithms
-  <https://en.wikipedia.org/wiki/Streaming_algorithm>`_ (which see each item once).
-  This is the natural continuation of the lecture on complexity classes: What do we
-  do when a problem is hard?
-- **Sharper analysis.** Big-O is a blunt tool. `Amortized analysis
-  <https://en.wikipedia.org/wiki/Amortized_analysis>`_ explains why a dynamic array is
-  fast although one of its insertions is slow, and the analysis of randomized
-  algorithms explains why a random pivot works.
+  for optimization, `cryptography
+  <https://en.wikipedia.org/wiki/Public-key_cryptography>`_ for the algorithms behind
+  secure communication, and many more.
 
 
 Preparing for a Tech Interview
