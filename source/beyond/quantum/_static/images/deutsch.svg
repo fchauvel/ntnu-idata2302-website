@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='300' viewBox='0 0 800 300'>
+<rect width='800' height='300' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<text x='40' y='106' font-size='20' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>|0⟩</text>
+<text x='40' y='216' font-size='20' text-anchor='end' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>|1⟩</text>
+<line x1='55' y1='100' x2='600' y2='100' stroke='#222222' stroke-width='1.8'/>
+<line x1='55' y1='210' x2='400' y2='210' stroke='#222222' stroke-width='1.8'/>
+<rect x='110' y='73' width='54' height='54' rx='6' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<text x='137.0' y='107.0' font-size='20' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>H</text>
+<rect x='110' y='183' width='54' height='54' rx='6' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<text x='137.0' y='217.0' font-size='20' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>H</text>
+<rect x='250' y='55' width='110' height='200' rx='8' fill='white' stroke='#222222' stroke-width='2'/>
+<text x='305' y='163.0' font-size='24' text-anchor='middle' fill='#222222' font-weight='bold' font-style='italic' font-family='Helvetica, Arial, sans-serif'>f</text>
+<text x='305' y='48' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>ask f once</text>
+<rect x='440' y='73' width='54' height='54' rx='6' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.8'/>
+<text x='467.0' y='107.0' font-size='20' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>H</text>
+<rect x='540' y='73' width='54' height='54' rx='6' fill='white' stroke='#222222' stroke-width='1.8'/>
+<path d='M550,114 A20,20 0 0 1 584,114' fill='none' stroke='#222222' stroke-width='1.8'/>
+<line x1='567' y1='114' x2='579' y2='88' stroke='#222222' stroke-width='1.8'/>
+<text x='640' y='86' font-size='14' text-anchor='start' fill='#1f6feb' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>0: f is constant</text>
+<text x='640' y='110' font-size='14' text-anchor='start' fill='#1f6feb' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>1: f is variable</text>
+<text x='400' y='275' font-size='14' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Classically, we must evaluate f twice, on 0 and on 1. Here, once is enough.</text>
+</svg>
