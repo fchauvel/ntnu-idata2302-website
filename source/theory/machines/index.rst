@@ -318,7 +318,7 @@ anyone proposed turned out to be equivalent. This is why we are comfortable
 using the Turing machine as a reference.
 
 One thing we do not look at here is *how long* the simulation takes. We only
-care that it can be done. The time will matter in the next lecture.
+care that it can be done.
 
 
 The Machine We Search For

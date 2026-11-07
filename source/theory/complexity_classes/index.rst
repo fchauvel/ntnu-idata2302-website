@@ -38,10 +38,24 @@ or the RAM, which we know to be equivalent. Weaker machines, such as the
 automaton, can only solve some of the problems, which we saw in the first
 lecture.
 
-To keep things simple, we look at problems that are *yes/no questions*: "Is
-there a path shorter than ``k``?", "Is the list sorted?". We have seen that this
-is no loss: A yes/no question is a *membership problem*, and so it is a problem
-about a language.
+Finding versus Checking
+-----------------------
+
+Every problem has two sides. The first is **finding** a solution. This is the
+hard side, in general: It is a search in a tree, which may be exponential, as we
+did in the combinatorial search lecture. The second is **checking** that a given
+solution is correct. This is often much easier. It is the ``is_valid`` of our
+Search Problem. A solved Sudoku grid can be checked at a glance, whereas finding
+the grid can take hours. It is the same for a jigsaw puzzle, or a lock and its
+key.
+
+Checking is a *yes/no question*: "Is this candidate a valid solution of this
+instance?". And a yes/no question is a *membership problem*, as in the first
+lecture: Is the pair (instance, candidate) in the set of valid pairs? So
+checking is a problem about a *language*. From now on, we will mostly speak of
+problems in their yes/no form, such as "Is there a path shorter than ``k``?" or
+"Is there a spanning tree cheaper than ``k``?". It is no loss: Whenever the
+answer is yes, a solution proves it, and checking that proof is the easy side.
 
 Machine, Resource, Bound
 ------------------------
@@ -62,16 +76,21 @@ input", or "the problems that an automaton solves with a constant amount of
 state". The second one should ring a bell: These are the *regular languages* of
 the first lecture!
 
-There are countless such triplets, and thus countless classes. Fortunately, only
-a few are of real interest, and we will meet only two, which have names:
+There are countless such triplets, and thus countless classes. A few of them have
+names. Here are some, for time and for memory:
 
-======================  ==========================  ===========  ================
-Class                   Machine                     Resource     Bound
-======================  ==========================  ===========  ================
-Regular languages       Automaton                   State        Constant
-**P**                   Turing machine (or RAM)     Time         Polynomial
-**NP**                  Non-deterministic machine   Time         Polynomial
-======================  ==========================  ===========  ================
+==========================================================================  ==============================  ===========  ====================
+Class                                                                       Machine                         Resource     Bound
+==========================================================================  ==============================  ===========  ====================
+Regular languages                                                           Automaton                       Memory       Constant
+`L <https://en.wikipedia.org/wiki/L_(complexity)>`_                         Turing machine                  Memory       Logarithmic
+`PSPACE <https://en.wikipedia.org/wiki/PSPACE>`_                            Turing machine                  Memory       Polynomial
+**P**                                                                       Turing machine (or RAM)         Time         Polynomial
+**NP**                                                                      Non-deterministic machine       Time         Polynomial
+`EXPTIME <https://en.wikipedia.org/wiki/EXPTIME>`_                          Turing machine                  Time         Exponential
+==========================================================================  ==============================  ===========  ====================
+
+In this lecture, we focus on the two most famous ones, P and NP.
 
 
 P
@@ -87,60 +106,9 @@ searching, the shortest path, the minimum spanning tree. In their yes/no form,
 "is there a path shorter than ``k``?" or "is there a spanning tree cheaper than
 ``k``?" belong to P.
 
-Why Polynomial?
----------------
-
-Why draw the line at polynomial, and not at ``n²``, or ``n log n``? There are
-two reasons.
-
-The first is that polynomials do not blow up, but exponentials do.
-:numref:`theory/complexity_classes/growth` shows how many steps a problem needs,
-for a few sizes of input.
-
-.. list-table:: Number of steps, as the input grows
-   :name: theory/complexity_classes/growth
-   :header-rows: 1
-   :stub-columns: 1
-   :align: center
-
-   * - ``n``
-     - ``n²``
-     - ``n³``
-     - ``2ⁿ``
-   * - 10
-     - 100
-     - 1 000
-     - 1 024
-   * - 50
-     - 2 500
-     - 125 000
-     - about 10¹⁵
-   * - 100
-     - 10 000
-     - 1 000 000
-     - about 10³⁰
-
-Doubling the size of the input makes a polynomial algorithm a few times slower. It
-makes an exponential algorithm a *different* algorithm, one that never ends.
-(For ``n = 100``, ``2ⁿ`` is a number with 31 digits: More than the number of
-grains of sand on Earth.)
-
-The second reason is the one we left open in the last lecture. We did not look
-at *how long* it takes for a RAM to simulate a Turing machine, or the other way
-around. It turns out that the slowdown is only *polynomial*. So a problem solved
-in polynomial time by a RAM is also solved in polynomial time by a Turing
-machine, and the other way around. Polynomial time does not depend on which of
-the two machines we pick, which is exactly what we want from a definition of
-"efficient". (We state this without proof. It is a convenient property of
-polynomials, which stay polynomial when we plug a polynomial into another.)
-
-.. margin::
-
-   A classical nuance: The knapsack problem can be solved by dynamic
-   programming in a time proportional to the *capacity* of the knapsack. This
-   looks polynomial, but it is not, because the capacity is a number, and a
-   number written with ``k`` digits can be as large as ``10ᵏ``. This is a story
-   for another course.
+As in the rest of this course, we take it as a convention that polynomial is
+*efficient*, and that anything beyond, such as ``2ⁿ``, is *impractical* on
+real-life instances.
 
 So P is the set of problems that are easy to *solve*. But there are many other
 problems, which we do not know how to solve fast. Can we say anything about them?
@@ -157,27 +125,10 @@ which explores all the branches at the same time).
 The name stands for *non-deterministic polynomial time*. It does **not** mean
 "not polynomial", which is a common mistake!
 
-Finding versus Checking
------------------------
-
-To see what NP really contains, let us look again at what the lucky machine did
-for the Sudoku. It first *guessed* every cell. Then it *checked* the rows, the
-columns and the blocks. These are the two sides of any problem:
-
-- **Finding** a solution. This is the hard side, in general. It is a search in a
-  tree, which may be exponential. This is what we did in the combinatorial
-  search lecture.
-- **Checking** that a given solution is correct. This is often much easier. It
-  is the ``is_valid`` of our Search Problem. A solved Sudoku grid can be checked
-  at a glance, whereas finding the grid can take hours. It is the same for a
-  jigsaw puzzle, or a lock and its key.
-
-Checking is a yes/no question: "Is this candidate a valid solution of this
-instance?". It is a *membership problem*, as in the first lecture: Is the pair
-(instance, candidate) in the set of valid pairs?
-
-Here is the link with the lucky machine. It *guesses* a candidate, which takes
-a polynomial number of steps, and then *checks* it, in polynomial time. If the
+Here is what NP really contains. Remember what the lucky machine did for the
+Sudoku: It *guessed* every cell, then it *checked* the rows, the columns and
+the blocks. In general, it *guesses* a candidate solution, which takes a
+polynomial number of steps, and then *checks* it, in polynomial time. If the
 check is fast, the whole run is fast. So, a problem is in NP *exactly* when a
 candidate solution can be **checked in polynomial time**. That is the
 description of NP we will keep in mind: *easy to check*, but maybe hard to find.
@@ -193,36 +144,60 @@ Some examples, as yes/no questions:
 - The **Sudoku**: "Can this grid be completed?". Given a completed grid, we check
   every row, column and block.
 
+.. margin::
+
+   Wait, did we not solve the knapsack fast, with dynamic programming? That
+   algorithm takes a time proportional to the *capacity* of the box, which is
+   a number. A number written with ``k`` digits can be as large as ``10ᵏ``, so
+   this is not polynomial in the *size* of the input. This is a story for
+   another course.
+
 Every problem of P is also in NP: If we can *find* a solution in polynomial
 time, we can certainly *check* one. We just find it again, and compare. So P is
 inside NP. The question is whether it is the *whole* of it.
 
-NP-Complete
------------
+Reductions
+----------
 
-Are some problems in NP harder than the others? Yes, and here is a beautiful
-idea. A problem can sometimes be *translated* into another, quickly. If we have a
-fast way to turn any question of a problem A into a question of a problem B, with
-the same answer, then a fast solver for B gives us a fast solver for A, as shown
-in :numref:`theory/complexity_classes/translation`.
+Here is a surprising discovery. Problems that look very different at first sight
+sometimes turn out to be *the same problem in disguise*. A Sudoku, for instance,
+is a *graph coloring* problem. Make a vertex for each cell, and an edge between
+two cells that must hold different digits (same row, same column or same block).
+Filling the grid with the digits 1 to 9 is then coloring the vertices with nine
+colors so that no two neighbors share a color. Scheduling exams, so that no
+student has two at the same time, is the same problem again: The exams are the
+vertices, the colors are the time slots, and two exams are linked if a student
+takes both.
+
+What we did is *transform* an instance of one problem into an instance of another,
+with the same answer. This is called a **reduction**. If we can transform
+problem A into problem B quickly, then a fast solver for B gives us a fast solver
+for A: We transform the question, and we ask the solver for B, as shown in
+:numref:`theory/complexity_classes/translation`.
 
 .. figure:: _static/images/translation.svg
    :name: theory/complexity_classes/translation
    :align: center
 
-   If A translates quickly into B, a fast solver for B is also a fast solver
-   for A.
+   A reduction. If A transforms quickly into B, a fast solver for B is also a
+   fast solver for A.
 
-So B is *at least as hard as* A. And it turns out that some problems of NP are
-so general that *every* problem of NP translates into them. The first one that
-was shown to be of this kind was the satisfiability of a formula, in the 1970s.
-Since then, thousands of others have been found, including the knapsack and the
-traveling salesperson. We call them **NP-complete**: They are the *hardest* of
-NP.
+So B is *at least as hard as* A. We found many such links between the problems of
+NP, and they are surprising: Seemingly unrelated problems turn out to be the same
+one, over and over.
+
+NP-Complete
+-----------
+
+Some problems of NP are so general that *every* problem of NP reduces to them.
+The first one that was shown to be of this kind was the satisfiability of a
+formula, in the 1970s. Since then, thousands of others have been found, including
+the knapsack and the traveling salesperson. We call them **NP-complete**: They
+are the *hardest* of NP.
 
 What does that mean? If we found a fast algorithm for *just one* of them, we
-would get a fast algorithm for *all* of NP, since all the others translate into
-it. Despite decades of efforts, nobody has found one.
+would get a fast algorithm for *all* of NP, since all the others reduce to it.
+Despite decades of efforts, nobody has found one.
 
 .. margin::
 

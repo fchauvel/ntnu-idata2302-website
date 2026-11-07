@@ -6,7 +6,7 @@
 <text x='80' y='78' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a question</text>
 <text x='80' y='98' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>of problem A</text>
 <rect x='190' y='50' width='120' height='64' rx='10' fill='#e8f0fe' stroke='#1f6feb' stroke-width='1.6'/>
-<text x='250' y='78' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>translate</text>
+<text x='250' y='78' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>transform</text>
 <text x='250' y='98' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>(fast)</text>
 <rect x='360' y='50' width='120' height='64' rx='10' fill='white' stroke='#222222' stroke-width='1.6'/>
 <text x='420' y='78' font-size='14' text-anchor='middle' fill='#222222' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>a question</text>
