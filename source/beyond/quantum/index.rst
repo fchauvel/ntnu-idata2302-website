@@ -94,7 +94,9 @@ and how does a computation go? For a quantum computer:
 
 - The **state** of ``n`` qubits is a list of *weights*, one for each of the ``2ⁿ``
   possible combinations of 0 and 1. With ``n = 50``, that is a million billion
-  weights.
+  weights. (Careful: This is not about how many *values* we can represent.
+  ``n`` ordinary bits can also represent ``2ⁿ`` values. The difference is explained
+  below.)
 - The **rules** are the *gates*, and each gate is a *matrix* that transforms the
   whole list of weights in one go.
 - A **computation** applies a sequence of gates, and ends with a measurement.
@@ -103,9 +105,13 @@ So the speed-up *does* have to do with matrices, but not because matrices are
 magic: Ordinary computers multiply matrices all the time. It comes from three
 things:
 
-1. **The state is huge.** ``n`` qubits hold ``2ⁿ`` weights, and one gate acts on
-   all of them at once. An ordinary computer would have to store and update each
-   of them. A quantum computer does it by *being* the physical system.
+1. **The state is huge.** 50 ordinary bits can take 2⁵⁰ different values, but, at any
+   time, they hold *only one* of them, and we need 50 bits to write it down. 50
+   qubits hold a weight for *every one* of the 2⁵⁰ combinations *at the same time*, and
+   to write the state down, we need all 2⁵⁰ weights. One gate acts on all of them at
+   once. An ordinary computer that wants to *simulate* 50 qubits must store and update
+   each of these weights, which takes petabytes of memory, and every extra qubit
+   doubles it. A quantum computer does it by *being* the physical system.
 2. **Weights can cancel out.** Weights are not odds. They can be negative, or
    complex, and so two paths that lead to the same result can *cancel*, like two
    waves that meet in opposite phase, or *reinforce* each other. This is called
