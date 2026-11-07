@@ -57,21 +57,67 @@ A Different Contract
 How Does It Work, at a Glance?
 ==============================
 
-- Not a course on machine learning: A few images only, so that the rest of the
-  lecture makes sense.
-- A neural network is a **machine**, as in the machines lecture. Its *state* is a
-  huge list of numbers, the *weights* (billions, for the largest ones). Its *rules*
-  are computations on matrices, as in the quantum lecture, but on ordinary computers.
-- **Training** is optimization: We look for the weights that make the error on the
-  examples as small as possible. The usual method, *gradient descent*, is the hill
-  climbing of the heuristic search lecture, with the same traps: Local minima and
-  plateaus. No guarantee to reach the best.
+- Not a course on machine learning: A few images, so that the rest of the lecture
+  makes sense. Just enough detail to *picture* it.
+
+The Artificial Neuron
+---------------------
+
+- A **neuron** is a *vertex of a graph* that stands for a small calculation: It
+  takes several numbers, makes a *weighted sum* (each input has its own weight),
+  and passes it through an *activation function* (a simple function, such as "stay
+  at 0 if the sum is negative, else keep it"). It outputs one number.
+- Figure: A neuron, with its inputs, weights, sum and activation.
+
+Layers
+------
+
+- We stack neurons in **layers**. The outputs of a layer are the inputs of the
+  next. Figure: A small network, with an input layer, one or two hidden layers, an
+  output layer.
+- It is a *weighted directed graph* (the graph ADT of the graphs module), without
+  cycles. Evaluating it means traversing it from the inputs to the outputs, layer
+  by layer. A whole layer is one matrix computation (as in the quantum lecture).
+- The **weights** are the *state* of the machine, as in the machines lecture. There
+  can be billions of them.
+
+Training
+--------
+
+- What is training? We have *examples*: Inputs, and the output we expect. Feed an
+  input, **detect the error** (how far is the output from the expected one?), and
+  **adjust the weights** so that the error shrinks. Repeat over many examples.
+- It is a **hill climbing** over millions of parameters *at once*, with the traps of
+  the heuristic search lecture: Local minima and plateaus. No guarantee to reach the
+  best. (Strictly, we go *downhill*, since we minimize the error.)
+- A difference with the hill climbing of the course: We do not try the neighbors one
+  by one, there would be far too many (millions of weights, each in two directions).
+  The *slope* (the derivative) tells, for each weight, in which direction the error
+  goes down. This is *gradient descent*.
+
+One Intuition: Universal Approximation
+--------------------------------------
+
+- One result, stated without proof: With *enough neurons*, a network can
+  approximate *any* reasonable function, to any accuracy we like. This is the
+  *universal approximation theorem*. So, in principle, a network can represent any
+  rule we could want.
+- A caution: It says that a good network *exists*, not that training will *find* it,
+  nor how many neurons it takes. Existence, not a recipe.
+
+Large Language Models
+---------------------
+
+- A quick jump, with a gross simplification (fine for intuition): An LLM is a
+  *giant neural network* that, given the text so far, computes how *likely* each
+  possible next word is (in fact, each next piece of a word).
+- To answer a question, it takes the question as the start of the text, picks a likely
+  first word of the answer (with some randomness, so not always the *most* likely, and
+  the answer varies), adds it to the text, and does it again, one word at a time.
+- It is trained on huge amounts of text to predict the next word, and then refined to
+  behave as an assistant. It does not store texts: What it learned is in its weights.
 - It took off with **parallel hardware**: Graphics cards do matrix computations on
   many numbers at the same time (the SIMD machines of the parallel lecture).
-- A **large language model** is trained to predict the next piece of text, given what
-  came before. To write, it predicts, picks one piece with some randomness (the
-  *randomize* idea of the design lecture), and starts again.
-- Figure (optional): A tiny network, with its weights as the state.
 
 *Hand-off: When is such a tool the right one?*
 
@@ -107,6 +153,17 @@ What It Changes for Engineers
 *First person, the lecturer's take. To be written by the lecturer. Points to make:*
 
 - It is changing how we work: We hardly write code anymore, we direct, read, test.
+  (Personal: "I don't write code anymore. Too bad, I liked it, and I miss it at
+  times.")
+- I still review code, I cannot help it. Maybe I will be shown wrong. AI has
+  injected errors that bit me. And it has also surprised me with really clever
+  designs that I would not have thought of.
+- Not writing code takes something away: Writing meant understanding something to
+  its very bitter end. Understanding by *reviewing* feels, as of today, always a bit
+  shallow. Maybe this is just me. (An argument for learning by writing, in a course.)
+- Contracts (preconditions and postconditions) and clear interfaces matter *more*:
+  They are a tool to reason about the components of a system. Without clear
+  interfaces, it feels impossible to reason about a large, spaghetti-like system.
 - Does it still matter *how* the code is written, or only that it is correct? It
   matters *less* than before, because **changing code has become much cheaper**.
   Changes that were too risky or too expensive a few years ago are now real options.
