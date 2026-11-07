@@ -90,7 +90,34 @@ Regular languages                                                           Auto
 `EXPTIME <https://en.wikipedia.org/wiki/EXPTIME>`_                          Turing machine                  Time         Exponential
 ==========================================================================  ==============================  ===========  ====================
 
-In this lecture, we focus on the two most famous ones, P and NP.
+These classes are not unrelated. A machine that is allowed more resource can do at
+least as much, so the classes are nested, as in
+:numref:`theory/complexity_classes/inclusions`.
+
+.. figure:: _static/images/class_inclusions.svg
+   :name: theory/complexity_classes/inclusions
+   :align: center
+
+   How the classes relate: Each one is inside the next.
+
+You can find the intuition behind each step:
+
+- A machine with constant memory is also a machine with logarithmic memory.
+- With logarithmic memory, a machine can be in only polynomially many different
+  configurations. It cannot go on for longer without repeating one, and so it
+  runs in polynomial time: L is inside P.
+- The lucky machine does at least what the ordinary one does: P is inside NP.
+- We can imitate the lucky machine by trying every branch of its tree, one after
+  the other, forgetting each one when done. This uses little memory (as in our
+  search lectures, the tree is never stored), but a lot of time: NP is inside
+  PSPACE.
+- With polynomial memory, a machine has at most exponentially many
+  configurations, so it runs in at most exponential time: PSPACE is inside
+  EXPTIME.
+
+What we do *not* know is which of these steps are strict. We know that P is not
+EXPTIME, so at least one step in between is strict, but we cannot tell which one.
+In this lecture, we focus on the two most famous classes, P and NP.
 
 
 P
