@@ -115,6 +115,35 @@ You can find the intuition behind each step:
   configurations, so it runs in at most exponential time: PSPACE is inside
   EXPTIME.
 
+Here are problems for each class, as yes/no questions, with the ones we met in
+this course first. (Several of these problems have their own page on Wikipedia,
+for the curious.)
+
+- **Regular languages**: Does this text match a pattern, such as ``ba*!``, an
+  identifier or a date? (First lecture of this module.)
+- **L**: Is this array sorted? We only need to remember an index, which is
+  logarithmic in the size of the array. The language ``aⁿbⁿ`` of the first
+  lecture also belongs here: An automaton cannot count, but a counter written in
+  binary takes only logarithmically many bits.
+- **P**: Is this the sorted version of that list? Is there a path shorter than
+  ``k`` between two vertices (shortest paths)? Is there a spanning tree cheaper
+  than ``k`` (Prim, Kruskal)? Is this key in the hash table, or in the tree?
+- **NP**: The ones for which finding seems hard but checking is easy. The
+  `knapsack <https://en.wikipedia.org/wiki/Knapsack_problem>`_ and the
+  `traveling salesperson <https://en.wikipedia.org/wiki/Travelling_salesman_problem>`_
+  of the Optimization module, the Sudoku, `graph coloring
+  <https://en.wikipedia.org/wiki/Graph_coloring>`_, and the `satisfiability
+  of a formula <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_.
+- **PSPACE**: Problems where, it seems, even *checking* a solution is hard, such as many
+  puzzles and games on boards of any size: `Sokoban
+  <https://en.wikipedia.org/wiki/Sokoban>`_, `Rush Hour
+  <https://en.wikipedia.org/wiki/Rush_Hour_(puzzle)>`_, or deciding whether a
+  `quantified formula
+  <https://en.wikipedia.org/wiki/Quantified_Boolean_formula>`_ is true.
+- **EXPTIME**: Who wins at chess, or checkers, played on a board of any size, with
+  both players playing perfectly. See the `complexity of games
+  <https://en.wikipedia.org/wiki/Computational_complexity_of_games>`_.
+
 What we do *not* know is which of these steps are strict. We know that P is not
 EXPTIME, so at least one step in between is strict, but we cannot tell which one.
 In this lecture, we focus on the two most famous classes, P and NP.
@@ -232,11 +261,6 @@ Despite decades of efforts, nobody has found one.
    instead of "is there one worth at least ``k``?") are at least as hard as the
    NP-complete ones. They are called **NP-hard**.
 
-What does it mean for you, in practice? That when you recognize an NP-complete
-problem in the wild, you should not hunt for a fast and exact algorithm.
-Instead, go back to the Optimization module: Branch-and-bound, dynamic
-programming when the numbers are small, or a heuristic.
-
 
 P = NP?
 =======
@@ -266,3 +290,54 @@ cryptography, which counts on some problems being hard to solve and easy to
 check, would be in danger. And if P is not equal to NP, then we know that our
 intuition is right, and that *some* problems are hopeless in general. Either
 way, the answer would tell us a lot about what computers can do.
+
+
+In Practice
+===========
+
+Here is probably the most useful part of this lecture. Sooner or later, you will
+read, in a paper, a blog post or a code review, that "this problem is in P", or
+"NP-complete", or "EXPTIME". As an engineer, what should you do with it? Here is
+a field guide.
+
+- **"This problem is in P."** *Good news: An efficient algorithm exists.* Sorting
+  is in P, and so is finding a shortest path. Do not invent something fancy: Look
+  for the textbook algorithm, and use it. Keep in mind that polynomial is not
+  always fast. A ``n³`` algorithm on a million items is still too slow, so look at
+  the exponent and at the size of your data.
+- **"This problem is in NP."** *Careful, this says less than you may think.* It
+  only says that a solution is easy to *check*, and it includes everything in P.
+  The knapsack is in NP, and so is sorting! This is still useful: Write the
+  checker (our ``is_valid``). It tests any solver, and it validates the result of
+  a heuristic that may have made a mistake.
+- **"This problem is NP-complete" (or "NP-hard").** *Warning: The hardest of NP.*
+  Nobody knows an efficient algorithm for it, and finding one would be a
+  breakthrough. So do not promise an optimal solution on large instances, and do
+  not blame yourself if your algorithm is slow: It is the problem. Instead, you
+  have a toolbox, which you know from the Optimization module:
+
+  - *Check the size.* If your instances are small, branch-and-bound or even a
+    plain search is fine.
+  - *Look at the numbers.* If they are small, as with the capacity of a knapsack,
+    dynamic programming may do.
+  - *Settle for good enough.* A heuristic, such as hill climbing or simulated
+    annealing, finds a good solution fast, though not provably the best. Some
+    problems even have `approximation algorithms
+    <https://en.wikipedia.org/wiki/Approximation_algorithm>`_ that guarantee how
+    far from the best they are.
+  - *Use a solver.* Tools such as SAT or constraint solvers solve many
+    NP-complete problems in practice, even though they cannot beat the worst case.
+  - *Talk to the customer.* Is the *best* solution really needed, or a good one?
+    This conversation can save months.
+- **"This problem is PSPACE-complete" or "EXPTIME-complete".** *Even worse: There
+  may be no easy way to even check an answer.* Expect to solve only small
+  instances exactly, and to rely on search with a limit, as chess programs do, or
+  on approximations.
+
+Two more things to keep in mind. First, a class describes the *worst case*, over
+all the instances of a problem. Your own instances may be much easier: Solvers
+for satisfiability handle formulas with millions of variables. A hard class is a
+warning, not a verdict. Second, when you meet a new problem, ask yourself
+whether it is *a known problem in disguise*. If it reduces to, or comes from, an
+NP-complete problem, you inherit everything that is known about it, including the
+tricks that work.
