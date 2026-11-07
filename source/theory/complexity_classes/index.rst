@@ -22,6 +22,16 @@ answer to "how hard is it?". In this lecture, we clean it up, with one idea: We
 stop looking at algorithms, and we look at the *problems*.
 
 
+.. note::
+
+   **A disclaimer.** The point of this lecture is *not* to convey the
+   technicalities. We skip the formal definitions and the proofs, and we
+   simplify here and there. The goal is to give you a good enough *intuition*
+   about some of the big ideas of computer science, and maybe to pick your
+   curiosity, but no more. If it does, the theory of computation is a whole
+   field, with courses of its own, waiting for you.
+
+
 Complexity Classes
 ==================
 
