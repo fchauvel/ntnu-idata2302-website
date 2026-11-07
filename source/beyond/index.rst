@@ -7,9 +7,8 @@ This is the last module. We have covered a lot of ground and we now
 take a step back. We have based everything on random access machines,
 but other approaches are possible: Parallel computers, quantum
 computers, biological computers, AI, etc. We take a quick look at
-parallel and quantum computing and see where they fit. Then we close
-the course with a lecture on how to approach a problem you have never
-seen.
+parallel and quantum computing and see where they fit. Then we turn to
+AI, and to the question that comes with it: Is programming obsolete?
 
 .. note::
 
@@ -26,7 +25,7 @@ Contents
 
    parallel/index
    quantum/index
-   farewell/index
+   ai/index
 
 
    

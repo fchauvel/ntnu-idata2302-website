@@ -2,7 +2,7 @@
 How to Design Algorithms?
 =========================
 
-:Lecture: Lecture 9.3 :download:`(slides)
+:Lecture: Lecture 10.1 :download:`(slides)
           <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EcEs__S4Lr5Nhhpwu0oKS4cBhd8RS1W5_DnnWpTpPHS3Og?e=oe8tW2>`
 :Objectives: Understand the "methodology" to approach computational problems
 :Concepts: Brute force, divide-and-conquer, greedy, randomization, design method
@@ -66,10 +66,10 @@ Facing a New Problem
 ====================
 
 Beyond the ideas, there is a method. Here are the questions I ask myself, in this
-order (:numref:`beyond/farewell/flow`).
+order (:numref:`farewell/design/flow`).
 
 .. figure:: _static/images/design_flow.svg
-   :name: beyond/farewell/flow
+   :name: farewell/design/flow
    :align: center
 
    A way to approach a new problem.
