@@ -265,12 +265,6 @@ What does that mean? If we found a fast algorithm for *just one* of them, we
 would get a fast algorithm for *all* of NP, since all the others reduce to it.
 Despite decades of efforts, nobody has found one.
 
-.. margin::
-
-   The optimization versions of these problems ("what is the *best* knapsack?"
-   instead of "is there one worth at least ``k``?") are at least as hard as the
-   NP-complete ones. They are called **NP-hard**.
-
 
 P = NP?
 =======
@@ -320,7 +314,7 @@ a field guide.
   The knapsack is in NP, and so is sorting! This is still useful: Write the
   checker (our ``is_valid``). It tests any solver, and it validates the result of
   a heuristic that may have made a mistake.
-- **"This problem is NP-complete" (or "NP-hard").** *Warning: The hardest of NP.*
+- **"This problem is NP-complete."** *Warning: The hardest of NP.*
   Nobody knows an efficient algorithm for it, and finding one would be a
   breakthrough. So do not promise an optimal solution on large instances, and do
   not blame yourself if your algorithm is slow: It is the problem. Instead, you
