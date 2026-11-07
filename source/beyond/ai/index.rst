@@ -222,6 +222,16 @@ What It Changes for Engineers
      matters *less* than before, because changing code has become much cheaper.
      Changes that were too risky or too expensive a few years ago are now real
      options.
+   - The central idea (the lecturer's): Since the cost of *doing* is low, what matters
+     is to understand how a change in one component will disturb the system, or even
+     the ecosystem: The load on a third-party API, business partners, the way users
+     interact. Local code quality matters less, the *boundaries* (interfaces,
+     contracts) matter more.
+     (Suggested links: Amdahl's law, since writing code got fast but understanding the
+     consequences did not, so that is what limits the overall speed. Complexity
+     thinking at system scale, such as one call per item turning into ``n²`` calls to a
+     partner. A change is cheap to make but not always cheap to undo, once it has
+     reached the outside world. And cheap change means *more* changes.)
    - But the generated code is far from perfect, and the gap grows when we zoom out:
      programming in the small (a function, a class: it does well), in the middle
      (several components that must fit together), in the large (architecture,
