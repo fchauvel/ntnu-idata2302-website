@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='820' height='330' viewBox='0 0 820 330'>
+<rect width='820' height='330' fill='white'/>
+<defs><marker id='ar' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#222222'/></marker><marker id='arg' markerWidth='10' markerHeight='8' refX='9' refY='4' orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#888888'/></marker></defs>
+<text x='100' y='28' font-size='14' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>1. start</text>
+<text x='100' y='46' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>all equal</text>
+<line x1='20' y1='190' x2='180' y2='190' stroke='#222222' stroke-width='1.2'/>
+<rect x='22' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='42' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='62' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='82' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='102' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='122' y='156.4' width='16' height='33.6' fill='#1f6feb'/>
+<rect x='142' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='162' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<text x='100' y='262' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>chance to find it: 12.5%</text>
+<text x='300' y='28' font-size='14' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>2. check: the winner</text>
+<text x='300' y='46' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>gets a hidden mark</text>
+<line x1='220' y1='190' x2='380' y2='190' stroke='#222222' stroke-width='1.2'/>
+<rect x='222' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='242' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='262' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='282' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='302' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='322' y='190.0' width='16' height='33.6' fill='#1f6feb'/>
+<rect x='342' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<rect x='362' y='156.4' width='16' height='33.6' fill='#b9c4d6'/>
+<line x1='220' y1='164.8' x2='380' y2='164.8' stroke='#d97706' stroke-width='1.6' stroke-dasharray='5,3'/>
+<text x='300' y='130.825' font-size='12' text-anchor='middle' fill='#d97706' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>dashed: the average</text>
+<text x='300' y='262' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>chance to find it: 12.5%</text>
+<text x='500' y='28' font-size='14' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>3. mirror around</text>
+<text x='500' y='46' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>the average</text>
+<line x1='420' y1='190' x2='580' y2='190' stroke='#222222' stroke-width='1.2'/>
+<rect x='422' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='442' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='462' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='482' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='502' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='522' y='106.0' width='16' height='84.0' fill='#1f6feb'/>
+<rect x='542' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<rect x='562' y='173.2' width='16' height='16.8' fill='#b9c4d6'/>
+<text x='500' y='262' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>chance to find it: 78%</text>
+<text x='700' y='28' font-size='14' text-anchor='middle' fill='#222222' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>4. check and mirror</text>
+<text x='700' y='46' font-size='13' text-anchor='middle' fill='#555555' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>once more</text>
+<line x1='620' y1='190' x2='780' y2='190' stroke='#222222' stroke-width='1.2'/>
+<rect x='622' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='642' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='662' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='682' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='702' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='722' y='97.7' width='16' height='92.3' fill='#1f6feb'/>
+<rect x='742' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<rect x='762' y='190.0' width='16' height='8.4' fill='#b9c4d6'/>
+<text x='700' y='262' font-size='13' text-anchor='middle' fill='#1f6feb' font-weight='bold' font-style='normal' font-family='Helvetica, Arial, sans-serif'>chance to find it: 95%</text>
+<text x='410' y='310' font-size='13' text-anchor='middle' fill='#888888' font-weight='normal' font-style='normal' font-family='Helvetica, Arial, sans-serif'>Eight boxes, one winner. The bars are the weights of the boxes, and the bar of the winner is in blue.</text>
+</svg>
