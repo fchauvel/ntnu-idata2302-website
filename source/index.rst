@@ -33,7 +33,7 @@ Algorithms and Data Structures
 
 ..
    beyond/index
-   farewell/index
+   design/index
 
 .. toctree::
    :caption: Lab Sessions
