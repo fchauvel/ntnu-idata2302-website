@@ -66,10 +66,10 @@ Facing a New Problem
 ====================
 
 Beyond the ideas, there is a method. Here are the questions I ask myself, in this
-order (:numref:`farewell/design/flow`).
+order (:numref:`design/flow`).
 
 .. figure:: _static/images/design_flow.svg
-   :name: farewell/design/flow
+   :name: design/flow
    :align: center
 
    A way to approach a new problem.
