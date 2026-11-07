@@ -20,7 +20,9 @@ show you is something different. Advanced topics, such as the
 compilation of a programming language, are not built from exotic new
 ideas. They are built from the very concepts we have studied together:
 *trees*, *recursion*, *graphs* and *hash sets*. Regular expressions are
-a small and friendly place to see this happening.
+a small and friendly place to see this happening. Think of this lecture as a
+guided tour: You are not expected to reproduce the construction, only to
+recognize the pieces you already know.
 
 Patterns Everywhere
 -------------------
