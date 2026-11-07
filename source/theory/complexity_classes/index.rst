@@ -18,8 +18,20 @@ Complexity Classes
    bound". Lecture 1 gave a machine and a first class. Lecture 2 gave more
    machines, and the imaginary one. Here, we put them together.
 
+   The hook, which takes up the end of lecture 2: Every problem has two sides,
+   *finding* a solution and *verifying* that a solution is correct. The lucky
+   machine does both, in this order: It guesses, then it checks. Verifying is a
+   membership problem ("is this solution in the set of the valid ones?"), and so
+   it is a problem about a language, as in lecture 1. The whole lecture plays
+   with the gap between the two sides.
+
+   The aim, as for the whole module: A good enough *intuition* for the general
+   results of computer science, not their proofs.
+
    What students should take away:
 
+   - Every problem has two sides: Finding a solution, and verifying one.
+     Verifying is often much easier than finding.
    - There are machines, and some are more powerful than others.
    - A complexity class is a set of problems that can be solved with a given
      amount of resource, by a specific machine, or an equivalent one.
@@ -27,6 +39,30 @@ Complexity Classes
      one, which always guesses right.
    - The two most common classes are P and NP.
    - Whether P = NP is an open problem.
+
+
+Two Sides of a Problem
+======================
+
+- The lucky machine of lecture 2 solved the Sudoku in two moves: It *guessed*
+  every cell, then it *checked* the rows, the columns and the blocks.
+- These are the two sides of any problem. **Finding** a solution: Hard, in
+  general, since it is a search in a tree that may be exponential. **Verifying**
+  a solution: Given a candidate, is it correct? Often easy. A Sudoku grid is
+  checked at a glance, and finding it can take hours. (The same as for a
+  jigsaw puzzle, or a lock and its key.)
+- Examples, in the vocabulary of the course: The ``is_valid`` of the Search
+  Problem of the combinatorial search lecture is the verification. The search
+  that finds a complete and valid solution is the finding.
+- Verifying is a *yes/no question*: "Is this candidate a valid solution of this
+  instance?". It is a *membership problem*: Is the pair (instance, candidate) in
+  the set of valid pairs? So it is a problem about a *language*, and the machines
+  of lecture 2 can be asked how fast they solve it. This is the link with the
+  first lecture.
+- So we can ask how much *time* each side takes, on a given machine. This is
+  what a complexity class will measure.
+
+*Hand-off: But time depends on the machine.*
 
 
 Bounds Depend on the Machine
@@ -94,16 +130,21 @@ P
 NP
 ==
 
-- The problems that the *lucky machine* solves in polynomial time.
-- An equivalent description: The solutions can be **checked** in polynomial
-  time. This is the ``is_valid`` of the Search Problem of the combinatorial
-  search lecture.
+- The problems whose solutions can be **verified** in polynomial time. This is
+  the ``is_valid`` of the Search Problem of the combinatorial search lecture.
+- The same thing, with the machine of lecture 2: The problems that the *lucky
+  machine* solves in polynomial time. It guesses a candidate, which takes a
+  polynomial number of steps, then verifies it, in polynomial time. A fast
+  verifier is exactly what the guess needs. (Stated, with this intuition, not
+  proved. This is why NP is not "not polynomial", which is a common mistake:
+  It stands for *non-deterministic* polynomial.)
 - Examples, as yes/no questions: the knapsack ("is there a box worth at least
   15 000?"), the traveling salesperson, satisfiability of a formula, the Sudoku.
 - Easy to check, hard to find (as far as we know): A Sudoku grid is checked in a
-  glance.
+  glance. This is the gap of the first section.
 - P is contained in NP: What an ordinary machine does, the lucky machine does
-  too.
+  too. If we can *find* in polynomial time, we can certainly *verify*: Just
+  find again, and compare.
 
 *Hand-off: Are some problems of NP harder than others?*
 
@@ -132,7 +173,8 @@ P = NP?
 
 - The question: Does the lucky machine really help? Can an ordinary machine solve
   in polynomial time what the lucky machine solves, or is the exponential tree
-  unavoidable?
+  unavoidable? In the words of the first section: *Is finding really harder than
+  verifying*, or have we just not been clever enough?
 - It is **open**. Most specialists believe the answer is no, but nobody has
   proved it. It is one of the Millennium Prize Problems of the Clay Mathematics
   Institute, worth one million dollars.
