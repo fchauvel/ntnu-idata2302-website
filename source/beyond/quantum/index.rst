@@ -130,13 +130,15 @@ Where Does the Speed-Up Come From?
 Remember our three questions about a machine: What is its state, what are its rules,
 and how does a computation go? For a quantum computer:
 
-- The **state** of ``n`` qubits is a list of *weights*, one for each of the ``2ⁿ``
-  possible combinations of 0 and 1. With ``n = 50``, that is a million billion
+- The **state** of one qubit is two weights, one for each answer, 0 and 1, as above.
+  The state of ``n`` qubits is a list of weights, one for each of the ``2ⁿ``
+  possible combinations of answers. With ``n = 50``, that is a million billion
   weights. (Careful: This is not about how many *values* we can represent.
   ``n`` ordinary bits can also represent ``2ⁿ`` values. The difference is explained
   below.)
-- The **rules** are the *gates*, and each gate is a *matrix* that transforms the
-  whole list of weights in one go.
+- The **rules** are the *gates*. For a single qubit, a gate is a *turn* of the ball.
+  In general, each gate is a *matrix* that transforms the whole list of weights in
+  one go.
 - A **computation** applies a sequence of gates, and ends with a measurement.
 
 So the speed-up *does* have to do with matrices, but not because matrices are
@@ -144,12 +146,17 @@ magic: Ordinary computers multiply matrices all the time. It comes from three
 things:
 
 1. **The state is huge.** 50 ordinary bits can take 2⁵⁰ different values, but, at any
-   time, they hold *only one* of them, and we need 50 bits to write it down. 50
-   qubits hold a weight for *every one* of the 2⁵⁰ combinations *at the same time*, and
-   to write the state down, we need all 2⁵⁰ weights. One gate acts on all of them at
+   time, they hold *only one* of them, and 50 bits are enough to write it down. The
+   state of 50 qubits is described by a weight for *every one* of the 2⁵⁰
+   combinations *at the same time*, and to write it down, we need all 2⁵⁰ weights.
+   (If the qubits were independent of each other, a pair of weights per qubit would
+   be enough. We need the full list when they are *linked*, which is what a gate such
+   as CNOT does, and which is called *entanglement*.) One gate acts on all of them at
    once. An ordinary computer that wants to *simulate* 50 qubits must store and update
    each of these weights, which takes petabytes of memory, and every extra qubit
-   doubles it. A quantum computer does it by *being* the physical system.
+   doubles it. A quantum computer does it by *being* the physical system. But
+   careful: Reading 50 qubits gives us only 50 bits. The size is that of the
+   *description*, not of what we can read out.
 2. **Weights can cancel out.** Weights are not odds. They can be negative, or
    complex, and so two paths that lead to the same result can *cancel*, like two
    waves that meet in opposite phase, or *reinforce* each other. This is called
@@ -180,14 +187,17 @@ that lets us extract a useful property of all of them.
 A Few Gates
 -----------
 
-Here are the main gates. You do not need the matrices, so they are folded.
-Applying a gate means multiplying the list of weights by its matrix.
+Here are the main gates. For one qubit, a gate is a *turn of the ball*, which changes
+the tilt of its axis, or the way it is swung around the reference. You do not need
+the matrices, so they are folded. Applying a gate means multiplying the list of
+weights by its matrix.
 
 .. admonition:: X, the quantum NOT
    :class: hint, dropdown
 
-   It swaps the weights of 0 and 1: A ``0`` becomes a ``1`` and the other way
-   around.
+   In the ball picture, it flips the ball upside down: A ball that turned
+   counterclockwise seen from above turns clockwise, so 0 becomes 1 and the other
+   way around. It swaps the weights of 0 and 1.
 
    .. math::
 
@@ -196,9 +206,10 @@ Applying a gate means multiplying the list of weights by its matrix.
 .. admonition:: Z, the sign flip
    :class: hint, dropdown
 
-   It keeps the weight of 0, and flips the *sign* of the weight of 1. If we
-   measure right away, we notice nothing, since the odds are the squares of the
-   weights. But the sign matters for the interference that comes next. It is the
+   In the ball picture, it swings the axis half-way around the reference, without
+   changing its tilt. It keeps the weight of 0, and flips the *sign* of the weight
+   of 1. If we measure right away, we notice nothing, since the tilt, and so the
+   odds, did not change. But the sign matters for the interference that comes next. It is the
    kind of "hidden mark" that Grover's algorithm uses.
 
    .. math::
@@ -208,8 +219,9 @@ Applying a gate means multiplying the list of weights by its matrix.
 .. admonition:: H, the Hadamard gate
    :class: hint, dropdown
 
-   It turns a ``0`` into an equal mix of 0 and 1, and a ``1`` into an equal mix
-   with a minus sign. It is the usual way to create a superposition. Applying it
+   In the ball picture, it tips a ball that is upright onto its side, which gives
+   a 50/50 odds, and, applied twice, tips it back upright. It turns a ``0`` into an
+   equal mix of 0 and 1, and a ``1`` into an equal mix with a minus sign. It is the usual way to create a superposition. Applying it
    twice brings us back to where we started, which is a nice example of
    interference: The two paths to the "wrong" result cancel out.
 
@@ -341,8 +353,9 @@ winner (:numref:`beyond/quantum/grover`).
 
 How many rounds? Roughly three quarters of the square root of ``n``: Two rounds
 for our eight boxes, and about 800 for a million. Each round pushes the winner a
-small and fixed step up, and we need that many of them to get close to certainty. If we go on for longer, the weight comes back down, like a swing
-that we keep pushing at the wrong moment. So we have to stop at the right time.
+small and fixed step up, and we need that many of them to get close to certainty. If
+we go on for longer, the weight comes back down, like a swing that we keep pushing
+at the wrong moment. So we have to stop at the right time.
 
 So there is no magic: The algorithm opens every box in every round, but it only
 learns by *tilting the odds*, a little at a time. Two things to remember:
