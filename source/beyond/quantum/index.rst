@@ -32,58 +32,96 @@ that machine? Spoiler: No. Let us look at what it *is*, from a distance.
 From Bits to Qubits
 ===================
 
-An ordinary computer works with *bits*, which are 0 or 1. A few simple operations,
-the *gates*, such as NOT, AND, OR, XOR or NAND, transform bits into bits. Wire
-gates together, and you get a *Boolean circuit*, which is how processors are made.
+Let us start with what we know. An ordinary computer works with *bits*: A machine
+with a two-symbol alphabet, {0, 1}. Each symbol is mapped to a physical phenomenon:
+An electric current above a threshold is a 1, and below it is a 0. A quantum computer
+works with the same alphabet, mapped to a *different physical phenomenon*, and that
+changes everything:
 
-A quantum computer works with **qubits**, and a qubit is a physical thing: The
-spin of an electron, the polarization of a photon, or the state of a tiny
-superconducting circuit. Take the spin of an electron. We can measure whether it
-points up or down, and we call these two outcomes 0 and 1. But, before we measure
-it, the spin may point in *any direction* in space, not just up or down.
-:numref:`beyond/quantum/sphere` shows it: A qubit is a direction, a point on a
-sphere, and "up" and "down" are only the two poles.
+=====================  ===============================  ======================================
+\                      Bit                              Qubit
+=====================  ===============================  ======================================
+Alphabet               {0, 1}                           {0, 1}
+Physical phenomenon    A voltage above or below a       A spin (or a photon, or a tiny
+                       threshold                        circuit), seen as one way or the other
+What 0 or 1 means      A property: The wire *is* high   An *answer* to a question that we
+                       or low                           ask to the qubit
+Reading it             Harmless, as often as we like    Random, and it destroys the state
+Copying it             Free                             Impossible
+=====================  ===============================  ======================================
 
-.. figure:: _static/images/sphere.svg
-   :name: beyond/quantum/sphere
+A Spinning Ball
+---------------
+
+Picture a tiny ball spinning on itself. It does not matter that real qubits are not
+exactly balls (the best known one is the *spin* of an electron, which behaves as if
+it were). The ball turns around an axis, and **this axis can be tilted in any
+direction**.
+
+To read the qubit, we need a *reference*: One direction that the hardware looks
+along. Let us say we look at the ball from above. We ask one question: **does it
+turn counterclockwise (0) or clockwise (1)?** The answer is always a clean 0 or 1,
+never "a bit of both". But which one we get is random, and the odds depend on how
+much the *spin axis* is tilted compared to the *reference axis*
+(:numref:`beyond/quantum/spin_axis`).
+
+.. figure:: _static/images/spin_axis.svg
+   :name: beyond/quantum/spin_axis
    :align: center
 
-   A qubit is a direction in space. The poles are the 0 and the 1. Anywhere else, it
-   is a *superposition*: a mix of 0 and 1.
+   The dashed line is the reference axis, along which we look. The blue arrow is the
+   axis around which the ball really spins. The more it is tilted, the more the odds
+   shift.
 
-A direction that is not at a pole is a **superposition**. It is not "either 0 or 1,
-we do not know which". It is both, in a way, and the closer to a pole, the more it
-weighs on that side.
+- **The spin axis is nearly aligned with the reference, pointing up.** Seen from
+  above, the ball almost surely turns counterclockwise. We read a 0 nearly every time,
+  and a 1 only now and then.
+- **The spin axis is nearly aligned with the reference, pointing down.** The ball
+  almost surely turns clockwise, and we read a 1 nearly every time.
+- **The spin axis lies flat, perpendicular to the reference.** Seen from above, there
+  is no reason for one sense or the other, so the odds are 50/50. This is what we
+  call an equal *superposition* of 0 and 1.
 
-.. admonition:: How is a direction written down?
+Two things are worth stressing.
+
+- **The odds are not our ignorance.** The ball has a definite spin axis. A coin under
+  a cup is already heads or tails, and we just do not know. Here, the *answer* to the
+  question does not exist before we ask: It is created, at random, when we ask. And
+  asking destroys the rest. The ball snaps to the answer, as if it had been spinning
+  that way all along, so we cannot ask twice and learn more about the tilt.
+- **The reference is part of the hardware.** The machine has one built-in question: A
+  magnetic field, or an energy level, sets the reference axis once and for all, as
+  the voltage threshold does in a bit. A program never mentions it. To ask about
+  another direction, we first *turn the ball* with a gate, and then ask the usual
+  question.
+
+This also tells what a "superposition" really is. A ball whose axis lies flat is
+neither 0 nor 1 *for this question*. But it has a perfectly definite answer for
+another question, the one asked along its own axis. What is strange about quantum
+physics is that no direction is definite for *all* the questions at the same time.
+
+To compute with this, we write down the state with numbers. For each of the two
+answers, we keep a *weight*, and the odds of an answer are the square of its weight.
+The weights are not ordinary numbers, and this is the only place where complex numbers
+enter.
+
+.. admonition:: How is the state written down?
    :class: hint, dropdown
 
-   A qubit is written as two *complex numbers*, :math:`a` and :math:`b`, such that
-   :math:`|a|^2 + |b|^2 = 1`. They are the *weights* (or *amplitudes*) of 0 and 1:
+   The state is written as two *complex numbers*, :math:`a` and :math:`b`, the weights
+   of 0 and 1, such that :math:`|a|^2 + |b|^2 = 1` (the odds add up to 1):
 
    .. math::
 
       \text{qubit} = a \,|0\rangle + b \,|1\rangle
 
-   Why complex numbers? A real number alone cannot describe a direction in
-   three-dimensional space. A complex number is a length *and an angle*, called the
-   *phase*. The two lengths tell how close to each pole we are, and the angle
-   between :math:`a` and :math:`b` tells where we are around the vertical axis (the
-   longitude on the sphere). You cannot see the phase by measuring, but, as we will
-   see, it matters a lot.
-
-What do we see when we measure? Only a 0 or a 1, chosen at random, with odds given
-by the weights (:numref:`beyond/quantum/qubit`). And the superposition is gone: What
-we measured is all that remains. So we cannot "read" the direction. A quantum
-algorithm must be arranged so that, in the end, the answer we want is the likely
-one.
-
-.. figure:: _static/images/qubit.svg
-   :name: beyond/quantum/qubit
-   :align: center
-
-   A bit is 0 or 1. A qubit is a mix of both. When we measure it, we get 0 or 1,
-   with odds given by the weights, and the mix is lost.
+   Why complex numbers? A direction in three-dimensional space is described by two
+   angles: How far the axis is tilted from the reference, and which way it is swung
+   around it, like latitude and longitude. The first angle gives the odds. The second,
+   the *phase*, does not change the odds of the first question, but it does matter
+   later. A complex number is a length and an angle, and it can be turned by multiplying
+   it. This is what the weights need. You cannot see the phase by measuring, but, as
+   we will see, it matters a lot.
 
 
 Where Does the Speed-Up Come From?
