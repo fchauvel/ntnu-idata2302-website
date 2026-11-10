@@ -2,7 +2,8 @@
 Machines
 ========
 
-:Lecture: Lecture 8.2 (slides to come)
+:Lecture: Lecture 8.2 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/IQBYMNcO7K1VS692uByRcjxOAUJJHHHxCeIQbeH75XvNoLg?e=9GJ7eO>`
 :Objectives: Understand what is a machine, what is a Turing machine, why the
              RAM and the Turing machine are equivalent, and what a
              non-deterministic machine is
