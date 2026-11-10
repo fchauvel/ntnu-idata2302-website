@@ -3,7 +3,7 @@ Regular Expressions
 ===================
 
 :Lecture: Lecture 8.1 :download:`(slides)
-          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/ESOpzEspsN5Dk-IdmSry_rwBDfjkWiBK7ToMb6JAnaXldQ?e=y4Wpsk>`
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/IQAAEDfVdPVmQLB4WhsoHNrBAVJZedvDIrKHbS8axUsXy2Y?e=haVZHH>`
 :Objectives: Understand what regular expressions, grammars and automata are, and
              see how trees, recursion and graphs come together to connect them
 :Concepts: Regular expression, language, grammar, expression tree, finite
