@@ -29,9 +29,9 @@ Algorithms and Data Structures
    trees/index
    graphs/index
    optimization/index
+   theory/index
 
 ..
-   theory/index
    beyond/index
 
 .. toctree::
