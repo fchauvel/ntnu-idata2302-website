@@ -3,7 +3,7 @@ Complexity Classes
 ==================
 
 :Lecture: Lecture 8.3 :download:`(slides)
-          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/EXxGuQ6duiJMpPVzNyQq6CsBct3rHRF5nXujbv43iILsow?e=gYK2An>`
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/IQBXy0ZrCt4QQLqK1pRWaIDTASerWfn7tz_2gkWSA4QyI9U?e=EWa1QU>`
 :Objectives: Understand what is a complexity class, what P and NP mean, and
              why the question "P = NP?" matters
 :Concepts: Complexity class, machine, resource, bound, P, NP, finding versus
