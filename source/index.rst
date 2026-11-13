@@ -43,8 +43,6 @@ Algorithms and Data Structures
    labs/recursion
    labs/trees
    labs/graphs/index
-
-..
    labs/optimization
 
    
