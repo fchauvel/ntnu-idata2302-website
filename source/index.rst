@@ -31,8 +31,6 @@ Algorithms and Data Structures
    optimization/index
    theory/index
    beyond/index
-
-..
    design/index
 
 .. toctree::
