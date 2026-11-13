@@ -2,7 +2,8 @@
 AI
 ==
 
-:Lecture: Lecture 9.3 (slides to come)
+:Lecture: Lecture 9.3 :download:`(slides)
+          <https://studntnu-my.sharepoint.com/:p:/g/personal/franckc_ntnu_no/IQA_kddSpNoBQJlgmARqO39jAZeglBXwuoPj19pc_CF-VWU?e=4EZYuR>`
 :Objectives: Understand, with just enough intuition, how AI differs from the
              algorithms of this course, where it shines, and what it changes
              for a programmer
