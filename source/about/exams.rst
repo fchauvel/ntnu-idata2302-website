@@ -29,6 +29,14 @@ before the final examination.
      - Session
      - Question Set 
      - Solutions
+   * - 2025-2026
+     - Session 2 / Spring
+     - :download:`Questions (PDF) <_static/exams/2026-06_questions.pdf>`
+     - :download:`Solutions (PDF) <_static/exams/2026-06_solutions.pdf>`
+   * - 2025-2026
+     - Session 1 / Fall
+     - :download:`Questions (PDF) <_static/exams/2025-12_questions.pdf>`
+     - :download:`Solutions (PDF) <_static/exams/2025-12_solutions.pdf>`
    * - 2024-2025
      - Session 2 / Spring
      - :download:`Questions (PDF) <_static/exams/2025-05_questions.pdf>`
